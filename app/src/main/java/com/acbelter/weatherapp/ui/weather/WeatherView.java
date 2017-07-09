@@ -1,4 +1,4 @@
-package com.acbelter.weatherapp.ui;
+package com.acbelter.weatherapp.ui.weather;
 
 import com.acbelter.weatherapp.domain.model.WeatherData;
 import com.arellomobile.mvp.MvpView;
@@ -9,7 +9,7 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import java.util.List;
 
 @StateStrategyType(AddToEndSingleStrategy.class)
-public interface MainView extends MvpView {
+public interface WeatherView extends MvpView {
     void showWeatherLoading();
     void showWeather(List<WeatherData> weatherDataList);
     @StateStrategyType(OneExecutionStateStrategy.class)

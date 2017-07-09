@@ -4,32 +4,24 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
-import com.acbelter.weatherapp.domain.model.WeatherData;
-import com.acbelter.weatherapp.presentation.MainPresenter;
+import com.acbelter.weatherapp.ui.about.AboutFragment;
+import com.acbelter.weatherapp.ui.settings.SettingsFragment;
+import com.acbelter.weatherapp.ui.weather.WeatherFragment;
 import com.arellomobile.mvp.MvpAppCompatActivity;
-import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.arellomobile.mvp.presenter.ProvidePresenter;
-
-import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends MvpAppCompatActivity implements
-        MainView, NavigationView.OnNavigationItemSelectedListener  {
-    @Inject
-    @InjectPresenter
-    MainPresenter mMainPresenter;
+        NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.drawer_layout)
@@ -40,7 +32,6 @@ public class MainActivity extends MvpAppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        App.getComponentManager().addWeatherComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -54,6 +45,12 @@ public class MainActivity extends MvpAppCompatActivity implements
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
         mNavigationView.setNavigationItemSelectedListener(this);
+
+        if (savedInstanceState == null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_frame, new WeatherFragment(), WeatherFragment.tag());
+            ft.commit();
+        }
     }
 
     @Override
@@ -81,44 +78,25 @@ public class MainActivity extends MvpAppCompatActivity implements
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_settings:
+                showSettings();
                 break;
             case R.id.nav_about:
+                showAbout();
                 break;
         }
-
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    @ProvidePresenter
-    public MainPresenter provideMainPresenter() {
-        return mMainPresenter;
+    private void showSettings() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, new SettingsFragment(), SettingsFragment.tag());
+        ft.commit();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mMainPresenter.getWeather();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        App.getComponentManager().removeWeatherComponent();
-    }
-
-    @Override
-    public void showWeatherLoading() {
-
-    }
-
-    @Override
-    public void showWeather(List<WeatherData> weatherDataList) {
-
-    }
-
-    @Override
-    public void showError() {
-
+    private void showAbout() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, new AboutFragment(), AboutFragment.tag());
+        ft.commit();
     }
 }

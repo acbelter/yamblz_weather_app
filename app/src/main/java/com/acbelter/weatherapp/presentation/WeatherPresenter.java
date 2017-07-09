@@ -1,7 +1,7 @@
 package com.acbelter.weatherapp.presentation;
 
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
-import com.acbelter.weatherapp.ui.MainView;
+import com.acbelter.weatherapp.ui.weather.WeatherView;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
@@ -13,12 +13,12 @@ import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 @InjectViewState
-public class MainPresenter extends MvpPresenter<MainView> {
+public class WeatherPresenter extends MvpPresenter<WeatherView> {
     private WeatherInteractor mWeatherInteractor;
     private Disposable mGetWeatherDisposable;
 
     @Inject
-    public MainPresenter(WeatherInteractor weatherInteractor) {
+    public WeatherPresenter(WeatherInteractor weatherInteractor) {
         mWeatherInteractor = weatherInteractor;
     }
 
