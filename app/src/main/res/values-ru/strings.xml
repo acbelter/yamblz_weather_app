@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">YamblzWeatherApp</string>
+    <string name="nav_drawer_open">Открыть боковую панель</string>
+    <string name="nav_drawer_close">Закрыть боковую панель</string>
+
+    <string name="weather">Погода</string>
+    <string name="settings">Настройки</string>
+    <string name="about">О программе</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">YamblzWeatherApp</string>
+    <string name="nav_drawer_open">Open side panel</string>
+    <string name="nav_drawer_close">Close side panel</string>
+
+    <string name="weather">Weather</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+</resources>
