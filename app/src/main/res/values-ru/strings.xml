@@ -7,4 +7,6 @@
     <string name="weather">Погода</string>
     <string name="settings">Настройки</string>
     <string name="about">О программе</string>
+
+    <string name="weather_images_license">Иконки погоды от Linector с Flaticon</string>
 </resources>

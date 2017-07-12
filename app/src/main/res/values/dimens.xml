@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="nav_header_height">160dp</dimen>
+    <dimen name="weather_image_size">120dp</dimen>
+    <dimen name="offset_large">16dp</dimen>
+    <dimen name="offset_medium">8dp</dimen>
 </resources>

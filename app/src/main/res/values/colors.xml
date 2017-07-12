@@ -5,4 +5,7 @@
     <color name="colorAccent">#0288D1</color>
     <color name="colorNavHeader">#0288D1</color>
     <color name="colorNavHeaderText">@android:color/white</color>
+    <color name="colorTextShadow">@android:color/darker_gray</color>
+    <color name="colorWeatherLight">@android:color/white</color>
+    <color name="colorWeatherDark">@android:color/black</color>
 </resources>
