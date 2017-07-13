@@ -54,6 +54,8 @@ dependencies {
     compile support.design
     compile support.constraintLayout
 
+    compile ui.weatherView
+
     compile rx.rxAndroid
     compile rx.rxJava
 
