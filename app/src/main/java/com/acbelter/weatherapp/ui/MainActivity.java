@@ -1,5 +1,6 @@
 package com.acbelter.weatherapp.ui;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,8 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.acbelter.weatherapp.R;
-import com.acbelter.weatherapp.ui.about.AboutFragment;
-import com.acbelter.weatherapp.ui.settings.SettingsFragment;
+import com.acbelter.weatherapp.ui.about.AboutActivity;
+import com.acbelter.weatherapp.ui.settings.SettingsActivity;
 import com.acbelter.weatherapp.ui.weather.WeatherFragment;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 
@@ -89,14 +90,14 @@ public class MainActivity extends MvpAppCompatActivity implements
     }
 
     private void showSettings() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, new SettingsFragment(), SettingsFragment.tag());
-        ft.commit();
+        Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(settingsIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     private void showAbout() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, new AboutFragment(), AboutFragment.tag());
-        ft.commit();
+        Intent aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
+        startActivity(aboutIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }

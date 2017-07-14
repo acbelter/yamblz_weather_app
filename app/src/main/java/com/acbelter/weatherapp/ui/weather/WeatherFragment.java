@@ -19,12 +19,12 @@ import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.domain.model.WeatherData;
 import com.acbelter.weatherapp.presentation.WeatherPresenter;
-import com.acbelter.weatherapp.ui.SimpleAnimationListener;
+import com.acbelter.weatherapp.ui.util.AnimationWeakListener;
+import com.acbelter.weatherapp.ui.util.ValueAnimatorWeakUpdateListener;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -148,61 +148,74 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
         int colorFrom;
         int colorTo = newWeatherStateRes.getBackgroundColor(context);
         final long animBgDuration = context.getResources().getInteger(R.integer.anim_bg_duration);
-
-        WeakReference<xyz.matteobattilana.library.WeatherView> weatherViewWeakRef =
-                new WeakReference<>(mWeatherView);
-        WeakReference<ImageView> weatherImageWeakRef = new WeakReference<>(mWeatherImage);
-        WeakReference<ViewGroup> contentLayoutWeakRef = new WeakReference<>(mContentLayout);
-
         if (mWeatherData == null || mWeatherStateRes == null) {
             // Show weather first time
             colorFrom = ContextCompat.getColor(context, R.color.colorBgWeatherDefault);
             mWeatherImage.setImageResource(newWeatherStateRes.getWeatherImageResId());
 
-            Animation fadeIn = AnimationUtils.loadAnimation(context, R.anim.anim_fade_in);
-            fadeIn.setAnimationListener(new SimpleAnimationListener() {
+            Animation fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+            fadeIn.setAnimationListener(
+                    new AnimationWeakListener<xyz.matteobattilana.library.WeatherView>(mWeatherView) {
                 @Override
-                public void onAnimationEnd(Animation animation) {
-                    xyz.matteobattilana.library.WeatherView weatherView = weatherViewWeakRef.get();
-                    if (weatherView != null) {
-                        weatherView.setWeather(WeatherUtils.getWeatherStatus(newWeatherStateRes));
-                        weatherView.startAnimation();
-                    }
+                public void onAnimationStarted(Animation animation,
+                                               xyz.matteobattilana.library.WeatherView view) {
+                }
+
+                @Override
+                public void onAnimationEnded(Animation animation,
+                                             xyz.matteobattilana.library.WeatherView view) {
+                    view.setWeather(WeatherUtils.getWeatherStatus(newWeatherStateRes));
+                    view.startAnimation();
+                }
+
+                @Override
+                public void onAnimationRepeated(Animation animation,
+                                                xyz.matteobattilana.library.WeatherView view) {
                 }
             });
             mWeatherImage.startAnimation(fadeIn);
 
             ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
             colorAnimation.setDuration(animBgDuration);
-            colorAnimation.addUpdateListener(animator -> {
-                ViewGroup contentLayout = contentLayoutWeakRef.get();
-                if (contentLayout != null) {
-                    contentLayout.setBackgroundColor((int) animator.getAnimatedValue());
+            colorAnimation.addUpdateListener(new ValueAnimatorWeakUpdateListener<ViewGroup>(mContentLayout) {
+                @Override
+                public void onAnimationUpdated(ValueAnimator animation, ViewGroup view) {
+                    view.setBackgroundColor((int) animation.getAnimatedValue());
                 }
             });
             colorAnimation.start();
         } else if (mWeatherStateRes != newWeatherStateRes) {
             // Replace weather
-            Animation fadeOut = AnimationUtils.loadAnimation(context, R.anim.anim_fade_out);
-            Animation fadeIn = AnimationUtils.loadAnimation(context, R.anim.anim_fade_in);
-            fadeOut.setAnimationListener(new SimpleAnimationListener() {
+            Animation fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out);
+            Animation fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+            fadeOut.setAnimationListener(new AnimationWeakListener<ImageView>(mWeatherImage) {
                 @Override
-                public void onAnimationEnd(Animation animation) {
-                    ImageView weatherImage = weatherImageWeakRef.get();
-                    if (weatherImage != null) {
-                        weatherImage.setImageResource(newWeatherStateRes.getWeatherImageResId());
-                        weatherImage.startAnimation(fadeIn);
-                    }
+                public void onAnimationStarted(Animation animation, ImageView view) {
+                }
+
+                @Override
+                public void onAnimationEnded(Animation animation, ImageView view) {
+                    view.setImageResource(newWeatherStateRes.getWeatherImageResId());
+                    view.startAnimation(fadeIn);
+                }
+
+                @Override
+                public void onAnimationRepeated(Animation animation, ImageView view) {
                 }
             });
-            fadeIn.setAnimationListener(new SimpleAnimationListener() {
+            fadeIn.setAnimationListener(new AnimationWeakListener<xyz.matteobattilana.library.WeatherView>(mWeatherView) {
                 @Override
-                public void onAnimationEnd(Animation animation) {
-                    xyz.matteobattilana.library.WeatherView weatherView = weatherViewWeakRef.get();
-                    if (weatherView != null) {
-                        weatherView.setWeather(WeatherUtils.getWeatherStatus(newWeatherStateRes));
-                        weatherView.startAnimation();
-                    }
+                public void onAnimationStarted(Animation animation, xyz.matteobattilana.library.WeatherView view) {
+                }
+
+                @Override
+                public void onAnimationEnded(Animation animation, xyz.matteobattilana.library.WeatherView view) {
+                    view.setWeather(WeatherUtils.getWeatherStatus(newWeatherStateRes));
+                    view.startAnimation();
+                }
+
+                @Override
+                public void onAnimationRepeated(Animation animation, xyz.matteobattilana.library.WeatherView view) {
                 }
             });
             mWeatherImage.startAnimation(fadeOut);
@@ -212,10 +225,10 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
 
             ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
             colorAnimation.setDuration(animBgDuration);
-            colorAnimation.addUpdateListener(animator -> {
-                ViewGroup contentLayout = contentLayoutWeakRef.get();
-                if (contentLayout != null) {
-                    contentLayout.setBackgroundColor((int) animator.getAnimatedValue());
+            colorAnimation.addUpdateListener(new ValueAnimatorWeakUpdateListener<ViewGroup>(mContentLayout) {
+                @Override
+                public void onAnimationUpdated(ValueAnimator animation, ViewGroup view) {
+                    view.setBackgroundColor((int) animation.getAnimatedValue());
                 }
             });
             colorAnimation.start();

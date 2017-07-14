@@ -55,6 +55,8 @@ dependencies {
     compile support.constraintLayout
 
     compile ui.weatherView
+    compile ui.fixPreference
+    compile ui.seekBarPreference
 
     compile rx.rxAndroid
     compile rx.rxJava
