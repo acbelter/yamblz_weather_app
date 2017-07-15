@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.acbelter.weatherapp.data.dbmodel.DatabaseWeatherData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -16,36 +15,36 @@ public class DatabaseServiceImpl implements DatabaseService {
 
     @Override
     public Observable<Long> insertWeatherData(DatabaseWeatherData weatherData) {
-        return Observable.just(1L);
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Observable<Integer> insertAllWeatherData(List<DatabaseWeatherData> weatherDataList) {
-        return Observable.just(weatherDataList.size());
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Observable<DatabaseWeatherData> getWeatherData(long id) {
-        return Observable.just(new DatabaseWeatherData());
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Observable<List<DatabaseWeatherData>> getAllWeatherData() {
-        return Observable.just(new ArrayList<>(0));
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Observable<Boolean> updateWeatherData(DatabaseWeatherData weatherData) {
-        return Observable.just(true);
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Observable<Boolean> deleteWeatherData(long id) {
-        return Observable.just(true);
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Observable<Integer> deleteAllWeatherData() {
-        return Observable.just(0);
+        throw new UnsupportedOperationException();
     }
 }

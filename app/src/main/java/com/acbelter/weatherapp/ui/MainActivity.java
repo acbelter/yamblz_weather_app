@@ -37,7 +37,7 @@ public class MainActivity extends MvpAppCompatActivity implements
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        setSupportActionBar(mToolbar);
+        mToolbar.setTitle(R.string.weather);
 
         mDrawerToggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, mToolbar,

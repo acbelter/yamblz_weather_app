@@ -23,7 +23,9 @@ dependencies {
     compile rx.rxJava
     compile lib.retrofit2
     compile lib.retrofit2_adapter
-    compile lib.retrofit2_gson
+    compile lib.retrofit2_scalars
+    compile lib.gson
+    compile lib.loggingInterceptor
     compile lib.timber
 
     compile lib.dagger2

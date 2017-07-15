@@ -2,9 +2,12 @@ package com.acbelter.weatherapp.ui.weather;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -25,7 +28,9 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -36,6 +41,9 @@ import timber.log.Timber;
 import xyz.matteobattilana.library.Common.Constants;
 
 public class WeatherFragment extends MvpAppCompatFragment implements WeatherView {
+    private static SimpleDateFormat sDateFormat =
+            new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+
     @Inject
     @InjectPresenter
     WeatherPresenter mPresenter;
@@ -57,7 +65,6 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     ImageView mWeatherImage;
     private Unbinder mUnbinder;
     private WeatherData mWeatherData;
-    private WeatherStateRes mWeatherStateRes;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,9 +80,6 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
         if (mWeatherData != null) {
             outState.putParcelable("weather_data", mWeatherData);
         }
-        if (mWeatherStateRes != null) {
-            outState.putString("weather_state_res", mWeatherStateRes.name());
-        }
     }
 
     @Override
@@ -84,10 +88,6 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
         Timber.d("Restore weather fragment state");
         if (savedInstanceState != null) {
             mWeatherData = savedInstanceState.getParcelable("weather_data");
-            String weatherStateResName = savedInstanceState.getString("weather_state_res");
-            if (weatherStateResName != null) {
-                mWeatherStateRes = WeatherStateRes.valueOf(weatherStateResName);
-            }
         }
     }
 
@@ -113,7 +113,7 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
         mUnbinder = ButterKnife.bind(this, view);
 
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            mPresenter.getWeather();
+            mPresenter.getCurrentWeather();
         });
 
         mSwipeRefreshLayout.setColorSchemeResources(
@@ -132,47 +132,48 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
         return view;
     }
 
-    private void showWeather(Context context, WeatherData newWeatherData) {
-        // FIXME For testing
-        WeatherStateRes newWeatherStateRes = WeatherUtils.getRandomStateRes();
-        Timber.d("Change weather state res: " + mWeatherStateRes + "->" + newWeatherStateRes);
+    @SuppressLint("SetTextI18n")
+    private void showNewWeather(Context context, WeatherData newWeatherData) {
+        Timber.d("Show new weather");
 
-        int textColor = newWeatherStateRes.getTextColor(context);
-        setWeatherTextColor(textColor);
+        WeatherRes newWeatherRes = new WeatherRes(newWeatherData);
 
-        mDateText.setText(newWeatherData.date);
-        mTemperatureText.setText(newWeatherData.temperature);
+        setWeatherTextColor(context, newWeatherRes.getTextColorResId());
+
+        mDateText.setText(sDateFormat.format(new Date(newWeatherData.getTimestamp() * 1000)));
+        mTemperatureText.setText(Integer.toString((int) newWeatherData.getTemperatureC()));
         mUnitsText.setText(R.string.celsius);
-        mLocationText.setText(newWeatherData.location);
+        mLocationText.setText(newWeatherData.getCity());
 
         int colorFrom;
-        int colorTo = newWeatherStateRes.getBackgroundColor(context);
+        int colorTo = ContextCompat.getColor(context, newWeatherRes.getBackgroundColorResId());
         final long animBgDuration = context.getResources().getInteger(R.integer.anim_bg_duration);
-        if (mWeatherData == null || mWeatherStateRes == null) {
-            // Show weather first time
+        if (mWeatherData == null) {
+            Timber.d("Show weather first time");
+
             colorFrom = ContextCompat.getColor(context, R.color.colorBgWeatherDefault);
-            mWeatherImage.setImageResource(newWeatherStateRes.getWeatherImageResId());
+            mWeatherImage.setImageResource(newWeatherRes.getWeatherImageResId());
 
             Animation fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in);
             fadeIn.setAnimationListener(
                     new AnimationWeakListener<xyz.matteobattilana.library.WeatherView>(mWeatherView) {
-                @Override
-                public void onAnimationStarted(Animation animation,
-                                               xyz.matteobattilana.library.WeatherView view) {
-                }
+                        @Override
+                        public void onAnimationStarted(Animation animation,
+                                                       xyz.matteobattilana.library.WeatherView view) {
+                        }
 
-                @Override
-                public void onAnimationEnded(Animation animation,
-                                             xyz.matteobattilana.library.WeatherView view) {
-                    view.setWeather(WeatherUtils.getWeatherStatus(newWeatherStateRes));
-                    view.startAnimation();
-                }
+                        @Override
+                        public void onAnimationEnded(Animation animation,
+                                                     xyz.matteobattilana.library.WeatherView view) {
+                            view.setWeather(newWeatherRes.getWeatherStatus());
+                            view.startAnimation();
+                        }
 
-                @Override
-                public void onAnimationRepeated(Animation animation,
-                                                xyz.matteobattilana.library.WeatherView view) {
-                }
-            });
+                        @Override
+                        public void onAnimationRepeated(Animation animation,
+                                                        xyz.matteobattilana.library.WeatherView view) {
+                        }
+                    });
             mWeatherImage.startAnimation(fadeIn);
 
             ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
@@ -184,61 +185,71 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
                 }
             });
             colorAnimation.start();
-        } else if (mWeatherStateRes != newWeatherStateRes) {
-            // Replace weather
-            Animation fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out);
-            Animation fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in);
-            fadeOut.setAnimationListener(new AnimationWeakListener<ImageView>(mWeatherImage) {
-                @Override
-                public void onAnimationStarted(Animation animation, ImageView view) {
-                }
+        } else {
+            WeatherRes currentWeatherRes = new WeatherRes(mWeatherData);
+            if (!newWeatherRes.equals(currentWeatherRes)) {
+                Timber.d("Replace weather res");
 
-                @Override
-                public void onAnimationEnded(Animation animation, ImageView view) {
-                    view.setImageResource(newWeatherStateRes.getWeatherImageResId());
-                    view.startAnimation(fadeIn);
-                }
+                Animation fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out);
+                Animation fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+                fadeOut.setAnimationListener(new AnimationWeakListener<ImageView>(mWeatherImage) {
+                    @Override
+                    public void onAnimationStarted(Animation animation, ImageView view) {
+                    }
 
-                @Override
-                public void onAnimationRepeated(Animation animation, ImageView view) {
-                }
-            });
-            fadeIn.setAnimationListener(new AnimationWeakListener<xyz.matteobattilana.library.WeatherView>(mWeatherView) {
-                @Override
-                public void onAnimationStarted(Animation animation, xyz.matteobattilana.library.WeatherView view) {
-                }
+                    @Override
+                    public void onAnimationEnded(Animation animation, ImageView view) {
+                        view.setImageResource(newWeatherRes.getWeatherImageResId());
+                        view.startAnimation(fadeIn);
+                    }
 
-                @Override
-                public void onAnimationEnded(Animation animation, xyz.matteobattilana.library.WeatherView view) {
-                    view.setWeather(WeatherUtils.getWeatherStatus(newWeatherStateRes));
-                    view.startAnimation();
-                }
+                    @Override
+                    public void onAnimationRepeated(Animation animation, ImageView view) {
+                    }
+                });
+                fadeIn.setAnimationListener(new AnimationWeakListener<xyz.matteobattilana.library.WeatherView>(mWeatherView) {
+                    @Override
+                    public void onAnimationStarted(Animation animation, xyz.matteobattilana.library.WeatherView view) {
+                    }
 
-                @Override
-                public void onAnimationRepeated(Animation animation, xyz.matteobattilana.library.WeatherView view) {
-                }
-            });
-            mWeatherImage.startAnimation(fadeOut);
+                    @Override
+                    public void onAnimationEnded(Animation animation, xyz.matteobattilana.library.WeatherView view) {
+                        view.setWeather(newWeatherRes.getWeatherStatus());
+                        view.startAnimation();
+                    }
 
-            colorFrom = mWeatherStateRes.getBackgroundColor(context);
-            mWeatherView.cancelAnimation();
+                    @Override
+                    public void onAnimationRepeated(Animation animation, xyz.matteobattilana.library.WeatherView view) {
+                    }
+                });
+                mWeatherImage.startAnimation(fadeOut);
 
-            ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-            colorAnimation.setDuration(animBgDuration);
-            colorAnimation.addUpdateListener(new ValueAnimatorWeakUpdateListener<ViewGroup>(mContentLayout) {
-                @Override
-                public void onAnimationUpdated(ValueAnimator animation, ViewGroup view) {
-                    view.setBackgroundColor((int) animation.getAnimatedValue());
-                }
-            });
-            colorAnimation.start();
+                colorFrom = ContextCompat.getColor(context, currentWeatherRes.getBackgroundColorResId());
+                mWeatherView.cancelAnimation();
+
+                ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+                colorAnimation.setDuration(animBgDuration);
+                colorAnimation.addUpdateListener(new ValueAnimatorWeakUpdateListener<ViewGroup>(mContentLayout) {
+                    @Override
+                    public void onAnimationUpdated(ValueAnimator animation, ViewGroup view) {
+                        view.setBackgroundColor((int) animation.getAnimatedValue());
+                    }
+                });
+                colorAnimation.start();
+            } else {
+                Timber.d("Weather res is not changed");
+                mContentLayout.setBackgroundColor(
+                        ContextCompat.getColor(context, newWeatherRes.getBackgroundColorResId()));
+                mWeatherImage.setImageResource(newWeatherRes.getWeatherImageResId());
+                mWeatherView.setWeather(newWeatherRes.getWeatherStatus());
+            }
         }
 
         mWeatherData = newWeatherData;
-        mWeatherStateRes = newWeatherStateRes;
     }
 
-    private void setWeatherTextColor(int color) {
+    private void setWeatherTextColor(Context context, @ColorRes int colorRes) {
+        int color = ContextCompat.getColor(context, colorRes);
         mDateText.setTextColor(color);
         mTemperatureText.setTextColor(color);
         mUnitsText.setTextColor(color);
@@ -246,19 +257,15 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if (mWeatherData != null && mWeatherStateRes != null) {
+    public void onStart() {
+        super.onStart();
+        if (mWeatherData != null) {
             mWeatherView.startAnimation();
         }
-        // FIXME For testing
-        mPresenter.getWeather();
-    }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        mWeatherView.cancelAnimation();
+        if (mWeatherData == null) {
+            mPresenter.getCurrentWeather();
+        }
     }
 
     @Override
@@ -270,19 +277,18 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     }
 
     @Override
-    public void showWeather(List<WeatherData> weatherDataList) {
+    public void showWeather(WeatherData weatherData) {
         mSwipeRefreshLayout.setRefreshing(false);
+        showNewWeather(getContext(), weatherData);
     }
 
     @Override
     public void showError() {
         mSwipeRefreshLayout.setRefreshing(false);
-        // FIXME For testing
-        showWeather(getContext(), WeatherData.newDebugInstance());
-//        Snackbar errorSnackbar =
-//                Snackbar.make(mContentLayout, R.string.text_weather_error, Snackbar.LENGTH_LONG);
-//        errorSnackbar.setAction(R.string.ok, v -> errorSnackbar.dismiss());
-//        errorSnackbar.show();
+        Snackbar errorSnackbar =
+                Snackbar.make(mContentLayout, R.string.text_weather_error, Snackbar.LENGTH_LONG);
+        errorSnackbar.setAction(R.string.ok, v -> {});
+        errorSnackbar.show();
     }
 
     public static String tag() {

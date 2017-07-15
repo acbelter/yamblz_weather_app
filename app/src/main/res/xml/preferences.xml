@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.preference.PreferenceScreen
+<PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v7.preference.PreferenceCategory
+    <PreferenceCategory
         android:title="@string/weather_settings">
 
         <com.pavelsikun.seekbarpreference.SeekBarPreferenceCompat
@@ -16,5 +16,5 @@
             app:msbp_maxValue="24"
             app:msbp_measurementUnit="@string/hour"
             app:msbp_minValue="1"/>
-    </android.support.v7.preference.PreferenceCategory>
-</android.support.v7.preference.PreferenceScreen>
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -10,12 +10,10 @@
     <color name="colorTextWeatherDark">@android:color/black</color>
 
     <color name="colorBgWeatherDefault">@color/colorPrimary</color>
-    <color name="colorBgWeatherHeat">#81D4FA</color>
-    <color name="colorBgWeatherSun">#4FC3F7</color>
-    <color name="colorBgWeatherCloudy">#B3E5FC</color>
-    <color name="colorBgWeatherRainLight">#BDBDBD</color>
-    <color name="colorBgWeatherRainHeavy">#9E9E9E</color>
-    <color name="colorBgWeatherStorm">#616161</color>
-    <color name="colorBgWeatherSnow">#90A4AE</color>
     <color name="colorBgWeatherNight">#37474F</color>
+    <color name="colorBgWeatherSun">#4FC3F7</color>
+    <color name="colorBgWeatherClouds">#B3E5FC</color>
+    <color name="colorBgWeatherSnow">#90A4AE</color>
+    <color name="colorBgWeatherRain">#9E9E9E</color>
+    <color name="colorBgWeatherStorm">#616161</color>
 </resources>

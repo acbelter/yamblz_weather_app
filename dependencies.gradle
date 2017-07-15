@@ -31,14 +31,16 @@ ext {
     ]
 
     lib = [
-            dagger2          : "com.google.dagger:dagger:$daggerVersion",
-            moxy             : "com.arello-mobile:moxy:$moxyVersion",
-            moxyAppCompat    : "com.arello-mobile:moxy-app-compat:$moxyVersion",
-            butterknife      : "com.jakewharton:butterknife:$butterknifeVersion",
-            retrofit2        : "com.squareup.retrofit2:retrofit:$retrofitVersion",
-            retrofit2_adapter: "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
-            retrofit2_gson   : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
-            timber           : "com.jakewharton.timber:timber:4.5.1",
+            dagger2           : "com.google.dagger:dagger:$daggerVersion",
+            moxy              : "com.arello-mobile:moxy:$moxyVersion",
+            moxyAppCompat     : "com.arello-mobile:moxy-app-compat:$moxyVersion",
+            butterknife       : "com.jakewharton:butterknife:$butterknifeVersion",
+            retrofit2         : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            retrofit2_adapter : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
+            retrofit2_scalars : "com.squareup.retrofit2:converter-scalars:$retrofitVersion",
+            gson              : "com.google.code.gson:gson:2.8.1",
+            loggingInterceptor: "com.squareup.okhttp3:logging-interceptor:3.8.1",
+            timber            : "com.jakewharton.timber:timber:4.5.1",
     ]
 
     compiler = [

@@ -1,6 +1,7 @@
 package com.acbelter.weatherapp.presentation;
 
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
+import com.acbelter.weatherapp.domain.model.WeatherParams;
 import com.acbelter.weatherapp.ui.weather.WeatherView;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
@@ -22,30 +23,33 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
         mWeatherInteractor = weatherInteractor;
     }
 
-    public void getWeather() {
+    public void getCurrentWeather() {
         if (mGetWeatherDisposable != null) {
             return;
         }
 
-        mGetWeatherDisposable = mWeatherInteractor.getWeather()
+        // FIXME City for testing
+        WeatherParams params = new WeatherParams("Moscow");
+
+        mGetWeatherDisposable = mWeatherInteractor.getCurrentWeather(params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         weatherData -> {
-                            Timber.d("getWeather()->onNext()");
+                            Timber.d("getCurrentWeatherData()->onNext()");
                             getViewState().showWeather(weatherData);
                         },
-                        e -> {
-                            Timber.d("getWeather()->onError(): " + e.toString());
+                        error -> {
+                            Timber.d("getCurrentWeatherData()->onError(): " + error.toString());
                             getViewState().showError();
                             stopGetWeatherProcess();
                         },
                         () -> {
-                            Timber.d("getWeather()->onComplete()");
+                            Timber.d("getCurrentWeatherData()->onComplete()");
                             stopGetWeatherProcess();
                         },
-                        d -> {
-                            Timber.d("getWeather()->onSubscribe()");
+                        disposable -> {
+                            Timber.d("getCurrentWeatherData()->onSubscribe()");
                             getViewState().showWeatherLoading();
                         }
                 );
