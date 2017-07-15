@@ -117,16 +117,17 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
         });
 
         mSwipeRefreshLayout.setColorSchemeResources(
-                android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+                R.color.colorPrimary,
+                R.color.colorPrimaryDark);
 
         mWeatherView.setWeather(Constants.weatherStatus.SUN)
-                .setCurrentLifeTime(5000)
-                .setCurrentParticles(15)
+                .setRainTime(6000)
+                .setSnowTime(6000)
+                .setRainAngle(20)
+                .setSnowAngle(20)
+                .setRainParticles(25)
+                .setSnowParticles(25)
                 .setFPS(60)
-                .setCurrentAngle(-10)
                 .setOrientationMode(Constants.orientationStatus.ENABLE);
 
         return view;
@@ -259,13 +260,21 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     @Override
     public void onStart() {
         super.onStart();
-        if (mWeatherData != null) {
-            mWeatherView.startAnimation();
-        }
-
         if (mWeatherData == null) {
             mPresenter.getCurrentWeather();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mWeatherView.startAnimation();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mWeatherView.cancelAnimation();
     }
 
     @Override
