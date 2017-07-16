@@ -31,9 +31,9 @@ public class WeatherDataConverter {
         weatherData.setCity(netData.name);
         weatherData.setTemperatureK(netData.main.temp);
         weatherData.setWeatherType(extractWeatherType(netData.weather));
-        weatherData.setTimestamp(netData.dt);
-        weatherData.setSunriseTimestamp(netData.sys.sunrise);
-        weatherData.setSunsetTimestamp(netData.sys.sunset);
+        weatherData.setTimestamp((long) netData.dt * 1000);
+        weatherData.setSunriseTimestamp((long) netData.sys.sunrise * 1000);
+        weatherData.setSunsetTimestamp((long) netData.sys.sunset * 1000);
         return weatherData;
     }
 

@@ -71,5 +71,7 @@ dependencies {
     compile lib.butterknife
     annotationProcessor compiler.butterknife
 
+    compile lib.gson
+
     compile lib.timber
 }

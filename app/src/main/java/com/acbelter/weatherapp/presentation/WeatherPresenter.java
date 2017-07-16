@@ -1,6 +1,16 @@
 package com.acbelter.weatherapp.presentation;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
+
+import com.acbelter.weatherapp.PreferencesStorage;
+import com.acbelter.weatherapp.WeatherUpdateReceiver;
+import com.acbelter.weatherapp.WeatherUpdateScheduler;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
+import com.acbelter.weatherapp.domain.model.WeatherData;
 import com.acbelter.weatherapp.domain.model.WeatherParams;
 import com.acbelter.weatherapp.ui.weather.WeatherView;
 import com.arellomobile.mvp.InjectViewState;
@@ -15,54 +25,100 @@ import timber.log.Timber;
 
 @InjectViewState
 public class WeatherPresenter extends MvpPresenter<WeatherView> {
+    private PreferencesStorage mPrefsStorage;
     private WeatherInteractor mWeatherInteractor;
-    private Disposable mGetWeatherDisposable;
+    private Disposable mCurrentWeatherDisposable;
+
+    private BroadcastReceiver mWeatherUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            WeatherData weatherData =
+                    intent.getParcelableExtra(WeatherUpdateReceiver.KEY_WEATHER_DATA);
+            getViewState().showWeather(weatherData);
+        }
+    };
+
+    private WeatherData mWeatherData;
 
     @Inject
-    public WeatherPresenter(WeatherInteractor weatherInteractor) {
+    public WeatherPresenter(Context context,
+                            PreferencesStorage prefsStorage,
+                            WeatherInteractor weatherInteractor) {
+        mPrefsStorage = prefsStorage;
         mWeatherInteractor = weatherInteractor;
+        int updateInterval = prefsStorage.getUpdateInterval();
+        if (updateInterval > 0) {
+            WeatherUpdateScheduler.restartWeatherUpdates(context, updateInterval);
+        }
     }
 
-    public void getCurrentWeather() {
-        if (mGetWeatherDisposable != null) {
+    public void setWeatherData(WeatherData weatherData) {
+        mWeatherData = weatherData;
+    }
+
+    public WeatherData getWeatherData() {
+        return mWeatherData;
+    }
+
+    public void getCurrentWeather(boolean forceRefresh) {
+        mWeatherData = mPrefsStorage.getLastWeatherData();
+
+        if (mWeatherData != null && !forceRefresh) {
+            getViewState().showWeather(mWeatherData);
+            return;
+        }
+
+        if (mCurrentWeatherDisposable != null) {
+            // Getting weather already in progress
             return;
         }
 
         // FIXME City for testing
         WeatherParams params = new WeatherParams("Moscow");
 
-        mGetWeatherDisposable = mWeatherInteractor.getCurrentWeather(params)
+        mCurrentWeatherDisposable = mWeatherInteractor.getCurrentWeather(params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         weatherData -> {
-                            Timber.d("getCurrentWeatherData()->onNext()");
+                            Timber.d("getCurrentWeather->onNext()");
+                            mPrefsStorage.setLastWeatherData(weatherData);
+                            mPrefsStorage.setLastUpdateTimestamp(System.currentTimeMillis());
                             getViewState().showWeather(weatherData);
                         },
                         error -> {
-                            Timber.d("getCurrentWeatherData()->onError(): " + error.toString());
+                            Timber.d("getCurrentWeather->onError(): " + error.toString());
                             getViewState().showError();
-                            stopGetWeatherProcess();
+                            clearGetWeatherDisposable();
                         },
                         () -> {
-                            Timber.d("getCurrentWeatherData()->onComplete()");
-                            stopGetWeatherProcess();
+                            Timber.d("getCurrentWeather->onComplete()");
+                            clearGetWeatherDisposable();
                         },
                         disposable -> {
-                            Timber.d("getCurrentWeatherData()->onSubscribe()");
+                            Timber.d("getCurrentWeather->onSubscribe()");
                             getViewState().showWeatherLoading();
                         }
                 );
     }
 
-    private void stopGetWeatherProcess() {
-        if (mGetWeatherDisposable != null && !mGetWeatherDisposable.isDisposed()) {
-            mGetWeatherDisposable.dispose();
-        }
-        mGetWeatherDisposable = null;
+    private void clearGetWeatherDisposable() {
+        mCurrentWeatherDisposable = null;
     }
 
-    public void stop() {
-        stopGetWeatherProcess();
+    public void stopGetCurrentWeatherProcess() {
+        if (mCurrentWeatherDisposable != null && !mCurrentWeatherDisposable.isDisposed()) {
+            mCurrentWeatherDisposable.dispose();
+        }
+        mCurrentWeatherDisposable = null;
+    }
+
+    public void resume(Context context) {
+        IntentFilter filter = new IntentFilter(WeatherUpdateReceiver.ACTION_WEATHER_UPDATE);
+        LocalBroadcastManager.getInstance(context).registerReceiver(mWeatherUpdateReceiver, filter);
+    }
+
+    public void pause(Context context) {
+        LocalBroadcastManager.getInstance(context).unregisterReceiver(mWeatherUpdateReceiver);
     }
 }

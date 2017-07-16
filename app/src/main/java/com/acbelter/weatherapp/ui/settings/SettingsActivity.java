@@ -5,17 +5,26 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
+import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.presentation.SettingsPresenter;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 
-public class SettingsActivity extends MvpAppCompatActivity implements SettingsView {
+import javax.inject.Inject;
+
+import timber.log.Timber;
+
+public class SettingsActivity extends MvpAppCompatActivity implements
+        SettingsView, SettingsFragment.SettingsListener {
+    @Inject
     @InjectPresenter
     SettingsPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        App.getComponentManager().getAppComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
@@ -31,6 +40,17 @@ public class SettingsActivity extends MvpAppCompatActivity implements SettingsVi
         }
     }
 
+    @ProvidePresenter
+    public SettingsPresenter provideSettingsPresenter() {
+        return mPresenter;
+    }
+
+    @Override
+    public void onUpdateIntervalChanged(int newUpdateInterval) {
+        Timber.d("Weather update interval is changed: " + newUpdateInterval);
+        mPresenter.restartWeatherUpdating(this, newUpdateInterval);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -42,6 +62,11 @@ public class SettingsActivity extends MvpAppCompatActivity implements SettingsVi
                 return super.onOptionsItemSelected(item);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        close();
     }
 
     @Override

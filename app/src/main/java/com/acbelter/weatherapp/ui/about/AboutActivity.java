@@ -51,6 +51,11 @@ public class AboutActivity extends MvpAppCompatActivity implements AboutView {
     }
 
     @Override
+    public void onBackPressed() {
+        close();
+    }
+
+    @Override
     public void close() {
         finish();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

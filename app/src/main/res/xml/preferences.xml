@@ -7,7 +7,7 @@
         android:title="@string/weather_settings">
 
         <com.pavelsikun.seekbarpreference.SeekBarPreferenceCompat
-            android:defaultValue="24"
+            android:defaultValue="0"
             android:key="pref_update_interval"
             android:summary="@string/update_interval"
             android:title="@string/weather_update_setting"
@@ -15,6 +15,6 @@
             app:msbp_interval="1"
             app:msbp_maxValue="24"
             app:msbp_measurementUnit="@string/hour"
-            app:msbp_minValue="1"/>
+            app:msbp_minValue="0"/>
     </PreferenceCategory>
 </PreferenceScreen>
