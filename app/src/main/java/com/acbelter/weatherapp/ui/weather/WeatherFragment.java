@@ -42,7 +42,7 @@ import xyz.matteobattilana.library.Common.Constants;
 
 public class WeatherFragment extends MvpAppCompatFragment implements WeatherView {
     private static SimpleDateFormat sDateFormat =
-            new SimpleDateFormat("dd MMM yyyy (HH:mm)", Locale.getDefault());
+            new SimpleDateFormat("EEE, dd MMM yyyy (HH:mm)", Locale.getDefault());
 
     @Inject
     @InjectPresenter
@@ -171,6 +171,7 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
             WeatherRes currentWeatherRes = new WeatherRes(mPresenter.getWeatherData());
             if (!newWeatherRes.equals(currentWeatherRes)) {
                 Timber.d("Replace weather res");
+                mWeatherView.cancelAnimation();
 
                 Animation fadeOut = AnimationUtils.loadAnimation(context, R.anim.fade_out);
                 Animation fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in);
@@ -212,7 +213,6 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
 
                 colorFrom = ContextCompat.getColor(context,
                         currentWeatherRes.getBackgroundColorResId());
-                mWeatherView.cancelAnimation();
 
                 ValueAnimator colorAnimation =
                         ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
@@ -230,7 +230,9 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
                 mContentLayout.setBackgroundColor(
                         ContextCompat.getColor(context, newWeatherRes.getBackgroundColorResId()));
                 mWeatherImage.setImageResource(newWeatherRes.getWeatherImageResId());
+                mWeatherView.cancelAnimation();
                 mWeatherView.setWeather(newWeatherRes.getWeatherStatus());
+                mWeatherView.startAnimation();
             }
         }
     }

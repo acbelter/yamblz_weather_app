@@ -92,11 +92,11 @@ public class WeatherData implements Parcelable {
     }
 
     public boolean isDay() {
-        return mTimestamp >= mSunriseTimestamp && mTimestamp <= mSunsetTimestamp;
+        return mTimestamp > mSunriseTimestamp && mTimestamp < mSunsetTimestamp;
     }
 
     public boolean isNight() {
-        return mTimestamp >= mSunsetTimestamp && mTimestamp <= mSunriseTimestamp;
+        return !isDay();
     }
 
     @Override
@@ -117,18 +117,6 @@ public class WeatherData implements Parcelable {
     }
 
     @Override
-    public String toString() {
-        return "(city=" + mCity +
-                ", temperature=" + mKelvinTemperature + "K" +
-                ", type=" + mWeatherType +
-                ", timestamp=" + mTimestamp +
-                ", sunrise=" + mSunriseTimestamp +
-                ", sunset=" + mSunsetTimestamp +
-                ", day=" + isDay() +
-                ")";
-    }
-
-    @Override
     public int describeContents() {
         return 0;
     }
@@ -141,5 +129,17 @@ public class WeatherData implements Parcelable {
         dest.writeLong(mTimestamp);
         dest.writeLong(mSunriseTimestamp);
         dest.writeLong(mSunsetTimestamp);
+    }
+
+    @Override
+    public String toString() {
+        return "(city=" + mCity +
+                ", temperature=" + mKelvinTemperature + "K" +
+                ", type=" + mWeatherType +
+                ", timestamp=" + mTimestamp +
+                ", sunrise=" + mSunriseTimestamp +
+                ", sunset=" + mSunsetTimestamp +
+                ", day=" + isDay() +
+                ")";
     }
 }

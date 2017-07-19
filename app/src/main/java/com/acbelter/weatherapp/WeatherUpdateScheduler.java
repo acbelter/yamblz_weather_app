@@ -11,44 +11,38 @@ import android.os.SystemClock;
 import timber.log.Timber;
 
 public class WeatherUpdateScheduler {
-    private static final boolean DEBUG_ALARM_MANAGER = false;
-
-    public static void restartWeatherUpdates(Context context, int newUpdateInterval) {
+    public static void startWeatherUpdates(Context context, int newUpdateInterval, boolean restart) {
         if (newUpdateInterval <= 0) {
             throw new IllegalArgumentException("Update interval must be > 0");
         }
 
-        Timber.d("Restart weather updates");
+        Timber.d("Start weather updates: " + restart);
         enableWeatherUpdateReceiver(context);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, WeatherUpdateReceiver.class);
-        PendingIntent alarmIntent =
-                PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent updateIntent =
+                PendingIntent.getBroadcast(context, 0, intent,
+                        restart ? PendingIntent.FLAG_UPDATE_CURRENT : 0);
         // Cancel previous alarm
-        alarmManager.cancel(alarmIntent);
+        alarmManager.cancel(updateIntent);
 
-        int newUpdateIntervalMs;
-        if (DEBUG_ALARM_MANAGER) {
-            newUpdateIntervalMs = 60000;
-        } else {
-            newUpdateIntervalMs = newUpdateInterval * 60 * 60 * 1000;
-        }
+        int newUpdateIntervalMs = newUpdateInterval * 60 * 60 * 1000;
+//        newUpdateIntervalMs = 60000; // for debug
         alarmManager.setRepeating(
                 AlarmManager.ELAPSED_REALTIME,
-                SystemClock.elapsedRealtime() + 1000,
+                SystemClock.elapsedRealtime() + newUpdateIntervalMs,
                 newUpdateIntervalMs,
-                alarmIntent);
+                updateIntent);
     }
 
     public static void stopWeatherUpdates(Context context) {
         Timber.d("Stop weather updates");
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, WeatherUpdateReceiver.class);
-        PendingIntent alarmIntent =
-                PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent updateIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         // Cancel previous alarm
-        alarmManager.cancel(alarmIntent);
+        alarmManager.cancel(updateIntent);
 
         disableWeatherUpdateReceiver(context);
     }

@@ -36,12 +36,7 @@ public class RetrofitNetworkService implements NetworkService {
 
     private static HttpLoggingInterceptor provideHttpLoggingInterceptor() {
         HttpLoggingInterceptor httpLoggingInterceptor =
-                new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-                    @Override
-                    public void log(String message) {
-                        Timber.d(message);
-                    }
-                });
+                new HttpLoggingInterceptor(message -> Timber.d(message));
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
         return httpLoggingInterceptor;
     }

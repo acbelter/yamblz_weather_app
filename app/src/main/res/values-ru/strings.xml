@@ -14,8 +14,7 @@
     <string name="settings">Настройки</string>
     <string name="weather_settings">Настройки погоды</string>
     <string name="weather_update_setting">Настройка обновления погоды</string>
-    <string name="update_interval">Интервал обновления</string>
-    <string name="hour">ч</string>
+    <string name="update_interval">Интервал обновления в часах</string>
 
     <!--About screen-->
     <string name="about">О программе</string>

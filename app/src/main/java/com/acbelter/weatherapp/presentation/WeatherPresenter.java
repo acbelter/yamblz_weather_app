@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.acbelter.weatherapp.PreferencesStorage;
 import com.acbelter.weatherapp.WeatherUpdateReceiver;
 import com.acbelter.weatherapp.WeatherUpdateScheduler;
+import com.acbelter.weatherapp.data.repository.PreferencesRepo;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.WeatherData;
 import com.acbelter.weatherapp.domain.model.WeatherParams;
@@ -25,7 +25,7 @@ import timber.log.Timber;
 
 @InjectViewState
 public class WeatherPresenter extends MvpPresenter<WeatherView> {
-    private PreferencesStorage mPrefsStorage;
+    private PreferencesRepo mPrefsRepo;
     private WeatherInteractor mWeatherInteractor;
     private Disposable mCurrentWeatherDisposable;
 
@@ -42,13 +42,13 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
 
     @Inject
     public WeatherPresenter(Context context,
-                            PreferencesStorage prefsStorage,
+                            PreferencesRepo prefsRepo,
                             WeatherInteractor weatherInteractor) {
-        mPrefsStorage = prefsStorage;
+        mPrefsRepo = prefsRepo;
         mWeatherInteractor = weatherInteractor;
-        int updateInterval = prefsStorage.getUpdateInterval();
+        int updateInterval = prefsRepo.getUpdateInterval();
         if (updateInterval > 0) {
-            WeatherUpdateScheduler.restartWeatherUpdates(context, updateInterval);
+            WeatherUpdateScheduler.startWeatherUpdates(context, updateInterval, false);
         }
     }
 
@@ -61,7 +61,8 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     }
 
     public void getCurrentWeather(boolean forceRefresh) {
-        mWeatherData = mPrefsStorage.getLastWeatherData();
+        mWeatherData = mPrefsRepo.getLastWeatherData();
+        Timber.d("Update current weather: " + mWeatherData);
 
         if (mWeatherData != null && !forceRefresh) {
             getViewState().showWeather(mWeatherData);
@@ -82,8 +83,8 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
                 .subscribe(
                         weatherData -> {
                             Timber.d("getCurrentWeather->onNext()");
-                            mPrefsStorage.setLastWeatherData(weatherData);
-                            mPrefsStorage.setLastUpdateTimestamp(System.currentTimeMillis());
+                            mPrefsRepo.setLastWeatherData(weatherData);
+                            mPrefsRepo.setLastUpdateTimestamp(System.currentTimeMillis());
                             getViewState().showWeather(weatherData);
                         },
                         error -> {

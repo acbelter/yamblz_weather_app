@@ -1,8 +1,8 @@
-package com.acbelter.weatherapp;
+package com.acbelter.weatherapp.data.repository;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.preference.PreferenceManager;
+import android.preference.PreferenceManager;
 
 import com.acbelter.weatherapp.domain.model.WeatherData;
 import com.acbelter.weatherapp.domain.model.WeatherType;
@@ -10,15 +10,14 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-// TODO Convert repository and move to data layer
-public class PreferencesStorage {
+public class PreferencesRepo {
     public static final String KEY_UPDATE_INTERVAL = "pref_update_interval";
     public static final String KEY_LAST_UPDATE_TIMESTAMP = "pref_last_update_timestamp";
     public static final String KEY_LAST_WEATHER_DATA = "pref_last_weather_data";
 
     private SharedPreferences mPrefs;
 
-    public PreferencesStorage(Context context) {
+    public PreferencesRepo(Context context) {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 

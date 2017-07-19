@@ -20,13 +20,21 @@ public class WeatherRes {
     public WeatherRes(WeatherData data) {
         switch (data.getWeatherType()) {
             case SUN:
-                mWeatherImageResId = R.drawable.img_sun;
+                if (data.isDay()) {
+                    mWeatherImageResId = R.drawable.img_sun;
+                } else {
+                    mWeatherImageResId = R.drawable.img_night;
+                }
                 mBackgroundColorResId = R.color.colorBgWeatherSun;
                 mTextColorResId = R.color.colorTextWeatherLight;
                 mWeatherStatus = Constants.weatherStatus.SUN;
                 break;
             case CLOUDS:
-                mWeatherImageResId = R.drawable.img_clouds;
+                if (data.isDay()) {
+                    mWeatherImageResId = R.drawable.img_clouds;
+                } else {
+                    mWeatherImageResId = R.drawable.img_clouds_night;
+                }
                 mBackgroundColorResId = R.color.colorBgWeatherClouds;
                 mTextColorResId = R.color.colorTextWeatherDark;
                 mWeatherStatus = Constants.weatherStatus.SUN;

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.acbelter.weatherapp.data.repository.PreferencesRepo;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.WeatherParams;
 
@@ -22,7 +23,7 @@ public class WeatherUpdateReceiver extends BroadcastReceiver {
             "com.acbelter.weatherapp.KEY_WEATHER_DATA";
 
     @Inject
-    PreferencesStorage mPrefsStorage;
+    PreferencesRepo mPrefsRepo;
     @Inject
     WeatherInteractor mWeatherInteractor;
     private Disposable mUpdateWeatherDisposable;
@@ -37,9 +38,10 @@ public class WeatherUpdateReceiver extends BroadcastReceiver {
         }
 
         String action = intent.getAction();
+        Timber.d("Received broadcast with action: " + action);
         if ("android.intent.action.BOOT_COMPLETED".equals(action) ||
                 "android.intent.action.ACTION_MY_PACKAGE_REPLACED".equals(action)) {
-            WeatherUpdateScheduler.restartWeatherUpdates(context, mPrefsStorage.getUpdateInterval());
+            WeatherUpdateScheduler.startWeatherUpdates(context, mPrefsRepo.getUpdateInterval(), false);
         } else {
             updateWeather(context);
         }
@@ -57,8 +59,8 @@ public class WeatherUpdateReceiver extends BroadcastReceiver {
                 .subscribe(
                         weatherData -> {
                             Timber.d("updateCurrentWeather->onNext()");
-                            mPrefsStorage.setLastWeatherData(weatherData);
-                            mPrefsStorage.setLastUpdateTimestamp(System.currentTimeMillis());
+                            mPrefsRepo.setLastWeatherData(weatherData);
+                            mPrefsRepo.setLastUpdateTimestamp(System.currentTimeMillis());
 
                             Intent intent = new Intent(ACTION_WEATHER_UPDATE);
                             intent.putExtra(KEY_WEATHER_DATA, weatherData);

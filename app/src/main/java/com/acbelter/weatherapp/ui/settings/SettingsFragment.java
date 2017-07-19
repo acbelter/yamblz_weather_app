@@ -5,8 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.acbelter.weatherapp.App;
-import com.acbelter.weatherapp.PreferencesStorage;
 import com.acbelter.weatherapp.R;
+import com.acbelter.weatherapp.data.repository.PreferencesRepo;
 import com.takisoft.fix.support.v7.preference.PreferenceFragmentCompat;
 
 import javax.inject.Inject;
@@ -16,7 +16,7 @@ import timber.log.Timber;
 public class SettingsFragment extends PreferenceFragmentCompat implements
         SharedPreferences.OnSharedPreferenceChangeListener {
     @Inject
-    PreferencesStorage mPrefsStorage;
+    PreferencesRepo mPrefsRepo;
     private SettingsListener mListener;
 
     public interface SettingsListener {
@@ -27,14 +27,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     public void onCreatePreferencesFix(Bundle savedInstanceState, String rootKey) {
         App.getComponentManager().getAppComponent().inject(this);
         addPreferencesFromResource(R.xml.preferences);
-        Timber.d("Stored weather update interval: " + mPrefsStorage.getUpdateInterval());
-        mPrefsStorage.addListener(this);
+        Timber.d("Stored weather update interval: " + mPrefsRepo.getUpdateInterval());
+        mPrefsRepo.addListener(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPrefsStorage.removeListener(this);
+        mPrefsRepo.removeListener(this);
         App.getComponentManager().removeWeatherComponent();
     }
 
@@ -50,8 +50,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (PreferencesStorage.KEY_UPDATE_INTERVAL.equals(key)) {
-            mListener.onUpdateIntervalChanged(mPrefsStorage.getUpdateInterval());
+        if (PreferencesRepo.KEY_UPDATE_INTERVAL.equals(key)) {
+            mListener.onUpdateIntervalChanged(mPrefsRepo.getUpdateInterval());
         }
     }
 

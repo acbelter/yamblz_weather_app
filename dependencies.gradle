@@ -7,7 +7,7 @@ ext {
     versionCode = 1
     versionName = "1.0"
 
-    supportLibraryVersion = "25.3.1"
+    supportLibraryVersion = "25.4.0"
     retrofitVersion = "2.3.0"
     daggerVersion = "2.11"
     moxyVersion = "1.5.3"
@@ -21,8 +21,7 @@ ext {
 
     ui = [
             weatherView      : "com.github.MatteoBattilana:WeatherView:1.2.0",
-            fixPreference    : "com.takisoft.fix:preference-v7:23.4.0.5",
-            seekBarPreference: "com.pavelsikun:material-seekbar-preference:2.3.0",
+            fixPreference    : "com.takisoft.fix:preference-v7:25.4.0.3",
     ]
 
     rx = [

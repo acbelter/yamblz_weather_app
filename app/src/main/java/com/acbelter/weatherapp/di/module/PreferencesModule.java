@@ -2,7 +2,7 @@ package com.acbelter.weatherapp.di.module;
 
 import android.content.Context;
 
-import com.acbelter.weatherapp.PreferencesStorage;
+import com.acbelter.weatherapp.data.repository.PreferencesRepo;
 
 import javax.inject.Singleton;
 
@@ -13,7 +13,7 @@ import dagger.Provides;
 public class PreferencesModule {
     @Provides
     @Singleton
-    PreferencesStorage providePreferences(Context context) {
-        return new PreferencesStorage(context);
+    PreferencesRepo providePreferences(Context context) {
+        return new PreferencesRepo(context);
     }
 }
