@@ -7,5 +7,5 @@ import com.google.gson.annotations.SerializedName;
 public class Rain {
     @SerializedName("3h")
     @Expose
-    public int _3h;
+    public int volume3h;
 }

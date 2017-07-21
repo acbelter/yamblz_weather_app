@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.acbelter.weatherapp.WeatherUpdateReceiver;
 import com.acbelter.weatherapp.WeatherUpdateScheduler;
+import com.acbelter.weatherapp.WeatherUpdateService;
 import com.acbelter.weatherapp.data.repository.PreferencesRepo;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.WeatherData;
@@ -33,8 +33,9 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
         @Override
         public void onReceive(Context context, Intent intent) {
             WeatherData weatherData =
-                    intent.getParcelableExtra(WeatherUpdateReceiver.KEY_WEATHER_DATA);
-            getViewState().showWeather(weatherData);
+                    intent.getParcelableExtra(WeatherUpdateService.KEY_WEATHER_DATA);
+            long updateTimestamp = intent.getLongExtra(WeatherUpdateService.KEY_WEATHER_UPDATE_TIMESTAMP, 0L);
+            getViewState().showWeather(weatherData, updateTimestamp);
         }
     };
 
@@ -62,10 +63,10 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
 
     public void getCurrentWeather(boolean forceRefresh) {
         mWeatherData = mPrefsRepo.getLastWeatherData();
-        Timber.d("Update current weather: " + mWeatherData);
+        Timber.d("Update current weather: %s", mWeatherData);
 
         if (mWeatherData != null && !forceRefresh) {
-            getViewState().showWeather(mWeatherData);
+            getViewState().showWeather(mWeatherData, mPrefsRepo.getLastUpdateTimestamp());
             return;
         }
 
@@ -74,8 +75,13 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
             return;
         }
 
-        // FIXME City for testing
-        WeatherParams params = new WeatherParams("Moscow");
+        String city = mPrefsRepo.getCurrentCity();
+        if (city == null) {
+            getViewState().showError();
+            return;
+        }
+
+        WeatherParams params = new WeatherParams(city);
 
         mCurrentWeatherDisposable = mWeatherInteractor.getCurrentWeather(params)
                 .subscribeOn(Schedulers.io())
@@ -84,27 +90,24 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
                         weatherData -> {
                             Timber.d("getCurrentWeather->onNext()");
                             mPrefsRepo.setLastWeatherData(weatherData);
-                            mPrefsRepo.setLastUpdateTimestamp(System.currentTimeMillis());
-                            getViewState().showWeather(weatherData);
+                            long updateTimestamp = System.currentTimeMillis();
+                            mPrefsRepo.setLastUpdateTimestamp(updateTimestamp);
+                            getViewState().showWeather(weatherData, updateTimestamp);
                         },
                         error -> {
-                            Timber.d("getCurrentWeather->onError(): " + error.toString());
+                            Timber.d("getCurrentWeather->onError(): %s", error.toString());
+                            mCurrentWeatherDisposable = null;
                             getViewState().showError();
-                            clearGetWeatherDisposable();
                         },
                         () -> {
                             Timber.d("getCurrentWeather->onComplete()");
-                            clearGetWeatherDisposable();
+                            mCurrentWeatherDisposable = null;
                         },
                         disposable -> {
                             Timber.d("getCurrentWeather->onSubscribe()");
                             getViewState().showWeatherLoading();
                         }
                 );
-    }
-
-    private void clearGetWeatherDisposable() {
-        mCurrentWeatherDisposable = null;
     }
 
     public void stopGetCurrentWeatherProcess() {
@@ -115,7 +118,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     }
 
     public void resume(Context context) {
-        IntentFilter filter = new IntentFilter(WeatherUpdateReceiver.ACTION_WEATHER_UPDATE);
+        IntentFilter filter = new IntentFilter(WeatherUpdateService.ACTION_WEATHER_UPDATE);
         LocalBroadcastManager.getInstance(context).registerReceiver(mWeatherUpdateReceiver, filter);
     }
 

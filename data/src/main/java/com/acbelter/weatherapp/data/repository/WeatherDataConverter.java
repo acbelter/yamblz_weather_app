@@ -23,7 +23,7 @@ public class WeatherDataConverter {
             throw new IllegalArgumentException("Converted object must be not null");
         }
 
-        if (netData.cod != 200) {
+        if (netData.code != 200) {
             return null;
         }
 

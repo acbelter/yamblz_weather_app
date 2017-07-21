@@ -45,5 +45,5 @@ public class NetworkWeatherData {
     public String name;
     @SerializedName("cod")
     @Expose
-    public int cod;
+    public int code;
 }

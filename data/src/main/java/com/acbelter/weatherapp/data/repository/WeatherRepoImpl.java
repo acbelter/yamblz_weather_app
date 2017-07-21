@@ -24,7 +24,7 @@ public class WeatherRepoImpl implements WeatherRepo {
         return mNetworkService.getCurrentWeather(params)
                 .map(WeatherDataConverter::fromNetworkData)
                 .doOnNext(data -> {
-                    Timber.d("Current weather data from network: " + data);
+                    Timber.d("Current weather data from network: %s", data);
                 });
     }
 }

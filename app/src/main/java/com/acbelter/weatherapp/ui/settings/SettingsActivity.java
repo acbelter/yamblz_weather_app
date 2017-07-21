@@ -47,7 +47,7 @@ public class SettingsActivity extends MvpAppCompatActivity implements
 
     @Override
     public void onUpdateIntervalChanged(int newUpdateInterval) {
-        Timber.d("Weather update interval is changed: " + newUpdateInterval);
+        Timber.d("Weather update interval is changed: %s", newUpdateInterval);
         mPresenter.restartWeatherUpdating(this, newUpdateInterval);
     }
 

@@ -11,6 +11,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class PreferencesRepo {
+    public static final String KEY_CURRENT_CITY = "pref_current_city";
     public static final String KEY_UPDATE_INTERVAL = "pref_update_interval";
     public static final String KEY_LAST_UPDATE_TIMESTAMP = "pref_last_update_timestamp";
     public static final String KEY_LAST_WEATHER_DATA = "pref_last_weather_data";
@@ -33,8 +34,17 @@ public class PreferencesRepo {
         }
     }
 
-    public void setUpdateInterval(int value) {
-        mPrefs.edit().putInt(KEY_UPDATE_INTERVAL, value).apply();
+    public void setCurrentCity(String city) {
+        mPrefs.edit().putString(KEY_CURRENT_CITY, city).apply();
+    }
+
+    public String getCurrentCity() {
+        // FIXME Don't use Moscow as default city
+        return mPrefs.getString(KEY_CURRENT_CITY, "Moscow");
+    }
+
+    public void setUpdateInterval(int interval) {
+        mPrefs.edit().putInt(KEY_UPDATE_INTERVAL, interval).apply();
     }
 
     public int getUpdateInterval() {

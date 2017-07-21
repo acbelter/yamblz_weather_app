@@ -10,5 +10,8 @@ public class Wind {
     public float speed;
     @SerializedName("deg")
     @Expose
-    public int deg;
+    public int degrees;
+    @SerializedName("dust")
+    @Expose
+    public int dust;
 }

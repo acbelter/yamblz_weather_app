@@ -25,5 +25,5 @@ public class Main {
     public float seaLevel;
     @SerializedName("grnd_level")
     @Expose
-    public float grndLevel;
+    public float groundLevel;
 }

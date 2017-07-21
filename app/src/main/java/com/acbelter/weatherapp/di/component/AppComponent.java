@@ -1,5 +1,6 @@
 package com.acbelter.weatherapp.di.component;
 
+import com.acbelter.weatherapp.WeatherUpdateReceiver;
 import com.acbelter.weatherapp.di.module.AppModule;
 import com.acbelter.weatherapp.di.module.DatabaseModule;
 import com.acbelter.weatherapp.di.module.NetworkModule;
@@ -22,4 +23,5 @@ public interface AppComponent {
     WeatherComponent addWeatherComponent(WeatherModule weatherModule);
     void inject(SettingsFragment settingsFragment);
     void inject(SettingsActivity settingsActivity);
+    void inject(WeatherUpdateReceiver updateReceiver);
 }

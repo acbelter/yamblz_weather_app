@@ -27,7 +27,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     public void onCreatePreferencesFix(Bundle savedInstanceState, String rootKey) {
         App.getComponentManager().getAppComponent().inject(this);
         addPreferencesFromResource(R.xml.preferences);
-        Timber.d("Stored weather update interval: " + mPrefsRepo.getUpdateInterval());
+        Timber.d("Stored weather update interval: %s", mPrefsRepo.getUpdateInterval());
         mPrefsRepo.addListener(this);
     }
 
@@ -35,7 +35,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     public void onDestroyView() {
         super.onDestroyView();
         mPrefsRepo.removeListener(this);
-        App.getComponentManager().removeWeatherComponent();
     }
 
     @Override

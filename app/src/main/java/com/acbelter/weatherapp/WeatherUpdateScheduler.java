@@ -8,15 +8,20 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.SystemClock;
 
+import java.util.concurrent.TimeUnit;
+
 import timber.log.Timber;
 
 public class WeatherUpdateScheduler {
+    private static final boolean DEBUG_ALARM_MANAGER = true;
+    private static final long DEBUG_DELAY = TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES);
+
     public static void startWeatherUpdates(Context context, int newUpdateInterval, boolean restart) {
         if (newUpdateInterval <= 0) {
             throw new IllegalArgumentException("Update interval must be > 0");
         }
 
-        Timber.d("Start weather updates: " + restart);
+        Timber.d("Start weather updates: %s", restart);
         enableWeatherUpdateReceiver(context);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -27,8 +32,12 @@ public class WeatherUpdateScheduler {
         // Cancel previous alarm
         alarmManager.cancel(updateIntent);
 
-        int newUpdateIntervalMs = newUpdateInterval * 60 * 60 * 1000;
-//        newUpdateIntervalMs = 60000; // for debug
+        long newUpdateIntervalMs;
+        if (DEBUG_ALARM_MANAGER) {
+            newUpdateIntervalMs = DEBUG_DELAY;
+        } else {
+            newUpdateIntervalMs = TimeUnit.HOURS.convert(newUpdateInterval, TimeUnit.MILLISECONDS);
+        }
         alarmManager.setRepeating(
                 AlarmManager.ELAPSED_REALTIME,
                 SystemClock.elapsedRealtime() + newUpdateIntervalMs,
