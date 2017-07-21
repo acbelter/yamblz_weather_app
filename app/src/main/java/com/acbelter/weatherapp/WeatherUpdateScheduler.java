@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 import timber.log.Timber;
 
 public class WeatherUpdateScheduler {
-    private static final boolean DEBUG_ALARM_MANAGER = true;
+    private static final boolean DEBUG_ALARM_MANAGER = false;
     private static final long DEBUG_DELAY = TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES);
 
     public static void startWeatherUpdates(Context context, int newUpdateInterval, boolean restart) {

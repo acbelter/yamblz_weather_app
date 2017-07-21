@@ -1,13 +1,8 @@
 package com.acbelter.weatherapp.presentation;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.support.v4.content.LocalBroadcastManager;
 
 import com.acbelter.weatherapp.WeatherUpdateScheduler;
-import com.acbelter.weatherapp.WeatherUpdateService;
 import com.acbelter.weatherapp.data.repository.PreferencesRepo;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.WeatherData;
@@ -28,16 +23,6 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     private PreferencesRepo mPrefsRepo;
     private WeatherInteractor mWeatherInteractor;
     private Disposable mCurrentWeatherDisposable;
-
-    private BroadcastReceiver mWeatherUpdateReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            WeatherData weatherData =
-                    intent.getParcelableExtra(WeatherUpdateService.KEY_WEATHER_DATA);
-            long updateTimestamp = intent.getLongExtra(WeatherUpdateService.KEY_WEATHER_UPDATE_TIMESTAMP, 0L);
-            getViewState().showWeather(weatherData, updateTimestamp);
-        }
-    };
 
     private WeatherData mWeatherData;
 
@@ -115,14 +100,5 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
             mCurrentWeatherDisposable.dispose();
         }
         mCurrentWeatherDisposable = null;
-    }
-
-    public void resume(Context context) {
-        IntentFilter filter = new IntentFilter(WeatherUpdateService.ACTION_WEATHER_UPDATE);
-        LocalBroadcastManager.getInstance(context).registerReceiver(mWeatherUpdateReceiver, filter);
-    }
-
-    public void pause(Context context) {
-        LocalBroadcastManager.getInstance(context).unregisterReceiver(mWeatherUpdateReceiver);
     }
 }

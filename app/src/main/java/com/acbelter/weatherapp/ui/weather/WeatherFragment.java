@@ -3,12 +3,16 @@ package com.acbelter.weatherapp.ui.weather;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +24,7 @@ import android.widget.TextView;
 
 import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
+import com.acbelter.weatherapp.WeatherUpdateService;
 import com.acbelter.weatherapp.domain.model.WeatherData;
 import com.acbelter.weatherapp.presentation.WeatherPresenter;
 import com.acbelter.weatherapp.ui.util.AnimationWeakListener;
@@ -42,7 +47,7 @@ import xyz.matteobattilana.library.Common.Constants;
 
 public class WeatherFragment extends MvpAppCompatFragment implements WeatherView {
     private SimpleDateFormat mDateFormat =
-            new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss", Locale.getDefault());
+            new SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.getDefault());
 
     @Inject
     @InjectPresenter
@@ -65,6 +70,16 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     ImageView mWeatherImage;
     private Unbinder mUnbinder;
     private long mAnimBgDuration;
+
+    private BroadcastReceiver mWeatherUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            WeatherData weatherData =
+                    intent.getParcelableExtra(WeatherUpdateService.KEY_WEATHER_DATA);
+            long updateTimestamp = intent.getLongExtra(WeatherUpdateService.KEY_WEATHER_UPDATE_TIMESTAMP, 0L);
+            showWeather(weatherData, updateTimestamp);
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -251,16 +266,19 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     @Override
     public void onResume() {
         super.onResume();
+        IntentFilter filter = new IntentFilter(WeatherUpdateService.ACTION_WEATHER_UPDATE);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mWeatherUpdateReceiver, filter);
+
         mWeatherView.startAnimation();
-        mPresenter.resume(getContext());
         mPresenter.getCurrentWeather(false);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mWeatherUpdateReceiver);
+
         mWeatherView.cancelAnimation();
-        mPresenter.pause(getContext());
     }
 
     @Override
