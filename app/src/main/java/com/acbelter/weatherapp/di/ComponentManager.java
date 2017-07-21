@@ -8,6 +8,7 @@ import com.acbelter.weatherapp.di.component.WeatherComponent;
 import com.acbelter.weatherapp.di.module.AppModule;
 import com.acbelter.weatherapp.di.module.DatabaseModule;
 import com.acbelter.weatherapp.di.module.NetworkModule;
+import com.acbelter.weatherapp.di.module.PreferencesModule;
 import com.acbelter.weatherapp.di.module.WeatherModule;
 
 public class ComponentManager {
@@ -38,6 +39,7 @@ public class ComponentManager {
                 .appModule(new AppModule(context))
                 .databaseModule(new DatabaseModule())
                 .networkModule(new NetworkModule())
+                .preferencesModule(new PreferencesModule())
                 .build();
     }
 }

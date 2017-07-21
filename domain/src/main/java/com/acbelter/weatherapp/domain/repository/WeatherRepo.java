@@ -1,11 +1,10 @@
 package com.acbelter.weatherapp.domain.repository;
 
 import com.acbelter.weatherapp.domain.model.WeatherData;
-
-import java.util.List;
+import com.acbelter.weatherapp.domain.model.WeatherParams;
 
 import io.reactivex.Observable;
 
 public interface WeatherRepo {
-    Observable<List<WeatherData>> getWeather();
+    Observable<WeatherData> getCurrentWeather(WeatherParams params);
 }

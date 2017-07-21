@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Common resources-->
     <string name="app_name">YamblzWeatherApp</string>
     <string name="nav_drawer_open">Открыть боковую панель</string>
     <string name="nav_drawer_close">Закрыть боковую панель</string>
+    <string name="ok">OK</string>
 
+    <!--Weather screen-->
     <string name="weather">Погода</string>
+    <string name="text_weather_error">Не удалось получить погоду</string>
+
+    <!--Settings screen-->
     <string name="settings">Настройки</string>
+    <string name="weather_settings">Настройки погоды</string>
+    <string name="weather_update_setting">Настройка обновления погоды</string>
+    <string name="update_interval">Интервал обновления в часах</string>
+
+    <!--About screen-->
     <string name="about">О программе</string>
+    <string name="version">Версия %1$s</string>
+    <string name="author_text">Автор: acbelter</string>
+    <string name="weather_images_license_text">Иконки погоды от Linector с сервиса Flaticon</string>
 </resources>

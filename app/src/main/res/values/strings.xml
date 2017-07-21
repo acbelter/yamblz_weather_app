@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="celsius" translatable="false">ºC</string>
+
+    <!--Common resources-->
     <string name="app_name">YamblzWeatherApp</string>
     <string name="nav_drawer_open">Open side panel</string>
     <string name="nav_drawer_close">Close side panel</string>
+    <string name="ok">OK</string>
 
+    <!--Weather screen-->
     <string name="weather">Weather</string>
+    <string name="text_weather_error">Failed to get weather</string>
+
+    <!--Settings screen-->
     <string name="settings">Settings</string>
+    <string name="weather_settings">Weather settings</string>
+    <string name="weather_update_setting">Setting weather updates</string>
+    <string name="update_interval">Update interval in hours</string>
+
+    <!--About screen-->
     <string name="about">About</string>
+    <string name="version">Version %1$s</string>
+    <string name="author_text">Author: acbelter</string>
+    <string name="weather_images_license_text">Weather images are designed by Linector from Flaticon</string>
 </resources>
