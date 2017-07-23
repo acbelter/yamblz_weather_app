@@ -21,4 +21,8 @@
     <string name="version">Версия %1$s</string>
     <string name="author_text">Автор: acbelter</string>
     <string name="weather_images_license_text">Иконки погоды от Linector с сервиса Flaticon</string>
+
+    <!--About screen-->
+    <string name="search_title">Поиск</string>
+    <string name="city_search">Поиск города</string>
 </resources>

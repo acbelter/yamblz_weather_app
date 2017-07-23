@@ -9,15 +9,15 @@ import com.google.gson.JsonParser;
 import io.reactivex.Observable;
 
 public class NetworkServiceImpl implements NetworkService {
-    private Api mApi;
+    private WeatherApi mWeatherApi;
 
-    public NetworkServiceImpl(Api api) {
-        mApi = api;
+    public NetworkServiceImpl(WeatherApi weatherApi) {
+        mWeatherApi = weatherApi;
     }
 
     @Override
     public Observable<NetworkWeatherData> getCurrentWeather(WeatherParams params) {
-        return mApi.getCurrentWeatherData(params.getCity(), params.getLangCode()).map(data -> {
+        return mWeatherApi.getCurrentWeatherData(params.getCity(), params.getLangCode()).map(data -> {
             JsonParser parser = new JsonParser();
             Gson gson = new Gson();
             JsonObject rootObject = parser.parse(data).getAsJsonObject();

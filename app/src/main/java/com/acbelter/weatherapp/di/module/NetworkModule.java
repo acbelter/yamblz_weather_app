@@ -1,8 +1,10 @@
 package com.acbelter.weatherapp.di.module;
 
-import com.acbelter.weatherapp.data.network.Api;
+import com.acbelter.weatherapp.data.network.LocationApi;
 import com.acbelter.weatherapp.data.network.NetworkService;
 import com.acbelter.weatherapp.data.network.NetworkServiceImpl;
+import com.acbelter.weatherapp.data.network.PlacesApi;
+import com.acbelter.weatherapp.data.network.WeatherApi;
 
 import javax.inject.Singleton;
 
@@ -53,16 +55,32 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    Api provideApi(Retrofit.Builder builder) {
+    WeatherApi provideWeatherApi(Retrofit.Builder builder) {
         return builder
-                .baseUrl(Api.BASE_URL)
+                .baseUrl(WeatherApi.BASE_WEATHER_URL)
                 .build()
-                .create(Api.class);
+                .create(WeatherApi.class);
     }
 
     @Provides
     @Singleton
-    NetworkService provideNetworkService(Api api) {
-        return new NetworkServiceImpl(api);
+    PlacesApi providePlacesApi(Retrofit.Builder builder) {
+        return builder.baseUrl(PlacesApi.BASE_PLACES_URL)
+                .build()
+                .create(PlacesApi.class);
+    }
+
+    @Provides
+    @Singleton
+    LocationApi provideLocationApi(Retrofit.Builder builder) {
+        return builder.baseUrl(LocationApi.BASE_LOCATION_URL)
+                .build()
+                .create(LocationApi.class);
+    }
+
+    @Provides
+    @Singleton
+    NetworkService provideNetworkService(WeatherApi weatherApi) {
+        return new NetworkServiceImpl(weatherApi);
     }
 }
