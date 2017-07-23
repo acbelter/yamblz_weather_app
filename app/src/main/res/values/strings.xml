@@ -27,7 +27,5 @@
     <!--About screen-->
     <string name="search_title">Search</string>
     <string name="city_search">City search</string>
-    <string name="title_activity_search_fragment2">SearchFragment2</string>
-    <string name="title_activity_search">SearchActivity</string>
 
 </resources>
