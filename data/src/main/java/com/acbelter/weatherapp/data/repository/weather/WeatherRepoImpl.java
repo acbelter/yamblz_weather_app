@@ -1,9 +1,9 @@
-package com.acbelter.weatherapp.data.repository;
+package com.acbelter.weatherapp.data.repository.weather;
 
 import com.acbelter.weatherapp.data.database.DatabaseService;
 import com.acbelter.weatherapp.data.network.NetworkService;
-import com.acbelter.weatherapp.domain.model.WeatherData;
-import com.acbelter.weatherapp.domain.model.WeatherParams;
+import com.acbelter.weatherapp.domain.model.weather.WeatherData;
+import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
 import io.reactivex.Observable;

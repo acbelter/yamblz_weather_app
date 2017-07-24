@@ -59,6 +59,8 @@ dependencies {
 
     compile rx.rxAndroid
     compile rx.rxJava
+    compile rx.rxBinding
+    compile rx.rxBindingDesign
 
     compile lib.dagger2
     annotationProcessor compiler.dagger2

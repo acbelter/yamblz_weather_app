@@ -1,4 +1,4 @@
-package com.acbelter.weatherapp.domain.model;
+package com.acbelter.weatherapp.domain.model.weather;
 
 import android.os.Parcel;
 import android.os.Parcelable;

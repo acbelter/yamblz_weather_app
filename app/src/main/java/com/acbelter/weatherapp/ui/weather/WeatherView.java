@@ -1,6 +1,6 @@
 package com.acbelter.weatherapp.ui.weather;
 
-import com.acbelter.weatherapp.domain.model.WeatherData;
+import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.OneExecutionStateStrategy;

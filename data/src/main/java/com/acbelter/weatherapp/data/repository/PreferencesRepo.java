@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.acbelter.weatherapp.domain.model.WeatherData;
-import com.acbelter.weatherapp.domain.model.WeatherType;
+import com.acbelter.weatherapp.domain.model.weather.WeatherData;
+import com.acbelter.weatherapp.domain.model.weather.WeatherType;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

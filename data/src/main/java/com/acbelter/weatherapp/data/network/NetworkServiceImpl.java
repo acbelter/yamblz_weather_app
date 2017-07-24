@@ -1,18 +1,29 @@
 package com.acbelter.weatherapp.data.network;
 
+import com.acbelter.weatherapp.data.locationmodel.Location;
 import com.acbelter.weatherapp.data.netmodel.NetworkWeatherData;
-import com.acbelter.weatherapp.domain.model.WeatherParams;
+import com.acbelter.weatherapp.domain.model.city.CityParams;
+import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class NetworkServiceImpl implements NetworkService {
     private WeatherApi mWeatherApi;
+    private PlacesApi mPlacesApi;
+    private LocationApi mLocationApi;
 
-    public NetworkServiceImpl(WeatherApi weatherApi) {
+    private static final long typingDelay = 500;
+
+    public NetworkServiceImpl(WeatherApi weatherApi, PlacesApi placesApi, LocationApi locationApi) {
         mWeatherApi = weatherApi;
+        mPlacesApi = placesApi;
+        mLocationApi = locationApi;
     }
 
     @Override
@@ -29,5 +40,17 @@ public class NetworkServiceImpl implements NetworkService {
                 return gson.fromJson(rootObject.getAsJsonArray("list").get(0), NetworkWeatherData.class);
             }
         });
+    }
+
+    @Override
+    public Observable<Location> getLocation(CityParams cityParams) {
+        return mPlacesApi.getPlaces(cityParams.getPartOfCityName().trim(), cityParams.getLangCode())
+                .debounce(typingDelay, TimeUnit.MILLISECONDS)
+                .flatMap(places -> {
+                    Timber.v("STATUS = " + places.getStatus());
+                    return Observable.fromIterable(places.getPredictions());
+
+                })
+                .concatMap(prediction -> mLocationApi.getLocation(prediction.getPlaceId()));
     }
 }

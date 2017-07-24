@@ -1,7 +1,7 @@
 package com.acbelter.weatherapp.domain.repository;
 
-import com.acbelter.weatherapp.domain.model.WeatherData;
-import com.acbelter.weatherapp.domain.model.WeatherParams;
+import com.acbelter.weatherapp.domain.model.weather.WeatherData;
+import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 
 import io.reactivex.Observable;
 

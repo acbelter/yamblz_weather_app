@@ -25,7 +25,7 @@ import android.widget.TextView;
 import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.WeatherUpdateService;
-import com.acbelter.weatherapp.domain.model.WeatherData;
+import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.presentation.WeatherPresenter;
 import com.acbelter.weatherapp.ui.util.AnimationWeakListener;
 import com.acbelter.weatherapp.ui.util.ValueAnimatorWeakUpdateListener;

@@ -1,4 +1,4 @@
-package com.acbelter.weatherapp.domain.model;
+package com.acbelter.weatherapp.domain.model.weather;
 
 public class WeatherParams {
     private String mCity;
