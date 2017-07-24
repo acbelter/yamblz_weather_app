@@ -14,7 +14,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.MyViewHolder> {
 
@@ -37,10 +36,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.MyViewHolder> 
     public void onBindViewHolder(MyViewHolder viewHolder, int position) {
         CityData location = locations.get(position);
         viewHolder.tvCity.setText(location.getCityName());
-
-        viewHolder.tvCity.setOnClickListener(view -> Timber.v("city = " + location.getLatitude()));
     }
-
 
     @Override
     public int getItemCount() {

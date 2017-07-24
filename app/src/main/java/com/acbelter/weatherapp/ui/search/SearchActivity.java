@@ -21,7 +21,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class SearchActivity extends MvpAppCompatActivity implements SearchView {
 
@@ -38,10 +37,10 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        App.getComponentManager().addWeatherComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        App.getComponentManager().addWeatherComponent().inject(this);
         ButterKnife.bind(this);
 
         this.adapter = new CityAdapter();
@@ -49,10 +48,8 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         RxTextView.textChanges(etSearch)
-                .subscribe(charSequence -> {
-                    Timber.v("charSequence = " + charSequence);
-                    mPresenter.showCityList(charSequence.toString());
-                });
+                .subscribe(charSequence ->
+                        mPresenter.showCityList(charSequence.toString()));
     }
 
     @ProvidePresenter
@@ -73,7 +70,6 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView {
 
     @Override
     public void updateCityList(List<CityData> locations) {
-        Timber.v("MYUPDATE");
         adapter.update(locations);
     }
 

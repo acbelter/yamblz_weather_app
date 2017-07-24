@@ -11,7 +11,6 @@ import javax.inject.Inject;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 @InjectViewState
 public class SearchPresenter extends MvpPresenter<SearchView> {
@@ -30,10 +29,8 @@ public class SearchPresenter extends MvpPresenter<SearchView> {
         mCurrentWeatherDisposable = mCityInteractor.getCityList(cityParams)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((cityDatas, throwable) -> {
-                    Timber.v("PRESENTER = " + getViewState());
-                    getViewState().updateCityList(cityDatas);
-                });
+                .subscribe((cityDatas, throwable) ->
+                        getViewState().updateCityList(cityDatas));
 
     }
 
