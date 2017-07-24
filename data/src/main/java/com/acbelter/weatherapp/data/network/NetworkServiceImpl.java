@@ -40,9 +40,7 @@ public class NetworkServiceImpl implements NetworkService {
     @Override
     public Observable<Location> getLocation(CityParams cityParams) {
         return mPlacesApi.getPlaces(cityParams.getPartOfCityName().trim(), cityParams.getLangCode())
-                .filter(places -> places != null)
-                .flatMap(places ->
-                        Observable.fromIterable(places.getPredictions()))
+                .flatMap(places -> Observable.fromIterable(places.getPredictions()))
                 .concatMap(prediction -> mLocationApi.getLocation(prediction.getPlaceId()));
     }
 }

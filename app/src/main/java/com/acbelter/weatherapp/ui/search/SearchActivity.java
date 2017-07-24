@@ -108,7 +108,7 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView, 
     @Override
     public void showError() {
         Snackbar errorSnackbar =
-                Snackbar.make(mConstraintLayout, R.string.internet_connection_error, Snackbar.LENGTH_LONG);
+                Snackbar.make(mConstraintLayout, R.string.get_city_list_error, Snackbar.LENGTH_LONG);
         errorSnackbar.setAction(R.string.ok, v -> {
         });
         errorSnackbar.show();

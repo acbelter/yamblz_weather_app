@@ -25,5 +25,5 @@
     <!--About screen-->
     <string name="search_title">Поиск</string>
     <string name="city_search">Поиск города</string>
-    <string name="internet_connection_error">Проверьте подключение к Интернету</string>
+    <string name="get_city_list_error">Невозможно получить список городов</string>
 </resources>
