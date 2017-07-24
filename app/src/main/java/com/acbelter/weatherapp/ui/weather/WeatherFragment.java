@@ -92,7 +92,6 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.stopGetCurrentWeatherProcess();
         App.getComponentManager().removeWeatherComponent();
         Timber.d("Remove weather component");
         mUnbinder.unbind();
@@ -270,7 +269,7 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mWeatherUpdateReceiver, filter);
 
         mWeatherView.startAnimation();
-        mPresenter.getCurrentWeather(true);
+        mPresenter.getCurrentWeather(false);
     }
 
     @Override

@@ -118,7 +118,6 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView, 
     public void onStop() {
         super.onStop();
 
-        mPresenter.stopGetCurrentWeatherProcess();
         App.getComponentManager().removeWeatherComponent();
     }
 

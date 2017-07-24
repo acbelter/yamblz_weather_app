@@ -3,21 +3,19 @@ package com.acbelter.weatherapp.presentation;
 import com.acbelter.weatherapp.domain.interactor.CityInteractor;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.city.CityParams;
+import com.acbelter.weatherapp.presentation.common.BasePresenter;
 import com.acbelter.weatherapp.ui.search.SearchView;
 import com.arellomobile.mvp.InjectViewState;
-import com.arellomobile.mvp.MvpPresenter;
 
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 @InjectViewState
-public class SearchPresenter extends MvpPresenter<SearchView> {
+public class SearchPresenter extends BasePresenter<SearchView> {
 
     private CityInteractor mCityInteractor;
-    private Disposable mCurrentWeatherDisposable;
 
     @Inject
     public SearchPresenter(CityInteractor cityInteractor) {
@@ -27,12 +25,12 @@ public class SearchPresenter extends MvpPresenter<SearchView> {
     public void showCityList(String input) {
 
         CityParams cityParams = new CityParams(input);
-        mCurrentWeatherDisposable = mCityInteractor.getCityList(cityParams)
+        unsubscribeOnDetach(mCityInteractor.getCityList(cityParams)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(cityDatas ->
-                        getViewState().updateCityList(cityDatas),
-                        throwable -> getViewState().showError());
+                                getViewState().updateCityList(cityDatas),
+                        throwable -> getViewState().showError()));
 
     }
 
@@ -42,12 +40,5 @@ public class SearchPresenter extends MvpPresenter<SearchView> {
 
     public void closeActivity() {
         getViewState().close();
-    }
-
-    public void stopGetCurrentWeatherProcess() {
-        if (mCurrentWeatherDisposable != null && !mCurrentWeatherDisposable.isDisposed()) {
-            mCurrentWeatherDisposable.dispose();
-        }
-        mCurrentWeatherDisposable = null;
     }
 }

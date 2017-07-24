@@ -7,22 +7,20 @@ import com.acbelter.weatherapp.data.repository.PreferencesRepo;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
+import com.acbelter.weatherapp.presentation.common.BasePresenter;
 import com.acbelter.weatherapp.ui.weather.WeatherView;
 import com.arellomobile.mvp.InjectViewState;
-import com.arellomobile.mvp.MvpPresenter;
 
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 @InjectViewState
-public class WeatherPresenter extends MvpPresenter<WeatherView> {
+public class WeatherPresenter extends BasePresenter<WeatherView> {
     private PreferencesRepo mPrefsRepo;
     private WeatherInteractor mWeatherInteractor;
-    private Disposable mCurrentWeatherDisposable;
 
     private WeatherData mWeatherData;
 
@@ -55,11 +53,6 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
             return;
         }
 
-        if (mCurrentWeatherDisposable != null) {
-            // Getting weather already in progress
-            return;
-        }
-
         String city = mPrefsRepo.getCurrentCity();
         if (city == null) {
             getViewState().showError();
@@ -68,7 +61,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
 
         WeatherParams params = new WeatherParams(city);
 
-        mCurrentWeatherDisposable = mWeatherInteractor.getCurrentWeather(params)
+        unsubscribeOnDetach(mWeatherInteractor.getCurrentWeather(params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -81,24 +74,15 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
                         },
                         error -> {
                             Timber.d("getCurrentWeather->onError(): %s", error.toString());
-                            mCurrentWeatherDisposable = null;
                             getViewState().showError();
                         },
                         () -> {
                             Timber.d("getCurrentWeather->onComplete()");
-                            mCurrentWeatherDisposable = null;
                         },
                         disposable -> {
                             Timber.d("getCurrentWeather->onSubscribe()");
                             getViewState().showWeatherLoading();
                         }
-                );
-    }
-
-    public void stopGetCurrentWeatherProcess() {
-        if (mCurrentWeatherDisposable != null && !mCurrentWeatherDisposable.isDisposed()) {
-            mCurrentWeatherDisposable.dispose();
-        }
-        mCurrentWeatherDisposable = null;
+                ));
     }
 }
