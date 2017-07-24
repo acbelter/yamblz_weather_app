@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.acbelter.weatherapp.App;
@@ -17,12 +18,12 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class SearchActivity extends MvpAppCompatActivity implements SearchView, CityAdapter.OnItemClickListener {
 
@@ -36,6 +37,8 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView, 
     SearchPresenter mPresenter;
 
     private CityAdapter mAdapter;
+
+    private static final long TYPING_DELAY = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView, 
         initAdapter();
 
         RxTextView.textChanges(etSearch)
+                .debounce(TYPING_DELAY, TimeUnit.MILLISECONDS)
                 .subscribe(charSequence ->
                         mPresenter.showCityList(charSequence.toString()));
     }
@@ -72,6 +76,20 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView, 
     public void onBackPressed() {
         mPresenter.closeActivity();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                mPresenter.closeActivity();
+                return true;
+            }
+            default: {
+                return super.onOptionsItemSelected(item);
+            }
+        }
+    }
+
 
     @Override
     public void close() {

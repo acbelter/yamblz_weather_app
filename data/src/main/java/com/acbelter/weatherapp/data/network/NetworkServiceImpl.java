@@ -8,10 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.util.concurrent.TimeUnit;
-
 import io.reactivex.Observable;
-import timber.log.Timber;
 
 public class NetworkServiceImpl implements NetworkService {
     private WeatherApi mWeatherApi;
