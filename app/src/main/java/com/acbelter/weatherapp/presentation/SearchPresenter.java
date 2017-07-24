@@ -1,6 +1,7 @@
 package com.acbelter.weatherapp.presentation;
 
 import com.acbelter.weatherapp.domain.interactor.CityInteractor;
+import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.city.CityParams;
 import com.acbelter.weatherapp.ui.search.SearchView;
 import com.arellomobile.mvp.InjectViewState;
@@ -32,6 +33,10 @@ public class SearchPresenter extends MvpPresenter<SearchView> {
                 .subscribe((cityDatas, throwable) ->
                         getViewState().updateCityList(cityDatas));
 
+    }
+
+    public void saveSelectedCity(CityData cityData) {
+        mCityInteractor.saveSelectedCity(cityData);
     }
 
     public void closeActivity() {

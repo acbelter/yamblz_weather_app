@@ -17,10 +17,16 @@ import butterknife.ButterKnife;
 
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.MyViewHolder> {
 
-    private List<CityData> locations;
+    public interface OnItemClickListener {
+        void onItemClick(CityData item);
+    }
 
-    public CityAdapter() {
-        this.locations = new ArrayList<>();
+    private List<CityData> mLocations;
+    private OnItemClickListener mClickListener;
+
+    public CityAdapter(OnItemClickListener clickListener) {
+        mLocations = new ArrayList<>();
+        mClickListener = clickListener;
 
         setHasStableIds(true);
     }
@@ -34,23 +40,23 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(MyViewHolder viewHolder, int position) {
-        CityData location = locations.get(position);
-        viewHolder.tvCity.setText(location.getCityName());
+        CityData location = mLocations.get(position);
+        viewHolder.bind(location, mClickListener);
     }
 
     @Override
     public int getItemCount() {
-        return locations.size();
+        return mLocations.size();
     }
 
     public void update(List<CityData> list) {
-        locations = list;
+        mLocations = list;
         notifyDataSetChanged();
     }
 
     @Override
     public long getItemId(int position) {
-        return locations.get(position).hashCode();
+        return mLocations.get(position).hashCode();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -62,6 +68,11 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.MyViewHolder> 
             super(itemView);
 
             ButterKnife.bind(this, itemView);
+        }
+
+        public void bind(final CityData item, final OnItemClickListener clickListener) {
+            tvCity.setText(item.getCityName());
+            itemView.setOnClickListener(view -> clickListener.onItemClick(item));
         }
     }
 }

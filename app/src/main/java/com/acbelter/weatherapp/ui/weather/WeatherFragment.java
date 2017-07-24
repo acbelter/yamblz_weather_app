@@ -82,6 +82,13 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     };
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        Timber.v("onAttach");
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         App.getComponentManager().addWeatherComponent().inject(this);
         super.onCreate(savedInstanceState);

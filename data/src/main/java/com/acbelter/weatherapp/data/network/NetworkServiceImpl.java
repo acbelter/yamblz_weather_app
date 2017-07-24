@@ -8,7 +8,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.Observable;
+import timber.log.Timber;
 
 public class NetworkServiceImpl implements NetworkService {
     private WeatherApi mWeatherApi;
@@ -40,6 +43,7 @@ public class NetworkServiceImpl implements NetworkService {
     @Override
     public Observable<Location> getLocation(CityParams cityParams) {
         return mPlacesApi.getPlaces(cityParams.getPartOfCityName().trim(), cityParams.getLangCode())
+                .filter(places -> places != null)
                 .flatMap(places ->
                         Observable.fromIterable(places.getPredictions()))
                 .concatMap(prediction -> mLocationApi.getLocation(prediction.getPlaceId()));

@@ -9,4 +9,7 @@ import io.reactivex.Observable;
 public interface CityRepo {
 
     Observable<CityData> getCity(CityParams cityParams);
+
+    void saveCity(CityData cityData);
+
 }

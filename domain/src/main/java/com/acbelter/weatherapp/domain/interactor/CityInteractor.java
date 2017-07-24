@@ -22,4 +22,8 @@ public class CityInteractor {
     public Single<List<CityData>> getCityList(CityParams cityParams) {
         return mCityRepo.getCity(cityParams).toList();
     }
+
+    public void saveSelectedCity(CityData cityData) {
+        mCityRepo.saveCity(cityData);
+    }
 }

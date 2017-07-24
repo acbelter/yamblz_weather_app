@@ -1,6 +1,7 @@
 package com.acbelter.weatherapp.ui.search;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
@@ -21,8 +22,9 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
-public class SearchActivity extends MvpAppCompatActivity implements SearchView {
+public class SearchActivity extends MvpAppCompatActivity implements SearchView, CityAdapter.OnItemClickListener {
 
     @BindView(R.id.etSearch)
     EditText etSearch;
@@ -33,7 +35,7 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView {
     @InjectPresenter
     SearchPresenter mPresenter;
 
-    private CityAdapter adapter;
+    private CityAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +43,24 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         ButterKnife.bind(this);
 
-        this.adapter = new CityAdapter();
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        initAdapter();
 
         RxTextView.textChanges(etSearch)
                 .subscribe(charSequence ->
                         mPresenter.showCityList(charSequence.toString()));
+    }
+
+    private void initAdapter() {
+        mAdapter = new CityAdapter(this);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @ProvidePresenter
@@ -70,7 +81,7 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView {
 
     @Override
     public void updateCityList(List<CityData> locations) {
-        adapter.update(locations);
+        mAdapter.update(locations);
     }
 
     @Override
@@ -79,5 +90,11 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView {
 
         mPresenter.stopGetCurrentWeatherProcess();
         App.getComponentManager().removeWeatherComponent();
+    }
+
+    @Override
+    public void onItemClick(CityData item) {
+        mPresenter.saveSelectedCity(item);
+        mPresenter.closeActivity();
     }
 }
