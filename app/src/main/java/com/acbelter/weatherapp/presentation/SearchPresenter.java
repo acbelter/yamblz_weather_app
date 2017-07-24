@@ -30,8 +30,9 @@ public class SearchPresenter extends MvpPresenter<SearchView> {
         mCurrentWeatherDisposable = mCityInteractor.getCityList(cityParams)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((cityDatas, throwable) ->
-                        getViewState().updateCityList(cityDatas));
+                .subscribe(cityDatas ->
+                        getViewState().updateCityList(cityDatas),
+                        throwable -> getViewState().showError());
 
     }
 

@@ -1,6 +1,8 @@
 package com.acbelter.weatherapp.ui.search;
 
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,9 +30,11 @@ import butterknife.ButterKnife;
 public class SearchActivity extends MvpAppCompatActivity implements SearchView, CityAdapter.OnItemClickListener {
 
     @BindView(R.id.etSearch)
-    EditText etSearch;
+    EditText mEtSearch;
     @BindView(R.id.rvCityList)
-    RecyclerView recyclerView;
+    RecyclerView mRecyclerView;
+    @BindView(R.id.content_layout)
+    ConstraintLayout mConstraintLayout;
 
     @Inject
     @InjectPresenter
@@ -55,7 +59,7 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView, 
 
         initAdapter();
 
-        RxTextView.textChanges(etSearch)
+        RxTextView.textChanges(mEtSearch)
                 .debounce(TYPING_DELAY, TimeUnit.MILLISECONDS)
                 .subscribe(charSequence ->
                         mPresenter.showCityList(charSequence.toString()));
@@ -63,8 +67,8 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView, 
 
     private void initAdapter() {
         mAdapter = new CityAdapter(this);
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @ProvidePresenter
@@ -90,7 +94,6 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView, 
         }
     }
 
-
     @Override
     public void close() {
         finish();
@@ -100,6 +103,15 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView, 
     @Override
     public void updateCityList(List<CityData> locations) {
         mAdapter.update(locations);
+    }
+
+    @Override
+    public void showError() {
+        Snackbar errorSnackbar =
+                Snackbar.make(mConstraintLayout, R.string.internet_connection_error, Snackbar.LENGTH_LONG);
+        errorSnackbar.setAction(R.string.ok, v -> {
+        });
+        errorSnackbar.show();
     }
 
     @Override
