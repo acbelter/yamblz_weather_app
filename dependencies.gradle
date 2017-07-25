@@ -14,6 +14,10 @@ ext {
     butterknifeVersion = "8.6.0"
     rxBindingVersion = "2.0.0"
 
+    mockitoVersion = "1.10.19"
+    junitVersion = "4.12"
+    assertJVersion = "2.5.0"
+
     support = [
             appCompat       : "com.android.support:appcompat-v7:$supportLibraryVersion",
             design          : "com.android.support:design:$supportLibraryVersion",
@@ -50,5 +54,11 @@ ext {
             dagger2    : "com.google.dagger:dagger-compiler:$daggerVersion",
             moxy       : "com.arello-mobile:moxy-compiler:$moxyVersion",
             butterknife: "com.jakewharton:butterknife-compiler:$butterknifeVersion",
+    ]
+
+    test = [
+            mockito: "org.mockito:mockito-core:$mockitoVersion",
+            junit  : "junit:junit:$junitVersion",
+            assertJ: "org.assertj:assertj-core:$assertJVersion"
     ]
 }

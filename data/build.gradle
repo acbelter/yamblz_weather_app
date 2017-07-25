@@ -40,4 +40,8 @@ dependencies {
 
     compile lib.dagger2
     annotationProcessor compiler.dagger2
+
+    testCompile test.junit
+    testCompile test.mockito
+    testCompile test.assertJ
 }
