@@ -6,6 +6,7 @@ import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import io.reactivex.Observable;
 
 public interface WeatherRepo {
+
     Observable<WeatherData> getCurrentWeather(WeatherParams params);
 
     void saveWeather(WeatherData weatherData);

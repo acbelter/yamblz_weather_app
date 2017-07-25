@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 
 public class WeatherInteractor {
+
     private WeatherRepo mWeatherRepo;
 
     @Inject

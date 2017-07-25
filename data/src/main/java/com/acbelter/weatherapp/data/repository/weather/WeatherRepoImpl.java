@@ -11,6 +11,7 @@ import io.reactivex.Observable;
 import timber.log.Timber;
 
 public class WeatherRepoImpl implements WeatherRepo {
+
     private DatabaseService mDatabaseService;
     private NetworkService mNetworkService;
     private PreferencesRepo mPreferencesRepo;

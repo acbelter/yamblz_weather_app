@@ -20,7 +20,11 @@ public class CityInteractor {
     }
 
     public Single<List<CityData>> getCityList(CityParams cityParams) {
-        return mCityRepo.getCity(cityParams).toList();
+        return mCityRepo.getCity(cityParams).toSortedList(this::compareCityData);
+    }
+
+    private int compareCityData(CityData cityData1, CityData cityData2) {
+        return cityData1.getCityName().compareTo(cityData2.getCityName());
     }
 
     public void saveSelectedCity(CityData cityData) {

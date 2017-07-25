@@ -11,6 +11,7 @@ import com.google.gson.JsonParser;
 import io.reactivex.Observable;
 
 public class NetworkServiceImpl implements NetworkService {
+
     private WeatherApi mWeatherApi;
     private PlacesApi mPlacesApi;
     private LocationApi mLocationApi;
