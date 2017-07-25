@@ -19,8 +19,8 @@ public class WeatherModule {
     @Provides
     @WeatherScope
     WeatherRepo provideWeatherRepo(DatabaseService databaseService,
-                                   NetworkService networkService) {
-        return new WeatherRepoImpl(databaseService, networkService);
+                                   NetworkService networkService, PreferencesRepo preferencesRepo) {
+        return new WeatherRepoImpl(databaseService, networkService, preferencesRepo);
     }
 
     @Provides

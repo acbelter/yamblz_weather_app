@@ -1,6 +1,5 @@
 package com.acbelter.weatherapp.presentation;
 
-import com.acbelter.weatherapp.data.repository.PreferencesRepo;
 import com.acbelter.weatherapp.domain.interactor.CityInteractor;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.city.CityData;
@@ -22,13 +21,11 @@ public class SearchPresenter extends BasePresenter<SearchView> {
 
     private CityInteractor mCityInteractor;
     private WeatherInteractor mWeatherInteractor;
-    private PreferencesRepo mPreferencesRepo;
 
     @Inject
-    public SearchPresenter(CityInteractor cityInteractor, WeatherInteractor weatherInteractor, PreferencesRepo preferencesRepo) {
+    public SearchPresenter(CityInteractor cityInteractor, WeatherInteractor weatherInteractor) {
         mCityInteractor = cityInteractor;
         mWeatherInteractor = weatherInteractor;
-        mPreferencesRepo = preferencesRepo;
     }
 
     public void showCityList(String input) {
@@ -71,9 +68,7 @@ public class SearchPresenter extends BasePresenter<SearchView> {
     }
 
     private void saveWeather(WeatherData weatherData) {
-        mPreferencesRepo.setLastWeatherData(weatherData);
-        long updateTimestamp = System.currentTimeMillis();
-        mPreferencesRepo.setLastUpdateTimestamp(updateTimestamp);
+        mWeatherInteractor.saveWeather(weatherData);
     }
 
     public void closeActivity() {

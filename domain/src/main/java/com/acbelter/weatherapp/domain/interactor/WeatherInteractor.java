@@ -19,4 +19,8 @@ public class WeatherInteractor {
     public Observable<WeatherData> getCurrentWeather(WeatherParams params) {
         return mWeatherRepo.getCurrentWeather(params);
     }
+
+    public void saveWeather(WeatherData weatherData) {
+        mWeatherRepo.saveWeather(weatherData);
+    }
 }
