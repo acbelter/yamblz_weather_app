@@ -16,16 +16,7 @@ public class Geometry {
         return location;
     }
 
-    public void setLocation(Location_ location) {
-        this.location = location;
-    }
-
     public Viewport getViewport() {
         return viewport;
     }
-
-    public void setViewport(Viewport viewport) {
-        this.viewport = viewport;
-    }
-
 }

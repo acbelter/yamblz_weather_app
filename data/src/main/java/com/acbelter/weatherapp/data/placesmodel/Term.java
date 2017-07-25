@@ -7,25 +7,16 @@ public class Term {
 
     @SerializedName("offset")
     @Expose
-    private Integer offset;
+    private int offset;
     @SerializedName("value")
     @Expose
     private String value;
 
-    public Integer getOffset() {
+    public int getOffset() {
         return offset;
-    }
-
-    public void setOffset(Integer offset) {
-        this.offset = offset;
     }
 
     public String getValue() {
         return value;
     }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
 }

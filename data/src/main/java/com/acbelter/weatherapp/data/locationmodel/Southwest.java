@@ -7,25 +7,16 @@ public class Southwest {
 
     @SerializedName("lat")
     @Expose
-    private Double lat;
+    private double lat;
     @SerializedName("lng")
     @Expose
-    private Double lng;
+    private double lng;
 
-    public Double getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public void setLat(Double lat) {
-        this.lat = lat;
-    }
-
-    public Double getLng() {
+    public double getLng() {
         return lng;
     }
-
-    public void setLng(Double lng) {
-        this.lng = lng;
-    }
-
 }
