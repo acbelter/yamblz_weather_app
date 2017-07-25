@@ -20,7 +20,7 @@ import dagger.Component;
         DatabaseModule.class,
         PreferencesModule.class})
 public interface AppComponent {
-    WeatherComponent addWeatherComponent(WeatherModule weatherModule);
+    ActivityComponent addWeatherComponent(WeatherModule weatherModule);
     void inject(SettingsFragment settingsFragment);
     void inject(SettingsActivity settingsActivity);
     void inject(WeatherUpdateReceiver updateReceiver);
