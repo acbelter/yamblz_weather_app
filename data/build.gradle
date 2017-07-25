@@ -1,6 +1,10 @@
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -15,6 +19,11 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes.each {
+        it.buildConfigField "String", "OPEN_WEATHER_MAP_API_KEY", keystoreProperties["OPEN_WEATHER_MAP_API_KEY"]
+        it.buildConfigField "String", "GOOGLE_PLACES_API_KEY", keystoreProperties["GOOGLE_PLACES_API_KEY"]
     }
 }
 

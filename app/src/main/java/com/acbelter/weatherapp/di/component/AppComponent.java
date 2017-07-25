@@ -21,7 +21,10 @@ import dagger.Component;
         PreferencesModule.class})
 public interface AppComponent {
     ActivityComponent addWeatherComponent(WeatherModule weatherModule);
+
     void inject(SettingsFragment settingsFragment);
+
     void inject(SettingsActivity settingsActivity);
+
     void inject(WeatherUpdateReceiver updateReceiver);
 }

@@ -1,4 +1,3 @@
-
 package com.acbelter.weatherapp.data.locationmodel;
 
 import com.google.gson.annotations.Expose;

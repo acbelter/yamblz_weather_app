@@ -71,7 +71,8 @@ public class PreferencesRepo {
         mPrefs.edit().putString(KEY_LAST_WEATHER_DATA, weatherDataJson).apply();
     }
 
-    public @Nullable
+    public
+    @Nullable
     WeatherData getLastWeatherData() {
         if (!mPrefs.contains(KEY_LAST_WEATHER_DATA)) {
             return null;

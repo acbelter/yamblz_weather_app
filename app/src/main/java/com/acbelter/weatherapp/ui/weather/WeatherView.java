@@ -9,7 +9,9 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 @StateStrategyType(AddToEndSingleStrategy.class)
 public interface WeatherView extends MvpView {
     void showWeatherLoading();
+
     void showWeather(WeatherData weatherData, long updateTimestamp);
+
     @StateStrategyType(OneExecutionStateStrategy.class)
     void showError();
 }

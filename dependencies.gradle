@@ -21,14 +21,14 @@ ext {
     ]
 
     ui = [
-            weatherView      : "com.github.MatteoBattilana:WeatherView:1.2.0",
-            fixPreference    : "com.takisoft.fix:preference-v7:25.4.0.3",
+            weatherView  : "com.github.MatteoBattilana:WeatherView:1.2.0",
+            fixPreference: "com.takisoft.fix:preference-v7:25.4.0.3",
     ]
 
     rx = [
-            rxJava   : "io.reactivex.rxjava2:rxjava:2.1.0",
-            rxAndroid: "io.reactivex.rxjava2:rxandroid:2.0.1",
-            rxBinding: "com.jakewharton.rxbinding2:rxbinding:$rxBindingVersion",
+            rxJava         : "io.reactivex.rxjava2:rxjava:2.1.0",
+            rxAndroid      : "io.reactivex.rxjava2:rxandroid:2.0.1",
+            rxBinding      : "com.jakewharton.rxbinding2:rxbinding:$rxBindingVersion",
             rxBindingDesign: "com.jakewharton.rxbinding2:rxbinding-design:$rxBindingVersion",
     ]
 

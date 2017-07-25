@@ -13,6 +13,8 @@ import dagger.Subcomponent;
 @Subcomponent(modules = {WeatherModule.class, CityModule.class})
 public interface ActivityComponent {
     void inject(WeatherFragment weatherFragment);
+
     void inject(SearchActivity searchActivity);
+
     void inject(WeatherUpdateService updateService);
 }
