@@ -123,7 +123,6 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView, 
 
     @Override
     public void onItemClick(CityData item) {
-        mPresenter.saveSelectedCity(item);
-        mPresenter.closeActivity();
+        mPresenter.saveSelectedCityAndWeather(item);
     }
 }

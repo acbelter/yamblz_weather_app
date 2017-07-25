@@ -19,6 +19,7 @@ import timber.log.Timber;
 
 @InjectViewState
 public class WeatherPresenter extends BasePresenter<WeatherView> {
+
     private PreferencesRepo mPrefsRepo;
     private WeatherInteractor mWeatherInteractor;
 
@@ -40,20 +41,17 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
         mWeatherData = weatherData;
     }
 
-    public WeatherData getWeatherData() {
-        return mWeatherData;
+    public void getCachedWeather() {
+        mWeatherData = mPrefsRepo.getLastWeatherData();
+        if (mWeatherData != null)
+            getViewState().showWeather(mWeatherData, mPrefsRepo.getLastUpdateTimestamp());
+        else
+            updateWeather();
     }
 
-    public void getCurrentWeather(boolean forceRefresh) {
-        mWeatherData = mPrefsRepo.getLastWeatherData();
-        Timber.d("Update current weather: %s", mWeatherData);
-
-        if (mWeatherData != null && !forceRefresh) {
-            getViewState().showWeather(mWeatherData, mPrefsRepo.getLastUpdateTimestamp());
-            return;
-        }
-
+    public void updateWeather() {
         String city = mPrefsRepo.getCurrentCity();
+
         if (city == null) {
             getViewState().showError();
             return;
@@ -84,5 +82,9 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
                             getViewState().showWeatherLoading();
                         }
                 ));
+    }
+
+    public WeatherData getWeatherData() {
+        return mWeatherData;
     }
 }

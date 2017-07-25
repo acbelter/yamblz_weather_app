@@ -1,8 +1,12 @@
 package com.acbelter.weatherapp.presentation;
 
+import com.acbelter.weatherapp.data.repository.PreferencesRepo;
 import com.acbelter.weatherapp.domain.interactor.CityInteractor;
+import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.city.CityParams;
+import com.acbelter.weatherapp.domain.model.weather.WeatherData;
+import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.presentation.common.BasePresenter;
 import com.acbelter.weatherapp.ui.search.SearchView;
 import com.arellomobile.mvp.InjectViewState;
@@ -11,19 +15,23 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 @InjectViewState
 public class SearchPresenter extends BasePresenter<SearchView> {
 
     private CityInteractor mCityInteractor;
+    private WeatherInteractor mWeatherInteractor;
+    private PreferencesRepo mPreferencesRepo;
 
     @Inject
-    public SearchPresenter(CityInteractor cityInteractor) {
+    public SearchPresenter(CityInteractor cityInteractor, WeatherInteractor weatherInteractor, PreferencesRepo preferencesRepo) {
         mCityInteractor = cityInteractor;
+        mWeatherInteractor = weatherInteractor;
+        mPreferencesRepo = preferencesRepo;
     }
 
     public void showCityList(String input) {
-
         CityParams cityParams = new CityParams(input);
         unsubscribeOnDetach(mCityInteractor.getCityList(cityParams)
                 .subscribeOn(Schedulers.io())
@@ -34,8 +42,38 @@ public class SearchPresenter extends BasePresenter<SearchView> {
 
     }
 
-    public void saveSelectedCity(CityData cityData) {
+    public void saveSelectedCityAndWeather(CityData cityData) {
         mCityInteractor.saveSelectedCity(cityData);
+        WeatherParams params = new WeatherParams(cityData.getCityName());
+        updateWeather(params);
+    }
+
+    private void updateWeather(WeatherParams params) {
+        unsubscribeOnDetach(mWeatherInteractor.getCurrentWeather(params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(weatherData -> {
+                            Timber.d("getCurrentWeather->onNext()");
+                            saveWeather(weatherData);
+                            closeActivity();
+                        },
+                        error -> {
+                            Timber.d("getCurrentWeather->onError(): %s", error.toString());
+                            getViewState().showError();
+                        },
+                        () -> {
+                            Timber.d("getCurrentWeather->onComplete()");
+                        },
+                        disposable -> {
+                            Timber.d("getCurrentWeather->onSubscribe()");
+                        }
+                ));
+    }
+
+    private void saveWeather(WeatherData weatherData) {
+        mPreferencesRepo.setLastWeatherData(weatherData);
+        long updateTimestamp = System.currentTimeMillis();
+        mPreferencesRepo.setLastUpdateTimestamp(updateTimestamp);
     }
 
     public void closeActivity() {

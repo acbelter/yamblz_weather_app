@@ -6,7 +6,6 @@ import com.acbelter.weatherapp.WeatherUpdateScheduler;
 import com.acbelter.weatherapp.presentation.common.BasePresenter;
 import com.acbelter.weatherapp.ui.settings.SettingsView;
 import com.arellomobile.mvp.InjectViewState;
-import com.arellomobile.mvp.MvpPresenter;
 
 import javax.inject.Inject;
 

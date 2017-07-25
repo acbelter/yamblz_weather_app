@@ -10,6 +10,8 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import io.reactivex.annotations.Nullable;
+
 public class PreferencesRepo {
     public static final String KEY_CURRENT_CITY = "pref_current_city";
     public static final String KEY_UPDATE_INTERVAL = "pref_update_interval";
@@ -40,7 +42,7 @@ public class PreferencesRepo {
 
     public String getCurrentCity() {
         // FIXME Don't use Moscow as default city
-        return mPrefs.getString(KEY_CURRENT_CITY, "Moscow");
+        return mPrefs.getString(KEY_CURRENT_CITY, "Moscow, TN 38057");
     }
 
     public void setUpdateInterval(int interval) {
@@ -69,7 +71,8 @@ public class PreferencesRepo {
         mPrefs.edit().putString(KEY_LAST_WEATHER_DATA, weatherDataJson).apply();
     }
 
-    public WeatherData getLastWeatherData() {
+    public @Nullable
+    WeatherData getLastWeatherData() {
         if (!mPrefs.contains(KEY_LAST_WEATHER_DATA)) {
             return null;
         }
