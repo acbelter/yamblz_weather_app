@@ -17,9 +17,9 @@ ext {
     mockitoVersion = "1.10.19"
     junitVersion = "4.12"
     assertJVersion = "2.5.0"
-    espressoCoreVersion = "3.0.0"
-    espressoContribVersion = "3.0.0"
+    espressoVersion = "3.0.0"
     testRunnerVersion = "1.0.0"
+    testRulesVersion = "1.0.0"
 
     support = [
             appCompat       : "com.android.support:appcompat-v7:$supportLibraryVersion",
@@ -66,8 +66,8 @@ ext {
     ]
 
     uiTest = [
-            espressoCore   : "com.android.support.test.espresso:espresso-core:$espressoCoreVersion",
-            espressoContrib: "com.android.support.test.espresso:espresso-contrib:$espressoContribVersion",
-            runner         : "com.android.support.test:runner:$testRunnerVersion"
+            espressoCore          : "com.android.support.test.espresso:espresso-core:$espressoVersion",
+            espressoContrib       : "com.android.support.test.espresso:espresso-contrib:$espressoVersion",
+            runner                : "com.android.support.test:runner:$testRunnerVersion",
     ]
 }

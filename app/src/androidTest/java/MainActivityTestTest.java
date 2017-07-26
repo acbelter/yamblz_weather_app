@@ -11,6 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -42,6 +43,8 @@ public class MainActivityTestTest {
     }
 
     private void checkViews() {
+        if (!utils.isNetworkAvailable())
+            return;
         onView(withText(mActivityRule.getActivity().getString(R.string.weather))).check(matches(isDisplayed()));
         onView(withId(R.id.swipe_refresh_layout)).check(matches(isDisplayed()));
         onView(withId(R.id.date_text)).check(matches(isDisplayed()));
@@ -64,6 +67,15 @@ public class MainActivityTestTest {
     public void checkOpenCloseSettingsActivity() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withText(mActivityRule.getActivity().getString(R.string.settings))).perform(click());
+        pressBack();
+        onView(withId(R.id.swipe_refresh_layout)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void checkOpenCloseSearchActivity() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.etSearchOnHeader)).perform(click());
+        closeSoftKeyboard();
         pressBack();
         onView(withId(R.id.swipe_refresh_layout)).check(matches(isDisplayed()));
     }

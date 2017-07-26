@@ -82,6 +82,4 @@ dependencies {
     androidTestCompile uiTest.espressoCore
     androidTestCompile uiTest.espressoContrib
     androidTestCompile uiTest.runner
-
-
 }
