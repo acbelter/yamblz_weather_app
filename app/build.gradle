@@ -17,6 +17,8 @@ android {
         versionName rootProject.ext.versionName
 
         vectorDrawables.useSupportLibrary = true
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
@@ -76,4 +78,10 @@ dependencies {
     compile lib.gson
 
     compile lib.timber
+
+    androidTestCompile uiTest.espressoCore
+    androidTestCompile uiTest.espressoContrib
+    androidTestCompile uiTest.runner
+
+
 }
