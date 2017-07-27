@@ -61,7 +61,7 @@ dependencies {
     compile ui.fixPreference
 
     compile rx.rxAndroid
-    compile rx.rxJava
+    compile rx.rxJava2
     compile rx.rxBinding
     compile rx.rxBindingDesign
 
