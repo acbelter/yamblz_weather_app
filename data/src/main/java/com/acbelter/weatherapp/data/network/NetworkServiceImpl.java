@@ -8,6 +8,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.Observable;
 
 public class NetworkServiceImpl implements NetworkService {
@@ -15,6 +17,8 @@ public class NetworkServiceImpl implements NetworkService {
     private WeatherApi mWeatherApi;
     private PlacesApi mPlacesApi;
     private LocationApi mLocationApi;
+
+    private static final int NETWORK_TIMEOUT = 5000;
 
     public NetworkServiceImpl(WeatherApi weatherApi, PlacesApi placesApi, LocationApi locationApi) {
         mWeatherApi = weatherApi;
@@ -41,6 +45,7 @@ public class NetworkServiceImpl implements NetworkService {
     @Override
     public Observable<Location> getLocation(CityParams cityParams) {
         return mPlacesApi.getPlaces(cityParams.getPartOfCityName().trim())
+                .timeout(NETWORK_TIMEOUT, TimeUnit.MILLISECONDS)
                 .flatMap(places ->
                         Observable.fromIterable(places.getPredictions()))
                 .concatMap(prediction -> mLocationApi.getLocation(prediction.getPlaceId(), cityParams.getLangCode()));
