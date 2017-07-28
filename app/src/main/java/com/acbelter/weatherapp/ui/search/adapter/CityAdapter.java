@@ -15,7 +15,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CityAdapter extends RecyclerView.Adapter<CityAdapter.MyViewHolder> {
+public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder> {
 
     public interface OnItemClickListener {
         void onItemClick(CityData item);
@@ -32,16 +32,26 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.MyViewHolder> 
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CityViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.city_item, parent, false);
+        CityViewHolder viewHolder = new CityViewHolder(view);
 
-        return new MyViewHolder(view);
+        view.setOnClickListener(it -> {
+            int adapterPosition = viewHolder.getAdapterPosition();
+            if (adapterPosition != RecyclerView.NO_POSITION)
+                itemClicked(adapterPosition);
+        });
+        return viewHolder;
+    }
+
+    private void itemClicked(int position) {
+        mClickListener.onItemClick(mLocations.get(position));
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder viewHolder, int position) {
+    public void onBindViewHolder(CityViewHolder viewHolder, int position) {
         CityData location = mLocations.get(position);
-        viewHolder.bind(location, mClickListener);
+        viewHolder.bind(location);
     }
 
     @Override
@@ -59,20 +69,19 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.MyViewHolder> 
         return mLocations.get(position).hashCode();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class CityViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tvCity)
         TextView tvCity;
 
-        public MyViewHolder(final View itemView) {
+        public CityViewHolder(final View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(final CityData item, final OnItemClickListener clickListener) {
+        public void bind(final CityData item) {
             tvCity.setText(item.getCityName());
-            itemView.setOnClickListener(view -> clickListener.onItemClick(item));
         }
     }
 }
