@@ -8,15 +8,18 @@ import com.acbelter.weatherapp.domain.repository.CityRepo;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import io.reactivex.Observable;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class CityDataNetworkTest {
 
     @Mock
@@ -26,7 +29,7 @@ public class CityDataNetworkTest {
     CityInteractor cityInteractor;
 
     @Before
-    public void setup() {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 
@@ -38,4 +41,5 @@ public class CityDataNetworkTest {
                 .assertNoErrors()
                 .assertValue(l -> l.size() == 1);
     }
+
 }

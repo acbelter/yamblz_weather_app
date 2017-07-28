@@ -7,9 +7,11 @@ import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import io.reactivex.observers.TestObserver;
 import io.reactivex.subjects.PublishSubject;
@@ -17,6 +19,7 @@ import io.reactivex.subjects.PublishSubject;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class WeatherDataNetworkTest {
 
     @Mock
@@ -26,7 +29,7 @@ public class WeatherDataNetworkTest {
     private WeatherInteractor weatherInteractor;
 
     @Before
-    public void setup() {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 

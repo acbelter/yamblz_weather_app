@@ -11,7 +11,7 @@ ext {
     retrofitVersion = "2.3.0"
     daggerVersion = "2.11"
     rxJava2Version = "2.1.0"
-    rxAndroidVersion= "2.0.1"
+    rxAndroidVersion = "2.0.1"
     moxyVersion = "1.5.3"
     butterknifeVersion = "8.6.0"
     rxBindingVersion = "2.0.0"

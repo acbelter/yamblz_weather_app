@@ -82,4 +82,8 @@ dependencies {
     androidTestCompile uiTest.espressoCore
     androidTestCompile uiTest.espressoContrib
     androidTestCompile uiTest.runner
+
+    testCompile unitTest.junit
+    testCompile unitTest.mockito
+    testCompile unitTest.assertJ
 }
