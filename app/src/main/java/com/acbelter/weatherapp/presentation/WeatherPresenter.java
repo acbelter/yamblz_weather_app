@@ -3,7 +3,7 @@ package com.acbelter.weatherapp.presentation;
 import android.content.Context;
 
 import com.acbelter.weatherapp.WeatherUpdateScheduler;
-import com.acbelter.weatherapp.data.repository.PreferencesRepo;
+import com.acbelter.weatherapp.data.repository.preference.PreferencesRepo;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;

@@ -22,6 +22,7 @@ ext {
     espressoVersion = "3.0.0"
     testRunnerVersion = "1.0.0"
     testRulesVersion = "1.0.0"
+    robolectricVersion = "3.4"
 
     support = [
             appCompat         : "com.android.support:appcompat-v7:$supportLibraryVersion",
@@ -63,9 +64,10 @@ ext {
     ]
 
     unitTest = [
-            mockito: "org.mockito:mockito-core:$mockitoVersion",
-            junit  : "junit:junit:$junitVersion",
-            assertJ: "org.assertj:assertj-core:$assertJVersion",
+            mockito    : "org.mockito:mockito-core:$mockitoVersion",
+            junit      : "junit:junit:$junitVersion",
+            assertJ    : "org.assertj:assertj-core:$assertJVersion",
+            robolectric: "org.robolectric:robolectric:$robolectricVersion"
     ]
 
     uiTest = [

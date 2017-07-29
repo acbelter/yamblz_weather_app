@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
-import com.acbelter.weatherapp.data.repository.PreferencesRepo;
+import com.acbelter.weatherapp.data.repository.preference.PreferencesRepo;
 import com.takisoft.fix.support.v7.preference.PreferenceFragmentCompat;
 
 import javax.inject.Inject;

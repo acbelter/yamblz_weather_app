@@ -47,5 +47,5 @@ dependencies {
     testCompile unitTest.junit
     testCompile unitTest.mockito
     testCompile unitTest.assertJ
-
+    testCompile unitTest.robolectric
 }

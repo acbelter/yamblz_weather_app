@@ -1,8 +1,7 @@
-package com.acbelter.weatherapp.data.repository;
+package com.acbelter.weatherapp.data.repository.preference;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.support.annotation.VisibleForTesting;
 
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherType;
@@ -20,8 +19,8 @@ public class PreferencesRepo {
 
     private SharedPreferences mPrefs;
 
-    public PreferencesRepo(Context context) {
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+    public PreferencesRepo(SharedPreferences sharedPreferences) {
+        mPrefs = sharedPreferences;
     }
 
     public void addListener(SharedPreferences.OnSharedPreferenceChangeListener listener) {
@@ -82,7 +81,8 @@ public class PreferencesRepo {
         return new Gson().fromJson(weatherDataJson, WeatherDataWrapper.class).toWeatherData();
     }
 
-    private static class WeatherDataWrapper {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    static class WeatherDataWrapper {
         @SerializedName("city")
         @Expose
         String city;
