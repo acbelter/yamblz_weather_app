@@ -1,7 +1,5 @@
 package com.acbelter.weatherapp.data.netmodel;
 
-import android.support.annotation.VisibleForTesting;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -47,9 +45,4 @@ public class NetworkWeatherData {
     @SerializedName("cod")
     @Expose
     public int code;
-
-    @VisibleForTesting
-    public void setName(String name) {
-        this.name = name;
-    }
 }

@@ -1,6 +1,5 @@
-package data.weather;
+package com.acbelter.weatherapp.domain.interactor;
 
-import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
@@ -17,16 +16,17 @@ import io.reactivex.observers.TestObserver;
 import io.reactivex.subjects.PublishSubject;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class WeatherDataNetworkTest {
-
-    @Mock
-    private WeatherRepo repoMock;
+public class WeatherDataInteractorTest {
 
     @InjectMocks
     private WeatherInteractor weatherInteractor;
+
+    @Mock
+    private WeatherRepo mockWeatherRepo;
 
     @Before
     public void setUp() {
@@ -34,9 +34,21 @@ public class WeatherDataNetworkTest {
     }
 
     @Test
+    public void testGetCityListFromRepo() {
+        String partOfCity = "Mos";
+        WeatherParams weatherParams = new WeatherParams(partOfCity);
+
+        PublishSubject<WeatherData> subject = PublishSubject.create();
+        when(mockWeatherRepo.getCurrentWeather(any(WeatherParams.class))).thenReturn(subject);
+
+        weatherInteractor.getCurrentWeather(weatherParams);
+        verify(mockWeatherRepo).getCurrentWeather(weatherParams);
+    }
+
+    @Test
     public void testSendingDataFromRepoToInteractor() {
         PublishSubject<WeatherData> subject = PublishSubject.create();
-        when(repoMock.getCurrentWeather(any(WeatherParams.class))).thenReturn(subject);
+        when(mockWeatherRepo.getCurrentWeather(any(WeatherParams.class))).thenReturn(subject);
 
         TestObserver<WeatherData> moscow = weatherInteractor.getCurrentWeather(new WeatherParams("Moscow"))
                 .test();
@@ -46,3 +58,4 @@ public class WeatherDataNetworkTest {
                 .assertValue(weatherData);
     }
 }
+

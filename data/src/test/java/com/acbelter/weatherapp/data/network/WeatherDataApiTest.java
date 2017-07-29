@@ -1,12 +1,11 @@
-package data.city;
+package com.acbelter.weatherapp.data.network;
 
 import com.acbelter.weatherapp.data.network.LocationApi;
 import com.acbelter.weatherapp.data.network.NetworkService;
 import com.acbelter.weatherapp.data.network.NetworkServiceImpl;
 import com.acbelter.weatherapp.data.network.PlacesApi;
 import com.acbelter.weatherapp.data.network.WeatherApi;
-import com.acbelter.weatherapp.data.placesmodel.Places;
-import com.acbelter.weatherapp.domain.model.city.CityParams;
+import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +21,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CityDataApiTest {
+public class WeatherDataApiTest {
 
     @Mock
     WeatherApi mockWeatherApi;
@@ -44,11 +43,11 @@ public class CityDataApiTest {
     @Test
     public void testGetPlaceIdFromApi() {
         String partOfCity = "Mos";
-        CityParams cityParams = new CityParams(partOfCity);
+        WeatherParams weatherParams = new WeatherParams(partOfCity);
 
-        PublishSubject<Places> subject = PublishSubject.create();
-        when(mockPlacesApi.getPlaces(anyString())).thenReturn(subject);
-        networkService.getLocation(cityParams);
-        verify(mockPlacesApi).getPlaces(partOfCity);
+        PublishSubject<String> subject = PublishSubject.create();
+        when(mockWeatherApi.getCurrentWeatherData(anyString(), anyString())).thenReturn(subject);
+        networkService.getCurrentWeather(weatherParams);
+        verify(mockWeatherApi).getCurrentWeatherData(anyString(), anyString());
     }
 }

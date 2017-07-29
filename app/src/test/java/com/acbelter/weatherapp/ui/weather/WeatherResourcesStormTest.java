@@ -1,16 +1,15 @@
-package resources;
+package com.acbelter.weatherapp.ui.weather;
 
 
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherType;
-import com.acbelter.weatherapp.ui.weather.WeatherRes;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 
-import resources.common.ResourceUtil;
+import com.acbelter.weatherapp.ui.weather.common.ResourceUtil;
 import xyz.matteobattilana.library.Common.Constants;
 
 import static org.junit.Assert.assertEquals;

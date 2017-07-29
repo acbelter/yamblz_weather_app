@@ -1,4 +1,4 @@
-package resources.common;
+package com.acbelter.weatherapp.ui.weather.common;
 
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 
