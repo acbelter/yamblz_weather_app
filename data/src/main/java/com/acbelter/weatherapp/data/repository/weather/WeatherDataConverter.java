@@ -20,7 +20,7 @@ public class WeatherDataConverter {
 
     public static WeatherData fromNetworkData(NetworkWeatherData netData) {
         if (netData == null) {
-            throw new IllegalArgumentException("Converted object must be not null");
+                throw new IllegalArgumentException("Converted object must be not null");
         }
 
         if (netData.code != 200) {

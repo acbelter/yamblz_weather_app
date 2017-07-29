@@ -1,4 +1,4 @@
-package data;
+package data.weather;
 
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;

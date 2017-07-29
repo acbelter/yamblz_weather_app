@@ -1,4 +1,4 @@
-package data;
+package data.city;
 
 import com.acbelter.weatherapp.data.network.LocationApi;
 import com.acbelter.weatherapp.data.network.NetworkService;

@@ -49,7 +49,7 @@ public class NetworkWeatherData {
     public int code;
 
     @VisibleForTesting
-    public void setCoord(Coord coord) {
-        this.coord = coord;
+    public void setName(String name) {
+        this.name = name;
     }
 }

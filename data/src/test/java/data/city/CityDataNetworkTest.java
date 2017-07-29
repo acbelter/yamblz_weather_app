@@ -1,5 +1,4 @@
-package data;
-
+package data.city;
 
 import com.acbelter.weatherapp.domain.interactor.CityInteractor;
 import com.acbelter.weatherapp.domain.model.city.CityData;
@@ -41,5 +40,4 @@ public class CityDataNetworkTest {
                 .assertNoErrors()
                 .assertValue(l -> l.size() == 1);
     }
-
 }
