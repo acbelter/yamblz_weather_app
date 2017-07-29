@@ -1,13 +1,9 @@
 package com.acbelter.weatherapp.data.repository.preference;
 
 import android.content.SharedPreferences;
-import android.support.annotation.VisibleForTesting;
 
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
-import com.acbelter.weatherapp.domain.model.weather.WeatherType;
 import com.google.gson.Gson;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import io.reactivex.annotations.Nullable;
 
@@ -66,7 +62,7 @@ public class PreferencesRepo {
             return;
         }
 
-        String weatherDataJson = new Gson().toJson(new WeatherDataWrapper(weatherData));
+        String weatherDataJson = new Gson().toJson(weatherData);
         mPrefs.edit().putString(KEY_LAST_WEATHER_DATA, weatherDataJson).apply();
     }
 
@@ -78,48 +74,6 @@ public class PreferencesRepo {
         }
 
         String weatherDataJson = mPrefs.getString(KEY_LAST_WEATHER_DATA, null);
-        return new Gson().fromJson(weatherDataJson, WeatherDataWrapper.class).toWeatherData();
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    static class WeatherDataWrapper {
-        @SerializedName("city")
-        @Expose
-        String city;
-        @SerializedName("kelvin_temperature")
-        @Expose
-        float kelvinTemperature;
-        @SerializedName("weather_type_name")
-        @Expose
-        String weatherTypeName;
-        @SerializedName("timestamp")
-        @Expose
-        long timestamp;
-        @SerializedName("sunrise_timestamp")
-        @Expose
-        long sunriseTimestamp;
-        @SerializedName("sunset_timestamp")
-        @Expose
-        long sunsetTimestamp;
-
-        WeatherDataWrapper(WeatherData weatherData) {
-            city = weatherData.getCity();
-            kelvinTemperature = weatherData.getTemperatureK();
-            weatherTypeName = weatherData.getWeatherType().name();
-            timestamp = weatherData.getTimestamp();
-            sunriseTimestamp = weatherData.getSunriseTimestamp();
-            sunsetTimestamp = weatherData.getSunsetTimestamp();
-        }
-
-        WeatherData toWeatherData() {
-            WeatherData weatherData = new WeatherData();
-            weatherData.setCity(city);
-            weatherData.setTemperatureK(kelvinTemperature);
-            weatherData.setWeatherType(WeatherType.valueOf(weatherTypeName));
-            weatherData.setTimestamp(timestamp);
-            weatherData.setSunriseTimestamp(sunriseTimestamp);
-            weatherData.setSunsetTimestamp(sunsetTimestamp);
-            return weatherData;
-        }
+        return new Gson().fromJson(weatherDataJson, WeatherData.class);
     }
 }
