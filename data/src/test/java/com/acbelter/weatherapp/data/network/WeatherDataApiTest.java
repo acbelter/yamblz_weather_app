@@ -1,10 +1,5 @@
 package com.acbelter.weatherapp.data.network;
 
-import com.acbelter.weatherapp.data.network.LocationApi;
-import com.acbelter.weatherapp.data.network.NetworkService;
-import com.acbelter.weatherapp.data.network.NetworkServiceImpl;
-import com.acbelter.weatherapp.data.network.PlacesApi;
-import com.acbelter.weatherapp.data.network.WeatherApi;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 
 import org.junit.Before;

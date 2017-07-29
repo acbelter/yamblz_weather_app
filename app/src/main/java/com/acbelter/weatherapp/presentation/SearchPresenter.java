@@ -41,7 +41,7 @@ public class SearchPresenter extends BasePresenter<SearchView> {
 
     public void saveSelectedCityAndWeather(CityData cityData) {
         mCityInteractor.saveSelectedCity(cityData);
-        WeatherParams params = new WeatherParams(cityData.getCityName());
+        WeatherParams params = new WeatherParams(cityData.getFormattedAddress());
         updateWeather(params);
     }
 

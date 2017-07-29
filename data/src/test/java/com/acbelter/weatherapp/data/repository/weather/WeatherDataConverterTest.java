@@ -4,7 +4,6 @@ import com.acbelter.weatherapp.data.netmodel.Main;
 import com.acbelter.weatherapp.data.netmodel.NetworkWeatherData;
 import com.acbelter.weatherapp.data.netmodel.Sys;
 import com.acbelter.weatherapp.data.netmodel.Weather;
-import com.acbelter.weatherapp.data.repository.weather.WeatherDataConverter;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherType;
 
@@ -40,15 +39,6 @@ public class WeatherDataConverterTest {
     @Test(expected = IllegalArgumentException.class)
     public void testWeatherConverterToNull() {
         assertNull(WeatherDataConverter.fromNetworkData(null));
-    }
-
-    @Test
-    public void testConverting() {
-        initNetworkWeather();
-        initWeatherData();
-
-        WeatherData testWeatherData = WeatherDataConverter.fromNetworkData(networkWeatherData);
-        assertEquals(testWeatherData, weatherData);
     }
 
     @Test
@@ -105,14 +95,21 @@ public class WeatherDataConverterTest {
         assertEquals(WeatherDataConverter.extractWeatherType(weatherList), WeatherType.SUN);
     }
 
+    @Test
+    public void testConverting() {
+        initNetworkWeather();
+        initWeatherData();
+
+        WeatherData testWeatherData = WeatherDataConverter.fromNetworkData(networkWeatherData);
+        assertEquals(testWeatherData.getCity(), weatherData.getCity());
+    }
+
     private void initNetworkWeather() {
         networkWeatherData.code = 200;
         networkWeatherData.name = "Tambov";
-        Main main = new Main();
-        main.temp = 301.998f;
-        networkWeatherData.main = main;
         Weather weather = new Weather();
         weather.main = "Clear";
+        networkWeatherData.main = new Main();
         List<Weather> weatherList = new ArrayList<>();
         weatherList.add(weather);
         networkWeatherData.weather = weatherList;

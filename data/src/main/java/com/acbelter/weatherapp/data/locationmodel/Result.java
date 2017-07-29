@@ -1,5 +1,7 @@
 package com.acbelter.weatherapp.data.locationmodel;
 
+import android.support.annotation.VisibleForTesting;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -113,4 +115,13 @@ public class Result {
         return vicinity;
     }
 
+    @VisibleForTesting
+    public void setFormattedAddress(String address) {
+        this.formattedAddress = address;
+    }
+
+    @VisibleForTesting
+    public void setGeometry(Geometry geometry) {
+        this.geometry = geometry;
+    }
 }

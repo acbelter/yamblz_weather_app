@@ -81,7 +81,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
         }
 
         public void bind(final CityData item) {
-            tvCity.setText(item.getCityName());
+            tvCity.setText(item.getFormattedAddress());
         }
     }
 }
