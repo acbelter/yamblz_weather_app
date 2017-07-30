@@ -6,7 +6,6 @@ import com.acbelter.weatherapp.domain.model.city.CityParams;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -45,6 +44,6 @@ public class CityDataApiTest {
         PublishSubject<Places> subject = PublishSubject.create();
         when(mockPlacesApi.getPlaces(anyString())).thenReturn(subject);
         networkService.getLocation(cityParams);
-        verify(mockPlacesApi).getPlaces(partOfCity);
+        verify(mockPlacesApi).getPlaces(anyString());
     }
 }

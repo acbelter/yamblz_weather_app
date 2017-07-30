@@ -8,23 +8,24 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class WeatherInteractor {
 
     private WeatherRepo mWeatherRepo;
     private Scheduler mSchedulerIO;
+    private Scheduler mSchedulerMain;
 
     @Inject
-    public WeatherInteractor(WeatherRepo weatherRepo, Scheduler schedulersIO) {
+    public WeatherInteractor(WeatherRepo weatherRepo, Scheduler schedulersIO, Scheduler schedulerMain) {
         mWeatherRepo = weatherRepo;
         mSchedulerIO = schedulersIO;
+        mSchedulerMain = schedulerMain;
     }
 
     public Observable<WeatherData> getCurrentWeather(WeatherParams params) {
         return mWeatherRepo.getCurrentWeather(params)
                 .subscribeOn(mSchedulerIO)
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(mSchedulerMain);
     }
 
     public void saveWeather(WeatherData weatherData) {

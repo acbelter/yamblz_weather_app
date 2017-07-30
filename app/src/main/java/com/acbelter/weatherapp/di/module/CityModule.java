@@ -24,6 +24,6 @@ public class CityModule {
     @Provides
     @ActivityScope
     CityInteractor provideCityInteractor(CityRepo cityRepo) {
-        return new CityInteractor(cityRepo, Schedulers.io());
+        return new CityInteractor(cityRepo, Schedulers.io(), AndroidSchedulers.mainThread());
     }
 }

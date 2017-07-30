@@ -12,8 +12,6 @@ import com.arellomobile.mvp.InjectViewState;
 
 import javax.inject.Inject;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 @InjectViewState

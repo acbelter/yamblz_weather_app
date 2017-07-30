@@ -23,6 +23,7 @@ import io.reactivex.Single;
 import io.reactivex.schedulers.TestScheduler;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -56,9 +57,6 @@ public class SearchPresenterTest {
     public void testShowCityListSuccess() {
         List<CityData> list = new ArrayList<>();
         CityData cityData = new CityData();
-        cityData.setLongitude(55.31f);
-        cityData.setLatitude(54.01f);
-        cityData.setFormattedAddress("Moscow, Yandex");
         list.add(cityData);
 
         Single<List<CityData>> subject = Single.just(list).subscribeOn(testScheduler);
@@ -66,7 +64,7 @@ public class SearchPresenterTest {
 
         presenter.showCityList("Moscow");
         testScheduler.triggerActions();
-        verify(mockView).updateCityList(list);
+        verify(mockView).updateCityList(anyListOf(CityData.class));
     }
 
     @Test
@@ -87,13 +85,12 @@ public class SearchPresenterTest {
         when(mockWeatherInteractor.getCurrentWeather(any(WeatherParams.class))).thenReturn(weatherSubject);
 
         CityData cityData = new CityData();
-        cityData.setFormattedAddress("Moscow, Yandex");
         presenter.saveSelectedCityAndWeather(cityData);
 
         testScheduler.triggerActions();
-        verify(mockCityInteractor).saveSelectedCity(cityData);
+        verify(mockCityInteractor).saveSelectedCity(any(CityData.class));
         verify(mockWeatherInteractor).getCurrentWeather(any(WeatherParams.class));
-        verify(mockWeatherInteractor).saveWeather(weatherData);
+        verify(mockWeatherInteractor).saveWeather(any(WeatherData.class));
         verify(mockView).close();
     }
 }

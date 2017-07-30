@@ -10,6 +10,7 @@ import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 @Module
@@ -24,6 +25,6 @@ public class WeatherModule {
     @Provides
     @ActivityScope
     WeatherInteractor provideWeatherInteractor(WeatherRepo weatherRepo) {
-        return new WeatherInteractor(weatherRepo, Schedulers.io());
+        return new WeatherInteractor(weatherRepo, Schedulers.io(), AndroidSchedulers.mainThread());
     }
 }
