@@ -1,10 +1,10 @@
-package com.acbelter.weatherapp.data.repository;
+package com.acbelter.weatherapp.data.repository.weather;
 
 import com.acbelter.weatherapp.data.dbmodel.DatabaseWeatherData;
 import com.acbelter.weatherapp.data.netmodel.NetworkWeatherData;
 import com.acbelter.weatherapp.data.netmodel.Weather;
-import com.acbelter.weatherapp.domain.model.WeatherData;
-import com.acbelter.weatherapp.domain.model.WeatherType;
+import com.acbelter.weatherapp.domain.model.weather.WeatherData;
+import com.acbelter.weatherapp.domain.model.weather.WeatherType;
 
 import java.util.HashSet;
 import java.util.List;

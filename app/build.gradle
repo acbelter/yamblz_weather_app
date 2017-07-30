@@ -21,10 +21,10 @@ android {
 
     signingConfigs {
         release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties["keyAlias"]
+            keyPassword keystoreProperties["keyPassword"]
+            storeFile file(keystoreProperties["storeFile"])
+            storePassword keystoreProperties["storePassword"]
         }
     }
 
@@ -44,6 +44,7 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
 }
 
 dependencies {
@@ -59,6 +60,8 @@ dependencies {
 
     compile rx.rxAndroid
     compile rx.rxJava
+    compile rx.rxBinding
+    compile rx.rxBindingDesign
 
     compile lib.dagger2
     annotationProcessor compiler.dagger2

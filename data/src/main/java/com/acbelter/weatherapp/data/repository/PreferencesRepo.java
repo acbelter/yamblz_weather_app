@@ -4,11 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.acbelter.weatherapp.domain.model.WeatherData;
-import com.acbelter.weatherapp.domain.model.WeatherType;
+import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.google.gson.Gson;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+
+import io.reactivex.annotations.Nullable;
 
 public class PreferencesRepo {
     public static final String KEY_CURRENT_CITY = "pref_current_city";
@@ -40,7 +39,7 @@ public class PreferencesRepo {
 
     public String getCurrentCity() {
         // FIXME Don't use Moscow as default city
-        return mPrefs.getString(KEY_CURRENT_CITY, "Moscow");
+        return mPrefs.getString(KEY_CURRENT_CITY, "Moscow, TN 38057");
     }
 
     public void setUpdateInterval(int interval) {
@@ -65,57 +64,18 @@ public class PreferencesRepo {
             return;
         }
 
-        String weatherDataJson = new Gson().toJson(new WeatherDataWrapper(weatherData));
+        String weatherDataJson = new Gson().toJson(weatherData);
         mPrefs.edit().putString(KEY_LAST_WEATHER_DATA, weatherDataJson).apply();
     }
 
-    public WeatherData getLastWeatherData() {
+    public
+    @Nullable
+    WeatherData getLastWeatherData() {
         if (!mPrefs.contains(KEY_LAST_WEATHER_DATA)) {
             return null;
         }
 
         String weatherDataJson = mPrefs.getString(KEY_LAST_WEATHER_DATA, null);
-        return new Gson().fromJson(weatherDataJson, WeatherDataWrapper.class).toWeatherData();
-    }
-
-    private static class WeatherDataWrapper {
-        @SerializedName("city")
-        @Expose
-        String city;
-        @SerializedName("kelvin_temperature")
-        @Expose
-        float kelvinTemperature;
-        @SerializedName("weather_type_name")
-        @Expose
-        String weatherTypeName;
-        @SerializedName("timestamp")
-        @Expose
-        long timestamp;
-        @SerializedName("sunrise_timestamp")
-        @Expose
-        long sunriseTimestamp;
-        @SerializedName("sunset_timestamp")
-        @Expose
-        long sunsetTimestamp;
-
-        WeatherDataWrapper(WeatherData weatherData) {
-            city = weatherData.getCity();
-            kelvinTemperature = weatherData.getTemperatureK();
-            weatherTypeName = weatherData.getWeatherType().name();
-            timestamp = weatherData.getTimestamp();
-            sunriseTimestamp = weatherData.getSunriseTimestamp();
-            sunsetTimestamp = weatherData.getSunsetTimestamp();
-        }
-
-        WeatherData toWeatherData() {
-            WeatherData weatherData = new WeatherData();
-            weatherData.setCity(city);
-            weatherData.setTemperatureK(kelvinTemperature);
-            weatherData.setWeatherType(WeatherType.valueOf(weatherTypeName));
-            weatherData.setTimestamp(timestamp);
-            weatherData.setSunriseTimestamp(sunriseTimestamp);
-            weatherData.setSunsetTimestamp(sunsetTimestamp);
-            return weatherData;
-        }
+        return new Gson().fromJson(weatherDataJson, WeatherData.class);
     }
 }

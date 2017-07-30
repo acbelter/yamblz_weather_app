@@ -11,9 +11,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.EditText;
 
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.ui.about.AboutActivity;
+import com.acbelter.weatherapp.ui.search.SearchActivity;
 import com.acbelter.weatherapp.ui.settings.SettingsActivity;
 import com.acbelter.weatherapp.ui.weather.WeatherFragment;
 import com.arellomobile.mvp.MvpAppCompatActivity;
@@ -52,6 +56,18 @@ public class MainActivity extends MvpAppCompatActivity implements
             ft.replace(R.id.content_frame, new WeatherFragment(), WeatherFragment.tag());
             ft.commit();
         }
+
+        View header = mNavigationView.getHeaderView(0);
+        EditText etSearch = (EditText) header.findViewById(R.id.etSearchOnHeader);
+
+        etSearch.setOnTouchListener((view, motionEvent) -> {
+            if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
+                showSearch();
+                mDrawerLayout.closeDrawers();
+            }
+
+            return true;
+        });
     }
 
     @Override
@@ -98,6 +114,12 @@ public class MainActivity extends MvpAppCompatActivity implements
     private void showAbout() {
         Intent aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
         startActivity(aboutIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    private void showSearch() {
+        Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
+        startActivity(searchIntent);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }
