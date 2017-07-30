@@ -20,6 +20,7 @@ android {
 
 dependencies {
     compile rx.rxJava2
+    compile rx.rxAndroid
 
     compile lib.dagger2
     annotationProcessor compiler.dagger2

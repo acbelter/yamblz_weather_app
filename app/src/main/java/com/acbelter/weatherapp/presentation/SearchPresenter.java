@@ -31,8 +31,6 @@ public class SearchPresenter extends BasePresenter<SearchView> {
     public void showCityList(String input) {
         CityParams cityParams = new CityParams(input);
         unsubscribeOnDetach(mCityInteractor.getCityList(cityParams)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(cityDatas ->
                                 getViewState().updateCityList(cityDatas),
                         throwable -> getViewState().showError()));
@@ -47,8 +45,6 @@ public class SearchPresenter extends BasePresenter<SearchView> {
 
     private void updateWeather(WeatherParams params) {
         unsubscribeOnDetach(mWeatherInteractor.getCurrentWeather(params)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(weatherData -> {
                             Timber.d("getCurrentWeather->onNext()");
                             saveWeather(weatherData);
