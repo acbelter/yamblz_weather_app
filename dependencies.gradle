@@ -21,7 +21,6 @@ ext {
     assertJVersion = "2.5.0"
     espressoVersion = "3.0.0"
     testRunnerVersion = "1.0.0"
-    testRulesVersion = "1.0.0"
     robolectricVersion = "3.4"
 
     support = [

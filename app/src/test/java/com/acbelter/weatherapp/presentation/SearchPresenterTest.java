@@ -6,14 +6,15 @@ import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.city.CityParams;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
-import com.acbelter.weatherapp.domain.repository.CityRepo;
 import com.acbelter.weatherapp.ui.search.SearchView;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class SearchPresenterTest {
 
     @Mock
@@ -37,9 +39,6 @@ public class SearchPresenterTest {
 
     @Mock
     SearchView mockView;
-
-    @Mock
-    CityRepo mockCityRepo;
 
     @InjectMocks
     SearchPresenter presenter;
@@ -59,7 +58,7 @@ public class SearchPresenterTest {
         CityData cityData = new CityData();
         list.add(cityData);
 
-        Single<List<CityData>> subject = Single.just(list).subscribeOn(testScheduler);
+        Single<List<CityData>> subject = Single.just(list);
         when(mockCityInteractor.getCityList(any(CityParams.class))).thenReturn(subject);
 
         presenter.showCityList("Moscow");
@@ -81,7 +80,7 @@ public class SearchPresenterTest {
     @Test
     public void testSaveSelectedCityAndWeather() {
         WeatherData weatherData = new WeatherData();
-        Observable<WeatherData> weatherSubject = Observable.just(weatherData).subscribeOn(testScheduler);
+        Observable<WeatherData> weatherSubject = Observable.just(weatherData);
         when(mockWeatherInteractor.getCurrentWeather(any(WeatherParams.class))).thenReturn(weatherSubject);
 
         CityData cityData = new CityData();
