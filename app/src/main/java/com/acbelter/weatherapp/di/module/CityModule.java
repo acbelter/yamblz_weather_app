@@ -1,14 +1,16 @@
 package com.acbelter.weatherapp.di.module;
 
 import com.acbelter.weatherapp.data.network.NetworkService;
-import com.acbelter.weatherapp.data.repository.PreferencesRepo;
 import com.acbelter.weatherapp.data.repository.city.CityRepoImpl;
+import com.acbelter.weatherapp.data.repository.preference.PreferencesRepo;
 import com.acbelter.weatherapp.di.scope.ActivityScope;
 import com.acbelter.weatherapp.domain.interactor.CityInteractor;
 import com.acbelter.weatherapp.domain.repository.CityRepo;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 @Module
 public class CityModule {
@@ -22,6 +24,6 @@ public class CityModule {
     @Provides
     @ActivityScope
     CityInteractor provideCityInteractor(CityRepo cityRepo) {
-        return new CityInteractor(cityRepo);
+        return new CityInteractor(cityRepo, Schedulers.io(), AndroidSchedulers.mainThread());
     }
 }

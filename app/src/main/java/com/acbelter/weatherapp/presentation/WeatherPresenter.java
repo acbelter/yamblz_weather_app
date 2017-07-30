@@ -3,7 +3,7 @@ package com.acbelter.weatherapp.presentation;
 import android.content.Context;
 
 import com.acbelter.weatherapp.WeatherUpdateScheduler;
-import com.acbelter.weatherapp.data.repository.PreferencesRepo;
+import com.acbelter.weatherapp.data.repository.preference.PreferencesRepo;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
@@ -13,8 +13,6 @@ import com.arellomobile.mvp.InjectViewState;
 
 import javax.inject.Inject;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 @InjectViewState
@@ -60,8 +58,6 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
         WeatherParams params = new WeatherParams(city);
 
         unsubscribeOnDetach(mWeatherInteractor.getCurrentWeather(params)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         weatherData -> {
                             Timber.d("getCurrentWeather->onNext()");

@@ -1,8 +1,6 @@
-package com.acbelter.weatherapp.data.repository;
+package com.acbelter.weatherapp.data.repository.preference;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.google.gson.Gson;
@@ -17,8 +15,8 @@ public class PreferencesRepo {
 
     private SharedPreferences mPrefs;
 
-    public PreferencesRepo(Context context) {
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+    public PreferencesRepo(SharedPreferences sharedPreferences) {
+        mPrefs = sharedPreferences;
     }
 
     public void addListener(SharedPreferences.OnSharedPreferenceChangeListener listener) {

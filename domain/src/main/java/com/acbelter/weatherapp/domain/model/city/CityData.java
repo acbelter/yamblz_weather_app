@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 public class CityData implements Parcelable {
 
-    private String cityName;
+    private String formattedAddress;
     private double latitude;
     private double longitude;
 
@@ -14,7 +14,7 @@ public class CityData implements Parcelable {
     }
 
     protected CityData(Parcel in) {
-        cityName = in.readString();
+        formattedAddress = in.readString();
         latitude = in.readDouble();
         longitude = in.readDouble();
     }
@@ -31,12 +31,12 @@ public class CityData implements Parcelable {
         }
     };
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
+    public void setFormattedAddress(String formattedAddress) {
+        this.formattedAddress = formattedAddress;
     }
 
-    public String getCityName() {
-        return cityName;
+    public String getFormattedAddress() {
+        return formattedAddress;
     }
 
     public void setLatitude(double latitude) {
@@ -62,7 +62,7 @@ public class CityData implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(cityName);
+        parcel.writeString(formattedAddress);
         parcel.writeDouble(latitude);
         parcel.writeDouble(longitude);
     }
@@ -74,13 +74,13 @@ public class CityData implements Parcelable {
         if (!(o instanceof CityData))
             return false;
         CityData cityData = (CityData) o;
-        return cityData.cityName.equals(cityName) && cityData.latitude == latitude && cityData.longitude == longitude;
+        return cityData.formattedAddress.equals(formattedAddress);
     }
 
     @Override
     public int hashCode() {
         int result = 17;
-        result = 31 * result + (cityName == null ? 0 : cityName.hashCode());
+        result = 31 * result + (formattedAddress == null ? 0 : formattedAddress.hashCode());
         result = 31 * result + Double.valueOf(latitude).hashCode();
         result = 31 * result + Double.valueOf(longitude).hashCode();
         return result;
@@ -88,7 +88,7 @@ public class CityData implements Parcelable {
 
     @Override
     public String toString() {
-        return "(cityName=" + cityName +
+        return "(formattedAddress=" + formattedAddress +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ")";

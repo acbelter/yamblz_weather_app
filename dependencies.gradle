@@ -10,6 +10,8 @@ ext {
     supportLibraryVersion = "25.4.0"
     retrofitVersion = "2.3.0"
     daggerVersion = "2.11"
+    rxJava2Version = "2.1.0"
+    rxAndroidVersion = "2.0.1"
     moxyVersion = "1.5.3"
     butterknifeVersion = "8.6.0"
     rxBindingVersion = "2.0.0"
@@ -17,11 +19,15 @@ ext {
     mockitoVersion = "1.10.19"
     junitVersion = "4.12"
     assertJVersion = "2.5.0"
+    espressoVersion = "3.0.0"
+    testRunnerVersion = "1.0.0"
+    robolectricVersion = "3.4"
 
     support = [
-            appCompat       : "com.android.support:appcompat-v7:$supportLibraryVersion",
-            design          : "com.android.support:design:$supportLibraryVersion",
-            constraintLayout: "com.android.support.constraint:constraint-layout:1.0.2",
+            appCompat         : "com.android.support:appcompat-v7:$supportLibraryVersion",
+            design            : "com.android.support:design:$supportLibraryVersion",
+            constraintLayout  : "com.android.support.constraint:constraint-layout:1.0.2",
+            supportAnnotations: "com.android.support:support-annotations:$supportLibraryVersion"
     ]
 
     ui = [
@@ -30,8 +36,8 @@ ext {
     ]
 
     rx = [
-            rxJava         : "io.reactivex.rxjava2:rxjava:2.1.0",
-            rxAndroid      : "io.reactivex.rxjava2:rxandroid:2.0.1",
+            rxJava2        : "io.reactivex.rxjava2:rxjava:$rxJava2Version",
+            rxAndroid      : "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion",
             rxBinding      : "com.jakewharton.rxbinding2:rxbinding:$rxBindingVersion",
             rxBindingDesign: "com.jakewharton.rxbinding2:rxbinding-design:$rxBindingVersion",
     ]
@@ -56,9 +62,16 @@ ext {
             butterknife: "com.jakewharton:butterknife-compiler:$butterknifeVersion",
     ]
 
-    test = [
-            mockito: "org.mockito:mockito-core:$mockitoVersion",
-            junit  : "junit:junit:$junitVersion",
-            assertJ: "org.assertj:assertj-core:$assertJVersion"
+    unitTest = [
+            mockito    : "org.mockito:mockito-core:$mockitoVersion",
+            junit      : "junit:junit:$junitVersion",
+            assertJ    : "org.assertj:assertj-core:$assertJVersion",
+            robolectric: "org.robolectric:robolectric:$robolectricVersion"
+    ]
+
+    uiTest = [
+            espressoCore   : "com.android.support.test.espresso:espresso-core:$espressoVersion",
+            espressoContrib: "com.android.support.test.espresso:espresso-contrib:$espressoVersion",
+            runner         : "com.android.support.test:runner:$testRunnerVersion"
     ]
 }

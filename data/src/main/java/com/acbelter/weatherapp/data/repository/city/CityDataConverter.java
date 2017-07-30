@@ -18,7 +18,7 @@ public class CityDataConverter {
         }
 
         CityData cityData = new CityData();
-        cityData.setCityName(location.getResult().getFormattedAddress());
+        cityData.setFormattedAddress(location.getResult().getFormattedAddress());
         cityData.setLatitude(location.getResult().getGeometry().getLocation().getLat());
         cityData.setLongitude(location.getResult().getGeometry().getLocation().getLng());
         return cityData;

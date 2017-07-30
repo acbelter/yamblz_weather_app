@@ -27,4 +27,7 @@
     <string name="city_search">Поиск города</string>
     <string name="city_name">Название города</string>
     <string name="get_city_list_error">Невозможно получить список городов</string>
+
+    <!--Test strings-->
+    <string name="version_test">Версия</string>
 </resources>

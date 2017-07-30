@@ -29,7 +29,10 @@ android {
 
 dependencies {
     compile project(path: ':domain')
-    compile rx.rxJava
+
+    compile support.supportAnnotations
+
+    compile rx.rxJava2
     compile lib.retrofit2
     compile lib.retrofit2_adapter
     compile lib.retrofit2_scalars
@@ -41,7 +44,8 @@ dependencies {
     compile lib.dagger2
     annotationProcessor compiler.dagger2
 
-    testCompile test.junit
-    testCompile test.mockito
-    testCompile test.assertJ
+    testCompile unitTest.junit
+    testCompile unitTest.mockito
+    testCompile unitTest.assertJ
+    testCompile unitTest.robolectric
 }

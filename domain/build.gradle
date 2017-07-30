@@ -19,8 +19,13 @@ android {
 }
 
 dependencies {
-    compile rx.rxJava
+    compile rx.rxJava2
+    compile rx.rxAndroid
 
     compile lib.dagger2
     annotationProcessor compiler.dagger2
+
+    testCompile unitTest.junit
+    testCompile unitTest.mockito
+    testCompile unitTest.assertJ
 }
