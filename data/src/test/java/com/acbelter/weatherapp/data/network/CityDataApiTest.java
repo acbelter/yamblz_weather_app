@@ -38,8 +38,7 @@ public class CityDataApiTest {
 
     @Test
     public void testGetPlaceIdFromApi() {
-        String partOfCity = "Mos";
-        CityParams cityParams = new CityParams(partOfCity);
+        CityParams cityParams = new CityParams("Mos");
 
         PublishSubject<Places> subject = PublishSubject.create();
         when(mockPlacesApi.getPlaces(anyString())).thenReturn(subject);

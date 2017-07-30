@@ -47,7 +47,6 @@ public class PreferenceRepoTest {
 
     @Test
     public void testDefaultLastWeatherData() {
-        String weatherData = null;
         assertNull(preferencesRepo.getLastWeatherData());
     }
 
@@ -84,10 +83,4 @@ public class PreferenceRepoTest {
         preferencesRepo.setLastWeatherData(savedWeatherData);
         assertEquals(preferencesRepo.getLastWeatherData(), savedWeatherData);
     }
-
-    @Test
-    public void testToWeatherData() {
-
-    }
-
 }

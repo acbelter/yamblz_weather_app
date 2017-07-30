@@ -40,11 +40,6 @@ public class CityDataInteractorTest {
     }
 
     @Test
-    public void simpleTest() {
-
-    }
-
-    @Test
     public void testGetCityListFromRepo() {
         CityParams cityParams = new CityParams("Mos");
 
@@ -54,13 +49,12 @@ public class CityDataInteractorTest {
         cityInteractor.getCityList(cityParams);
 
         testScheduler.triggerActions();
-        verify(mockCityRepo).getCity(cityParams);
+        verify(mockCityRepo).getCity(any(CityParams.class));
     }
 
     @Test
     public void testSendingDataFromRepoToInteractor() {
         when(mockCityRepo.getCity(any(CityParams.class))).thenReturn(Observable.just(new CityData()));
-
 
         TestObserver<List<CityData>> observer = cityInteractor.getCityList(new CityParams("Moscow")).test();
 

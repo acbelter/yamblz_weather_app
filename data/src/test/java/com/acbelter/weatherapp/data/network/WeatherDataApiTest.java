@@ -37,8 +37,7 @@ public class WeatherDataApiTest {
 
     @Test
     public void testGetPlaceIdFromApi() {
-        String partOfCity = "Mos";
-        WeatherParams weatherParams = new WeatherParams(partOfCity);
+        WeatherParams weatherParams = new WeatherParams("Mos");
 
         PublishSubject<String> subject = PublishSubject.create();
         when(mockWeatherApi.getCurrentWeatherData(anyString(), anyString())).thenReturn(subject);

@@ -2,7 +2,6 @@ package com.acbelter.weatherapp.presentation;
 
 import android.content.Context;
 
-import com.acbelter.weatherapp.data.netmodel.Weather;
 import com.acbelter.weatherapp.data.repository.preference.PreferencesRepo;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
@@ -22,8 +21,6 @@ import io.reactivex.schedulers.TestScheduler;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -51,7 +48,6 @@ public class WeatherPresenterTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         testScheduler = new TestScheduler();
-        presenter = new WeatherPresenter(mockContext, mockPreferencesRepo, mockWeatherInteractor);
         presenter.attachView(mockView);
     }
 
@@ -68,7 +64,6 @@ public class WeatherPresenterTest {
     public void testUpdateWeatherSuccess() {
         WeatherData weatherData = new WeatherData();
         Observable<WeatherData> subject = Observable.just(weatherData);
-
         when(mockWeatherInteractor.getCurrentWeather(any(WeatherParams.class))).thenReturn(subject);
         when(mockPreferencesRepo.getCurrentCity()).thenReturn("Moscow");
 
