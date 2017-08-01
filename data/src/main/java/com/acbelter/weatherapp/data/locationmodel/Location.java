@@ -1,9 +1,12 @@
-
 package com.acbelter.weatherapp.data.locationmodel;
 
-import java.util.List;
+import android.support.annotation.VisibleForTesting;
+
+import com.acbelter.weatherapp.data.network.ApiErrors;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class Location {
 
@@ -21,24 +24,21 @@ public class Location {
         return htmlAttributions;
     }
 
-    public void setHtmlAttributions(List<Object> htmlAttributions) {
-        this.htmlAttributions = htmlAttributions;
-    }
-
     public Result getResult() {
         return result;
-    }
-
-    public void setResult(Result result) {
-        this.result = result;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    @VisibleForTesting
+    public void setStatus(ApiErrors.PlacesApiErrors errorCode) {
+        this.status = errorCode.getError();
     }
 
+    @VisibleForTesting
+    public void setResult(Result result) {
+        this.result = result;
+    }
 }

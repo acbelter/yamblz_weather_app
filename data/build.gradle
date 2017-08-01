@@ -1,6 +1,10 @@
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -16,18 +20,32 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    buildTypes.each {
+        it.buildConfigField "String", "OPEN_WEATHER_MAP_API_KEY", keystoreProperties["OPEN_WEATHER_MAP_API_KEY"]
+        it.buildConfigField "String", "GOOGLE_PLACES_API_KEY", keystoreProperties["GOOGLE_PLACES_API_KEY"]
+    }
 }
 
 dependencies {
     compile project(path: ':domain')
-    compile rx.rxJava
+
+    compile support.supportAnnotations
+
+    compile rx.rxJava2
     compile lib.retrofit2
     compile lib.retrofit2_adapter
     compile lib.retrofit2_scalars
+    compile lib.retrofit2_gson
     compile lib.gson
     compile lib.loggingInterceptor
     compile lib.timber
 
     compile lib.dagger2
     annotationProcessor compiler.dagger2
+
+    testCompile unitTest.junit
+    testCompile unitTest.mockito
+    testCompile unitTest.assertJ
+    testCompile unitTest.robolectric
 }

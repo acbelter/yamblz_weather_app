@@ -1,4 +1,3 @@
-
 package com.acbelter.weatherapp.data.netmodel;
 
 import com.google.gson.annotations.Expose;

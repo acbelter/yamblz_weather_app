@@ -1,18 +1,29 @@
 package com.acbelter.weatherapp.data.network;
 
+import com.acbelter.weatherapp.data.locationmodel.Location;
 import com.acbelter.weatherapp.data.netmodel.NetworkWeatherData;
-import com.acbelter.weatherapp.domain.model.WeatherParams;
+import com.acbelter.weatherapp.domain.model.city.CityParams;
+import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.Observable;
 
 public class NetworkServiceImpl implements NetworkService {
-    private WeatherApi mWeatherApi;
 
-    public NetworkServiceImpl(WeatherApi weatherApi) {
+    private WeatherApi mWeatherApi;
+    private PlacesApi mPlacesApi;
+    private LocationApi mLocationApi;
+
+    private static final int NETWORK_TIMEOUT = 5000;
+
+    public NetworkServiceImpl(WeatherApi weatherApi, PlacesApi placesApi, LocationApi locationApi) {
         mWeatherApi = weatherApi;
+        mPlacesApi = placesApi;
+        mLocationApi = locationApi;
     }
 
     @Override
@@ -29,5 +40,14 @@ public class NetworkServiceImpl implements NetworkService {
                 return gson.fromJson(rootObject.getAsJsonArray("list").get(0), NetworkWeatherData.class);
             }
         });
+    }
+
+    @Override
+    public Observable<Location> getLocation(CityParams cityParams) {
+        return mPlacesApi.getPlaces(cityParams.getPartOfCityName().trim())
+                .timeout(NETWORK_TIMEOUT, TimeUnit.MILLISECONDS)
+                .flatMap(places ->
+                        Observable.fromIterable(places.getPredictions()))
+                .concatMap(prediction -> mLocationApi.getLocation(prediction.getPlaceId(), cityParams.getLangCode()));
     }
 }

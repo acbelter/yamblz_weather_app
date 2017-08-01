@@ -62,18 +62,12 @@ public class MainActivity extends MvpAppCompatActivity implements
 
         etSearch.setOnTouchListener((view, motionEvent) -> {
             if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
-                openSearchFragment();
+                showSearch();
                 mDrawerLayout.closeDrawers();
             }
 
             return true;
         });
-    }
-
-    private void openSearchFragment() {
-        Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
-        startActivity(searchIntent);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override
@@ -120,6 +114,12 @@ public class MainActivity extends MvpAppCompatActivity implements
     private void showAbout() {
         Intent aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
         startActivity(aboutIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    private void showSearch() {
+        Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
+        startActivity(searchIntent);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }

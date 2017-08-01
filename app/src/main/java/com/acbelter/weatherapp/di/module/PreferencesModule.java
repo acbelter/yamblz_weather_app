@@ -1,8 +1,9 @@
 package com.acbelter.weatherapp.di.module;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
-import com.acbelter.weatherapp.data.repository.PreferencesRepo;
+import com.acbelter.weatherapp.data.repository.preference.PreferencesRepo;
 
 import javax.inject.Singleton;
 
@@ -13,7 +14,13 @@ import dagger.Provides;
 public class PreferencesModule {
     @Provides
     @Singleton
-    PreferencesRepo providePreferences(Context context) {
-        return new PreferencesRepo(context);
+    PreferencesRepo providePreferences(SharedPreferences sharedPreferences) {
+        return new PreferencesRepo(sharedPreferences);
+    }
+
+    @Provides
+    @Singleton
+    SharedPreferences provideSharedPreferences(Context context) {
+        return context.getSharedPreferences("storage", Context.MODE_PRIVATE);
     }
 }

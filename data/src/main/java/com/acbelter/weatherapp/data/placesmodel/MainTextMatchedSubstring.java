@@ -1,4 +1,3 @@
-
 package com.acbelter.weatherapp.data.placesmodel;
 
 import com.google.gson.annotations.Expose;
@@ -8,25 +7,16 @@ public class MainTextMatchedSubstring {
 
     @SerializedName("length")
     @Expose
-    private Integer length;
+    private int length;
     @SerializedName("offset")
     @Expose
-    private Integer offset;
+    private int offset;
 
-    public Integer getLength() {
+    public int getLength() {
         return length;
     }
 
-    public void setLength(Integer length) {
-        this.length = length;
-    }
-
-    public Integer getOffset() {
+    public int getOffset() {
         return offset;
     }
-
-    public void setOffset(Integer offset) {
-        this.offset = offset;
-    }
-
 }

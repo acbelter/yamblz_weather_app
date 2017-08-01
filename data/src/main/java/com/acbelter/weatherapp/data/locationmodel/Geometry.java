@@ -1,5 +1,6 @@
-
 package com.acbelter.weatherapp.data.locationmodel;
+
+import android.support.annotation.VisibleForTesting;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -17,16 +18,12 @@ public class Geometry {
         return location;
     }
 
-    public void setLocation(Location_ location) {
-        this.location = location;
-    }
-
     public Viewport getViewport() {
         return viewport;
     }
 
-    public void setViewport(Viewport viewport) {
-        this.viewport = viewport;
+    @VisibleForTesting
+    public void setLocation(Location_ location) {
+        this.location = location;
     }
-
 }

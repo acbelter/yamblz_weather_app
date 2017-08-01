@@ -25,7 +25,7 @@ import android.widget.TextView;
 import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.WeatherUpdateService;
-import com.acbelter.weatherapp.domain.model.WeatherData;
+import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.presentation.WeatherPresenter;
 import com.acbelter.weatherapp.ui.util.AnimationWeakListener;
 import com.acbelter.weatherapp.ui.util.ValueAnimatorWeakUpdateListener;
@@ -92,7 +92,6 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.stopGetCurrentWeatherProcess();
         App.getComponentManager().removeWeatherComponent();
         Timber.d("Remove weather component");
         mUnbinder.unbind();
@@ -115,9 +114,7 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
                 R.color.colorPrimary,
                 R.color.colorPrimaryDark);
 
-        mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            mPresenter.getCurrentWeather(true);
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> mPresenter.updateWeather());
 
         mWeatherView.setWeather(Constants.weatherStatus.SUN)
                 .setRainTime(6000)
@@ -270,7 +267,7 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mWeatherUpdateReceiver, filter);
 
         mWeatherView.startAnimation();
-        mPresenter.getCurrentWeather(false);
+        mPresenter.getCachedWeather();
     }
 
     @Override
@@ -301,7 +298,8 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
         mSwipeRefreshLayout.setRefreshing(false);
         Snackbar errorSnackbar =
                 Snackbar.make(mContentLayout, R.string.text_weather_error, Snackbar.LENGTH_LONG);
-        errorSnackbar.setAction(R.string.ok, v -> {});
+        errorSnackbar.setAction(R.string.ok, v -> {
+        });
         errorSnackbar.show();
     }
 

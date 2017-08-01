@@ -4,7 +4,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 
 import com.acbelter.weatherapp.R;
-import com.acbelter.weatherapp.domain.model.WeatherData;
+import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 
 import xyz.matteobattilana.library.Common.Constants;
 

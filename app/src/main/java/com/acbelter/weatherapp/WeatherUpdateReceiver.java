@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.acbelter.weatherapp.data.repository.PreferencesRepo;
+import com.acbelter.weatherapp.data.repository.preference.PreferencesRepo;
 
 import javax.inject.Inject;
 
