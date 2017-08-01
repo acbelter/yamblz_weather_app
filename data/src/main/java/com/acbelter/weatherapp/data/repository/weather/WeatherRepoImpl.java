@@ -11,28 +11,35 @@ import timber.log.Timber;
 
 public class WeatherRepoImpl implements WeatherRepo {
 
-    private NetworkService mNetworkService;
-    private PreferencesRepo mPreferencesRepo;
+    private NetworkService networkService;
+    private PreferencesRepo preferencesRepo;
 
     public WeatherRepoImpl(NetworkService networkService, PreferencesRepo preferencesRepo) {
-        mNetworkService = networkService;
-        this.mPreferencesRepo = preferencesRepo;
+        this.networkService = networkService;
+        this.preferencesRepo = preferencesRepo;
     }
 
     @Override
     public Observable<WeatherData> getCurrentWeather() {
-        WeatherParams weatherParams = new WeatherParams(mPreferencesRepo.getCurrentCity());
-        return mNetworkService.getCurrentWeather(weatherParams)
-                .map(WeatherDataConverter::fromNetworkData)
+        WeatherParams weatherParams = new WeatherParams(preferencesRepo.getCurrentCity());
+        return preferencesRepo.getLastWeatherData()
+                .onErrorResumeNext(networkService.getCurrentWeather(weatherParams)
+                        .map(WeatherDataConverter::fromNetworkData))
                 .doOnNext(data -> {
                     Timber.d("Current weather data from network: %s", data);
                 });
     }
 
     @Override
+    public Observable<WeatherData> updateCurrentWeather() {
+        WeatherParams weatherParams = new WeatherParams(preferencesRepo.getCurrentCity());
+        return networkService.getCurrentWeather(weatherParams).map(WeatherDataConverter::fromNetworkData);
+    }
+
+    @Override
     public void saveWeather(WeatherData weatherData) {
-        mPreferencesRepo.setLastWeatherData(weatherData);
+        preferencesRepo.setLastWeatherData(weatherData);
         long updateTimestamp = System.currentTimeMillis();
-        mPreferencesRepo.setLastUpdateTimestamp(updateTimestamp);
+        preferencesRepo.setLastUpdateTimestamp(updateTimestamp);
     }
 }

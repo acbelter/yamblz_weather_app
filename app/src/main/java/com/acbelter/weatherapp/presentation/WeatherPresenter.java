@@ -17,8 +17,13 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
         this.weatherInteractor = weatherInteractor;
     }
 
-    public void getCachedWeather() {
+    public void getWeather() {
         unsubscribeOnDetach(weatherInteractor.getWeather()
+                .subscribe(weatherData -> getViewState().showWeather(weatherData)));
+    }
+
+    public void updateWeather() {
+        unsubscribeOnDetach(weatherInteractor.updateWeather()
                 .subscribe(weatherData -> getViewState().showWeather(weatherData)));
     }
 }

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.google.gson.Gson;
 
+import io.reactivex.Observable;
 import io.reactivex.annotations.Nullable;
 
 public class PreferencesRepo {
@@ -68,12 +69,9 @@ public class PreferencesRepo {
 
     public
     @Nullable
-    WeatherData getLastWeatherData() {
-        if (!mPrefs.contains(KEY_LAST_WEATHER_DATA)) {
-            return null;
-        }
-
+    Observable<WeatherData> getLastWeatherData() {
         String weatherDataJson = mPrefs.getString(KEY_LAST_WEATHER_DATA, null);
-        return new Gson().fromJson(weatherDataJson, WeatherData.class);
+        WeatherData weatherData = new Gson().fromJson(weatherDataJson, WeatherData.class);
+        return Observable.fromCallable(() -> weatherData);
     }
 }

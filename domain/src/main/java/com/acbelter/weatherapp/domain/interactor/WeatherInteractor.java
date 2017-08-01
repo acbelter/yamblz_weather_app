@@ -1,7 +1,6 @@
 package com.acbelter.weatherapp.domain.interactor;
 
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
-import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
 import javax.inject.Inject;
@@ -11,31 +10,30 @@ import io.reactivex.Scheduler;
 
 public class WeatherInteractor {
 
-    private WeatherRepo mWeatherRepo;
-    private Scheduler mSchedulerIO;
-    private Scheduler mSchedulerMain;
+    private WeatherRepo weatherRepo;
+    private Scheduler schedulerIO;
+    private Scheduler schedulerMain;
 
     @Inject
     public WeatherInteractor(WeatherRepo weatherRepo, Scheduler schedulersIO, Scheduler schedulerMain) {
-        mWeatherRepo = weatherRepo;
-        mSchedulerIO = schedulersIO;
-        mSchedulerMain = schedulerMain;
+        this.weatherRepo = weatherRepo;
+        schedulerIO = schedulersIO;
+        this.schedulerMain = schedulerMain;
     }
 
     public Observable<WeatherData> getWeather() {
-        return mWeatherRepo.getCurrentWeather()
-                .subscribeOn(mSchedulerIO)
-                .observeOn(mSchedulerMain);
+        return weatherRepo.getCurrentWeather()
+                .subscribeOn(schedulerIO)
+                .observeOn(schedulerMain);
     }
 
-    public Observable<WeatherData> getCurrentWeather(WeatherParams params) {
-        return null;
-//        return mWeatherRepo.getCurrentWeather(params)
-//                .subscribeOn(mSchedulerIO)
-//                .observeOn(mSchedulerMain);
+    public Observable<WeatherData> updateWeather() {
+        return weatherRepo.updateCurrentWeather()
+                .subscribeOn(schedulerIO)
+                .observeOn(schedulerMain);
     }
 
     public void saveWeather(WeatherData weatherData) {
-        mWeatherRepo.saveWeather(weatherData);
+        weatherRepo.saveWeather(weatherData);
     }
 }

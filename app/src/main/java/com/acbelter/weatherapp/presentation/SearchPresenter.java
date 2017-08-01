@@ -16,18 +16,18 @@ import timber.log.Timber;
 @InjectViewState
 public class SearchPresenter extends BasePresenter<SearchView> {
 
-    private CityInteractor mCityInteractor;
-    private WeatherInteractor mWeatherInteractor;
+    private CityInteractor cityInteractor;
+    private WeatherInteractor weatherInteractor;
 
     @Inject
     public SearchPresenter(CityInteractor cityInteractor, WeatherInteractor weatherInteractor) {
-        mCityInteractor = cityInteractor;
-        mWeatherInteractor = weatherInteractor;
+        this.cityInteractor = cityInteractor;
+        this.weatherInteractor = weatherInteractor;
     }
 
     public void showCityList(String input) {
         CityParams cityParams = new CityParams(input);
-        unsubscribeOnDetach(mCityInteractor.getCityList(cityParams)
+        unsubscribeOnDetach(cityInteractor.getCityList(cityParams)
                 .subscribe(cityDatas ->
                                 getViewState().updateCityList(cityDatas),
                         throwable -> getViewState().showError()));
@@ -35,12 +35,12 @@ public class SearchPresenter extends BasePresenter<SearchView> {
     }
 
     public void saveSelectedCityAndWeather(CityData cityData) {
-        mCityInteractor.saveSelectedCity(cityData);
+        cityInteractor.saveSelectedCity(cityData);
         updateWeather();
     }
 
     private void updateWeather() {
-        unsubscribeOnDetach(mWeatherInteractor.getWeather()
+        unsubscribeOnDetach(weatherInteractor.updateWeather()
                 .subscribe(weatherData -> {
                             Timber.d("getCurrentWeather->onNext()");
                             saveWeather(weatherData);
@@ -60,7 +60,7 @@ public class SearchPresenter extends BasePresenter<SearchView> {
     }
 
     private void saveWeather(WeatherData weatherData) {
-        mWeatherInteractor.saveWeather(weatherData);
+        weatherInteractor.saveWeather(weatherData);
     }
 
     public void closeActivity() {

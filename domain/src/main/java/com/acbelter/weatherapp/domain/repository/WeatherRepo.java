@@ -8,5 +8,7 @@ public interface WeatherRepo {
 
     Observable<WeatherData> getCurrentWeather();
 
+    Observable<WeatherData> updateCurrentWeather();
+
     void saveWeather(WeatherData weatherData);
 }

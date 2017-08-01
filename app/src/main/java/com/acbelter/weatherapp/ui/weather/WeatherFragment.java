@@ -28,9 +28,6 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -40,8 +37,6 @@ import timber.log.Timber;
 import xyz.matteobattilana.library.Common.Constants;
 
 public class WeatherFragment extends MvpAppCompatFragment implements WeatherView {
-    private SimpleDateFormat mDateFormat =
-            new SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.getDefault());
 
     @Inject
     @InjectPresenter
@@ -96,7 +91,7 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
                 R.color.colorPrimary,
                 R.color.colorPrimaryDark);
 
-        mSwipeRefreshLayout.setOnRefreshListener(() -> mPresenter.getCachedWeather());
+        mSwipeRefreshLayout.setOnRefreshListener(() -> mPresenter.updateWeather());
 
         mWeatherView.setWeather(Constants.weatherStatus.SUN)
                 .setRainTime(6000)
@@ -240,7 +235,7 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
         super.onResume();
 
         mWeatherView.startAnimation();
-        mPresenter.getCachedWeather();
+        mPresenter.getWeather();
     }
 
     @Override
