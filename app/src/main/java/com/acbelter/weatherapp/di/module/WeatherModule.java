@@ -1,6 +1,5 @@
 package com.acbelter.weatherapp.di.module;
 
-import com.acbelter.weatherapp.data.database.DatabaseService;
 import com.acbelter.weatherapp.data.network.NetworkService;
 import com.acbelter.weatherapp.data.repository.preference.PreferencesRepo;
 import com.acbelter.weatherapp.data.repository.weather.WeatherRepoImpl;
@@ -17,9 +16,8 @@ import io.reactivex.schedulers.Schedulers;
 public class WeatherModule {
     @Provides
     @ActivityScope
-    WeatherRepo provideWeatherRepo(DatabaseService databaseService,
-                                   NetworkService networkService, PreferencesRepo preferencesRepo) {
-        return new WeatherRepoImpl(databaseService, networkService, preferencesRepo);
+    WeatherRepo provideWeatherRepo(NetworkService networkService, PreferencesRepo preferencesRepo) {
+        return new WeatherRepoImpl(networkService, preferencesRepo);
     }
 
     @Provides

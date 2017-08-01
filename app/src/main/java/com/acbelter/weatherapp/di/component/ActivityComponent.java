@@ -1,6 +1,5 @@
 package com.acbelter.weatherapp.di.component;
 
-import com.acbelter.weatherapp.WeatherUpdateService;
 import com.acbelter.weatherapp.di.module.CityModule;
 import com.acbelter.weatherapp.di.module.WeatherModule;
 import com.acbelter.weatherapp.di.scope.ActivityScope;
@@ -15,6 +14,4 @@ public interface ActivityComponent {
     void inject(WeatherFragment weatherFragment);
 
     void inject(SearchActivity searchActivity);
-
-    void inject(WeatherUpdateService updateService);
 }

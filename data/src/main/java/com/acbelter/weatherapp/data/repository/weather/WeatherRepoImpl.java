@@ -1,6 +1,5 @@
 package com.acbelter.weatherapp.data.repository.weather;
 
-import com.acbelter.weatherapp.data.database.DatabaseService;
 import com.acbelter.weatherapp.data.network.NetworkService;
 import com.acbelter.weatherapp.data.repository.preference.PreferencesRepo;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
@@ -12,13 +11,10 @@ import timber.log.Timber;
 
 public class WeatherRepoImpl implements WeatherRepo {
 
-    private DatabaseService mDatabaseService;
     private NetworkService mNetworkService;
     private PreferencesRepo mPreferencesRepo;
 
-    public WeatherRepoImpl(DatabaseService databaseService,
-                           NetworkService networkService, PreferencesRepo preferencesRepo) {
-        mDatabaseService = databaseService;
+    public WeatherRepoImpl(NetworkService networkService, PreferencesRepo preferencesRepo) {
         mNetworkService = networkService;
         this.mPreferencesRepo = preferencesRepo;
     }

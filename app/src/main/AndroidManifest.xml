@@ -34,21 +34,6 @@
             android:label="@string/search_title"
             android:theme="@style/AppTheme" />
 
-        <receiver
-            android:name=".WeatherUpdateReceiver"
-            android:enabled="false">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.ACTION_MY_PACKAGE_REPLACED" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name=".WeatherUpdateService"
-            android:exported="false" />
-
     </application>
 
 </manifest>

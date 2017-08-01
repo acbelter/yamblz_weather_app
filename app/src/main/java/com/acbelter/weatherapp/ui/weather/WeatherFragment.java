@@ -3,16 +3,12 @@ package com.acbelter.weatherapp.ui.weather;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +20,6 @@ import android.widget.TextView;
 
 import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
-import com.acbelter.weatherapp.WeatherUpdateService;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.presentation.WeatherPresenter;
 import com.acbelter.weatherapp.ui.util.AnimationWeakListener;
@@ -70,16 +65,6 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     ImageView mWeatherImage;
     private Unbinder mUnbinder;
     private long mAnimBgDuration;
-
-    private BroadcastReceiver mWeatherUpdateReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            WeatherData weatherData =
-                    intent.getParcelableExtra(WeatherUpdateService.KEY_WEATHER_DATA);
-            long updateTimestamp = intent.getLongExtra(WeatherUpdateService.KEY_WEATHER_UPDATE_TIMESTAMP, 0L);
-            showWeather(weatherData, updateTimestamp);
-        }
-    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -139,22 +124,22 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
         mUnitsText.setText(R.string.celsius);
         mLocationText.setText(newWeatherData.getCity());
 
-        if (mPresenter.getWeatherData() == null) {
-            showWeatherFirstTime(context, newWeatherRes);
-        } else {
-            WeatherRes currentWeatherRes = new WeatherRes(mPresenter.getWeatherData());
-            if (!newWeatherRes.equals(currentWeatherRes)) {
-                replaceWeather(context, currentWeatherRes, newWeatherRes);
-            } else {
-                Timber.d("Weather res is not changed");
-                mContentLayout.setBackgroundColor(
-                        ContextCompat.getColor(context, newWeatherRes.getBackgroundColorResId()));
-                mWeatherImage.setImageResource(newWeatherRes.getWeatherImageResId());
-                mWeatherView.cancelAnimation();
-                mWeatherView.setWeather(newWeatherRes.getWeatherStatus());
-                mWeatherView.startAnimation();
-            }
-        }
+//        if (mPresenter.getWeatherData() == null) {
+//            showWeatherFirstTime(context, newWeatherRes);
+//        } else {
+//            WeatherRes currentWeatherRes = new WeatherRes(mPresenter.getWeatherData());
+//            if (!newWeatherRes.equals(currentWeatherRes)) {
+//                replaceWeather(context, currentWeatherRes, newWeatherRes);
+//            } else {
+//                Timber.d("Weather res is not changed");
+//                mContentLayout.setBackgroundColor(
+//                        ContextCompat.getColor(context, newWeatherRes.getBackgroundColorResId()));
+//                mWeatherImage.setImageResource(newWeatherRes.getWeatherImageResId());
+//                mWeatherView.cancelAnimation();
+//                mWeatherView.setWeather(newWeatherRes.getWeatherStatus());
+//                mWeatherView.startAnimation();
+//            }
+//        }
     }
 
     private void showWeatherFirstTime(Context context, WeatherRes newWeatherRes) {
@@ -263,8 +248,6 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     @Override
     public void onResume() {
         super.onResume();
-        IntentFilter filter = new IntentFilter(WeatherUpdateService.ACTION_WEATHER_UPDATE);
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mWeatherUpdateReceiver, filter);
 
         mWeatherView.startAnimation();
         mPresenter.getCachedWeather();
@@ -273,7 +256,6 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     @Override
     public void onPause() {
         super.onPause();
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mWeatherUpdateReceiver);
 
         mWeatherView.cancelAnimation();
     }
@@ -290,7 +272,7 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     public void showWeather(WeatherData weatherData, long updateTimestamp) {
         mSwipeRefreshLayout.setRefreshing(false);
         showNewWeather(getContext(), weatherData, updateTimestamp);
-        mPresenter.setWeatherData(weatherData);
+//        mPresenter.setWeatherData(weatherData);
     }
 
     @Override
