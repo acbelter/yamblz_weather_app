@@ -29,7 +29,6 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -51,8 +50,6 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.content_layout)
     ViewGroup mContentLayout;
-    @BindView(R.id.date_text)
-    TextView mDateText;
     @BindView(R.id.temperature_text)
     TextView mTemperatureText;
     @BindView(R.id.units_text)
@@ -99,7 +96,7 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
                 R.color.colorPrimary,
                 R.color.colorPrimaryDark);
 
-        mSwipeRefreshLayout.setOnRefreshListener(() -> mPresenter.updateWeather());
+        mSwipeRefreshLayout.setOnRefreshListener(() -> mPresenter.getCachedWeather());
 
         mWeatherView.setWeather(Constants.weatherStatus.SUN)
                 .setRainTime(6000)
@@ -115,31 +112,25 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     }
 
     @SuppressLint("SetTextI18n")
-    private void showNewWeather(Context context, WeatherData newWeatherData, long updateTimestamp) {
+    private void showNewWeather(Context context, WeatherData newWeatherData) {
         Timber.d("Show new weather for timestamp: %s", newWeatherData.getTimestamp());
         WeatherRes newWeatherRes = new WeatherRes(newWeatherData);
         setWeatherTextColor(context, newWeatherRes.getTextColorResId());
-        mDateText.setText(mDateFormat.format(new Date(updateTimestamp)));
         mTemperatureText.setText(Integer.toString((int) newWeatherData.getTemperatureC()));
         mUnitsText.setText(R.string.celsius);
         mLocationText.setText(newWeatherData.getCity());
-
-//        if (mPresenter.getWeatherData() == null) {
-//            showWeatherFirstTime(context, newWeatherRes);
-//        } else {
-//            WeatherRes currentWeatherRes = new WeatherRes(mPresenter.getWeatherData());
-//            if (!newWeatherRes.equals(currentWeatherRes)) {
-//                replaceWeather(context, currentWeatherRes, newWeatherRes);
-//            } else {
-//                Timber.d("Weather res is not changed");
-//                mContentLayout.setBackgroundColor(
-//                        ContextCompat.getColor(context, newWeatherRes.getBackgroundColorResId()));
-//                mWeatherImage.setImageResource(newWeatherRes.getWeatherImageResId());
-//                mWeatherView.cancelAnimation();
-//                mWeatherView.setWeather(newWeatherRes.getWeatherStatus());
-//                mWeatherView.startAnimation();
-//            }
-//        }
+        WeatherRes currentWeatherRes = new WeatherRes(newWeatherData);
+        if (!newWeatherRes.equals(currentWeatherRes)) {
+            replaceWeather(context, currentWeatherRes, newWeatherRes);
+        } else {
+            Timber.d("Weather res is not changed");
+            mContentLayout.setBackgroundColor(
+                    ContextCompat.getColor(context, newWeatherRes.getBackgroundColorResId()));
+            mWeatherImage.setImageResource(newWeatherRes.getWeatherImageResId());
+            mWeatherView.cancelAnimation();
+            mWeatherView.setWeather(newWeatherRes.getWeatherStatus());
+            mWeatherView.startAnimation();
+        }
     }
 
     private void showWeatherFirstTime(Context context, WeatherRes newWeatherRes) {
@@ -239,7 +230,6 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
 
     private void setWeatherTextColor(Context context, @ColorRes int colorRes) {
         int color = ContextCompat.getColor(context, colorRes);
-        mDateText.setTextColor(color);
         mTemperatureText.setTextColor(color);
         mUnitsText.setTextColor(color);
         mLocationText.setTextColor(color);
@@ -269,10 +259,9 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     }
 
     @Override
-    public void showWeather(WeatherData weatherData, long updateTimestamp) {
+    public void showWeather(WeatherData weatherData) {
         mSwipeRefreshLayout.setRefreshing(false);
-        showNewWeather(getContext(), weatherData, updateTimestamp);
-//        mPresenter.setWeatherData(weatherData);
+        showNewWeather(getContext(), weatherData);
     }
 
     @Override

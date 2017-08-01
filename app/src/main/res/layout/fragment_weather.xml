@@ -13,21 +13,6 @@
         android:background="@color/colorBgWeatherDefault">
 
         <TextView
-            android:id="@+id/date_text"
-            style="@style/ShadowedText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/offset_large"
-            android:layout_marginStart="@dimen/offset_large"
-            android:layout_marginTop="@dimen/offset_large"
-            android:textColor="@color/colorTextWeatherLight"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="12 July 2017" />
-
-        <TextView
             android:id="@+id/temperature_text"
             style="@style/ShadowedText"
             android:layout_width="wrap_content"
@@ -37,7 +22,6 @@
             android:textColor="@color/colorTextWeatherLight"
             android:textSize="88sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date_text"
             tools:text="123" />
 
         <TextView
@@ -79,7 +63,6 @@
             app:layout_constraintHeight_default="spread"
             app:layout_constraintLeft_toRightOf="@+id/units_text"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date_text"
             app:layout_constraintWidth_default="spread"
             tools:ignore="ContentDescription"
             tools:src="@drawable/img_sun" />

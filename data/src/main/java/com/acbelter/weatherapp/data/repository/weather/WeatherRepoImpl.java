@@ -20,8 +20,9 @@ public class WeatherRepoImpl implements WeatherRepo {
     }
 
     @Override
-    public Observable<WeatherData> getCurrentWeather(WeatherParams params) {
-        return mNetworkService.getCurrentWeather(params)
+    public Observable<WeatherData> getCurrentWeather() {
+        WeatherParams weatherParams = new WeatherParams(mPreferencesRepo.getCurrentCity());
+        return mNetworkService.getCurrentWeather(weatherParams)
                 .map(WeatherDataConverter::fromNetworkData)
                 .doOnNext(data -> {
                     Timber.d("Current weather data from network: %s", data);

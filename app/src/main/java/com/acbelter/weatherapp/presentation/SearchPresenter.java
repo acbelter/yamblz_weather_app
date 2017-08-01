@@ -5,7 +5,6 @@ import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.city.CityParams;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
-import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.presentation.common.BasePresenter;
 import com.acbelter.weatherapp.ui.search.SearchView;
 import com.arellomobile.mvp.InjectViewState;
@@ -37,12 +36,11 @@ public class SearchPresenter extends BasePresenter<SearchView> {
 
     public void saveSelectedCityAndWeather(CityData cityData) {
         mCityInteractor.saveSelectedCity(cityData);
-        WeatherParams params = new WeatherParams(cityData.getFormattedAddress());
-        updateWeather(params);
+        updateWeather();
     }
 
-    private void updateWeather(WeatherParams params) {
-        unsubscribeOnDetach(mWeatherInteractor.getCurrentWeather(params)
+    private void updateWeather() {
+        unsubscribeOnDetach(mWeatherInteractor.getWeather()
                 .subscribe(weatherData -> {
                             Timber.d("getCurrentWeather->onNext()");
                             saveWeather(weatherData);

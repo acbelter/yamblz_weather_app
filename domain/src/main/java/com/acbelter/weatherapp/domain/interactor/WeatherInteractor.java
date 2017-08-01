@@ -22,10 +22,17 @@ public class WeatherInteractor {
         mSchedulerMain = schedulerMain;
     }
 
-    public Observable<WeatherData> getCurrentWeather(WeatherParams params) {
-        return mWeatherRepo.getCurrentWeather(params)
+    public Observable<WeatherData> getWeather() {
+        return mWeatherRepo.getCurrentWeather()
                 .subscribeOn(mSchedulerIO)
                 .observeOn(mSchedulerMain);
+    }
+
+    public Observable<WeatherData> getCurrentWeather(WeatherParams params) {
+        return null;
+//        return mWeatherRepo.getCurrentWeather(params)
+//                .subscribeOn(mSchedulerIO)
+//                .observeOn(mSchedulerMain);
     }
 
     public void saveWeather(WeatherData weatherData) {
