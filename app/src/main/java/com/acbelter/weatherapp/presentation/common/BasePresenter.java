@@ -8,11 +8,13 @@ import io.reactivex.disposables.Disposable;
 
 public class BasePresenter<V extends MvpView> extends MvpPresenter<V> {
 
-    private V view;
-
     private CompositeDisposable disposable = new CompositeDisposable();
 
     public void unsubscribeOnDetach(Disposable... disposables) {
         disposable.addAll(disposables);
+    }
+
+    public void onDetach() {
+        disposable.clear();
     }
 }
