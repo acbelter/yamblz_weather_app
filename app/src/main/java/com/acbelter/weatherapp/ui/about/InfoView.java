@@ -5,6 +5,9 @@ import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
 @StateStrategyType(AddToEndSingleStrategy.class)
-public interface AboutView extends MvpView {
+public interface InfoView extends MvpView {
+
+    void showAppVersion();
+
     void close();
 }

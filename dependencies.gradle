@@ -11,6 +11,7 @@ ext {
     takisoftVersion = "25.4.0.3"
 
     supportLibraryVersion = "25.4.0"
+    constraintLayoutVersion = "1.0.2"
     retrofitVersion = "2.3.0"
     daggerVersion = "2.11"
     rxJava2Version = "2.1.0"
@@ -32,8 +33,9 @@ ext {
 
     support = [
             appCompat         : "com.android.support:appcompat-v7:$supportLibraryVersion",
+            appCompatV4       : "com.android.support:support-v4:$supportLibraryVersion",
             design            : "com.android.support:design:$supportLibraryVersion",
-            constraintLayout  : "com.android.support.constraint:constraint-layout:1.0.2",
+            constraintLayout  : "com.android.support.constraint:constraint-layout:$constraintLayoutVersion",
             supportAnnotations: "com.android.support:support-annotations:$supportLibraryVersion"
     ]
 

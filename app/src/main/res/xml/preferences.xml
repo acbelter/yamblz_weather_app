@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/weather_settings">
+
+        <android.support.v7.preference.SeekBarPreference
+            android:defaultValue="0"
+            android:key="pref_update_interval"
+            android:summary="@string/update_interval"
+            android:title="@string/weather_update_setting"
+            android:max="24" />
+    </PreferenceCategory>
+</PreferenceScreen>

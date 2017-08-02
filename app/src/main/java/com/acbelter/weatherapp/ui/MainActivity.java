@@ -2,9 +2,11 @@ package com.acbelter.weatherapp.ui;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,7 +18,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.acbelter.weatherapp.R;
-import com.acbelter.weatherapp.ui.about.AboutActivity;
+import com.acbelter.weatherapp.ui.about.InfoFragment;
+import com.acbelter.weatherapp.ui.drawer.DrawerLocker;
 import com.acbelter.weatherapp.ui.search.SearchActivity;
 import com.acbelter.weatherapp.ui.settings.SettingsActivity;
 import com.acbelter.weatherapp.ui.weather.WeatherFragment;
@@ -24,85 +27,133 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class MainActivity extends MvpAppCompatActivity implements
-        NavigationView.OnNavigationItemSelectedListener {
+        NavigationView.OnNavigationItemSelectedListener, DrawerLocker {
     @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+    Toolbar toolbar;
     @BindView(R.id.drawer_layout)
-    DrawerLayout mDrawerLayout;
+    DrawerLayout drawerLayout;
     @BindView(R.id.nav_view)
-    NavigationView mNavigationView;
-    private ActionBarDrawerToggle mDrawerToggle;
+    NavigationView nvDrawer;
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        mToolbar.setTitle(R.string.weather);
-
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this, mDrawerLayout, mToolbar,
-                R.string.nav_drawer_open,
-                R.string.nav_drawer_close);
-        mDrawerLayout.addDrawerListener(mDrawerToggle);
-
-        mNavigationView.setNavigationItemSelectedListener(this);
+        setupDrawerContent(nvDrawer);
 
         if (savedInstanceState == null) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, new WeatherFragment(), WeatherFragment.tag());
-            ft.commit();
+            WeatherFragment weatherFragment = WeatherFragment.newInstance();
+            getSupportFragmentManager().beginTransaction().add(R.id.content_frame, weatherFragment, WeatherFragment.class.getSimpleName()).commit();
         }
 
-        View header = mNavigationView.getHeaderView(0);
+        initSearchEdittext();
+
+    }
+
+    private void initSearchEdittext() {
+        View header = nvDrawer.getHeaderView(0);
         EditText etSearch = (EditText) header.findViewById(R.id.etSearchOnHeader);
 
         etSearch.setOnTouchListener((view, motionEvent) -> {
             if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
                 showSearch();
-                mDrawerLayout.closeDrawers();
+                drawerLayout.closeDrawers();
             }
 
             return true;
         });
     }
 
+    private void setupDrawerContent(NavigationView navigationView) {
+        setupToolbar();
+        navigationView.setNavigationItemSelectedListener(item -> {
+            selectDrawerItem(item);
+            return true;
+        });
+    }
+
+    private void setupToolbar() {
+        toolbar.setTitleTextColor(Color.WHITE);
+        setSupportActionBar(toolbar);
+        toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        toggle.setToolbarNavigationClickListener(view -> {
+            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                getSupportFragmentManager().popBackStack();
+                setDrawerUnlocked();
+            }
+            Timber.v("click");
+        });
+    }
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
+        toggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
+        toggle.onConfigurationChanged(newConfig);
     }
 
     @Override
     public void onBackPressed() {
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-        } else {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START))
+            drawerLayout.closeDrawer(GravityCompat.START);
+        else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+            setDrawerUnlocked();
+        } else
             super.onBackPressed();
-        }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
+        selectDrawerItem(item);
+        return true;
+    }
+
+    void selectDrawerItem(MenuItem menuItem) {
+        Class fragmentClass = null;
+        switch (menuItem.getItemId()) {
+            case R.id.nav_view:
+                fragmentClass = WeatherFragment.class;
+                break;
             case R.id.nav_settings:
                 showSettings();
+//                fragmentClass = SettingsFragment.class;
                 break;
-            case R.id.nav_about:
-                showAbout();
+            case R.id.nav_info:
+                fragmentClass = InfoFragment.class;
                 break;
+            default:
+                fragmentClass = WeatherFragment.class;
         }
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-        return true;
+
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(fragmentClass.getSimpleName());
+        if (fragment == null) {
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, fragment, fragmentClass.getSimpleName())
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack(null)
+                        .commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     private void showSettings() {
@@ -111,15 +162,30 @@ public class MainActivity extends MvpAppCompatActivity implements
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
-    private void showAbout() {
-        Intent aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
-        startActivity(aboutIntent);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-    }
-
     private void showSearch() {
         Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
         startActivity(searchIntent);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    @Override
+    public void setDrawerEnable(boolean enabled) {
+        if (enabled)
+            setDrawerUnlocked();
+        else
+            setDrawerLocked();
+    }
+
+    private void setDrawerLocked() {
+        toggle.setDrawerIndicatorEnabled(false);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        toggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        toolbar.setNavigationIcon(R.drawable.ic_close);
+    }
+
+    private void setDrawerUnlocked() {
+        toggle.setDrawerIndicatorEnabled(true);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        toggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
 }

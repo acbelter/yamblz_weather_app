@@ -4,7 +4,6 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.data.BuildConfig;
-import com.acbelter.weatherapp.ui.about.AboutActivity;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -22,8 +21,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class AboutActivityTest {
 
     @Rule
-    public ActivityTestRule<AboutActivity> mActivityRule =
-            new ActivityTestRule(AboutActivity.class);
+    public ActivityTestRule<InfoActivity> mActivityRule =
+            new ActivityTestRule(InfoActivity.class);
 
     private Utils utils;
 

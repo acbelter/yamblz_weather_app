@@ -55,6 +55,10 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
         return presenter;
     }
 
+    public static WeatherFragment newInstance() {
+        return new WeatherFragment();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         App.getInstance().plusActivityComponent().inject(this);

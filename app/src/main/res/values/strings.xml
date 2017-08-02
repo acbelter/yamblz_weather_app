@@ -2,6 +2,9 @@
 <resources>
     <string name="celsius" translatable="false">ºC</string>
 
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+
     <!--Common resources-->
     <string name="app_name">YamblzWeatherApp</string>
     <string name="nav_drawer_open">Open side panel</string>
@@ -32,6 +35,5 @@
 
     <!--Test strings-->
     <string name="version_test">Version</string>
-
 
 </resources>
