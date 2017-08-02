@@ -45,7 +45,7 @@ public class SettingsData {
         return this.updateWeatherInterval;
     }
 
-    public String getSelectedCityId() {
+    public String getSelectedCityName() {
         return this.cityName;
     }
 }

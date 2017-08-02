@@ -33,7 +33,8 @@ public class WeatherRepoImpl implements WeatherRepo {
     @Override
     public Observable<WeatherData> updateCurrentWeather() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity());
-        return networkService.getCurrentWeather(weatherParams).map(WeatherDataConverter::fromNetworkData);
+        return networkService.getCurrentWeather(weatherParams)
+                .map(WeatherDataConverter::fromNetworkData);
     }
 
     @Override

@@ -13,7 +13,7 @@ import com.acbelter.weatherapp.domain.model.settings.SettingsData;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 import com.acbelter.weatherapp.mvp.presentation.SettingsPresenter;
 import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
-import com.arellomobile.mvp.MvpAppCompatFragment;
+import com.acbelter.weatherapp.mvp.view.fragment.BaseFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 
@@ -26,7 +26,7 @@ import butterknife.Unbinder;
 import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.CELSIUS;
 import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.FAHRENHEIT;
 
-public class SettingsFragment extends MvpAppCompatFragment implements SettingsView {
+public class SettingsFragment extends BaseFragment implements SettingsView {
 
     private Unbinder unbinder;
 
@@ -55,19 +55,18 @@ public class SettingsFragment extends MvpAppCompatFragment implements SettingsVi
     }
 
     @Override
-    public void onActivityCreated(Bundle saveInstanceState) {
-        super.onActivityCreated(saveInstanceState);
-
-        setTitle();
-        setDrawableEnabled();
-    }
-
-    private void setTitle() {
+    protected void setTitle() {
         getActivity().setTitle(R.string.settings);
     }
 
+    @Override
     protected void setDrawableEnabled() {
         ((DrawerLocker) getActivity()).setDrawerEnable(false);
+    }
+
+    @Override
+    protected void inject() {
+        App.getInstance().plusActivityComponent().inject(this);
     }
 
     @Override

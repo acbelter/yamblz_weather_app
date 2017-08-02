@@ -51,7 +51,6 @@ public class MainActivity extends MvpAppCompatActivity implements
         }
 
         initSearchEdittext();
-
     }
 
     private void initSearchEdittext() {

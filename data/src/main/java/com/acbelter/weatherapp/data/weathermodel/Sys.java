@@ -1,10 +1,13 @@
-package com.acbelter.weatherapp.data.netmodel;
+package com.acbelter.weatherapp.data.weathermodel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Sys {
 
+    @SerializedName("message")
+    @Expose
+    private double message;
     @SerializedName("country")
     @Expose
     private String country;
@@ -14,6 +17,10 @@ public class Sys {
     @SerializedName("sunset")
     @Expose
     private int sunset;
+
+    public double getMessage() {
+        return message;
+    }
 
     public String getCountry() {
         return country;

@@ -1,4 +1,4 @@
-package com.acbelter.weatherapp.data.netmodel;
+package com.acbelter.weatherapp.data.weathermodel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

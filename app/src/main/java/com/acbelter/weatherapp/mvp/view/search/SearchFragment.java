@@ -1,5 +1,6 @@
 package com.acbelter.weatherapp.mvp.view.search;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
@@ -9,14 +10,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.mvp.presentation.SearchPresenter;
+import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
+import com.acbelter.weatherapp.mvp.view.fragment.BaseFragment;
 import com.acbelter.weatherapp.mvp.view.search.adapter.CityAdapter;
-import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.jakewharton.rxbinding2.widget.RxTextView;
@@ -30,7 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class SearchFragment extends MvpAppCompatFragment implements SearchView, CityAdapter.OnItemClickListener {
+public class SearchFragment extends BaseFragment implements SearchView, CityAdapter.OnItemClickListener {
 
     @BindView(R.id.etSearch)
     EditText etSearch;
@@ -43,7 +46,7 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView, 
     @InjectPresenter
     SearchPresenter presenter;
 
-    private CityAdapter mAdapter;
+    private CityAdapter adapter;
 
     private static final long TYPING_DELAY = 400;
 
@@ -59,15 +62,9 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView, 
         return new SearchFragment();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        App.getInstance().plusActivityComponent().inject(this);
-        super.onCreate(savedInstanceState);
-    }
-
     private void initAdapter() {
-        mAdapter = new CityAdapter(this);
-        recyclerView.setAdapter(mAdapter);
+        adapter = new CityAdapter(this);
+        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL);
@@ -85,6 +82,7 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView, 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         unbinder = ButterKnife.bind(this, view);
 
+        showKeyboard();
         initAdapter();
 
         RxTextView.textChanges(etSearch)
@@ -93,16 +91,19 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView, 
                         presenter.showCityList(charSequence.toString()));
     }
 
+    private void showKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
 
     @Override
     public void updateCityList(List<CityData> locations) {
-        mAdapter.update(locations);
+        adapter.update(locations);
     }
 
     @Override
     public void showError() {
-        Snackbar errorSnackbar =
-                Snackbar.make(constraintLayout, R.string.get_city_list_error, Snackbar.LENGTH_LONG);
+        Snackbar errorSnackbar = Snackbar.make(constraintLayout, R.string.get_city_list_error, Snackbar.LENGTH_LONG);
         errorSnackbar.setAction(R.string.ok, v -> {
         });
         errorSnackbar.show();
@@ -113,10 +114,16 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView, 
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_NOT_ALWAYS, 0);
+    }
+
     @Override
     public void onStop() {
         super.onStop();
 
+        hideKeyboard();
         App.getInstance().releaseActivityComponent();
     }
 
@@ -132,6 +139,21 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchView, 
         super.onDestroy();
 
         presenter.onDetach();
+    }
+
+    @Override
+    protected void setTitle() {
+        getActivity().setTitle(R.string.search_title);
+    }
+
+    @Override
+    protected void setDrawableEnabled() {
+        ((DrawerLocker) getActivity()).setDrawerEnable(false);
+    }
+
+    @Override
+    protected void inject() {
+        App.getInstance().plusActivityComponent().inject(this);
     }
 
     @Override

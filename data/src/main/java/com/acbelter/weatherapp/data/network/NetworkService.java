@@ -1,7 +1,7 @@
 package com.acbelter.weatherapp.data.network;
 
 import com.acbelter.weatherapp.data.locationmodel.Location;
-import com.acbelter.weatherapp.data.netmodel.CurrentWeather;
+import com.acbelter.weatherapp.data.weathermodel.CurrentWeather;
 import com.acbelter.weatherapp.domain.model.city.CityParams;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 

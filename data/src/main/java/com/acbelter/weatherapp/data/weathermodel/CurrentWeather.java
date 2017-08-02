@@ -1,36 +1,35 @@
-package com.acbelter.weatherapp.data.netmodel;
+package com.acbelter.weatherapp.data.weathermodel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CurrentWeather {
     @SerializedName("coord")
     @Expose
     private Coord coord;
-    @SerializedName("sys")
-    @Expose
-    private Sys sys;
     @SerializedName("weather")
     @Expose
-    private List<Weather> weather = new ArrayList<>();
+    private List<Weather> weather = null;
+    @SerializedName("base")
+    @Expose
+    private String base;
     @SerializedName("main")
     @Expose
     private Main main;
     @SerializedName("wind")
     @Expose
     private Wind wind;
-    @SerializedName("rain")
-    @Expose
-    private Rain rain;
     @SerializedName("clouds")
     @Expose
     private Clouds clouds;
     @SerializedName("dt")
     @Expose
     private int dt;
+    @SerializedName("sys")
+    @Expose
+    private Sys sys;
     @SerializedName("id")
     @Expose
     private int id;
@@ -45,12 +44,12 @@ public class CurrentWeather {
         return coord;
     }
 
-    public Sys getSys() {
-        return sys;
-    }
-
     public List<Weather> getWeather() {
         return weather;
+    }
+
+    public String getBase() {
+        return base;
     }
 
     public Main getMain() {
@@ -61,16 +60,16 @@ public class CurrentWeather {
         return wind;
     }
 
-    public Rain getRain() {
-        return rain;
-    }
-
     public Clouds getClouds() {
         return clouds;
     }
 
     public int getDt() {
         return dt;
+    }
+
+    public Sys getSys() {
+        return sys;
     }
 
     public int getId() {

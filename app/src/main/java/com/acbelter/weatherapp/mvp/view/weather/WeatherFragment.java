@@ -16,7 +16,8 @@ import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.mvp.presentation.WeatherPresenter;
-import com.arellomobile.mvp.MvpAppCompatFragment;
+import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
+import com.acbelter.weatherapp.mvp.view.fragment.BaseFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 
@@ -28,7 +29,7 @@ import butterknife.Unbinder;
 import timber.log.Timber;
 import xyz.matteobattilana.library.Common.Constants;
 
-public class WeatherFragment extends MvpAppCompatFragment implements WeatherView {
+public class WeatherFragment extends BaseFragment implements WeatherView {
 
     @Inject
     @InjectPresenter
@@ -48,7 +49,6 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     @BindView(R.id.weather_image)
     ImageView mWeatherImage;
     private Unbinder mUnbinder;
-    private long mAnimBgDuration;
 
     @ProvidePresenter
     public WeatherPresenter provideWeatherPresenter() {
@@ -57,14 +57,6 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
 
     public static WeatherFragment newInstance() {
         return new WeatherFragment();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        App.getInstance().plusActivityComponent().inject(this);
-        super.onCreate(savedInstanceState);
-        Timber.d("Add weather component");
-        mAnimBgDuration = getContext().getResources().getInteger(R.integer.anim_bg_duration);
     }
 
     @Nullable
@@ -127,6 +119,21 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
         super.onDestroy();
 
         presenter.onDetach();
+    }
+
+    @Override
+    protected void setTitle() {
+        getActivity().setTitle(R.string.settings);
+    }
+
+    @Override
+    protected void setDrawableEnabled() {
+        ((DrawerLocker) getActivity()).setDrawerEnable(true);
+    }
+
+    @Override
+    protected void inject() {
+        App.getInstance().plusActivityComponent().inject(this);
     }
 
     @Override

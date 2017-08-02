@@ -1,6 +1,6 @@
 package com.acbelter.weatherapp.data.network;
 
-import com.acbelter.weatherapp.data.netmodel.CurrentWeather;
+import com.acbelter.weatherapp.data.weathermodel.CurrentWeather;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

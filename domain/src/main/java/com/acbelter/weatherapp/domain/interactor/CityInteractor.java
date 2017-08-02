@@ -11,24 +11,24 @@ import io.reactivex.Single;
 
 public class CityInteractor {
 
-    private CityRepo mCityRepo;
-    private Scheduler mSchedulerIO;
-    private Scheduler mSchedulerMain;
+    private CityRepo cityRepo;
+    private Scheduler schedulerIO;
+    private Scheduler schedulerMain;
 
     public CityInteractor(CityRepo cityRepo, Scheduler schedulerIO, Scheduler schedulerMain) {
-        mCityRepo = cityRepo;
-        mSchedulerIO = schedulerIO;
-        mSchedulerMain = schedulerMain;
+        this.cityRepo = cityRepo;
+        this.schedulerIO = schedulerIO;
+        this.schedulerMain = schedulerMain;
     }
 
     public Single<List<CityData>> getCityList(CityParams cityParams) {
-        return mCityRepo.getCity(cityParams)
+        return cityRepo.getCity(cityParams)
                 .toList()
-                .subscribeOn(mSchedulerIO)
-                .observeOn(mSchedulerMain);
+                .subscribeOn(schedulerIO)
+                .observeOn(schedulerMain);
     }
 
     public void saveSelectedCity(CityData cityData) {
-        mCityRepo.saveCity(cityData);
+        cityRepo.saveCity(cityData);
     }
 }

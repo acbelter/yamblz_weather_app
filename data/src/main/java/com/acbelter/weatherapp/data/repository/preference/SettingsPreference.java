@@ -15,7 +15,7 @@ import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.CELSIUS;
 import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.fromString;
 
 public class SettingsPreference {
-    public static final String KEY_CURRENT_CITY = "pref_current_city";
+    public static final String KEY_CURRENT_CITY_NAME = "pref_current_city";
     public static final String TEMPERATURE_METRIC_KEY = "pref_temperature_metric";
     public static final String KEY_UPDATE_INTERVAL = "pref_update_interval";
     public static final String KEY_LAST_UPDATE_TIMESTAMP = "pref_last_update_timestamp";
@@ -30,12 +30,12 @@ public class SettingsPreference {
     }
 
     public void saveCurrentCity(String city) {
-        sharedPreferences.edit().putString(KEY_CURRENT_CITY, city).apply();
+        sharedPreferences.edit().putString(KEY_CURRENT_CITY_NAME, city).apply();
     }
 
     public String loadCurrentCity() {
         // FIXME Don't use Moscow as default city
-        return sharedPreferences.getString(KEY_CURRENT_CITY, "Moscow, TN 38057");
+        return sharedPreferences.getString(KEY_CURRENT_CITY_NAME, "Moscow, TN 38057");
     }
 
     public void saveUpdateInterval(long interval) {

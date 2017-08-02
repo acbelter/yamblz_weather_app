@@ -12,11 +12,11 @@ import timber.log.Timber;
 public class CityRepoImpl implements CityRepo {
 
     private NetworkService mNetworkService;
-    private SettingsPreference mSettingsPreference;
+    private SettingsPreference settingsPreference;
 
     public CityRepoImpl(NetworkService networkService, SettingsPreference settingsPreference) {
         mNetworkService = networkService;
-        mSettingsPreference = settingsPreference;
+        this.settingsPreference = settingsPreference;
     }
 
     @Override
@@ -30,6 +30,6 @@ public class CityRepoImpl implements CityRepo {
 
     @Override
     public void saveCity(CityData cityData) {
-        mSettingsPreference.saveCurrentCity(cityData.getFormattedAddress());
+        settingsPreference.saveCurrentCity(cityData.getFormattedAddress());
     }
 }

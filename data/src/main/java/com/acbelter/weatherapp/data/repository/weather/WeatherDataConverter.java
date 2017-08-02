@@ -3,8 +3,8 @@ package com.acbelter.weatherapp.data.repository.weather;
 import android.support.annotation.VisibleForTesting;
 
 import com.acbelter.weatherapp.data.dbmodel.DatabaseWeatherData;
-import com.acbelter.weatherapp.data.netmodel.CurrentWeather;
-import com.acbelter.weatherapp.data.netmodel.Weather;
+import com.acbelter.weatherapp.data.weathermodel.CurrentWeather;
+import com.acbelter.weatherapp.data.weathermodel.Weather;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherType;
 

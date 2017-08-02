@@ -3,7 +3,7 @@ package com.acbelter.weatherapp.scheduler;
 import android.support.annotation.NonNull;
 
 import com.acbelter.weatherapp.App;
-import com.acbelter.weatherapp.domain.BuildConfig;
+import com.acbelter.weatherapp.BuildConfig;
 import com.acbelter.weatherapp.domain.interactor.SettingsInteractor;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.evernote.android.job.Job;

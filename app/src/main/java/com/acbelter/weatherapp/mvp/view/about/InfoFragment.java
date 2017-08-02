@@ -6,19 +6,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.BuildConfig;
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.mvp.presentation.InfoPresenter;
 import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
-import com.arellomobile.mvp.MvpAppCompatFragment;
+import com.acbelter.weatherapp.mvp.view.fragment.BaseFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class InfoFragment extends MvpAppCompatFragment implements InfoView {
+public class InfoFragment extends BaseFragment implements InfoView {
 
+    @Inject
     @InjectPresenter
     InfoPresenter presenter;
     @BindView(R.id.version_text)
@@ -38,12 +42,19 @@ public class InfoFragment extends MvpAppCompatFragment implements InfoView {
         setDrawableEnabled();
     }
 
-    private void setTitle() {
+    @Override
+    protected void setTitle() {
         getActivity().setTitle(R.string.about);
     }
 
+    @Override
     protected void setDrawableEnabled() {
         ((DrawerLocker) getActivity()).setDrawerEnable(false);
+    }
+
+    @Override
+    protected void inject() {
+        App.getInstance().plusActivityComponent().inject(this);
     }
 
     @Override
