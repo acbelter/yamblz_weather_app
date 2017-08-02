@@ -10,7 +10,7 @@ public class BasePresenter<V extends MvpView> extends MvpPresenter<V> {
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
-    public void unsubscribeOnDetach(Disposable... disposables) {
+    public void unSubscribeOnDetach(Disposable... disposables) {
         disposable.addAll(disposables);
     }
 

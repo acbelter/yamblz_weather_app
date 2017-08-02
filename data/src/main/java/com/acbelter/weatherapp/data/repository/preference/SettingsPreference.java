@@ -41,7 +41,7 @@ public class SettingsPreference {
         }
     }
 
-    public void setCurrentCity(String city) {
+    public void saveCurrentCity(String city) {
         sharedPreferences.edit().putString(KEY_CURRENT_CITY, city).apply();
     }
 

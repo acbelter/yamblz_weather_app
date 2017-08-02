@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="celsius" translatable="false">ºC</string>
-
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+
+    <string name="celsius" translatable="false">°C</string>
+    <string name="fahrenheit" translatable="false">°F</string>
 
     <!--Common resources-->
     <string name="app_name">YamblzWeatherApp</string>
@@ -16,10 +17,16 @@
     <string name="text_weather_error">Failed to get weather</string>
 
     <!--Settings screen-->
+    <string name="settings_title_temperature">Temperature</string>
     <string name="settings">Settings</string>
     <string name="weather_settings">Weather settings</string>
     <string name="weather_update_setting">Setting weather updates</string>
     <string name="update_interval">Update interval in hours</string>
+
+    <string name="min_15">15 minutes</string>
+    <string name="min_30">30 minutes</string>
+    <string name="min_60">1 hour</string>
+    <string name="min_180">3 hours</string>
 
     <!--About screen-->
     <string name="about">About</string>

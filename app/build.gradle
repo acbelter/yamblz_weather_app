@@ -58,7 +58,6 @@ dependencies {
     compile support.design
     compile support.constraintLayout
     compile ui.weatherView
-    compile ui.fixPreference
     compile rx.rxAndroid
     compile rx.rxJava2
     compile rx.rxBinding

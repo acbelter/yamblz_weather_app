@@ -8,6 +8,4 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 public interface InfoView extends MvpView {
 
     void showAppVersion();
-
-    void close();
 }

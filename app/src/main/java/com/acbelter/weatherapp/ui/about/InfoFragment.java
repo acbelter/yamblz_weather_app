@@ -78,9 +78,4 @@ public class InfoFragment extends MvpAppCompatFragment implements InfoView {
     public void showAppVersion() {
         versionText.setText(getString(R.string.version, BuildConfig.VERSION_NAME));
     }
-
-    @Override
-    public void close() {
-
-    }
 }

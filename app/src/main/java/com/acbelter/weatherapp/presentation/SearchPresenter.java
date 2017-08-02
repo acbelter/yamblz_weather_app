@@ -27,7 +27,7 @@ public class SearchPresenter extends BasePresenter<SearchView> {
 
     public void showCityList(String input) {
         CityParams cityParams = new CityParams(input);
-        unsubscribeOnDetach(cityInteractor.getCityList(cityParams)
+        unSubscribeOnDetach(cityInteractor.getCityList(cityParams)
                 .subscribe(cityDatas ->
                                 getViewState().updateCityList(cityDatas),
                         throwable -> getViewState().showError()));
@@ -40,7 +40,7 @@ public class SearchPresenter extends BasePresenter<SearchView> {
     }
 
     private void updateWeather() {
-        unsubscribeOnDetach(weatherInteractor.updateWeather()
+        unSubscribeOnDetach(weatherInteractor.updateWeather()
                 .subscribe(weatherData -> {
                             Timber.d("getCurrentWeather->onNext()");
                             saveWeather(weatherData);
@@ -64,6 +64,6 @@ public class SearchPresenter extends BasePresenter<SearchView> {
     }
 
     public void closeActivity() {
-        getViewState().close();
+//        getViewState().close();
     }
 }

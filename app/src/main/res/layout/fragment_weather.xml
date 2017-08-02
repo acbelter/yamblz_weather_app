@@ -14,7 +14,6 @@
 
         <TextView
             android:id="@+id/temperature_text"
-            style="@style/ShadowedText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/offset_large"
@@ -27,7 +26,6 @@
 
         <TextView
             android:id="@+id/units_text"
-            style="@style/ShadowedText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorTextWeatherLight"
@@ -38,7 +36,6 @@
 
         <TextView
             android:id="@+id/location_text"
-            style="@style/ShadowedText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/offset_large"

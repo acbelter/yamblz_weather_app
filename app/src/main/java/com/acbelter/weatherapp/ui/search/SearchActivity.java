@@ -99,12 +99,6 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView, 
     }
 
     @Override
-    public void close() {
-        finish();
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-    }
-
-    @Override
     public void updateCityList(List<CityData> locations) {
         mAdapter.update(locations);
     }

@@ -1,6 +1,5 @@
 package com.acbelter.weatherapp.ui;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,8 +19,7 @@ import android.widget.EditText;
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.ui.about.InfoFragment;
 import com.acbelter.weatherapp.ui.drawer.DrawerLocker;
-import com.acbelter.weatherapp.ui.search.SearchActivity;
-import com.acbelter.weatherapp.ui.settings.SettingsActivity;
+import com.acbelter.weatherapp.ui.settings.SettingsFragment;
 import com.acbelter.weatherapp.ui.weather.WeatherFragment;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 
@@ -61,7 +59,7 @@ public class MainActivity extends MvpAppCompatActivity implements
 
         etSearch.setOnTouchListener((view, motionEvent) -> {
             if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
-                showSearch();
+//                showSearch();
                 drawerLayout.closeDrawers();
             }
 
@@ -123,14 +121,13 @@ public class MainActivity extends MvpAppCompatActivity implements
     }
 
     void selectDrawerItem(MenuItem menuItem) {
-        Class fragmentClass = null;
+        Class fragmentClass;
         switch (menuItem.getItemId()) {
             case R.id.nav_view:
                 fragmentClass = WeatherFragment.class;
                 break;
             case R.id.nav_settings:
-                showSettings();
-//                fragmentClass = SettingsFragment.class;
+                fragmentClass = SettingsFragment.class;
                 break;
             case R.id.nav_info:
                 fragmentClass = InfoFragment.class;
@@ -154,18 +151,6 @@ public class MainActivity extends MvpAppCompatActivity implements
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
-    }
-
-    private void showSettings() {
-        Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
-        startActivity(settingsIntent);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-    }
-
-    private void showSearch() {
-        Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
-        startActivity(searchIntent);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override

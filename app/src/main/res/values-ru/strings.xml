@@ -11,10 +11,16 @@
     <string name="text_weather_error">Не удалось получить погоду</string>
 
     <!--Settings screen-->
+    <string name="settings_title_temperature">Температура</string>
     <string name="settings">Настройки</string>
     <string name="weather_settings">Настройки погоды</string>
     <string name="weather_update_setting">Настройка обновления погоды</string>
     <string name="update_interval">Интервал обновления в часах</string>
+
+    <string name="min_15">15 минут</string>
+    <string name="min_30">30 минут</string>
+    <string name="min_60">1 час</string>
+    <string name="min_180">3 часа</string>
 
     <!--About screen-->
     <string name="about">О программе</string>

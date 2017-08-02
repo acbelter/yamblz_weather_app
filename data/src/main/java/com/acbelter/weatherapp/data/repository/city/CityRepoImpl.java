@@ -30,6 +30,6 @@ public class CityRepoImpl implements CityRepo {
 
     @Override
     public void saveCity(CityData cityData) {
-        mSettingsPreference.setCurrentCity(cityData.getFormattedAddress());
+        mSettingsPreference.saveCurrentCity(cityData.getFormattedAddress());
     }
 }

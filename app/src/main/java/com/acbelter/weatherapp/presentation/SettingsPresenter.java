@@ -1,28 +1,41 @@
 package com.acbelter.weatherapp.presentation;
 
-import android.content.Context;
-
+import com.acbelter.weatherapp.App;
+import com.acbelter.weatherapp.domain.interactor.SettingsInteractor;
+import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 import com.acbelter.weatherapp.presentation.common.BasePresenter;
+import com.acbelter.weatherapp.scheduler.WeatherScheduleJob;
 import com.acbelter.weatherapp.ui.settings.SettingsView;
 import com.arellomobile.mvp.InjectViewState;
 
 import javax.inject.Inject;
 
-import timber.log.Timber;
-
 @InjectViewState
 public class SettingsPresenter extends BasePresenter<SettingsView> {
+
+    private SettingsInteractor settingsInteractor;
+
     @Inject
-    public SettingsPresenter() {
+    WeatherScheduleJob scheduleJob;
+
+    @Inject
+    public SettingsPresenter(SettingsInteractor settingsInteractor) {
+        this.settingsInteractor = settingsInteractor;
+
+        App.getInstance().getAppComponent().inject(this);
     }
 
-    public void restartWeatherUpdating(Context context, long newUpdateInterval) {
-        Timber.d("Restart weather updating");
-        // Clear last weather data and restart update process
-//        if (newUpdateInterval > 0) {
-//            WeatherUpdateScheduler.startWeatherUpdates(context, newUpdateInterval, true);
-//        } else {
-//            WeatherUpdateScheduler.stopWeatherUpdates(context);
-//        }
+    public void showSettings() {
+        unSubscribeOnDetach(settingsInteractor.getUserSettings().subscribe(settings -> getViewState().setSettings(settings)));
+    }
+
+    public void saveTemperatureMetric(TemperatureMetric metric) {
+        settingsInteractor.saveTemperatureMetric(metric);
+    }
+
+    public void saveUpdateInterval(long interval) {
+        settingsInteractor.saveUpdateInterval(interval);
+
+        scheduleJob.startJob();
     }
 }

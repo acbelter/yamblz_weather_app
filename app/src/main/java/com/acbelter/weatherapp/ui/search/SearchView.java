@@ -10,9 +10,6 @@ import java.util.List;
 
 @StateStrategyType(AddToEndSingleStrategy.class)
 public interface SearchView extends MvpView {
-
-    void close();
-
     void updateCityList(List<CityData> locations);
 
     @StateStrategyType(OneExecutionStateStrategy.class)

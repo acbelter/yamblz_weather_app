@@ -53,7 +53,7 @@ public class PreferenceRepoTest {
     @Test
     public void testSavedCity() {
         String savedCity = "Moscow";
-        settingsPreference.setCurrentCity(savedCity);
+        settingsPreference.saveCurrentCity(savedCity);
         assertEquals(settingsPreference.loadCurrentCity(), savedCity);
     }
 

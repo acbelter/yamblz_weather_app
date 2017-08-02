@@ -20,15 +20,15 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 @LargeTest
 public class AboutActivityTest {
 
-    @Rule
-    public ActivityTestRule<InfoActivity> mActivityRule =
-            new ActivityTestRule(InfoActivity.class);
+//    @Rule
+//    public ActivityTestRule<InfoActivity> mActivityRule =
+//            new ActivityTestRule(InfoActivity.class);
 
     private Utils utils;
 
     @Before
     public void initUtils() {
-        utils = new Utils(mActivityRule);
+//        utils = new Utils(mActivityRule);
     }
 
     @Test
