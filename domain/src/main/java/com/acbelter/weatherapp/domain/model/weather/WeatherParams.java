@@ -1,27 +1,27 @@
 package com.acbelter.weatherapp.domain.model.weather;
 
 public class WeatherParams {
-    private String mCity;
-    private String mLangCode;
+    private String cityName;
+    private String lang;
 
     public WeatherParams(String city) {
-        mCity = city;
-        mLangCode = "en";
+        cityName = city;
+        lang = "en";
     }
 
-    public String getCity() {
-        return mCity;
+    public String getCityName() {
+        return cityName;
     }
 
     public void setCity(String city) {
-        mCity = city;
+        cityName = city;
     }
 
     public String getLangCode() {
-        return mLangCode;
+        return lang;
     }
 
     public void setLangCode(String langCode) {
-        mLangCode = langCode;
+        lang = langCode;
     }
 }

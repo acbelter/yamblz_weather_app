@@ -4,25 +4,40 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Main {
+
     @SerializedName("temp")
     @Expose
-    public float temp;
-    @SerializedName("pressure")
-    @Expose
-    public int pressure;
+    private double temp;
     @SerializedName("humidity")
     @Expose
-    public int humidity;
+    private int humidity;
+    @SerializedName("pressure")
+    @Expose
+    private double pressure;
     @SerializedName("temp_min")
     @Expose
-    public float tempMin;
+    private double tempMin;
     @SerializedName("temp_max")
     @Expose
-    public float tempMax;
-    @SerializedName("sea_level")
-    @Expose
-    public float seaLevel;
-    @SerializedName("grnd_level")
-    @Expose
-    public float groundLevel;
+    private double tempMax;
+
+    public double getTemp() {
+        return temp;
+    }
+
+    public int getHumidity() {
+        return humidity;
+    }
+
+    public double getPressure() {
+        return pressure;
+    }
+
+    public double getTempMin() {
+        return tempMin;
+    }
+
+    public double getTempMax() {
+        return tempMax;
+    }
 }

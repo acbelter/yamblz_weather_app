@@ -1,7 +1,7 @@
 package com.acbelter.weatherapp.data.repository.weather;
 
+import com.acbelter.weatherapp.data.netmodel.CurrentWeather;
 import com.acbelter.weatherapp.data.netmodel.Main;
-import com.acbelter.weatherapp.data.netmodel.NetworkWeatherData;
 import com.acbelter.weatherapp.data.netmodel.Sys;
 import com.acbelter.weatherapp.data.netmodel.Weather;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
@@ -21,19 +21,19 @@ import static org.junit.Assert.assertNull;
 @RunWith(MockitoJUnitRunner.class)
 public class WeatherDataConverterTest {
 
-    private NetworkWeatherData networkWeatherData;
+    private CurrentWeather currentWeather;
     private WeatherData weatherData;
 
     @Before
     public void setUp() {
-        networkWeatherData = new NetworkWeatherData();
+        currentWeather = new CurrentWeather();
         weatherData = new WeatherData();
     }
 
     @Test
     public void testCodeError() {
-        networkWeatherData.code = 201;
-        assertNull(WeatherDataConverter.fromNetworkData(networkWeatherData));
+        currentWeather.code = 201;
+        assertNull(WeatherDataConverter.fromNetworkData(currentWeather));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -100,24 +100,24 @@ public class WeatherDataConverterTest {
         initNetworkWeather();
         initWeatherData();
 
-        WeatherData testWeatherData = WeatherDataConverter.fromNetworkData(networkWeatherData);
+        WeatherData testWeatherData = WeatherDataConverter.fromNetworkData(currentWeather);
         assertEquals(testWeatherData.getCity(), weatherData.getCity());
     }
 
     private void initNetworkWeather() {
-        networkWeatherData.code = 200;
-        networkWeatherData.name = "Tambov";
+        currentWeather.code = 200;
+        currentWeather.name = "Tambov";
         Weather weather = new Weather();
         weather.main = "Clear";
-        networkWeatherData.main = new Main();
+        currentWeather.main = new Main();
         List<Weather> weatherList = new ArrayList<>();
         weatherList.add(weather);
-        networkWeatherData.weather = weatherList;
-        networkWeatherData.dt = 1501311011;
+        currentWeather.weather = weatherList;
+        currentWeather.dt = 1501311011;
         Sys sys = new Sys();
         sys.sunrise = 1501291729;
         sys.sunset = 1501348298;
-        networkWeatherData.sys = sys;
+        currentWeather.sys = sys;
     }
 
     private void initWeatherData() {

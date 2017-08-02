@@ -55,7 +55,6 @@ ext {
             butterknife       : "com.jakewharton:butterknife:$butterknifeVersion",
             retrofit2         : "com.squareup.retrofit2:retrofit:$retrofitVersion",
             retrofit2_adapter : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
-            retrofit2_scalars : "com.squareup.retrofit2:converter-scalars:$retrofitVersion",
             retrofit2_gson    : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
             gson              : "com.google.code.gson:gson:$gsonVersion",
             loggingInterceptor: "com.squareup.okhttp3:logging-interceptor:$okhttp3Version",

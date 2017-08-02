@@ -40,8 +40,8 @@ public class WeatherDataApiTest {
         WeatherParams weatherParams = new WeatherParams("Mos");
 
         PublishSubject<String> subject = PublishSubject.create();
-        when(mockWeatherApi.getCurrentWeatherData(anyString(), anyString())).thenReturn(subject);
+        when(mockWeatherApi.getCurrentWeather(anyString(), anyString())).thenReturn(subject);
         networkService.getCurrentWeather(weatherParams);
-        verify(mockWeatherApi).getCurrentWeatherData(anyString(), anyString());
+        verify(mockWeatherApi).getCurrentWeather(anyString(), anyString());
     }
 }

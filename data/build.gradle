@@ -35,7 +35,6 @@ dependencies {
     compile rx.rxJava2
     compile lib.retrofit2
     compile lib.retrofit2_adapter
-    compile lib.retrofit2_scalars
     compile lib.retrofit2_gson
     compile lib.gson
     compile lib.loggingInterceptor

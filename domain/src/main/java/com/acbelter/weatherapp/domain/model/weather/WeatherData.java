@@ -1,11 +1,8 @@
 package com.acbelter.weatherapp.domain.model.weather;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-public class WeatherData implements Parcelable {
+public class WeatherData {
     private String mCity;
-    private float mKelvinTemperature;
+    private double kelvinTemperature;
     private WeatherType mWeatherType;
     private long mTimestamp;
     private long mSunriseTimestamp;
@@ -13,27 +10,6 @@ public class WeatherData implements Parcelable {
 
     public WeatherData() {
     }
-
-    protected WeatherData(Parcel in) {
-        mCity = in.readString();
-        mKelvinTemperature = in.readFloat();
-        mWeatherType = WeatherType.valueOf(in.readString());
-        mTimestamp = in.readLong();
-        mSunriseTimestamp = in.readLong();
-        mSunsetTimestamp = in.readLong();
-    }
-
-    public static final Creator<WeatherData> CREATOR = new Creator<WeatherData>() {
-        @Override
-        public WeatherData createFromParcel(Parcel in) {
-            return new WeatherData(in);
-        }
-
-        @Override
-        public WeatherData[] newArray(int size) {
-            return new WeatherData[size];
-        }
-    };
 
     public void setCity(String city) {
         mCity = city;
@@ -43,19 +19,19 @@ public class WeatherData implements Parcelable {
         return mCity;
     }
 
-    public void setTemperatureK(float temperature) {
-        mKelvinTemperature = temperature;
+    public void setTemperatureK(double temperature) {
+        kelvinTemperature = temperature;
     }
 
-    public float getTemperatureK() {
-        return mKelvinTemperature;
+    public double getTemperatureK() {
+        return kelvinTemperature;
     }
 
-    public float getTemperatureC() {
-        return mKelvinTemperature - 273.15f;
+    public double getTemperatureC() {
+        return kelvinTemperature - 273.15f;
     }
 
-    public float getTemperatureF() {
+    public double getTemperatureF() {
         return 1.8f * getTemperatureC() + 32;
     }
 
@@ -117,24 +93,9 @@ public class WeatherData implements Parcelable {
     }
 
     @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mCity);
-        dest.writeFloat(mKelvinTemperature);
-        dest.writeString(mWeatherType.name());
-        dest.writeLong(mTimestamp);
-        dest.writeLong(mSunriseTimestamp);
-        dest.writeLong(mSunsetTimestamp);
-    }
-
-    @Override
     public String toString() {
         return "(city=" + mCity +
-                ", temperature=" + mKelvinTemperature + "K" +
+                ", temperature=" + kelvinTemperature + "K" +
                 ", type=" + mWeatherType +
                 ", timestamp=" + mTimestamp +
                 ", sunrise=" + mSunriseTimestamp +

@@ -3,7 +3,7 @@ package com.acbelter.weatherapp.data.repository.weather;
 import android.support.annotation.VisibleForTesting;
 
 import com.acbelter.weatherapp.data.dbmodel.DatabaseWeatherData;
-import com.acbelter.weatherapp.data.netmodel.NetworkWeatherData;
+import com.acbelter.weatherapp.data.netmodel.CurrentWeather;
 import com.acbelter.weatherapp.data.netmodel.Weather;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherType;
@@ -20,22 +20,22 @@ public class WeatherDataConverter {
         throw new UnsupportedOperationException();
     }
 
-    public static WeatherData fromNetworkData(NetworkWeatherData netData) {
-        if (netData == null) {
+    public static WeatherData fromNetworkData(CurrentWeather currentWeather) {
+        if (currentWeather == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
 
-        if (netData.code != 200) {
+        if (currentWeather.getCod() != 200) {
             return null;
         }
 
         WeatherData weatherData = new WeatherData();
-        weatherData.setCity(netData.name);
-        weatherData.setTemperatureK(netData.main.temp);
-        weatherData.setWeatherType(extractWeatherType(netData.weather));
-        weatherData.setTimestamp((long) netData.dt * 1000);
-        weatherData.setSunriseTimestamp((long) netData.sys.sunrise * 1000);
-        weatherData.setSunsetTimestamp((long) netData.sys.sunset * 1000);
+        weatherData.setCity(currentWeather.getName());
+        weatherData.setTemperatureK(currentWeather.getMain().getTemp());
+        weatherData.setWeatherType(extractWeatherType(currentWeather.getWeather()));
+        weatherData.setTimestamp((long) currentWeather.getDt() * 1000);
+        weatherData.setSunriseTimestamp((long) currentWeather.getSys().getSunrise() * 1000);
+        weatherData.setSunsetTimestamp((long) currentWeather.getSys().getSunset() * 1000);
         return weatherData;
     }
 
@@ -43,7 +43,7 @@ public class WeatherDataConverter {
     static WeatherType extractWeatherType(List<Weather> weatherList) {
         Set<String> weatherStringTypes = new HashSet<>();
         for (Weather weather : weatherList) {
-            weatherStringTypes.add(weather.main);
+            weatherStringTypes.add(weather.getMain());
         }
 
         if (weatherStringTypes.contains("Thunderstorm")) {
@@ -65,7 +65,7 @@ public class WeatherDataConverter {
         return WeatherType.SUN;
     }
 
-    public static DatabaseWeatherData fromNetworkToDatabaseData(NetworkWeatherData netData) {
+    public static DatabaseWeatherData fromNetworkToDatabaseData(CurrentWeather netData) {
         if (netData == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
