@@ -24,7 +24,7 @@ public class SettingsActivity extends MvpAppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        App.getComponentManager().getAppComponent().inject(this);
+        App.getInstance().plusActivityComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
@@ -46,7 +46,7 @@ public class SettingsActivity extends MvpAppCompatActivity implements
     }
 
     @Override
-    public void onUpdateIntervalChanged(int newUpdateInterval) {
+    public void onUpdateIntervalChanged(long newUpdateInterval) {
         Timber.d("Weather update interval is changed: %s", newUpdateInterval);
         mPresenter.restartWeatherUpdating(this, newUpdateInterval);
     }

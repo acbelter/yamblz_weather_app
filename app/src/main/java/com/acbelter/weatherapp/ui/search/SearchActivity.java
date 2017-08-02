@@ -47,7 +47,7 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView, 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        App.getComponentManager().addWeatherComponent().inject(this);
+        App.getInstance().plusActivityComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
@@ -122,7 +122,7 @@ public class SearchActivity extends MvpAppCompatActivity implements SearchView, 
     public void onStop() {
         super.onStop();
 
-        App.getComponentManager().removeWeatherComponent();
+        App.getInstance().releaseActivityComponent();
     }
 
     @Override

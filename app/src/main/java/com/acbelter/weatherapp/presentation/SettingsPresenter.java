@@ -16,7 +16,7 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
     public SettingsPresenter() {
     }
 
-    public void restartWeatherUpdating(Context context, int newUpdateInterval) {
+    public void restartWeatherUpdating(Context context, long newUpdateInterval) {
         Timber.d("Restart weather updating");
         // Clear last weather data and restart update process
 //        if (newUpdateInterval > 0) {

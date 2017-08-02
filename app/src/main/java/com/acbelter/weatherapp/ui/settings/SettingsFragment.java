@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
-import com.acbelter.weatherapp.data.repository.preference.PreferencesRepo;
+import com.acbelter.weatherapp.data.repository.preference.SettingsPreference;
 import com.takisoft.fix.support.v7.preference.PreferenceFragmentCompat;
 
 import javax.inject.Inject;
@@ -16,18 +16,18 @@ import timber.log.Timber;
 public class SettingsFragment extends PreferenceFragmentCompat implements
         SharedPreferences.OnSharedPreferenceChangeListener {
     @Inject
-    PreferencesRepo mPrefsRepo;
+    SettingsPreference mPrefsRepo;
     private SettingsListener mListener;
 
     public interface SettingsListener {
-        void onUpdateIntervalChanged(int newUpdateInterval);
+        void onUpdateIntervalChanged(long newUpdateInterval);
     }
 
     @Override
     public void onCreatePreferencesFix(Bundle savedInstanceState, String rootKey) {
-        App.getComponentManager().getAppComponent().inject(this);
+        App.getInstance().plusActivityComponent().inject(this);
         addPreferencesFromResource(R.xml.preferences);
-        Timber.d("Stored weather update interval: %s", mPrefsRepo.getUpdateInterval());
+        Timber.d("Stored weather update interval: %s", mPrefsRepo.loadUpdateInterval());
         mPrefsRepo.addListener(this);
     }
 
@@ -49,8 +49,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (PreferencesRepo.KEY_UPDATE_INTERVAL.equals(key)) {
-            mListener.onUpdateIntervalChanged(mPrefsRepo.getUpdateInterval());
+        if (SettingsPreference.KEY_UPDATE_INTERVAL.equals(key)) {
+            mListener.onUpdateIntervalChanged(mPrefsRepo.loadUpdateInterval());
         }
     }
 

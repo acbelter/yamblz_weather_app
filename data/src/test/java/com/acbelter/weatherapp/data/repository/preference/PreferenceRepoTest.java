@@ -18,57 +18,57 @@ import static org.junit.Assert.assertNull;
 @RunWith(RobolectricTestRunner.class)
 public class PreferenceRepoTest {
 
-    private PreferencesRepo preferencesRepo;
+    private SettingsPreference settingsPreference;
 
     @Before
     public void setUp() {
         SharedPreferences sharedPreferences = RuntimeEnvironment.application.getSharedPreferences("storage", Context.MODE_PRIVATE);
-        preferencesRepo = new PreferencesRepo(sharedPreferences);
+        settingsPreference = new SettingsPreference(sharedPreferences);
         sharedPreferences.edit().clear().apply();
     }
 
     @Test
     public void testDefaultCity() {
         String defaultCity = "Moscow, TN 38057";
-        assertEquals(preferencesRepo.getCurrentCity(), defaultCity);
+        assertEquals(settingsPreference.loadCurrentCity(), defaultCity);
     }
 
     @Test
     public void testDefaultUpdateInterval() {
         int defaultInterval = 1;
-        assertEquals(preferencesRepo.getUpdateInterval(), defaultInterval);
+        assertEquals(settingsPreference.loadUpdateInterval(), defaultInterval);
     }
 
     @Test
     public void testDefaultLastUpdateTimestamp() {
         long defaultLastUpdateTimestamp = 0L;
-        assertEquals(preferencesRepo.getLastUpdateTimestamp(), defaultLastUpdateTimestamp);
+        assertEquals(settingsPreference.getLastUpdateTimestamp(), defaultLastUpdateTimestamp);
     }
 
     @Test
     public void testDefaultLastWeatherData() {
-        assertNull(preferencesRepo.getLastWeatherData());
+        assertNull(settingsPreference.getLastWeatherData());
     }
 
     @Test
     public void testSavedCity() {
         String savedCity = "Moscow";
-        preferencesRepo.setCurrentCity(savedCity);
-        assertEquals(preferencesRepo.getCurrentCity(), savedCity);
+        settingsPreference.setCurrentCity(savedCity);
+        assertEquals(settingsPreference.loadCurrentCity(), savedCity);
     }
 
     @Test
     public void testSavedUpdateInterval() {
         int savedInterval = 5;
-        preferencesRepo.setUpdateInterval(savedInterval);
-        assertEquals(preferencesRepo.getUpdateInterval(), savedInterval);
+        settingsPreference.saveUpdateInterval(savedInterval);
+        assertEquals(settingsPreference.loadUpdateInterval(), savedInterval);
     }
 
     @Test
     public void testSavedLastUpdateTimestamp() {
         long saveTimestamp = 5L;
-        preferencesRepo.setLastUpdateTimestamp(saveTimestamp);
-        assertEquals(preferencesRepo.getLastUpdateTimestamp(), saveTimestamp);
+        settingsPreference.setLastUpdateTimestamp(saveTimestamp);
+        assertEquals(settingsPreference.getLastUpdateTimestamp(), saveTimestamp);
     }
 
     @Test
@@ -80,7 +80,7 @@ public class PreferenceRepoTest {
         savedWeatherData.setTimestamp(2L);
         savedWeatherData.setSunsetTimestamp(3L);
         savedWeatherData.setSunriseTimestamp(4L);
-        preferencesRepo.setLastWeatherData(savedWeatherData);
-        assertEquals(preferencesRepo.getLastWeatherData(), savedWeatherData);
+        settingsPreference.setLastWeatherData(savedWeatherData);
+        assertEquals(settingsPreference.getLastWeatherData(), savedWeatherData);
     }
 }

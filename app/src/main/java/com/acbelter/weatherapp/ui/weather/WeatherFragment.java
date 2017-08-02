@@ -57,7 +57,7 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        App.getComponentManager().addWeatherComponent().inject(this);
+        App.getInstance().plusActivityComponent().inject(this);
         super.onCreate(savedInstanceState);
         Timber.d("Add weather component");
         mAnimBgDuration = getContext().getResources().getInteger(R.integer.anim_bg_duration);
@@ -113,7 +113,7 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        App.getComponentManager().removeWeatherComponent();
+        App.getInstance().releaseActivityComponent();
         Timber.d("Remove weather component");
         mUnbinder.unbind();
     }
@@ -138,7 +138,7 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
         mSwipeRefreshLayout.setRefreshing(false);
         WeatherRes newWeatherRes = new WeatherRes(weatherData);
         setWeatherTextColor(newWeatherRes.getTextColorResId());
-        mTemperatureText.setText(String.valueOf(weatherData.getTemperatureC()));
+        mTemperatureText.setText(String.valueOf(Math.round(weatherData.getTemperatureC())));
         mUnitsText.setText(R.string.celsius);
         mLocationText.setText(weatherData.getCity());
         mContentLayout.setBackgroundColor(

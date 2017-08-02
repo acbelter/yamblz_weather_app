@@ -7,6 +7,7 @@ import com.acbelter.weatherapp.domain.repository.CityRepo;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
@@ -17,7 +18,6 @@ public class CityInteractor {
     private Scheduler mSchedulerIO;
     private Scheduler mSchedulerMain;
 
-    @Inject
     public CityInteractor(CityRepo cityRepo, Scheduler schedulerIO, Scheduler schedulerMain) {
         mCityRepo = cityRepo;
         mSchedulerIO = schedulerIO;

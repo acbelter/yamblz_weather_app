@@ -36,10 +36,12 @@ android {
     }
 
     buildTypes {
+
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -52,37 +54,28 @@ android {
 dependencies {
     compile project(path: ':data')
     compile project(path: ':domain')
-
     compile support.appCompat
     compile support.design
     compile support.constraintLayout
-
     compile ui.weatherView
     compile ui.fixPreference
-
     compile rx.rxAndroid
     compile rx.rxJava2
     compile rx.rxBinding
     compile rx.rxBindingDesign
-
     compile lib.dagger2
     annotationProcessor compiler.dagger2
-
     compile lib.moxy
     compile lib.moxyAppCompat
     annotationProcessor compiler.moxy
-
     compile lib.butterknife
     annotationProcessor compiler.butterknife
-
     compile lib.gson
-
     compile lib.timber
-
+    compile lib.androidJob
     androidTestCompile uiTest.espressoCore
     androidTestCompile uiTest.espressoContrib
     androidTestCompile uiTest.runner
-
     testCompile unitTest.junit
     testCompile unitTest.mockito
     testCompile unitTest.assertJ

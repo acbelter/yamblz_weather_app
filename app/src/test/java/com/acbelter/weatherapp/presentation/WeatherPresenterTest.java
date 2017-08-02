@@ -2,7 +2,7 @@ package com.acbelter.weatherapp.presentation;
 
 import android.content.Context;
 
-import com.acbelter.weatherapp.data.repository.preference.PreferencesRepo;
+import com.acbelter.weatherapp.data.repository.preference.SettingsPreference;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
@@ -32,7 +32,7 @@ public class WeatherPresenterTest {
     Context mockContext;
 
     @Mock
-    PreferencesRepo mockPreferencesRepo;
+    SettingsPreference mockSettingsPreference;
 
     @Mock
     WeatherView mockView;
@@ -54,7 +54,7 @@ public class WeatherPresenterTest {
 //        presenter.updateWeather();
 
 //        testScheduler.triggerActions();
-//        verify(mockPreferencesRepo).getCurrentCity();
+//        verify(mockSettingsPreference).loadCurrentCity();
 //        verify(mockView).showError();
     }
 
@@ -63,14 +63,14 @@ public class WeatherPresenterTest {
         WeatherData weatherData = new WeatherData();
         Observable<WeatherData> subject = Observable.just(weatherData);
         when(mockWeatherInteractor.getCurrentWeather(any(WeatherParams.class))).thenReturn(subject);
-        when(mockPreferencesRepo.getCurrentCity()).thenReturn("Moscow");
+        when(mockSettingsPreference.loadCurrentCity()).thenReturn("Moscow");
 
 //        presenter.updateWeather();
 
 //        testScheduler.triggerActions();
-//        verify(mockPreferencesRepo).getCurrentCity();
-//        verify(mockPreferencesRepo).setLastWeatherData(weatherData);
-//        verify(mockPreferencesRepo).setLastUpdateTimestamp(anyLong());
+//        verify(mockSettingsPreference).loadCurrentCity();
+//        verify(mockSettingsPreference).setLastWeatherData(weatherData);
+//        verify(mockSettingsPreference).setLastUpdateTimestamp(anyLong());
 //        verify(mockView).showWeather(any(WeatherData.class), anyLong());
     }
 }

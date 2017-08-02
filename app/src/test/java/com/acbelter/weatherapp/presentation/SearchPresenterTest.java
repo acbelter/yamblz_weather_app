@@ -81,14 +81,14 @@ public class SearchPresenterTest {
     public void testSaveSelectedCityAndWeather() {
         WeatherData weatherData = new WeatherData();
         Observable<WeatherData> weatherSubject = Observable.just(weatherData);
-        when(mockWeatherInteractor.getCurrentWeather(any(WeatherParams.class))).thenReturn(weatherSubject);
+//        when(mockWeatherInteractor.getCurrentWeather(any(WeatherParams.class))).thenReturn(weatherSubject);
 
         CityData cityData = new CityData();
         presenter.saveSelectedCityAndWeather(cityData);
 
         testScheduler.triggerActions();
         verify(mockCityInteractor).saveSelectedCity(any(CityData.class));
-        verify(mockWeatherInteractor).getCurrentWeather(any(WeatherParams.class));
+//        verify(mockWeatherInteractor).getCurrentWeather(any(WeatherParams.class));
         verify(mockWeatherInteractor).saveWeather(any(WeatherData.class));
         verify(mockView).close();
     }

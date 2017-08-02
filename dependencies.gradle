@@ -7,6 +7,9 @@ ext {
     versionCode = 1
     versionName = "1.0"
 
+    weatherViewVersion = "1.2.0"
+    takisoftVersion = "25.4.0.3"
+
     supportLibraryVersion = "25.4.0"
     retrofitVersion = "2.3.0"
     daggerVersion = "2.11"
@@ -15,6 +18,10 @@ ext {
     moxyVersion = "1.5.3"
     butterknifeVersion = "8.6.0"
     rxBindingVersion = "2.0.0"
+    timberVersion = "4.5.1"
+    androidJobVersion = "1.1.11"
+    gsonVersion = "2.8.1"
+    okhttp3Version = "3.8.1"
 
     mockitoVersion = "1.10.19"
     junitVersion = "4.12"
@@ -31,8 +38,8 @@ ext {
     ]
 
     ui = [
-            weatherView  : "com.github.MatteoBattilana:WeatherView:1.2.0",
-            fixPreference: "com.takisoft.fix:preference-v7:25.4.0.3",
+            weatherView  : "com.github.MatteoBattilana:WeatherView:$weatherViewVersion",
+            fixPreference: "com.takisoft.fix:preference-v7:$takisoftVersion",
     ]
 
     rx = [
@@ -51,9 +58,10 @@ ext {
             retrofit2_adapter : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
             retrofit2_scalars : "com.squareup.retrofit2:converter-scalars:$retrofitVersion",
             retrofit2_gson    : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
-            gson              : "com.google.code.gson:gson:2.8.1",
-            loggingInterceptor: "com.squareup.okhttp3:logging-interceptor:3.8.1",
-            timber            : "com.jakewharton.timber:timber:4.5.1",
+            gson              : "com.google.code.gson:gson:$gsonVersion",
+            loggingInterceptor: "com.squareup.okhttp3:logging-interceptor:$okhttp3Version",
+            timber            : "com.jakewharton.timber:timber:$timberVersion",
+            androidJob        : "com.evernote:android-job:$androidJobVersion"
     ]
 
     compiler = [

@@ -25,6 +25,8 @@ dependencies {
     compile lib.dagger2
     annotationProcessor compiler.dagger2
 
+    compile lib.timber
+
     testCompile unitTest.junit
     testCompile unitTest.mockito
     testCompile unitTest.assertJ

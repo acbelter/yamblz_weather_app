@@ -1,7 +1,7 @@
 package com.acbelter.weatherapp.data.repository.city;
 
 import com.acbelter.weatherapp.data.network.NetworkService;
-import com.acbelter.weatherapp.data.repository.preference.PreferencesRepo;
+import com.acbelter.weatherapp.data.repository.preference.SettingsPreference;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.city.CityParams;
 import com.acbelter.weatherapp.domain.repository.CityRepo;
@@ -12,11 +12,11 @@ import timber.log.Timber;
 public class CityRepoImpl implements CityRepo {
 
     private NetworkService mNetworkService;
-    private PreferencesRepo mPreferencesRepo;
+    private SettingsPreference mSettingsPreference;
 
-    public CityRepoImpl(NetworkService networkService, PreferencesRepo preferencesRepo) {
+    public CityRepoImpl(NetworkService networkService, SettingsPreference settingsPreference) {
         mNetworkService = networkService;
-        mPreferencesRepo = preferencesRepo;
+        mSettingsPreference = settingsPreference;
     }
 
     @Override
@@ -30,6 +30,6 @@ public class CityRepoImpl implements CityRepo {
 
     @Override
     public void saveCity(CityData cityData) {
-        mPreferencesRepo.setCurrentCity(cityData.getFormattedAddress());
+        mSettingsPreference.setCurrentCity(cityData.getFormattedAddress());
     }
 }

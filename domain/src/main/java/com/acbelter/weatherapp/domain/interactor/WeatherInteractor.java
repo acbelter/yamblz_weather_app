@@ -4,6 +4,7 @@ import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
@@ -14,7 +15,6 @@ public class WeatherInteractor {
     private Scheduler schedulerIO;
     private Scheduler schedulerMain;
 
-    @Inject
     public WeatherInteractor(WeatherRepo weatherRepo, Scheduler schedulersIO, Scheduler schedulerMain) {
         this.weatherRepo = weatherRepo;
         schedulerIO = schedulersIO;
