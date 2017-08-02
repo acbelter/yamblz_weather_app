@@ -5,7 +5,8 @@
     android:id="@+id/content_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBgWeatherSun">
+    android:background="@color/colorBgWeatherSun"
+    tools:context=".mvp.view.MainActivity">
 
     <ImageView
         android:id="@+id/icon"

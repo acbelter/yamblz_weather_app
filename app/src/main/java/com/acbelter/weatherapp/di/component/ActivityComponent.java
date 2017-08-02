@@ -2,11 +2,10 @@ package com.acbelter.weatherapp.di.component;
 
 import com.acbelter.weatherapp.di.module.ActivityModule;
 import com.acbelter.weatherapp.di.scope.ActivityScope;
+import com.acbelter.weatherapp.mvp.view.search.SearchActivity;
+import com.acbelter.weatherapp.mvp.view.settings.SettingsFragment;
+import com.acbelter.weatherapp.mvp.view.weather.WeatherFragment;
 import com.acbelter.weatherapp.scheduler.WeatherScheduleJob;
-import com.acbelter.weatherapp.ui.search.SearchActivity;
-import com.acbelter.weatherapp.ui.settings.SettingsFragment;
-import com.acbelter.weatherapp.ui.weather.WeatherFragment;
-
 import dagger.Subcomponent;
 
 @ActivityScope

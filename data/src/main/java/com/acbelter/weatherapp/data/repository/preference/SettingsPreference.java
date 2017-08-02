@@ -29,18 +29,6 @@ public class SettingsPreference {
         this.sharedPreferences = sharedPreferences;
     }
 
-    public void addListener(SharedPreferences.OnSharedPreferenceChangeListener listener) {
-        if (listener != null) {
-            sharedPreferences.registerOnSharedPreferenceChangeListener(listener);
-        }
-    }
-
-    public void removeListener(SharedPreferences.OnSharedPreferenceChangeListener listener) {
-        if (listener != null) {
-            sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
-        }
-    }
-
     public void saveCurrentCity(String city) {
         sharedPreferences.edit().putString(KEY_CURRENT_CITY, city).apply();
     }

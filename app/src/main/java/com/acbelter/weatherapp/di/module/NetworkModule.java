@@ -20,6 +20,7 @@ import timber.log.Timber;
 
 @Module
 public class NetworkModule {
+
     @Provides
     @Singleton
     HttpLoggingInterceptor provideHttpLoggingInterceptor() {

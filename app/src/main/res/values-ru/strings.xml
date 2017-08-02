@@ -15,7 +15,7 @@
     <string name="settings">Настройки</string>
     <string name="weather_settings">Настройки погоды</string>
     <string name="weather_update_setting">Настройка обновления погоды</string>
-    <string name="update_interval">Интервал обновления в часах</string>
+    <string name="update_interval">Интервал обновления</string>
 
     <string name="min_15">15 минут</string>
     <string name="min_30">30 минут</string>
