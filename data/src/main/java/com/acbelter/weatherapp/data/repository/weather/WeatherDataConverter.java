@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import timber.log.Timber;
+
 public class WeatherDataConverter {
     public static WeatherData fromDatabaseData(DatabaseWeatherData dbData) {
         if (dbData == null) {
@@ -30,6 +32,7 @@ public class WeatherDataConverter {
         }
 
         WeatherData weatherData = new WeatherData();
+        Timber.v("description = " + currentWeather.getWeather().get(0).getDescription());
         weatherData.setCity(currentWeather.getName());
         weatherData.setTemperatureK(currentWeather.getMain().getTemp());
         weatherData.setWeatherType(extractWeatherType(currentWeather.getWeather()));

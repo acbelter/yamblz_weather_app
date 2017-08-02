@@ -2,11 +2,9 @@ package com.acbelter.weatherapp.domain.model.weather;
 
 public class WeatherParams {
     private String cityName;
-    private String lang;
 
     public WeatherParams(String city) {
         cityName = city;
-        lang = "en";
     }
 
     public String getCityName() {
@@ -17,11 +15,4 @@ public class WeatherParams {
         cityName = city;
     }
 
-    public String getLangCode() {
-        return lang;
-    }
-
-    public void setLangCode(String langCode) {
-        lang = langCode;
-    }
 }

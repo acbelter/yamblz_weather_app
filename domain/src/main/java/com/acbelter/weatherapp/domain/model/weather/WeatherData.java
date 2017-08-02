@@ -1,22 +1,22 @@
 package com.acbelter.weatherapp.domain.model.weather;
 
 public class WeatherData {
-    private String mCity;
+    private String cityName;
     private double kelvinTemperature;
-    private WeatherType mWeatherType;
-    private long mTimestamp;
-    private long mSunriseTimestamp;
-    private long mSunsetTimestamp;
+    private WeatherType weatherType;
+    private long timestamp;
+    private long sunriseTimestamp;
+    private long sunsetTimestamp;
 
     public WeatherData() {
     }
 
     public void setCity(String city) {
-        mCity = city;
+        cityName = city;
     }
 
     public String getCity() {
-        return mCity;
+        return cityName;
     }
 
     public void setTemperatureK(double temperature) {
@@ -36,39 +36,39 @@ public class WeatherData {
     }
 
     public void setWeatherType(WeatherType type) {
-        mWeatherType = type;
+        weatherType = type;
     }
 
     public WeatherType getWeatherType() {
-        return mWeatherType;
+        return weatherType;
     }
 
     public void setTimestamp(long timestamp) {
-        mTimestamp = timestamp;
+        this.timestamp = timestamp;
     }
 
     public long getTimestamp() {
-        return mTimestamp;
+        return timestamp;
     }
 
     public void setSunriseTimestamp(long timestamp) {
-        mSunriseTimestamp = timestamp;
+        sunriseTimestamp = timestamp;
     }
 
     public long getSunriseTimestamp() {
-        return mSunriseTimestamp;
+        return sunriseTimestamp;
     }
 
     public void setSunsetTimestamp(long timestamp) {
-        mSunsetTimestamp = timestamp;
+        sunsetTimestamp = timestamp;
     }
 
     public long getSunsetTimestamp() {
-        return mSunsetTimestamp;
+        return sunsetTimestamp;
     }
 
     public boolean isDay() {
-        return mTimestamp > mSunriseTimestamp && mTimestamp < mSunsetTimestamp;
+        return timestamp > sunriseTimestamp && timestamp < sunsetTimestamp;
     }
 
     public boolean isNight() {
@@ -84,22 +84,22 @@ public class WeatherData {
             return false;
         }
         WeatherData data = (WeatherData) o;
-        return mCity.equals(data.mCity);
+        return cityName.equals(data.cityName);
     }
 
     @Override
     public int hashCode() {
-        return mCity.hashCode();
+        return cityName.hashCode();
     }
 
     @Override
     public String toString() {
-        return "(city=" + mCity +
+        return "(city=" + cityName +
                 ", temperature=" + kelvinTemperature + "K" +
-                ", type=" + mWeatherType +
-                ", timestamp=" + mTimestamp +
-                ", sunrise=" + mSunriseTimestamp +
-                ", sunset=" + mSunsetTimestamp +
+                ", type=" + weatherType +
+                ", timestamp=" + timestamp +
+                ", sunrise=" + sunriseTimestamp +
+                ", sunset=" + sunsetTimestamp +
                 ", day=" + isDay() +
                 ")";
     }
