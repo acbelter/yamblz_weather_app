@@ -38,7 +38,7 @@ ext {
     ]
 
     ui = [
-            weatherView  : "com.github.MatteoBattilana:WeatherView:$weatherViewVersion",
+            weatherView: "com.github.MatteoBattilana:WeatherView:$weatherViewVersion",
     ]
 
     rx = [

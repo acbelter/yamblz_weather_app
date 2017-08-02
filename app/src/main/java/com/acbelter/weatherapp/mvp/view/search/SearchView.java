@@ -14,4 +14,6 @@ public interface SearchView extends MvpView {
 
     @StateStrategyType(OneExecutionStateStrategy.class)
     void showError();
+
+    void close();
 }

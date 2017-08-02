@@ -3,9 +3,6 @@ package com.acbelter.weatherapp.domain.interactor;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 

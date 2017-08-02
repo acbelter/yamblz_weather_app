@@ -12,7 +12,7 @@ import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.domain.model.settings.SettingsData;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 import com.acbelter.weatherapp.mvp.presentation.SettingsPresenter;
-import com.acbelter.weatherapp.mvp.view.drawer.DrawerLocker;
+import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;

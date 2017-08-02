@@ -1,4 +1,4 @@
-package com.acbelter.weatherapp.mvp.view;
+package com.acbelter.weatherapp.mvp.view.activity;
 
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -18,7 +18,8 @@ import android.widget.EditText;
 
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.mvp.view.about.InfoFragment;
-import com.acbelter.weatherapp.mvp.view.drawer.DrawerLocker;
+import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
+import com.acbelter.weatherapp.mvp.view.search.SearchFragment;
 import com.acbelter.weatherapp.mvp.view.settings.SettingsFragment;
 import com.acbelter.weatherapp.mvp.view.weather.WeatherFragment;
 import com.arellomobile.mvp.MvpAppCompatActivity;
@@ -59,7 +60,7 @@ public class MainActivity extends MvpAppCompatActivity implements
 
         etSearch.setOnTouchListener((view, motionEvent) -> {
             if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
-//                showSearch();
+                showFragment(SearchFragment.class);
                 drawerLayout.closeDrawers();
             }
 
@@ -136,6 +137,12 @@ public class MainActivity extends MvpAppCompatActivity implements
                 fragmentClass = WeatherFragment.class;
         }
 
+        showFragment(fragmentClass);
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    private void showFragment(Class fragmentClass) {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(fragmentClass.getSimpleName());
         if (fragment == null) {
             try {
@@ -149,8 +156,6 @@ public class MainActivity extends MvpAppCompatActivity implements
                 e.printStackTrace();
             }
         }
-
-        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     @Override

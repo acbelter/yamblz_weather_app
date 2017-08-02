@@ -64,6 +64,6 @@ public class SearchPresenter extends BasePresenter<SearchView> {
     }
 
     public void closeActivity() {
-//        getViewState().close();
+        getViewState().close();
     }
 }

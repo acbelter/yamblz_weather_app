@@ -11,8 +11,6 @@ import org.mockito.MockitoAnnotations;
 
 import xyz.matteobattilana.library.Common.Constants;
 
-import static org.junit.Assert.assertEquals;
-
 public class WeatherResoursesRainTest {
 
     private WeatherData weatherData;

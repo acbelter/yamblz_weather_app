@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.acbelter.weatherapp.BuildConfig;
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.mvp.presentation.InfoPresenter;
-import com.acbelter.weatherapp.mvp.view.drawer.DrawerLocker;
+import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 

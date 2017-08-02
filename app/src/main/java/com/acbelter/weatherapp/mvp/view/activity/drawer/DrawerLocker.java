@@ -1,4 +1,4 @@
-package com.acbelter.weatherapp.mvp.view.drawer;
+package com.acbelter.weatherapp.mvp.view.activity.drawer;
 
 public interface DrawerLocker {
 
