@@ -122,7 +122,7 @@ public class WeatherDataConverterTest {
 
     private void initWeatherData() {
         weatherData.setCity("Tambov");
-        weatherData.setTemperatureK(301.998f);
+        weatherData.setTemperature(301.998f);
         weatherData.setWeatherType(WeatherType.SUN);
         weatherData.setTimestamp(1501311011000L);
         weatherData.setSunriseTimestamp(1501291729000L);

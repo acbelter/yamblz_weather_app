@@ -11,6 +11,7 @@ import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.domain.model.weather.WeatherType;
+import com.acbelter.weatherapp.domain.utils.TemperatureMetricConverter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -36,7 +37,8 @@ public class WeatherDataConverter {
 
         WeatherData weatherData = new WeatherData();
         weatherData.setCity(weatherParams.getCityData().getShortName());
-        weatherData.setTemperatureK(currentWeather.getMain().getTemp());
+        int temperature = TemperatureMetricConverter.getSupportedTemperature(currentWeather.getMain().getTemp(), weatherParams.getMetric());
+        weatherData.setTemperature(temperature);
         weatherData.setTemperatureMetric(weatherParams.getMetric());
         weatherData.setWeatherType(extractWeatherType(currentWeather.getWeather()));
         weatherData.setTimestamp((long) currentWeather.getDt() * 1000);
@@ -60,7 +62,8 @@ public class WeatherDataConverter {
         for (WeatherForecastElement element : forecastList) {
             WeatherData weatherData = new WeatherData();
             weatherData.setCity(weatherParams.getCityData().getShortName());
-            weatherData.setTemperatureK(element.getMain().getTemp());
+            int temperature = TemperatureMetricConverter.getSupportedTemperature(element.getMain().getTemp(), weatherParams.getMetric());
+            weatherData.setTemperature(temperature);
             weatherData.setTemperatureMetric(weatherParams.getMetric());
             weatherData.setWeatherType(extractWeatherType(element.getWeather()));
             forecastWeatherData.add(weatherData);

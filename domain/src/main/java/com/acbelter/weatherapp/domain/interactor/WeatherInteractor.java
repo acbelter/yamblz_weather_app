@@ -1,7 +1,6 @@
 package com.acbelter.weatherapp.domain.interactor;
 
 import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
-import com.acbelter.weatherapp.domain.model.settings.SettingsData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;

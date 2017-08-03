@@ -5,7 +5,7 @@ import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 public class WeatherData {
 
     private String cityName;
-    private double TemperatureK;
+    private int temperature;
     private WeatherType weatherType;
     private TemperatureMetric temperatureMetric;
 
@@ -40,12 +40,12 @@ public class WeatherData {
         return cityName;
     }
 
-    public void setTemperatureK(double temperature) {
-        TemperatureK = temperature;
+    public void setTemperature(int temperature) {
+        this.temperature = temperature;
     }
 
-    public double getTemperatureK() {
-        return TemperatureK;
+    public int getTemperature() {
+        return temperature;
     }
 
     public void setWeatherType(WeatherType type) {
@@ -108,7 +108,7 @@ public class WeatherData {
     @Override
     public String toString() {
         return "(city=" + cityName +
-                ", temperature=" + TemperatureK + "K" +
+                ", temperature=" + temperature + "K" +
                 ", type=" + weatherType +
                 ", timestamp=" + timestamp +
                 ", sunrise=" + sunriseTimestamp +

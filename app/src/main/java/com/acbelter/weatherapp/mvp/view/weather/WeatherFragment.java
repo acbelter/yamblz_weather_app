@@ -153,16 +153,21 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
         swipeRefreshLayout.setRefreshing(false);
         WeatherRes newWeatherRes = new WeatherRes(weatherData.getWeatherData());
         setWeatherTextColor(newWeatherRes.getTextColorResId());
-        int temperature = Math.round((float)weatherData.getWeatherData().getTemperatureK());
-//        String metric = convertMetricToString();
-        tvTemperature.setText(String.valueOf(Math.round(weatherData.getWeatherData().getTemperatureK())));
+        String temperatureStr = getCurrentTemperatureString(weatherData);
+        tvTemperature.setText(temperatureStr);
+        String temperatureMetric = convertMetricToString(weatherData.getWeatherData().getTemperatureMetric());
+        tvMetric.setText(temperatureMetric);
         tvCity.setText(weatherData.getCityName());
-        tvMetric.setText(R.string.celsius);
         contentLayout.setBackgroundColor(
                 ContextCompat.getColor(getContext(), newWeatherRes.getBackgroundColorResId()));
         weatherImage.setImageResource(newWeatherRes.getWeatherImageResId());
         weatherView.setWeather(newWeatherRes.getWeatherStatus());
         weatherView.startAnimation();
+    }
+
+    private String getCurrentTemperatureString(FullWeatherModel fullWeatherModel) {
+        int temperature = fullWeatherModel.getWeatherData().getTemperature();
+        return String.valueOf(temperature);
     }
 
     private String convertMetricToString(TemperatureMetric metric) {

@@ -75,7 +75,7 @@ public class PreferenceRepoTest {
     public void testSavedWeatherData() {
         WeatherData savedWeatherData = new WeatherData();
         savedWeatherData.setCity("Moscow");
-        savedWeatherData.setTemperatureK(1f);
+        savedWeatherData.setTemperature(1f);
         savedWeatherData.setWeatherType(SUN);
         savedWeatherData.setTimestamp(2L);
         savedWeatherData.setSunsetTimestamp(3L);
