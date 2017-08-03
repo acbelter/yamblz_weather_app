@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
-import com.acbelter.weatherapp.domain.model.weather.WeatherData;
+import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
 import com.acbelter.weatherapp.mvp.presentation.WeatherPresenter;
 import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
 import com.acbelter.weatherapp.mvp.view.fragment.BaseFragment;
@@ -39,11 +39,11 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     @BindView(R.id.content_layout)
     ViewGroup contentLayout;
     @BindView(R.id.temperature_text)
-    TextView temperatureText;
+    TextView tvTemperature;
     @BindView(R.id.units_text)
-    TextView unitsText;
+    TextView tvMetric;
     @BindView(R.id.location_text)
-    TextView locationText;
+    TextView tvCity;
     @BindView(R.id.weather_view)
     xyz.matteobattilana.library.WeatherView weatherView;
     @BindView(R.id.weather_image)
@@ -123,7 +123,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
 
     @Override
     protected void setTitle() {
-        getActivity().setTitle(R.string.settings);
+        getActivity().setTitle(R.string.weather);
     }
 
     @Override
@@ -145,13 +145,13 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     }
 
     @Override
-    public void showWeather(WeatherData weatherData) {
+    public void showWeather(FullWeatherModel weatherData) {
         swipeRefreshLayout.setRefreshing(false);
-        WeatherRes newWeatherRes = new WeatherRes(weatherData);
+        WeatherRes newWeatherRes = new WeatherRes(weatherData.getWeatherData());
         setWeatherTextColor(newWeatherRes.getTextColorResId());
-        temperatureText.setText(String.valueOf(Math.round(weatherData.getTemperatureC())));
-        unitsText.setText(R.string.celsius);
-        locationText.setText(weatherData.getCity());
+        tvTemperature.setText(String.valueOf(Math.round(weatherData.getWeatherData().getTemperatureC())));
+        tvCity.setText(weatherData.getCityName());
+        tvMetric.setText(R.string.celsius);
         contentLayout.setBackgroundColor(
                 ContextCompat.getColor(getContext(), newWeatherRes.getBackgroundColorResId()));
         weatherImage.setImageResource(newWeatherRes.getWeatherImageResId());
@@ -161,9 +161,9 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
 
     private void setWeatherTextColor(@ColorRes int colorRes) {
         int color = ContextCompat.getColor(getContext(), colorRes);
-        temperatureText.setTextColor(color);
-        unitsText.setTextColor(color);
-        locationText.setTextColor(color);
+        tvTemperature.setTextColor(color);
+        tvMetric.setTextColor(color);
+        tvCity.setTextColor(color);
     }
 
     @Override
@@ -174,9 +174,5 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
         errorSnackbar.setAction(R.string.ok, v -> {
         });
         errorSnackbar.show();
-    }
-
-    public static String tag() {
-        return WeatherFragment.class.getSimpleName();
     }
 }

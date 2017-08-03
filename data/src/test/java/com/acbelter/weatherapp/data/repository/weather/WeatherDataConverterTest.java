@@ -1,9 +1,9 @@
 package com.acbelter.weatherapp.data.repository.weather;
 
-import com.acbelter.weatherapp.data.weathermodel.CurrentWeather;
-import com.acbelter.weatherapp.data.weathermodel.Main;
-import com.acbelter.weatherapp.data.weathermodel.Sys;
-import com.acbelter.weatherapp.data.weathermodel.Weather;
+import com.acbelter.weatherapp.data.weathermodel.currentweather.CurrentWeather;
+import com.acbelter.weatherapp.data.weathermodel.currentweather.Main;
+import com.acbelter.weatherapp.data.weathermodel.currentweather.Sys;
+import com.acbelter.weatherapp.data.weathermodel.currentweather.Weather;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherType;
 
@@ -33,12 +33,12 @@ public class WeatherDataConverterTest {
     @Test
     public void testCodeError() {
         currentWeather.code = 201;
-        assertNull(WeatherDataConverter.fromNetworkData(currentWeather));
+        assertNull(WeatherDataConverter.currentWeatherFromNetworkData(currentWeather));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testWeatherConverterToNull() {
-        assertNull(WeatherDataConverter.fromNetworkData(null));
+        assertNull(WeatherDataConverter.currentWeatherFromNetworkData(null));
     }
 
     @Test
@@ -100,7 +100,7 @@ public class WeatherDataConverterTest {
         initNetworkWeather();
         initWeatherData();
 
-        WeatherData testWeatherData = WeatherDataConverter.fromNetworkData(currentWeather);
+        WeatherData testWeatherData = WeatherDataConverter.currentWeatherFromNetworkData(currentWeather);
         assertEquals(testWeatherData.getCity(), weatherData.getCity());
     }
 

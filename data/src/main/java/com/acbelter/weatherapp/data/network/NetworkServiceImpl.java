@@ -1,7 +1,8 @@
 package com.acbelter.weatherapp.data.network;
 
 import com.acbelter.weatherapp.data.locationmodel.Location;
-import com.acbelter.weatherapp.data.weathermodel.CurrentWeather;
+import com.acbelter.weatherapp.data.weathermodel.currentweather.CurrentWeather;
+import com.acbelter.weatherapp.data.weathermodel.forecast.ExtendedWeather;
 import com.acbelter.weatherapp.domain.model.city.CityParams;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 
@@ -30,6 +31,11 @@ public class NetworkServiceImpl implements NetworkService {
     @Override
     public Observable<CurrentWeather> getCurrentWeather(WeatherParams params) {
         return weatherApi.getCurrentWeather(params.getCityName(), locale);
+    }
+
+    @Override
+    public Observable<ExtendedWeather> getForecast(WeatherParams params) {
+        return weatherApi.getForecast(params.getCityName(), locale);
     }
 
     @Override

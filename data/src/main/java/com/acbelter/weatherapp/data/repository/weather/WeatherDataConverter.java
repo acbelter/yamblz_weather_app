@@ -3,16 +3,19 @@ package com.acbelter.weatherapp.data.repository.weather;
 import android.support.annotation.VisibleForTesting;
 
 import com.acbelter.weatherapp.data.dbmodel.DatabaseWeatherData;
-import com.acbelter.weatherapp.data.weathermodel.CurrentWeather;
-import com.acbelter.weatherapp.data.weathermodel.Weather;
+import com.acbelter.weatherapp.data.weathermodel.currentweather.CurrentWeather;
+import com.acbelter.weatherapp.data.weathermodel.currentweather.Weather;
+import com.acbelter.weatherapp.data.weathermodel.forecast.ExtendedWeather;
+import com.acbelter.weatherapp.data.weathermodel.forecast.WeatherForecastElement;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
+import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
+import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.domain.model.weather.WeatherType;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import timber.log.Timber;
 
 public class WeatherDataConverter {
     public static WeatherData fromDatabaseData(DatabaseWeatherData dbData) {
@@ -22,7 +25,7 @@ public class WeatherDataConverter {
         throw new UnsupportedOperationException();
     }
 
-    public static WeatherData fromNetworkData(CurrentWeather currentWeather) {
+    public static WeatherData currentWeatherFromNetworkData(CurrentWeather currentWeather, WeatherParams weatherParams) {
         if (currentWeather == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
@@ -32,8 +35,7 @@ public class WeatherDataConverter {
         }
 
         WeatherData weatherData = new WeatherData();
-        Timber.v("description = " + currentWeather.getWeather().get(0).getDescription());
-        weatherData.setCity(currentWeather.getName());
+        weatherData.setCity(weatherParams.getCityName());
         weatherData.setTemperatureK(currentWeather.getMain().getTemp());
         weatherData.setWeatherType(extractWeatherType(currentWeather.getWeather()));
         weatherData.setTimestamp((long) currentWeather.getDt() * 1000);
@@ -41,6 +43,31 @@ public class WeatherDataConverter {
         weatherData.setSunsetTimestamp((long) currentWeather.getSys().getSunset() * 1000);
         return weatherData;
     }
+
+    public static WeatherForecast forecastFromNetworkData(ExtendedWeather extendedWeather, WeatherParams weatherParams) {
+        if (extendedWeather == null) {
+            throw new IllegalArgumentException("Converted object must be not null");
+        }
+
+        if (Integer.valueOf(extendedWeather.getCod()) != 200) {
+            return null;
+        }
+
+        WeatherForecast weatherForecast = new WeatherForecast();
+        List<WeatherForecastElement> forecastList = extendedWeather.getList();
+        List<WeatherData> forecastWeatherData = new ArrayList<>();
+        for (WeatherForecastElement element : forecastList) {
+            WeatherData weatherData = new WeatherData();
+            weatherData.setCity(weatherParams.getCityName());
+            weatherData.setWeatherType(extractWeatherType(element.getWeather()));
+            weatherData.setTemperatureK(element.getMain().getTemp());
+            weatherData.setTimestamp((long) element.getDt() * 1000);
+            forecastWeatherData.add(weatherData);
+        }
+        weatherForecast.setWeatherForecast(forecastWeatherData);
+        return weatherForecast;
+    }
+
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     static WeatherType extractWeatherType(List<Weather> weatherList) {

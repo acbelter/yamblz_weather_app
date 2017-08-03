@@ -43,7 +43,7 @@ public class SearchPresenter extends BasePresenter<SearchView> {
         unSubscribeOnDetach(weatherInteractor.updateWeather()
                 .subscribe(weatherData -> {
                             Timber.d("getCurrentWeather->onNext()");
-                            saveWeather(weatherData);
+//                            saveWeather(weatherData);
                             closeActivity();
                         },
                         error -> {
