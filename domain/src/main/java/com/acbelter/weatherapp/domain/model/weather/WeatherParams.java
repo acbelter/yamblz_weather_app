@@ -1,18 +1,21 @@
 package com.acbelter.weatherapp.domain.model.weather;
 
+import com.acbelter.weatherapp.domain.model.city.CityData;
+
 public class WeatherParams {
-    private String cityName;
 
-    public WeatherParams(String city) {
-        cityName = city;
+    private CityData cityData;
+
+    public CityData getCityData() {
+        return cityData;
     }
 
-    public String getCityName() {
-        return cityName;
+    public void setCityData(CityData cityData) {
+        this.cityData = cityData;
     }
 
-    public void setCity(String city) {
-        cityName = city;
-    }
+    public WeatherParams(CityData cityData) {
 
+        this.cityData = cityData;
+    }
 }

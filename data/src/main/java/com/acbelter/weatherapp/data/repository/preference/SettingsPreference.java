@@ -3,6 +3,7 @@ package com.acbelter.weatherapp.data.repository.preference;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
+import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.settings.SettingsData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
@@ -29,13 +30,21 @@ public class SettingsPreference {
         this.sharedPreferences = sharedPreferences;
     }
 
-    public void saveCurrentCity(String city) {
-        sharedPreferences.edit().putString(KEY_CURRENT_CITY_NAME, city).apply();
+    public void saveCurrentCity(CityData cityData) {
+        String cityDataStr = new Gson().toJson(cityData);
+        sharedPreferences.edit().putString(KEY_CURRENT_CITY_NAME, cityDataStr).apply();
     }
 
-    public String loadCurrentCity() {
+    public CityData loadCurrentCity() {
         // FIXME Don't use Moscow as default city
-        return sharedPreferences.getString(KEY_CURRENT_CITY_NAME, "Moscow, TN 38057");
+        CityData defaultCityData = new CityData();
+        defaultCityData.setFormattedAddress("Moscow, Russia");
+        defaultCityData.setShortName("Moscow");
+        Gson gson = new Gson();
+        String defaultStr = gson.toJson(defaultCityData);
+
+        String cityDataStr = sharedPreferences.getString(KEY_CURRENT_CITY_NAME, defaultStr);
+        return new Gson().fromJson(cityDataStr, CityData.class);
     }
 
     public void saveUpdateInterval(long interval) {
@@ -90,7 +99,7 @@ public class SettingsPreference {
     Observable<SettingsData> loadUserSettings() {
         TemperatureMetric metric = loadTemperatureMetric();
         long interval = loadUpdateInterval();
-        String cityName = loadCurrentCity();
-        return Observable.just(new SettingsData.Builder(metric, interval).cityName(cityName).build());
+        CityData cityData = loadCurrentCity();
+        return Observable.just(new SettingsData.Builder(metric, interval).cityData(cityData).build());
     }
 }

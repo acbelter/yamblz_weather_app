@@ -1,5 +1,6 @@
 package com.acbelter.weatherapp.data.repository.preference;
 
+import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.settings.SettingsData;
 import com.acbelter.weatherapp.domain.repository.SettingsRepo;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
@@ -30,7 +31,7 @@ public class SettingsRepoImpl implements SettingsRepo {
     }
 
     @Override
-    public void saveSelectedCity(String cityName) {
-        preference.saveCurrentCity(cityName);
+    public void saveSelectedCity(CityData cityData) {
+        preference.saveCurrentCity(cityData);
     }
 }

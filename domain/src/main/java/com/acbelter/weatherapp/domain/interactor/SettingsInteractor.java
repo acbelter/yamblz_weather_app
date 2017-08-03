@@ -1,5 +1,6 @@
 package com.acbelter.weatherapp.domain.interactor;
 
+import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.settings.SettingsData;
 import com.acbelter.weatherapp.domain.repository.SettingsRepo;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
@@ -26,7 +27,7 @@ public class SettingsInteractor {
         settingsRepo.saveUpdateInterval(interval);
     }
 
-    public void saveSelectedCity(String cityName) {
-        settingsRepo.saveSelectedCity(cityName);
+    public void saveSelectedCity(CityData cityData) {
+        settingsRepo.saveSelectedCity(cityData);
     }
 }

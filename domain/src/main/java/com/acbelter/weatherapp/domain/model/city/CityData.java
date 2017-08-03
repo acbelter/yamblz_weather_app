@@ -1,11 +1,9 @@
 package com.acbelter.weatherapp.domain.model.city;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-public class CityData implements Parcelable {
+public class CityData {
 
     private String formattedAddress;
+    private String shortName;
     private double latitude;
     private double longitude;
 
@@ -13,30 +11,20 @@ public class CityData implements Parcelable {
 
     }
 
-    protected CityData(Parcel in) {
-        formattedAddress = in.readString();
-        latitude = in.readDouble();
-        longitude = in.readDouble();
-    }
-
-    public static final Creator<CityData> CREATOR = new Creator<CityData>() {
-        @Override
-        public CityData createFromParcel(Parcel in) {
-            return new CityData(in);
-        }
-
-        @Override
-        public CityData[] newArray(int size) {
-            return new CityData[size];
-        }
-    };
-
     public void setFormattedAddress(String formattedAddress) {
         this.formattedAddress = formattedAddress;
     }
 
     public String getFormattedAddress() {
         return formattedAddress;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     public void setLatitude(double latitude) {
@@ -56,18 +44,6 @@ public class CityData implements Parcelable {
     }
 
     @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(formattedAddress);
-        parcel.writeDouble(latitude);
-        parcel.writeDouble(longitude);
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (o == this)
             return true;
@@ -81,6 +57,7 @@ public class CityData implements Parcelable {
     public int hashCode() {
         int result = 17;
         result = 31 * result + (formattedAddress == null ? 0 : formattedAddress.hashCode());
+        result = 31 * result + (shortName == null ? 0 : shortName.hashCode());
         result = 31 * result + Double.valueOf(latitude).hashCode();
         result = 31 * result + Double.valueOf(longitude).hashCode();
         return result;
@@ -89,6 +66,7 @@ public class CityData implements Parcelable {
     @Override
     public String toString() {
         return "(formattedAddress=" + formattedAddress +
+                ", shortName = " + shortName +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ")";

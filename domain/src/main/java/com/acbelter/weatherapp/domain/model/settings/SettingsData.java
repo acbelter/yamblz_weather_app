@@ -1,12 +1,13 @@
 package com.acbelter.weatherapp.domain.model.settings;
 
+import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 
 public class SettingsData {
 
     private final TemperatureMetric metric;
     private final long updateWeatherInterval;
-    private final String cityName;
+    private final CityData cityData;
 
     public static class Builder {
         //Requered params
@@ -14,15 +15,15 @@ public class SettingsData {
         private final long updateWeatherInterval;
 
         //Optional params
-        private String cityName;
+        private CityData cityData;
 
         public Builder(TemperatureMetric metric, long updateWeatherInterval) {
             this.metric = metric;
             this.updateWeatherInterval = updateWeatherInterval;
         }
 
-        public Builder cityName(String val) {
-            cityName = val;
+        public Builder cityData(CityData val) {
+            cityData = val;
             return this;
         }
 
@@ -34,7 +35,7 @@ public class SettingsData {
     public SettingsData(Builder builder) {
         metric = builder.metric;
         updateWeatherInterval = builder.updateWeatherInterval;
-        cityName = builder.cityName;
+        cityData = builder.cityData;
     }
 
     public TemperatureMetric getMetric() {
@@ -45,7 +46,7 @@ public class SettingsData {
         return this.updateWeatherInterval;
     }
 
-    public String getSelectedCityName() {
-        return this.cityName;
+    public CityData getSelectedCityName() {
+        return this.cityData;
     }
 }

@@ -30,12 +30,12 @@ public class NetworkServiceImpl implements NetworkService {
 
     @Override
     public Observable<CurrentWeather> getCurrentWeather(WeatherParams params) {
-        return weatherApi.getCurrentWeather(params.getCityName(), locale);
+        return weatherApi.getCurrentWeather(params.getCityData().getFormattedAddress(), locale);
     }
 
     @Override
     public Observable<ExtendedWeather> getForecast(WeatherParams params) {
-        return weatherApi.getForecast(params.getCityName(), locale);
+        return weatherApi.getForecast(params.getCityData().getFormattedAddress(), locale);
     }
 
     @Override

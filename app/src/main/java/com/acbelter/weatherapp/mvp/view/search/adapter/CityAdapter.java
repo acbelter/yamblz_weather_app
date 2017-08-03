@@ -21,12 +21,12 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
         void onItemClick(CityData item);
     }
 
-    private List<CityData> mLocations;
-    private OnItemClickListener mClickListener;
+    private List<CityData> locations;
+    private OnItemClickListener itemClickListener;
 
     public CityAdapter(OnItemClickListener clickListener) {
-        mLocations = new ArrayList<>();
-        mClickListener = clickListener;
+        locations = new ArrayList<>();
+        itemClickListener = clickListener;
 
         setHasStableIds(true);
     }
@@ -45,28 +45,28 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
     }
 
     private void itemClicked(int position) {
-        mClickListener.onItemClick(mLocations.get(position));
+        itemClickListener.onItemClick(locations.get(position));
     }
 
     @Override
     public void onBindViewHolder(CityViewHolder viewHolder, int position) {
-        CityData location = mLocations.get(position);
+        CityData location = locations.get(position);
         viewHolder.bind(location);
     }
 
     @Override
     public int getItemCount() {
-        return mLocations.size();
+        return locations.size();
     }
 
     public void update(List<CityData> list) {
-        mLocations = list;
+        locations = list;
         notifyDataSetChanged();
     }
 
     @Override
     public long getItemId(int position) {
-        return mLocations.get(position).hashCode();
+        return locations.get(position).hashCode();
     }
 
     public static class CityViewHolder extends RecyclerView.ViewHolder {

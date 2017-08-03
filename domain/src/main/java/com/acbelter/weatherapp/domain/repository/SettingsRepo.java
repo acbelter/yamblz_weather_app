@@ -1,5 +1,6 @@
 package com.acbelter.weatherapp.domain.repository;
 
+import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.settings.SettingsData;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 
@@ -13,5 +14,5 @@ public interface SettingsRepo {
 
     void saveUpdateInterval(long interval);
 
-    void saveSelectedCity(String cityName);
+    void saveSelectedCity(CityData cityData);
 }
