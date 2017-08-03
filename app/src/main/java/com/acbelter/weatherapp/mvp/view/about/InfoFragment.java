@@ -12,7 +12,6 @@ import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.mvp.presentation.InfoPresenter;
 import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
 import com.acbelter.weatherapp.mvp.view.fragment.BaseFragment;
-import com.arellomobile.mvp.presenter.InjectPresenter;
 
 import javax.inject.Inject;
 
@@ -22,16 +21,23 @@ import butterknife.Unbinder;
 
 public class InfoFragment extends BaseFragment implements InfoView {
 
-    @Inject
-    @InjectPresenter
-    InfoPresenter presenter;
     @BindView(R.id.version_text)
     TextView versionText;
 
     private Unbinder unbinder;
 
+    @Inject
+    InfoPresenter presenter;
+
     public static InfoFragment newInstance() {
         return new InfoFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle saveInstanceState) {
+        super.onCreate(saveInstanceState);
+
+        presenter.onAttach(this);
     }
 
     @Override

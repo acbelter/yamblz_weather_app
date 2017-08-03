@@ -1,9 +1,30 @@
 package com.acbelter.weatherapp.domain.model.weather;
 
+import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
+
 public class WeatherData {
+
     private String cityName;
-    private double kelvinTemperature;
+    private double TemperatureK;
     private WeatherType weatherType;
+    private TemperatureMetric temperatureMetric;
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public TemperatureMetric getTemperatureMetric() {
+        return temperatureMetric;
+    }
+
+    public void setTemperatureMetric(TemperatureMetric temperatureMetric) {
+        this.temperatureMetric = temperatureMetric;
+    }
+
     private long timestamp;
     private long sunriseTimestamp;
     private long sunsetTimestamp;
@@ -20,19 +41,11 @@ public class WeatherData {
     }
 
     public void setTemperatureK(double temperature) {
-        kelvinTemperature = temperature;
+        TemperatureK = temperature;
     }
 
     public double getTemperatureK() {
-        return kelvinTemperature;
-    }
-
-    public double getTemperatureC() {
-        return kelvinTemperature - 273.15f;
-    }
-
-    public double getTemperatureF() {
-        return 1.8f * getTemperatureC() + 32;
+        return TemperatureK;
     }
 
     public void setWeatherType(WeatherType type) {
@@ -95,7 +108,7 @@ public class WeatherData {
     @Override
     public String toString() {
         return "(city=" + cityName +
-                ", temperature=" + kelvinTemperature + "K" +
+                ", temperature=" + TemperatureK + "K" +
                 ", type=" + weatherType +
                 ", timestamp=" + timestamp +
                 ", sunrise=" + sunriseTimestamp +

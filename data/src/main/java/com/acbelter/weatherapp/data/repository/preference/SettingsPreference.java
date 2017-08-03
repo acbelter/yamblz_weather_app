@@ -100,6 +100,6 @@ public class SettingsPreference {
         TemperatureMetric metric = loadTemperatureMetric();
         long interval = loadUpdateInterval();
         CityData cityData = loadCurrentCity();
-        return Observable.just(new SettingsData.Builder(metric, interval).cityData(cityData).build());
+        return Observable.fromCallable(() -> new SettingsData.Builder(metric, interval).cityData(cityData).build());
     }
 }

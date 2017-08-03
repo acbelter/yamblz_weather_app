@@ -7,13 +7,11 @@ import com.acbelter.weatherapp.domain.model.city.CityParams;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.mvp.presentation.common.BasePresenter;
 import com.acbelter.weatherapp.mvp.view.search.SearchView;
-import com.arellomobile.mvp.InjectViewState;
 
 import javax.inject.Inject;
 
 import timber.log.Timber;
 
-@InjectViewState
 public class SearchPresenter extends BasePresenter<SearchView> {
 
     private CityInteractor cityInteractor;
@@ -26,11 +24,13 @@ public class SearchPresenter extends BasePresenter<SearchView> {
     }
 
     public void showCityList(String input) {
+        if (getView() == null)
+            return;
         CityParams cityParams = new CityParams(input);
         unSubscribeOnDetach(cityInteractor.getCityList(cityParams)
                 .subscribe(cityDatas ->
-                                getViewState().updateCityList(cityDatas),
-                        throwable -> getViewState().showError()));
+                                getView().updateCityList(cityDatas),
+                        throwable -> getView().showError()));
 
     }
 
@@ -40,6 +40,8 @@ public class SearchPresenter extends BasePresenter<SearchView> {
     }
 
     private void updateWeather() {
+        if (getView() == null)
+            return;
         unSubscribeOnDetach(weatherInteractor.updateWeather()
                 .subscribe(weatherData -> {
                             Timber.d("getCurrentWeather->onNext()");
@@ -48,7 +50,7 @@ public class SearchPresenter extends BasePresenter<SearchView> {
                         },
                         error -> {
                             Timber.d("getCurrentWeather->onError(): %s", error.toString());
-                            getViewState().showError();
+                            getView().showError();
                         },
                         () -> {
                             Timber.d("getCurrentWeather->onComplete()");
@@ -64,6 +66,7 @@ public class SearchPresenter extends BasePresenter<SearchView> {
     }
 
     public void closeActivity() {
-        getViewState().close();
+        if (getView() != null)
+            getView().close();
     }
 }

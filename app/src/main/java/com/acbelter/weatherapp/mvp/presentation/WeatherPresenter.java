@@ -4,11 +4,9 @@ import com.acbelter.weatherapp.domain.interactor.SettingsInteractor;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.mvp.presentation.common.BasePresenter;
 import com.acbelter.weatherapp.mvp.view.weather.WeatherView;
-import com.arellomobile.mvp.InjectViewState;
 
 import javax.inject.Inject;
 
-@InjectViewState
 public class WeatherPresenter extends BasePresenter<WeatherView> {
 
     private WeatherInteractor weatherInteractor;
@@ -21,12 +19,16 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
     }
 
     public void getWeather() {
+        if (getView() == null)
+            return;
         unSubscribeOnDetach(weatherInteractor.getWeather()
-                .subscribe(weatherData -> getViewState().showWeather(weatherData)));
+                .subscribe(weatherData -> getView().showWeather(weatherData)));
     }
 
     public void updateWeather() {
+        if (getView() == null)
+            return;
         unSubscribeOnDetach(weatherInteractor.updateWeather()
-                .subscribe(weatherData -> getViewState().showWeather(weatherData)));
+                .subscribe(weatherData -> getView().showWeather(weatherData)));
     }
 }

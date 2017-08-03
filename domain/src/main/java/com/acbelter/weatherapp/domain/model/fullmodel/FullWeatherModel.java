@@ -13,6 +13,7 @@ public class FullWeatherModel {
         this.cityName = cityName;
         this.weatherData = weatherData;
         this.forrecast = forrecast;
+
     }
 
     public String getCityName() {

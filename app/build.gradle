@@ -64,9 +64,6 @@ dependencies {
     compile rx.rxBindingDesign
     compile lib.dagger2
     annotationProcessor compiler.dagger2
-    compile lib.moxy
-    compile lib.moxyAppCompat
-    annotationProcessor compiler.moxy
     compile lib.butterknife
     annotationProcessor compiler.butterknife
     compile lib.gson

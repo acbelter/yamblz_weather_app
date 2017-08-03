@@ -20,8 +20,6 @@ import com.acbelter.weatherapp.mvp.presentation.SearchPresenter;
 import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
 import com.acbelter.weatherapp.mvp.view.fragment.BaseFragment;
 import com.acbelter.weatherapp.mvp.view.search.adapter.CityAdapter;
-import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.List;
@@ -43,7 +41,6 @@ public class SearchFragment extends BaseFragment implements SearchView, CityAdap
     ConstraintLayout constraintLayout;
 
     @Inject
-    @InjectPresenter
     SearchPresenter presenter;
 
     private CityAdapter adapter;
@@ -51,12 +48,6 @@ public class SearchFragment extends BaseFragment implements SearchView, CityAdap
     private static final long TYPING_DELAY = 400;
 
     private Unbinder unbinder;
-
-    @ProvidePresenter
-    public SearchPresenter provideSearchPresenter() {
-        return presenter;
-    }
-
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -69,6 +60,13 @@ public class SearchFragment extends BaseFragment implements SearchView, CityAdap
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
+    }
+
+    @Override
+    public void onCreate(Bundle saveInstanceState) {
+        super.onCreate(saveInstanceState);
+
+        presenter.onAttach(this);
     }
 
 

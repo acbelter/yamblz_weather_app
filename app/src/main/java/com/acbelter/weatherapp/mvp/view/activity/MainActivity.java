@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -22,13 +23,12 @@ import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
 import com.acbelter.weatherapp.mvp.view.search.SearchFragment;
 import com.acbelter.weatherapp.mvp.view.settings.SettingsFragment;
 import com.acbelter.weatherapp.mvp.view.weather.WeatherFragment;
-import com.arellomobile.mvp.MvpAppCompatActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class MainActivity extends MvpAppCompatActivity implements
+public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener, DrawerLocker {
     @BindView(R.id.toolbar)
     Toolbar toolbar;

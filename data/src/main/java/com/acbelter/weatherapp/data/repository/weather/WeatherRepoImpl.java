@@ -22,7 +22,8 @@ public class WeatherRepoImpl implements WeatherRepo {
 
     @Override
     public Observable<WeatherData> getCurrentWeather() {
-        WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity());
+        WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
+                , settingsPreference.loadTemperatureMetric());
         return settingsPreference.getLastWeatherData()
                 .onErrorResumeNext(networkService.getCurrentWeather(weatherParams)
                         .map(currentWeather -> WeatherDataConverter.currentWeatherFromNetworkData(currentWeather, weatherParams)))
@@ -33,21 +34,24 @@ public class WeatherRepoImpl implements WeatherRepo {
 
     @Override
     public Observable<WeatherForecast> getForecast() {
-        WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity());
+        WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
+                , settingsPreference.loadTemperatureMetric());
         return networkService.getForecast(weatherParams)
                 .map(extendedWeather -> WeatherDataConverter.forecastFromNetworkData(extendedWeather, weatherParams));
     }
 
     @Override
     public Observable<WeatherData> updateCurrentWeather() {
-        WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity());
+        WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
+                , settingsPreference.loadTemperatureMetric());
         return networkService.getCurrentWeather(weatherParams)
                 .map(currentWeather -> WeatherDataConverter.currentWeatherFromNetworkData(currentWeather, weatherParams));
     }
 
     @Override
     public Observable<WeatherForecast> updateForecast() {
-        WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity());
+        WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
+                , settingsPreference.loadTemperatureMetric());
         return networkService.getForecast(weatherParams)
                 .map(extendedWeather -> WeatherDataConverter.forecastFromNetworkData(extendedWeather, weatherParams));
     }

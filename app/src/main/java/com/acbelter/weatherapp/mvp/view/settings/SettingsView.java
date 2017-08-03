@@ -1,12 +1,9 @@
 package com.acbelter.weatherapp.mvp.view.settings;
 
 import com.acbelter.weatherapp.domain.model.settings.SettingsData;
-import com.arellomobile.mvp.MvpView;
-import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
-import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
+import com.acbelter.weatherapp.mvp.view.common.BaseView;
 
-@StateStrategyType(AddToEndSingleStrategy.class)
-public interface SettingsView extends MvpView {
+public interface SettingsView extends BaseView {
 
     void setSettings(SettingsData settings);
 }

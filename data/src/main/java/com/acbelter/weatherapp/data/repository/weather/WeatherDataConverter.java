@@ -37,6 +37,7 @@ public class WeatherDataConverter {
         WeatherData weatherData = new WeatherData();
         weatherData.setCity(weatherParams.getCityData().getShortName());
         weatherData.setTemperatureK(currentWeather.getMain().getTemp());
+        weatherData.setTemperatureMetric(weatherParams.getMetric());
         weatherData.setWeatherType(extractWeatherType(currentWeather.getWeather()));
         weatherData.setTimestamp((long) currentWeather.getDt() * 1000);
         weatherData.setSunriseTimestamp((long) currentWeather.getSys().getSunrise() * 1000);
@@ -59,9 +60,9 @@ public class WeatherDataConverter {
         for (WeatherForecastElement element : forecastList) {
             WeatherData weatherData = new WeatherData();
             weatherData.setCity(weatherParams.getCityData().getShortName());
-            weatherData.setWeatherType(extractWeatherType(element.getWeather()));
             weatherData.setTemperatureK(element.getMain().getTemp());
-            weatherData.setTimestamp((long) element.getDt() * 1000);
+            weatherData.setTemperatureMetric(weatherParams.getMetric());
+            weatherData.setWeatherType(extractWeatherType(element.getWeather()));
             forecastWeatherData.add(weatherData);
         }
         weatherForecast.setWeatherForecast(forecastWeatherData);

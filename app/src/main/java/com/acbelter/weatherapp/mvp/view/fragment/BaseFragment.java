@@ -1,11 +1,11 @@
 package com.acbelter.weatherapp.mvp.view.fragment;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import com.acbelter.weatherapp.App;
-import com.arellomobile.mvp.MvpAppCompatFragment;
 
-public abstract class BaseFragment extends MvpAppCompatFragment {
+public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

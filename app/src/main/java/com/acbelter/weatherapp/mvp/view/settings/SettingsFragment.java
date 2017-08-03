@@ -14,14 +14,13 @@ import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 import com.acbelter.weatherapp.mvp.presentation.SettingsPresenter;
 import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
 import com.acbelter.weatherapp.mvp.view.fragment.BaseFragment;
-import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.arellomobile.mvp.presenter.ProvidePresenter;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import timber.log.Timber;
 
 import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.CELSIUS;
 import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.FAHRENHEIT;
@@ -40,15 +39,9 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
     RadioGroup rgUpdateInterval;
 
     @Inject
-    @InjectPresenter
     SettingsPresenter presenter;
 
     private static final long INTERVAL_MULTIPLEXOR = 1 * 60 * 1000;
-
-    @ProvidePresenter
-    public SettingsPresenter provideSettingsPresenter() {
-        return presenter;
-    }
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -74,6 +67,8 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
         super.onCreate(savedInstanceState);
 
         App.getInstance().plusActivityComponent().inject(this);
+
+        presenter.onAttach(this);
     }
 
     @Override
@@ -153,6 +148,7 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
 
     @Override
     public void setSettings(SettingsData settingsData) {
+        Timber.v("Metric = " + settingsData.getMetric().getUnit());
         setTemperatureMetric(settingsData.getMetric());
         setUpdateInterval(settingsData.getUpdateWeatherInterval());
     }

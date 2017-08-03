@@ -15,7 +15,6 @@ ext {
     daggerVersion = "2.11"
     rxJava2Version = "2.1.0"
     rxAndroidVersion = "2.0.1"
-    moxyVersion = "1.5.3"
     butterknifeVersion = "8.6.0"
     rxBindingVersion = "2.0.0"
     timberVersion = "4.5.1"
@@ -50,8 +49,6 @@ ext {
 
     lib = [
             dagger2           : "com.google.dagger:dagger:$daggerVersion",
-            moxy              : "com.arello-mobile:moxy:$moxyVersion",
-            moxyAppCompat     : "com.arello-mobile:moxy-app-compat:$moxyVersion",
             butterknife       : "com.jakewharton:butterknife:$butterknifeVersion",
             retrofit2         : "com.squareup.retrofit2:retrofit:$retrofitVersion",
             retrofit2_adapter : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
@@ -64,7 +61,6 @@ ext {
 
     compiler = [
             dagger2    : "com.google.dagger:dagger-compiler:$daggerVersion",
-            moxy       : "com.arello-mobile:moxy-compiler:$moxyVersion",
             butterknife: "com.jakewharton:butterknife-compiler:$butterknifeVersion",
     ]
 

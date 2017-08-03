@@ -15,11 +15,10 @@ import android.widget.TextView;
 import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
+import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 import com.acbelter.weatherapp.mvp.presentation.WeatherPresenter;
 import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
 import com.acbelter.weatherapp.mvp.view.fragment.BaseFragment;
-import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.arellomobile.mvp.presenter.ProvidePresenter;
 
 import javax.inject.Inject;
 
@@ -29,11 +28,10 @@ import butterknife.Unbinder;
 import timber.log.Timber;
 import xyz.matteobattilana.library.Common.Constants;
 
+import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.CELSIUS;
+
 public class WeatherFragment extends BaseFragment implements WeatherView {
 
-    @Inject
-    @InjectPresenter
-    WeatherPresenter presenter;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.content_layout)
@@ -48,15 +46,21 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     xyz.matteobattilana.library.WeatherView weatherView;
     @BindView(R.id.weather_image)
     ImageView weatherImage;
+
     private Unbinder mUnbinder;
 
-    @ProvidePresenter
-    public WeatherPresenter provideWeatherPresenter() {
-        return presenter;
-    }
+    @Inject
+    WeatherPresenter presenter;
 
     public static WeatherFragment newInstance() {
         return new WeatherFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle saveInstanceState) {
+        super.onCreate(saveInstanceState);
+
+        presenter.onAttach(this);
     }
 
     @Nullable
@@ -149,7 +153,9 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
         swipeRefreshLayout.setRefreshing(false);
         WeatherRes newWeatherRes = new WeatherRes(weatherData.getWeatherData());
         setWeatherTextColor(newWeatherRes.getTextColorResId());
-        tvTemperature.setText(String.valueOf(Math.round(weatherData.getWeatherData().getTemperatureC())));
+        int temperature = Math.round((float)weatherData.getWeatherData().getTemperatureK());
+//        String metric = convertMetricToString();
+        tvTemperature.setText(String.valueOf(Math.round(weatherData.getWeatherData().getTemperatureK())));
         tvCity.setText(weatherData.getCityName());
         tvMetric.setText(R.string.celsius);
         contentLayout.setBackgroundColor(
@@ -157,6 +163,13 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
         weatherImage.setImageResource(newWeatherRes.getWeatherImageResId());
         weatherView.setWeather(newWeatherRes.getWeatherStatus());
         weatherView.startAnimation();
+    }
+
+    private String convertMetricToString(TemperatureMetric metric) {
+        if (metric == CELSIUS)
+            return getString(R.string.celsius);
+        else
+            return getString(R.string.fahrenheit);
     }
 
     private void setWeatherTextColor(@ColorRes int colorRes) {

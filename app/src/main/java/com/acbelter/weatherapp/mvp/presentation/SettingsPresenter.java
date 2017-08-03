@@ -6,11 +6,11 @@ import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 import com.acbelter.weatherapp.mvp.presentation.common.BasePresenter;
 import com.acbelter.weatherapp.mvp.view.settings.SettingsView;
 import com.acbelter.weatherapp.scheduler.WeatherScheduleJob;
-import com.arellomobile.mvp.InjectViewState;
 
 import javax.inject.Inject;
 
-@InjectViewState
+import timber.log.Timber;
+
 public class SettingsPresenter extends BasePresenter<SettingsView> {
 
     private SettingsInteractor settingsInteractor;
@@ -26,7 +26,15 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
     }
 
     public void showSettings() {
-        unSubscribeOnDetach(settingsInteractor.getUserSettings().subscribe(settings -> getViewState().setSettings(settings)));
+        if (getView() == null)
+            return;
+        unSubscribeOnDetach(settingsInteractor.getUserSettings()
+                .subscribe(settings -> {
+                            getView().setSettings(settings);
+                        }
+                        , error -> {
+                            Timber.v("ERROR_SETTINGS = " + error);
+                        }));
     }
 
     public void saveTemperatureMetric(TemperatureMetric metric) {
