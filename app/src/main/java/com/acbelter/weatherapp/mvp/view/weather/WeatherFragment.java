@@ -35,19 +35,19 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     @InjectPresenter
     WeatherPresenter presenter;
     @BindView(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.content_layout)
-    ViewGroup mContentLayout;
+    ViewGroup contentLayout;
     @BindView(R.id.temperature_text)
-    TextView mTemperatureText;
+    TextView temperatureText;
     @BindView(R.id.units_text)
-    TextView mUnitsText;
+    TextView unitsText;
     @BindView(R.id.location_text)
-    TextView mLocationText;
+    TextView locationText;
     @BindView(R.id.weather_view)
-    xyz.matteobattilana.library.WeatherView mWeatherView;
+    xyz.matteobattilana.library.WeatherView weatherView;
     @BindView(R.id.weather_image)
-    ImageView mWeatherImage;
+    ImageView weatherImage;
     private Unbinder mUnbinder;
 
     @ProvidePresenter
@@ -74,14 +74,14 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     }
 
     private void setSwipeLayout() {
-        mSwipeRefreshLayout.setColorSchemeResources(
+        swipeRefreshLayout.setColorSchemeResources(
                 R.color.colorPrimary,
                 R.color.colorPrimaryDark);
-        mSwipeRefreshLayout.setOnRefreshListener(() -> presenter.updateWeather());
+        swipeRefreshLayout.setOnRefreshListener(() -> presenter.updateWeather());
     }
 
     private void setWeatherView() {
-        mWeatherView.setWeather(Constants.weatherStatus.SUN)
+        weatherView.setWeather(Constants.weatherStatus.SUN)
                 .setRainTime(6000)
                 .setSnowTime(6000)
                 .setRainAngle(20)
@@ -103,7 +103,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     public void onPause() {
         super.onPause();
 
-        mWeatherView.cancelAnimation();
+        weatherView.cancelAnimation();
     }
 
     @Override
@@ -138,39 +138,39 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
 
     @Override
     public void showWeatherLoading() {
-        if (mSwipeRefreshLayout.isRefreshing()) {
+        if (swipeRefreshLayout.isRefreshing()) {
             return;
         }
-        mSwipeRefreshLayout.setRefreshing(true);
+        swipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void showWeather(WeatherData weatherData) {
-        mSwipeRefreshLayout.setRefreshing(false);
+        swipeRefreshLayout.setRefreshing(false);
         WeatherRes newWeatherRes = new WeatherRes(weatherData);
         setWeatherTextColor(newWeatherRes.getTextColorResId());
-        mTemperatureText.setText(String.valueOf(Math.round(weatherData.getTemperatureC())));
-        mUnitsText.setText(R.string.celsius);
-        mLocationText.setText(weatherData.getCity());
-        mContentLayout.setBackgroundColor(
+        temperatureText.setText(String.valueOf(Math.round(weatherData.getTemperatureC())));
+        unitsText.setText(R.string.celsius);
+        locationText.setText(weatherData.getCity());
+        contentLayout.setBackgroundColor(
                 ContextCompat.getColor(getContext(), newWeatherRes.getBackgroundColorResId()));
-        mWeatherImage.setImageResource(newWeatherRes.getWeatherImageResId());
-        mWeatherView.setWeather(newWeatherRes.getWeatherStatus());
-        mWeatherView.startAnimation();
+        weatherImage.setImageResource(newWeatherRes.getWeatherImageResId());
+        weatherView.setWeather(newWeatherRes.getWeatherStatus());
+        weatherView.startAnimation();
     }
 
     private void setWeatherTextColor(@ColorRes int colorRes) {
         int color = ContextCompat.getColor(getContext(), colorRes);
-        mTemperatureText.setTextColor(color);
-        mUnitsText.setTextColor(color);
-        mLocationText.setTextColor(color);
+        temperatureText.setTextColor(color);
+        unitsText.setTextColor(color);
+        locationText.setTextColor(color);
     }
 
     @Override
     public void showError() {
-        mSwipeRefreshLayout.setRefreshing(false);
+        swipeRefreshLayout.setRefreshing(false);
         Snackbar errorSnackbar =
-                Snackbar.make(mContentLayout, R.string.text_weather_error, Snackbar.LENGTH_LONG);
+                Snackbar.make(contentLayout, R.string.text_weather_error, Snackbar.LENGTH_LONG);
         errorSnackbar.setAction(R.string.ok, v -> {
         });
         errorSnackbar.show();

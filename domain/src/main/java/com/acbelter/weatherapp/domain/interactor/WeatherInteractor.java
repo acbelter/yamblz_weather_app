@@ -14,8 +14,9 @@ public class WeatherInteractor {
 
     public WeatherInteractor(WeatherRepo weatherRepo, Scheduler schedulersIO, Scheduler schedulerMain) {
         this.weatherRepo = weatherRepo;
-        schedulerIO = schedulersIO;
+        this.schedulerIO = schedulersIO;
         this.schedulerMain = schedulerMain;
+
     }
 
     public Observable<WeatherData> getWeather() {
