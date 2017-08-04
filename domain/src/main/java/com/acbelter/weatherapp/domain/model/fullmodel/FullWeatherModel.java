@@ -1,27 +1,28 @@
 package com.acbelter.weatherapp.domain.model.fullmodel;
 
+import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
 
 public class FullWeatherModel {
 
-    String cityName;
+    CityData cityData;
     WeatherData weatherData;
     WeatherForecast forrecast;
 
-    public FullWeatherModel(String cityName, WeatherData weatherData, WeatherForecast forrecast) {
-        this.cityName = cityName;
+    public FullWeatherModel(CityData cityData, WeatherData weatherData, WeatherForecast forrecast) {
+        this.cityData = cityData;
         this.weatherData = weatherData;
         this.forrecast = forrecast;
 
     }
 
-    public String getCityName() {
-        return cityName;
+    public CityData getCityData() {
+        return cityData;
     }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
+    public void setCityData(CityData cityData) {
+        this.cityData = cityData;
     }
 
     public WeatherData getWeatherData() {

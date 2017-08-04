@@ -6,6 +6,9 @@ import com.acbelter.weatherapp.data.network.NetworkServiceImpl;
 import com.acbelter.weatherapp.data.network.PlacesApi;
 import com.acbelter.weatherapp.data.network.WeatherApi;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -77,5 +80,11 @@ public class NetworkModule {
     @Singleton
     NetworkService provideNetworkService(WeatherApi weatherApi, PlacesApi placesApi, LocationApi locationApi) {
         return new NetworkServiceImpl(weatherApi, placesApi, locationApi);
+    }
+
+    @Provides
+    @Singleton
+    Executor provideExecutor() {
+        return Executors.newFixedThreadPool(2);
     }
 }

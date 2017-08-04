@@ -42,6 +42,10 @@ dependencies {
     compile lib.loggingInterceptor
     compile lib.timber
 
+    compile db.room
+    compile db.roomRx
+    annotationProcessor db.roomPersistence
+
     compile lib.dagger2
     annotationProcessor compiler.dagger2
 

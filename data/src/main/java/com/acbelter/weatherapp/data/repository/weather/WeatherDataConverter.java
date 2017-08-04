@@ -2,7 +2,6 @@ package com.acbelter.weatherapp.data.repository.weather;
 
 import android.support.annotation.VisibleForTesting;
 
-import com.acbelter.weatherapp.data.dbmodel.DatabaseWeatherData;
 import com.acbelter.weatherapp.data.weathermodel.currentweather.CurrentWeather;
 import com.acbelter.weatherapp.data.weathermodel.currentweather.Weather;
 import com.acbelter.weatherapp.data.weathermodel.forecast.ExtendedWeather;
@@ -19,12 +18,6 @@ import java.util.List;
 import java.util.Set;
 
 public class WeatherDataConverter {
-    public static WeatherData fromDatabaseData(DatabaseWeatherData dbData) {
-        if (dbData == null) {
-            throw new IllegalArgumentException("Converted object must be not null");
-        }
-        throw new UnsupportedOperationException();
-    }
 
     public static WeatherData currentWeatherFromNetworkData(CurrentWeather currentWeather, WeatherParams weatherParams) {
         if (currentWeather == null) {
@@ -36,7 +29,7 @@ public class WeatherDataConverter {
         }
 
         WeatherData weatherData = new WeatherData();
-        weatherData.setCity(weatherParams.getCityData().getShortName());
+        weatherData.setCityData(weatherParams.getCityData());
         int temperature = TemperatureMetricConverter.getSupportedTemperature(currentWeather.getMain().getTemp(), weatherParams.getMetric());
         weatherData.setTemperature(temperature);
         weatherData.setTemperatureMetric(weatherParams.getMetric());
@@ -61,7 +54,7 @@ public class WeatherDataConverter {
         List<WeatherData> forecastWeatherData = new ArrayList<>();
         for (WeatherForecastElement element : forecastList) {
             WeatherData weatherData = new WeatherData();
-            weatherData.setCity(weatherParams.getCityData().getShortName());
+            weatherData.setCityData(weatherParams.getCityData());
             int temperature = TemperatureMetricConverter.getSupportedTemperature(element.getMain().getTemp(), weatherParams.getMetric());
             weatherData.setTemperature(temperature);
             weatherData.setTemperatureMetric(weatherParams.getMetric());
@@ -97,19 +90,5 @@ public class WeatherDataConverter {
         }
 
         return WeatherType.SUN;
-    }
-
-    public static DatabaseWeatherData fromNetworkToDatabaseData(CurrentWeather netData) {
-        if (netData == null) {
-            throw new IllegalArgumentException("Converted object must be not null");
-        }
-        throw new UnsupportedOperationException();
-    }
-
-    public static DatabaseWeatherData fromData(WeatherData data) {
-        if (data == null) {
-            throw new IllegalArgumentException("Converted object must be not null");
-        }
-        throw new UnsupportedOperationException();
     }
 }

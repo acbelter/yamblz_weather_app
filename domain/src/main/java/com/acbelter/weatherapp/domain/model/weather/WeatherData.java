@@ -1,20 +1,21 @@
 package com.acbelter.weatherapp.domain.model.weather;
 
+import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 
 public class WeatherData {
 
-    private String cityName;
+    private CityData cityData;
     private int temperature;
     private WeatherType weatherType;
     private TemperatureMetric temperatureMetric;
 
-    public String getCityName() {
-        return cityName;
+    public CityData getCityData() {
+        return cityData;
     }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
+    public void setCityData(CityData cityData) {
+        this.cityData = cityData;
     }
 
     public TemperatureMetric getTemperatureMetric() {
@@ -30,14 +31,6 @@ public class WeatherData {
     private long sunsetTimestamp;
 
     public WeatherData() {
-    }
-
-    public void setCity(String city) {
-        cityName = city;
-    }
-
-    public String getCity() {
-        return cityName;
     }
 
     public void setTemperature(int temperature) {
@@ -97,17 +90,17 @@ public class WeatherData {
             return false;
         }
         WeatherData data = (WeatherData) o;
-        return cityName.equals(data.cityName);
+        return cityData.equals(data.cityData);
     }
 
     @Override
     public int hashCode() {
-        return cityName.hashCode();
+        return cityData.hashCode();
     }
 
     @Override
     public String toString() {
-        return "(city=" + cityName +
+        return "(city=" + cityData +
                 ", temperature=" + temperature + "K" +
                 ", type=" + weatherType +
                 ", timestamp=" + timestamp +

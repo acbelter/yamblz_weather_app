@@ -21,6 +21,7 @@ ext {
     androidJobVersion = "1.1.11"
     gsonVersion = "2.8.1"
     okhttp3Version = "3.8.1"
+    roomVersion = "1.0.0-alpha5"
 
     mockitoVersion = "1.10.19"
     junitVersion = "4.12"
@@ -57,6 +58,12 @@ ext {
             loggingInterceptor: "com.squareup.okhttp3:logging-interceptor:$okhttp3Version",
             timber            : "com.jakewharton.timber:timber:$timberVersion",
             androidJob        : "com.evernote:android-job:$androidJobVersion"
+    ]
+
+    db = [
+            room           : "android.arch.persistence.room:runtime:$roomVersion",
+            roomPersistence: "android.arch.persistence.room:compiler:$roomVersion",
+            roomRx         : "android.arch.persistence.room:rxjava2:$roomVersion"
     ]
 
     compiler = [

@@ -157,7 +157,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
         tvTemperature.setText(temperatureStr);
         String temperatureMetric = convertMetricToString(weatherData.getWeatherData().getTemperatureMetric());
         tvMetric.setText(temperatureMetric);
-        tvCity.setText(weatherData.getCityName());
+        tvCity.setText(weatherData.getCityData().getShortName());
         contentLayout.setBackgroundColor(
                 ContextCompat.getColor(getContext(), newWeatherRes.getBackgroundColorResId()));
         weatherImage.setImageResource(newWeatherRes.getWeatherImageResId());

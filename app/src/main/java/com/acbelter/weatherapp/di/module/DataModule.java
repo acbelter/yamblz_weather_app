@@ -1,8 +1,11 @@
 package com.acbelter.weatherapp.di.module;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.acbelter.weatherapp.data.database.WeatherDAO;
+import com.acbelter.weatherapp.data.database.WeatherDatabase;
 import com.acbelter.weatherapp.data.network.NetworkService;
 import com.acbelter.weatherapp.data.repository.city.CityRepoImpl;
 import com.acbelter.weatherapp.data.repository.preference.SettingsPreference;
@@ -48,5 +51,19 @@ public class DataModule {
     @Singleton
     SettingsRepo provideSettingsRepo(SettingsPreference settingsPreference) {
         return new SettingsRepoImpl(settingsPreference);
+    }
+
+    @Provides
+    @Singleton
+    public WeatherDAO getWeatherDAO(WeatherDatabase weatherDatabase) {
+        return weatherDatabase.weatherDAO();
+    }
+
+    @Singleton
+    @Provides
+    public WeatherDatabase getWeatherDatabase(Context context) {
+        return Room.databaseBuilder(context.getApplicationContext(),
+                WeatherDatabase.class, "weather.db")
+                .build();
     }
 }

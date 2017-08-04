@@ -57,11 +57,11 @@ public class WeatherInteractor {
     }
 
     private FullWeatherModel convertCachedWeather(WeatherData weatherData, WeatherForecast weatherForecast) {
-        return new FullWeatherModel(weatherData.getCity(), weatherData, weatherForecast);
+        return new FullWeatherModel(weatherData.getCityData(), weatherData, weatherForecast);
     }
 
     private FullWeatherModel convertUpdatedWeather(WeatherData weatherData, WeatherForecast weatherForecast) {
-        return new FullWeatherModel(weatherData.getCity(), weatherData, weatherForecast);
+        return new FullWeatherModel(weatherData.getCityData(), weatherData, weatherForecast);
     }
 
 
