@@ -30,6 +30,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Predicate;
 
 public class SearchFragment extends BaseFragment implements SearchView, CityAdapter.OnItemClickListener {
 
@@ -85,6 +87,7 @@ public class SearchFragment extends BaseFragment implements SearchView, CityAdap
 
         RxTextView.textChanges(etSearch)
                 .debounce(TYPING_DELAY, TimeUnit.MILLISECONDS)
+                .filter(charSequence -> charSequence.length() > 2)
                 .subscribe(charSequence ->
                         presenter.showCityList(charSequence.toString()));
     }
