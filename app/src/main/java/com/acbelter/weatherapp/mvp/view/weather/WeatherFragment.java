@@ -163,6 +163,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
         weatherImage.setImageResource(newWeatherRes.getWeatherImageResId());
         weatherView.setWeather(newWeatherRes.getWeatherStatus());
         weatherView.startAnimation();
+        Timber.v("size = " + weatherData.getForrecast().getWeatherForecast().size());
     }
 
     private String getCurrentTemperatureString(FullWeatherModel fullWeatherModel) {

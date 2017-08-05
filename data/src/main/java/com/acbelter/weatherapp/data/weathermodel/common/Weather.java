@@ -1,4 +1,4 @@
-package com.acbelter.weatherapp.data.weathermodel.currentweather;
+package com.acbelter.weatherapp.data.weathermodel.common;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -18,18 +18,30 @@ public class Weather {
     @Expose
     private String icon;
 
+    /**
+     * @return The id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * @return The main
+     */
     public String getMain() {
         return main;
     }
 
+    /**
+     * @return The description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * @return The icon
+     */
     public String getIcon() {
         return icon;
     }

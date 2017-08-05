@@ -21,22 +21,37 @@ public class Main {
     @Expose
     private double tempMax;
 
+    /**
+     * @return The temp
+     */
     public double getTemp() {
         return temp;
     }
 
+    /**
+     * @return The humidity
+     */
     public int getHumidity() {
         return humidity;
     }
 
+    /**
+     * @return The pressure
+     */
     public double getPressure() {
         return pressure;
     }
 
+    /**
+     * @return The tempMin
+     */
     public double getTempMin() {
         return tempMin;
     }
 
+    /**
+     * @return The tempMax
+     */
     public double getTempMax() {
         return tempMax;
     }

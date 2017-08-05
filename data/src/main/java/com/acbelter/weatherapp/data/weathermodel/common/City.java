@@ -1,5 +1,6 @@
-package com.acbelter.weatherapp.data.weathermodel.currentweather;
+package com.acbelter.weatherapp.data.weathermodel.common;
 
+import com.acbelter.weatherapp.data.weathermodel.forecast.Sys;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

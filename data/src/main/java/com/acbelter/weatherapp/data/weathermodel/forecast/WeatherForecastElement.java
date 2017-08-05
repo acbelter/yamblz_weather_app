@@ -1,10 +1,10 @@
 package com.acbelter.weatherapp.data.weathermodel.forecast;
 
-import com.acbelter.weatherapp.data.weathermodel.currentweather.Clouds;
-import com.acbelter.weatherapp.data.weathermodel.currentweather.Main;
-import com.acbelter.weatherapp.data.weathermodel.currentweather.Rain;
-import com.acbelter.weatherapp.data.weathermodel.currentweather.Weather;
-import com.acbelter.weatherapp.data.weathermodel.currentweather.Wind;
+import com.acbelter.weatherapp.data.weathermodel.common.Clouds;
+import com.acbelter.weatherapp.data.weathermodel.common.Main;
+import com.acbelter.weatherapp.data.weathermodel.common.Rain;
+import com.acbelter.weatherapp.data.weathermodel.common.Weather;
+import com.acbelter.weatherapp.data.weathermodel.common.Wind;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

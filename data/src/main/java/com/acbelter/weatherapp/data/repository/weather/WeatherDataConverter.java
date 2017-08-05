@@ -2,8 +2,8 @@ package com.acbelter.weatherapp.data.repository.weather;
 
 import android.support.annotation.VisibleForTesting;
 
-import com.acbelter.weatherapp.data.weathermodel.currentweather.Weather;
-import com.acbelter.weatherapp.data.weathermodel.forecast.ExtendedWeather;
+import com.acbelter.weatherapp.data.weathermodel.common.Weather;
+import com.acbelter.weatherapp.data.weathermodel.forecast.ForecastWeather;
 import com.acbelter.weatherapp.data.weathermodel.forecast.WeatherForecastElement;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
@@ -42,17 +42,17 @@ public class WeatherDataConverter {
         return weatherData;
     }
 
-    public static WeatherForecast fromNWWeatherDataToForecastWeatherData(ExtendedWeather extendedWeather, WeatherParams weatherParams) {
-        if (extendedWeather == null) {
+    public static WeatherForecast fromNWWeatherDataToForecastWeatherData(ForecastWeather forecastWeather, WeatherParams weatherParams) {
+        if (forecastWeather == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
 
-        if (Integer.valueOf(extendedWeather.getCod()) != 200) {
+        if (Integer.valueOf(forecastWeather.getCod()) != 200) {
             return null;
         }
 
         WeatherForecast weatherForecast = new WeatherForecast();
-        List<WeatherForecastElement> forecastList = extendedWeather.getList();
+        List<WeatherForecastElement> forecastList = forecastWeather.getList();
         List<CurrentWeatherData> forecastCurrentWeatherData = new ArrayList<>();
         for (WeatherForecastElement element : forecastList) {
             CurrentWeatherData currentWeatherData = new CurrentWeatherData();

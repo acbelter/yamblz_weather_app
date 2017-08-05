@@ -38,7 +38,7 @@
     <string name="search_title">Search</string>
     <string name="city_search">City search</string>
     <string name="city_name">City name</string>
-    <string name="get_city_list_error">Can\'t get city list</string>
+    <string name="get_city_list_error">Can\'t get city weatherList</string>
 
     <!--Test strings-->
     <string name="version_test">Version</string>

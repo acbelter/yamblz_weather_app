@@ -2,7 +2,6 @@ package com.acbelter.weatherapp.data.repository.weather;
 
 import com.acbelter.weatherapp.data.weathermodel.currentweather.Main;
 import com.acbelter.weatherapp.data.weathermodel.currentweather.Sys;
-import com.acbelter.weatherapp.data.weathermodel.currentweather.Weather;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherType;
 

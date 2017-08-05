@@ -1,13 +1,13 @@
 package com.acbelter.weatherapp.data.weathermodel.forecast;
 
-import com.acbelter.weatherapp.data.weathermodel.currentweather.City;
+import com.acbelter.weatherapp.data.weathermodel.common.City;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExtendedWeather {
+public class ForecastWeather {
 
     @SerializedName("city")
     @Expose
