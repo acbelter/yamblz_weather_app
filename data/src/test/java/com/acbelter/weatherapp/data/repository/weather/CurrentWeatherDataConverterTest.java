@@ -32,12 +32,12 @@ public class CurrentWeatherDataConverterTest {
     @Test
     public void testCodeError() {
         currentWeatherData.code = 201;
-        assertNull(WeatherDataConverter.currentWeatherFromNetworkData(currentWeatherData));
+        assertNull(WeatherDataConverter.fromNWWeatherDataToCurrentWeatherData(currentWeatherData));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testWeatherConverterToNull() {
-        assertNull(WeatherDataConverter.currentWeatherFromNetworkData(null));
+        assertNull(WeatherDataConverter.fromNWWeatherDataToCurrentWeatherData(null));
     }
 
     @Test
@@ -99,7 +99,7 @@ public class CurrentWeatherDataConverterTest {
         initNetworkWeather();
         initWeatherData();
 
-        CurrentWeatherData testCurrentWeatherData = WeatherDataConverter.currentWeatherFromNetworkData(currentWeatherData);
+        CurrentWeatherData testCurrentWeatherData = WeatherDataConverter.fromNWWeatherDataToCurrentWeatherData(currentWeatherData);
         assertEquals(testCurrentWeatherData.getCity(), currentWeatherData.getCity());
     }
 

@@ -1,8 +1,8 @@
 package com.acbelter.weatherapp.di.module;
 
 import com.acbelter.weatherapp.data.network.LocationApi;
-import com.acbelter.weatherapp.data.network.NetworkService;
-import com.acbelter.weatherapp.data.network.NetworkServiceImpl;
+import com.acbelter.weatherapp.data.network.NetworkRepo;
+import com.acbelter.weatherapp.data.network.NetworkRepoImpl;
 import com.acbelter.weatherapp.data.network.PlacesApi;
 import com.acbelter.weatherapp.data.network.WeatherApi;
 
@@ -78,8 +78,8 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    NetworkService provideNetworkService(WeatherApi weatherApi, PlacesApi placesApi, LocationApi locationApi) {
-        return new NetworkServiceImpl(weatherApi, placesApi, locationApi);
+    NetworkRepo provideNetworkService(WeatherApi weatherApi, PlacesApi placesApi, LocationApi locationApi) {
+        return new NetworkRepoImpl(weatherApi, placesApi, locationApi);
     }
 
     @Provides

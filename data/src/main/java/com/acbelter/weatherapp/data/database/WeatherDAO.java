@@ -11,6 +11,7 @@ import com.acbelter.weatherapp.data.dbmodel.DatabaseWeatherData;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 @Dao
 public interface WeatherDAO {
@@ -18,7 +19,7 @@ public interface WeatherDAO {
     Flowable<List<DatabaseWeatherData>> getAllWeatherRecords();
 
     @Query("SELECT * FROM DatabaseWeatherData WHERE city_name = :cityName ")
-    Flowable<DatabaseWeatherData> getWeatherByCityName(String cityName);
+    Single<DatabaseWeatherData> getWeatherByCityName(String cityName);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertWeather(DatabaseWeatherData weather);

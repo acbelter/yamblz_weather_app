@@ -27,12 +27,12 @@ public class CurrentWeatherDataApiTest {
     @Mock
     LocationApi mockLocationApi;
 
-    private NetworkService networkService;
+    private NetworkRepo networkRepo;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        this.networkService = new NetworkServiceImpl(mockWeatherApi, mockPlacesApi, mockLocationApi);
+        this.networkRepo = new NetworkRepoImpl(mockWeatherApi, mockPlacesApi, mockLocationApi);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class CurrentWeatherDataApiTest {
 
         PublishSubject<String> subject = PublishSubject.create();
         when(mockWeatherApi.getCurrentWeather(anyString(), anyString())).thenReturn(subject);
-        networkService.getCurrentWeather(weatherParams);
+        networkRepo.getCurrentWeather(weatherParams);
         verify(mockWeatherApi).getCurrentWeather(anyString(), anyString());
     }
 }

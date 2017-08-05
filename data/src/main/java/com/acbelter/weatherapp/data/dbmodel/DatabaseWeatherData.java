@@ -11,7 +11,8 @@ public class DatabaseWeatherData {
     @PrimaryKey(autoGenerate = true)
     private int id;
     @ColumnInfo(name = "city_name")
-    private String cityData;
+    private String cityFullName;
+    private String cityShortName;
     private String currentWeather;
     private String forecast;
 
@@ -23,12 +24,20 @@ public class DatabaseWeatherData {
         this.id = id;
     }
 
-    public String getCityData() {
-        return cityData;
+    public String getCityFullName() {
+        return cityFullName;
     }
 
-    public void setCityData(String cityData) {
-        this.cityData = cityData;
+    public void setCityFullName(String cityFullName) {
+        this.cityFullName = cityFullName;
+    }
+
+    public String getCityShortName() {
+        return cityShortName;
+    }
+
+    public void setCityShortName(String cityShortName) {
+        this.cityShortName = cityShortName;
     }
 
     public String getCurrentWeather() {

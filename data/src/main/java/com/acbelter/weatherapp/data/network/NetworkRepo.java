@@ -8,10 +8,10 @@ import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 
 import io.reactivex.Flowable;
 
-public interface NetworkService {
+public interface NetworkRepo {
     Flowable<CurrentWeather> getCurrentWeather(WeatherParams params);
 
-    Flowable<ExtendedWeather> getForecast(WeatherParams params);
+    Flowable<ExtendedWeather> getForecastWeather(WeatherParams params);
 
     Flowable<Location> getLocation(CityParams cityParams);
 }

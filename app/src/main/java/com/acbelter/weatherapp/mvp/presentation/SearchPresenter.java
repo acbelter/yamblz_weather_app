@@ -10,8 +10,6 @@ import com.acbelter.weatherapp.mvp.view.search.SearchView;
 
 import javax.inject.Inject;
 
-import timber.log.Timber;
-
 public class SearchPresenter extends BasePresenter<SearchView> {
 
     private CityInteractor cityInteractor;
@@ -43,23 +41,7 @@ public class SearchPresenter extends BasePresenter<SearchView> {
         if (getView() == null)
             return;
         unSubscribeOnDetach(weatherInteractor.updateWeather()
-                .subscribe(weatherData -> {
-                            Timber.d("getCurrentWeatherData->onNext()");
-//                            saveWeather(weatherData);
-
-                        },
-                        error -> {
-                            Timber.d("getCurrentWeatherData->onError(): %s", error.toString());
-                            getView().showError();
-                        },
-                        () -> {
-                            Timber.d("getCurrentWeatherData->onComplete()");
-                        },
-                        disposable -> {
-                            closeActivity();
-                            Timber.d("getCurrentWeatherData->onSubscribe()");
-                        }
-                ));
+                .subscribe(fullWeatherModel -> closeActivity()));
     }
 
     private void saveWeather(CurrentWeatherData currentWeatherData) {

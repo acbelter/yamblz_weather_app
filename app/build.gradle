@@ -69,6 +69,7 @@ dependencies {
     compile lib.gson
     compile lib.timber
     compile lib.androidJob
+    compile utils.stetho
     androidTestCompile uiTest.espressoCore
     androidTestCompile uiTest.espressoContrib
     androidTestCompile uiTest.runner

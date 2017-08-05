@@ -14,20 +14,26 @@ public class DatabaseWeatherConverter {
             throw new IllegalArgumentException("Converted object must be not null");
         }
 
-        return new Gson().fromJson(databaseWeatherData.getCityData(), CityData.class);
+        CityData cityData = new CityData();
+        cityData.setFormattedAddress(databaseWeatherData.getCityFullName());
+        cityData.setShortName(databaseWeatherData.getCityShortName());
+        return cityData;
     }
 
-    public static FullWeatherModel fromDatabaseWeatherDataToFullWeatherModel(DatabaseWeatherData databaseWeatherData) {
+    public static CurrentWeatherData fromDatabaseWeatherDataToCurrentWeatherData(DatabaseWeatherData databaseWeatherData) {
         if (databaseWeatherData == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
 
-        Gson gson = new Gson();
-        CityData cityData = gson.fromJson(databaseWeatherData.getCityData(), CityData.class);
-        CurrentWeatherData currentWeatherData = gson.fromJson(databaseWeatherData.getCurrentWeather(), CurrentWeatherData.class);
-        WeatherForecast weatherForecast = gson.fromJson(databaseWeatherData.getForecast(), WeatherForecast.class);
+        return new Gson().fromJson(databaseWeatherData.getCurrentWeather(), CurrentWeatherData.class);
+    }
 
-        return new FullWeatherModel(cityData, currentWeatherData, weatherForecast);
+    public static WeatherForecast fromDatabaseWeatherDataToForecastWeather(DatabaseWeatherData databaseWeatherData) {
+        if (databaseWeatherData == null) {
+            throw new IllegalArgumentException("Converted object must be not null");
+        }
+
+        return new Gson().fromJson(databaseWeatherData.getForecast(), WeatherForecast.class);
     }
 
     public static DatabaseWeatherData fromFullWeatherDataToDatabaseFormat(FullWeatherModel fullWeatherModel) {
@@ -36,12 +42,14 @@ public class DatabaseWeatherConverter {
         }
 
         Gson gson = new Gson();
-        String cityData = gson.toJson(fullWeatherModel.getCityData());
+        String shortName = fullWeatherModel.getCityData().getShortName();
+        String fullName = fullWeatherModel.getCityData().getFormattedAddress();
         String currentWeather = gson.toJson(fullWeatherModel.getCurrentWeatherData());
         String forecast = gson.toJson(fullWeatherModel.getForrecast());
 
         DatabaseWeatherData databaseWeatherData = new DatabaseWeatherData();
-        databaseWeatherData.setCityData(cityData);
+        databaseWeatherData.setCityFullName(fullName);
+        databaseWeatherData.setCityShortName(shortName);
         databaseWeatherData.setCurrentWeather(currentWeather);
         databaseWeatherData.setForecast(forecast);
         return databaseWeatherData;

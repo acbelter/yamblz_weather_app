@@ -28,12 +28,12 @@ public class CityDataApiTest {
     @Mock
     LocationApi mockLocationApi;
 
-    private NetworkService networkService;
+    private NetworkRepo networkRepo;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        this.networkService = new NetworkServiceImpl(mockWeatherApi, mockPlacesApi, mockLocationApi);
+        this.networkRepo = new NetworkRepoImpl(mockWeatherApi, mockPlacesApi, mockLocationApi);
     }
 
     @Test
@@ -42,7 +42,7 @@ public class CityDataApiTest {
 
         PublishSubject<Places> subject = PublishSubject.create();
         when(mockPlacesApi.getPlaces(anyString())).thenReturn(subject);
-        networkService.getLocation(cityParams);
+        networkRepo.getLocation(cityParams);
         verify(mockPlacesApi).getPlaces(anyString());
     }
 }

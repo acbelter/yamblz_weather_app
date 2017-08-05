@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 
 import com.acbelter.weatherapp.data.database.WeatherDAO;
 import com.acbelter.weatherapp.data.database.WeatherDatabase;
-import com.acbelter.weatherapp.data.network.NetworkService;
+import com.acbelter.weatherapp.data.network.NetworkRepo;
 import com.acbelter.weatherapp.data.repository.city.CityRepoImpl;
 import com.acbelter.weatherapp.data.repository.database.DatabaseRepoImpl;
 import com.acbelter.weatherapp.data.repository.preference.SettingsPreference;
@@ -41,8 +41,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    WeatherRepo provideWeatherRepo(NetworkService networkService, SettingsPreference settingsPreference, DatabaseRepo databaseRepo) {
-        return new WeatherRepoImpl(networkService, settingsPreference, databaseRepo);
+    WeatherRepo provideWeatherRepo(NetworkRepo networkRepo, SettingsPreference settingsPreference, DatabaseRepo databaseRepo) {
+        return new WeatherRepoImpl(networkRepo, settingsPreference, databaseRepo);
     }
 
     @Provides
@@ -53,8 +53,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    CityRepo provideCityRepo(NetworkService networkService, SettingsPreference settingsPreference) {
-        return new CityRepoImpl(networkService, settingsPreference);
+    CityRepo provideCityRepo(NetworkRepo networkRepo, SettingsPreference settingsPreference) {
+        return new CityRepoImpl(networkRepo, settingsPreference);
     }
 
     @Provides

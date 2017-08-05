@@ -18,7 +18,10 @@ import java.util.Set;
 
 public class WeatherDataConverter {
 
-    public static CurrentWeatherData currentWeatherFromNetworkData(com.acbelter.weatherapp.data.weathermodel.currentweather.CurrentWeather currentWeather, WeatherParams weatherParams) {
+    private WeatherDataConverter() {
+    }
+
+    public static CurrentWeatherData fromNWWeatherDataToCurrentWeatherData(com.acbelter.weatherapp.data.weathermodel.currentweather.CurrentWeather currentWeather, WeatherParams weatherParams) {
         if (currentWeather == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
@@ -39,7 +42,7 @@ public class WeatherDataConverter {
         return weatherData;
     }
 
-    public static WeatherForecast forecastFromNetworkData(ExtendedWeather extendedWeather, WeatherParams weatherParams) {
+    public static WeatherForecast fromNWWeatherDataToForecastWeatherData(ExtendedWeather extendedWeather, WeatherParams weatherParams) {
         if (extendedWeather == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }

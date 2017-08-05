@@ -22,6 +22,7 @@ ext {
     gsonVersion = "2.8.1"
     okhttp3Version = "3.8.1"
     roomVersion = "1.0.0-alpha5"
+    stethoVersion = "1.5.0"
 
     mockitoVersion = "1.10.19"
     junitVersion = "4.12"
@@ -64,6 +65,10 @@ ext {
             room           : "android.arch.persistence.room:runtime:$roomVersion",
             roomPersistence: "android.arch.persistence.room:compiler:$roomVersion",
             roomRx         : "android.arch.persistence.room:rxjava2:$roomVersion"
+    ]
+
+    utils = [
+            stetho: "com.facebook.stetho:stetho:$stethoVersion"
     ]
 
     compiler = [

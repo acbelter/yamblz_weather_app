@@ -8,6 +8,7 @@ import com.acbelter.weatherapp.di.component.DaggerAppComponent;
 import com.acbelter.weatherapp.di.module.ActivityModule;
 import com.acbelter.weatherapp.di.module.AppModule;
 import com.acbelter.weatherapp.scheduler.WeatherScheduleJob;
+import com.facebook.stetho.Stetho;
 
 import timber.log.Timber;
 
@@ -21,8 +22,10 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        if (BuildConfig.DEBUG)
+        if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
+            Stetho.initializeWithDefaults(this);
+        }
 
         setInstance(this);
         this.appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();

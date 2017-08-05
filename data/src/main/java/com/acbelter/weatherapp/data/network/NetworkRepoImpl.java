@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
 
-public class NetworkServiceImpl implements NetworkService {
+public class NetworkRepoImpl implements NetworkRepo {
 
     private WeatherApi weatherApi;
     private PlacesApi placesApi;
@@ -21,7 +21,7 @@ public class NetworkServiceImpl implements NetworkService {
 
     private static final int NETWORK_TIMEOUT = 5000;
 
-    public NetworkServiceImpl(WeatherApi weatherApi, PlacesApi placesApi, LocationApi locationApi) {
+    public NetworkRepoImpl(WeatherApi weatherApi, PlacesApi placesApi, LocationApi locationApi) {
         this.weatherApi = weatherApi;
         this.placesApi = placesApi;
         this.locationApi = locationApi;
@@ -34,7 +34,7 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public Flowable<ExtendedWeather> getForecast(WeatherParams params) {
+    public Flowable<ExtendedWeather> getForecastWeather(WeatherParams params) {
         return weatherApi.getForecast(params.getCityData().getFormattedAddress(), locale);
     }
 
