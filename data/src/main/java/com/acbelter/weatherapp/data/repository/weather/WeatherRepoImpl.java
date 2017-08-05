@@ -2,9 +2,10 @@ package com.acbelter.weatherapp.data.repository.weather;
 
 import com.acbelter.weatherapp.data.network.NetworkService;
 import com.acbelter.weatherapp.data.repository.preference.SettingsPreference;
-import com.acbelter.weatherapp.domain.model.weather.WeatherData;
+import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
+import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
 import io.reactivex.Observable;
@@ -14,14 +15,16 @@ public class WeatherRepoImpl implements WeatherRepo {
 
     private NetworkService networkService;
     private SettingsPreference settingsPreference;
+    private DatabaseRepo databaseRepo;
 
-    public WeatherRepoImpl(NetworkService networkService, SettingsPreference settingsPreference) {
+    public WeatherRepoImpl(NetworkService networkService, SettingsPreference settingsPreference, DatabaseRepo databaseRepo) {
         this.networkService = networkService;
         this.settingsPreference = settingsPreference;
+        this.databaseRepo = databaseRepo;
     }
 
     @Override
-    public Observable<WeatherData> getCurrentWeather() {
+    public Observable<CurrentWeatherData> getCurrentWeather() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
         return settingsPreference.getLastWeatherData()
@@ -41,7 +44,7 @@ public class WeatherRepoImpl implements WeatherRepo {
     }
 
     @Override
-    public Observable<WeatherData> updateCurrentWeather() {
+    public Observable<CurrentWeatherData> updateCurrentWeather() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
         return networkService.getCurrentWeather(weatherParams)
@@ -57,8 +60,8 @@ public class WeatherRepoImpl implements WeatherRepo {
     }
 
     @Override
-    public void saveWeather(WeatherData weatherData) {
-        settingsPreference.setLastWeatherData(weatherData);
+    public void saveWeather(CurrentWeatherData currentWeatherData) {
+        settingsPreference.setLastWeatherData(currentWeatherData);
         long updateTimestamp = System.currentTimeMillis();
         settingsPreference.setLastUpdateTimestamp(updateTimestamp);
     }

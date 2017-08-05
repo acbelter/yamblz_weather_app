@@ -4,6 +4,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.acbelter.weatherapp.data.dbmodel.DatabaseWeatherData;
 
@@ -23,8 +24,8 @@ public interface WeatherDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertWeather(DatabaseWeatherData weather);
 
-    @Query("DELETE FROM DatabaseWeatherData WHERE city_name = :cityName")
-    void deleteAllWeatherRecords(String cityName);
+    @Update
+    void updateWeather(DatabaseWeatherData weather);
 
     @Query("DELETE FROM DatabaseWeatherData")
     void deleteAllWeatherRecords();

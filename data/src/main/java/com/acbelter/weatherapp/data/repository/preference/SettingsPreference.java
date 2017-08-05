@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.settings.SettingsData;
-import com.acbelter.weatherapp.domain.model.weather.WeatherData;
+import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 import com.google.gson.Gson;
 
@@ -16,11 +16,11 @@ import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.CELSIUS;
 import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.fromString;
 
 public class SettingsPreference {
-    public static final String KEY_CURRENT_CITY_NAME = "pref_current_city";
-    public static final String TEMPERATURE_METRIC_KEY = "pref_temperature_metric";
-    public static final String KEY_UPDATE_INTERVAL = "pref_update_interval";
-    public static final String KEY_LAST_UPDATE_TIMESTAMP = "pref_last_update_timestamp";
-    public static final String KEY_LAST_WEATHER_DATA = "pref_last_weather_data";
+    private static final String KEY_CURRENT_CITY_NAME = "pref_current_city";
+    private static final String TEMPERATURE_METRIC_KEY = "pref_temperature_metric";
+    private static final String KEY_UPDATE_INTERVAL = "pref_update_interval";
+    private static final String KEY_LAST_UPDATE_TIMESTAMP = "pref_last_update_timestamp";
+    private static final String KEY_LAST_WEATHER_DATA = "pref_last_weather_data";
 
     private static final long MIN_UPDATE_INTERVAL = 1 * 60 * 60 * 1000; // interval is 1 hour
 
@@ -63,22 +63,22 @@ public class SettingsPreference {
         return sharedPreferences.getLong(KEY_LAST_UPDATE_TIMESTAMP, 0L);
     }
 
-    public void setLastWeatherData(WeatherData weatherData) {
-        if (weatherData == null) {
+    public void setLastWeatherData(CurrentWeatherData currentWeatherData) {
+        if (currentWeatherData == null) {
             sharedPreferences.edit().remove(KEY_LAST_WEATHER_DATA).apply();
             return;
         }
 
-        String weatherDataJson = new Gson().toJson(weatherData);
+        String weatherDataJson = new Gson().toJson(currentWeatherData);
         sharedPreferences.edit().putString(KEY_LAST_WEATHER_DATA, weatherDataJson).apply();
     }
 
     public
     @Nullable
-    Observable<WeatherData> getLastWeatherData() {
+    Observable<CurrentWeatherData> getLastWeatherData() {
         String weatherDataJson = sharedPreferences.getString(KEY_LAST_WEATHER_DATA, null);
-        WeatherData weatherData = new Gson().fromJson(weatherDataJson, WeatherData.class);
-        return Observable.fromCallable(() -> weatherData);
+        CurrentWeatherData currentWeatherData = new Gson().fromJson(weatherDataJson, CurrentWeatherData.class);
+        return Observable.fromCallable(() -> currentWeatherData);
     }
 
     public void saveTemperatureMetric(TemperatureMetric metric) {

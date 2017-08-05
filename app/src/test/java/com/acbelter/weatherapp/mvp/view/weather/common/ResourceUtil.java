@@ -1,17 +1,17 @@
 package com.acbelter.weatherapp.ui.weather.common;
 
-import com.acbelter.weatherapp.domain.model.weather.WeatherData;
+import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
 
 import java.util.Calendar;
 
 public class ResourceUtil {
 
-    private WeatherData weatherData;
+    private CurrentWeatherData currentWeatherData;
 
     private long timestamp = 0;
 
-    public ResourceUtil(WeatherData weatherData) {
-        this.weatherData = weatherData;
+    public ResourceUtil(CurrentWeatherData currentWeatherData) {
+        this.currentWeatherData = currentWeatherData;
 
         setDate();
     }
@@ -23,20 +23,20 @@ public class ResourceUtil {
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         calendar.set(Calendar.HOUR_OF_DAY, 21);
         timestamp = calendar.getTimeInMillis();
-        weatherData.setTimestamp(timestamp);
+        currentWeatherData.setTimestamp(timestamp);
     }
 
     public void setDayTimestamp() {
         long sunriseTimestamp = timestamp - 1;
-        weatherData.setSunriseTimestamp(sunriseTimestamp);
+        currentWeatherData.setSunriseTimestamp(sunriseTimestamp);
         long sunsetTimestamp = timestamp + 1;
-        weatherData.setSunsetTimestamp(sunsetTimestamp);
+        currentWeatherData.setSunsetTimestamp(sunsetTimestamp);
     }
 
     public void setNightTimestamp() {
         long sunriseTimestamp = timestamp + 1;
-        weatherData.setSunriseTimestamp(sunriseTimestamp);
+        currentWeatherData.setSunriseTimestamp(sunriseTimestamp);
         long sunsetTimestamp = timestamp - 1;
-        weatherData.setSunsetTimestamp(sunsetTimestamp);
+        currentWeatherData.setSunsetTimestamp(sunsetTimestamp);
     }
 }

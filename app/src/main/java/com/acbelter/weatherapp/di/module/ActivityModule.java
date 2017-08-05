@@ -5,6 +5,7 @@ import com.acbelter.weatherapp.domain.interactor.CityInteractor;
 import com.acbelter.weatherapp.domain.interactor.SettingsInteractor;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.repository.CityRepo;
+import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
 import com.acbelter.weatherapp.domain.repository.SettingsRepo;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
@@ -18,8 +19,8 @@ public class ActivityModule {
 
     @Provides
     @ActivityScope
-    WeatherInteractor provideWeatherInteractor(WeatherRepo weatherRepo) {
-        return new WeatherInteractor(weatherRepo, Schedulers.io(), AndroidSchedulers.mainThread());
+    WeatherInteractor provideWeatherInteractor(WeatherRepo weatherRepo, DatabaseRepo databaseRepo) {
+        return new WeatherInteractor(weatherRepo, databaseRepo, Schedulers.io(), AndroidSchedulers.mainThread());
     }
 
     @Provides

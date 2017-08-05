@@ -4,7 +4,7 @@ import com.acbelter.weatherapp.domain.interactor.CityInteractor;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.city.CityParams;
-import com.acbelter.weatherapp.domain.model.weather.WeatherData;
+import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
 import com.acbelter.weatherapp.mvp.presentation.common.BasePresenter;
 import com.acbelter.weatherapp.mvp.view.search.SearchView;
 
@@ -44,25 +44,25 @@ public class SearchPresenter extends BasePresenter<SearchView> {
             return;
         unSubscribeOnDetach(weatherInteractor.updateWeather()
                 .subscribe(weatherData -> {
-                            Timber.d("getCurrentWeather->onNext()");
+                            Timber.d("getCurrentWeatherData->onNext()");
 //                            saveWeather(weatherData);
                             closeActivity();
                         },
                         error -> {
-                            Timber.d("getCurrentWeather->onError(): %s", error.toString());
+                            Timber.d("getCurrentWeatherData->onError(): %s", error.toString());
                             getView().showError();
                         },
                         () -> {
-                            Timber.d("getCurrentWeather->onComplete()");
+                            Timber.d("getCurrentWeatherData->onComplete()");
                         },
                         disposable -> {
-                            Timber.d("getCurrentWeather->onSubscribe()");
+                            Timber.d("getCurrentWeatherData->onSubscribe()");
                         }
                 ));
     }
 
-    private void saveWeather(WeatherData weatherData) {
-        weatherInteractor.saveWeather(weatherData);
+    private void saveWeather(CurrentWeatherData currentWeatherData) {
+//        weatherInteractor.saveWeather(currentWeatherData);
     }
 
     public void closeActivity() {

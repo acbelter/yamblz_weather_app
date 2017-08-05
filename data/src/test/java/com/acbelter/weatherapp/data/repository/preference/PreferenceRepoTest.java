@@ -3,7 +3,7 @@ package com.acbelter.weatherapp.data.repository.preference;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.acbelter.weatherapp.domain.model.weather.WeatherData;
+import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -73,14 +73,14 @@ public class PreferenceRepoTest {
 
     @Test
     public void testSavedWeatherData() {
-        WeatherData savedWeatherData = new WeatherData();
-        savedWeatherData.setCity("Moscow");
-        savedWeatherData.setTemperature(1f);
-        savedWeatherData.setWeatherType(SUN);
-        savedWeatherData.setTimestamp(2L);
-        savedWeatherData.setSunsetTimestamp(3L);
-        savedWeatherData.setSunriseTimestamp(4L);
-        settingsPreference.setLastWeatherData(savedWeatherData);
-        assertEquals(settingsPreference.getLastWeatherData(), savedWeatherData);
+        CurrentWeatherData savedCurrentWeatherData = new CurrentWeatherData();
+        savedCurrentWeatherData.setCity("Moscow");
+        savedCurrentWeatherData.setTemperature(1f);
+        savedCurrentWeatherData.setWeatherType(SUN);
+        savedCurrentWeatherData.setTimestamp(2L);
+        savedCurrentWeatherData.setSunsetTimestamp(3L);
+        savedCurrentWeatherData.setSunriseTimestamp(4L);
+        settingsPreference.setLastWeatherData(savedCurrentWeatherData);
+        assertEquals(settingsPreference.getLastWeatherData(), savedCurrentWeatherData);
     }
 }

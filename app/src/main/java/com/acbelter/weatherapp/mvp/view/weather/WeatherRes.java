@@ -4,7 +4,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 
 import com.acbelter.weatherapp.R;
-import com.acbelter.weatherapp.domain.model.weather.WeatherData;
+import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
 
 import xyz.matteobattilana.library.Common.Constants;
 
@@ -17,7 +17,7 @@ public class WeatherRes {
     private int mTextColorResId;
     private Constants.weatherStatus mWeatherStatus;
 
-    public WeatherRes(WeatherData data) {
+    public WeatherRes(CurrentWeatherData data) {
         switch (data.getWeatherType()) {
             case SUN:
                 if (data.isDay()) {

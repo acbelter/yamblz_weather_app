@@ -1,6 +1,6 @@
 package com.acbelter.weatherapp.domain.interactor;
 
-import com.acbelter.weatherapp.domain.model.weather.WeatherData;
+import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
@@ -16,7 +16,7 @@ import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.TestScheduler;
 
 @RunWith(MockitoJUnitRunner.class)
-public class WeatherDataInteractorTest {
+public class CurrentWeatherDataInteractorTest {
 
     private WeatherInteractor weatherInteractor;
 
@@ -35,29 +35,29 @@ public class WeatherDataInteractorTest {
 
     @Test
     public void testGetCityListFromRepo() {
-        WeatherData weatherData = new WeatherData();
-        Observable<WeatherData> subject = Observable.just(weatherData);
-//        when(mockWeatherRepo.getCurrentWeather(any(WeatherParams.class))).thenReturn(subject);
+        CurrentWeatherData currentWeatherData = new CurrentWeatherData();
+        Observable<CurrentWeatherData> subject = Observable.just(currentWeatherData);
+//        when(mockWeatherRepo.getCurrentWeatherData(any(WeatherParams.class))).thenReturn(subject);
 
         WeatherParams weatherParams = new WeatherParams("Mos");
         weatherInteractor.getCurrentWeather(weatherParams);
 
-//        verify(mockWeatherRepo).getCurrentWeather(any(WeatherParams.class));
+//        verify(mockWeatherRepo).getCurrentWeatherData(any(WeatherParams.class));
     }
 
     @Test
     public void testSendingDataFromRepoToInteractor() {
-        WeatherData weatherData = new WeatherData();
-        Observable<WeatherData> subject = Observable.just(weatherData);
-//        when(mockWeatherRepo.getCurrentWeather(any(WeatherParams.class))).thenReturn(subject);
+        CurrentWeatherData currentWeatherData = new CurrentWeatherData();
+        Observable<CurrentWeatherData> subject = Observable.just(currentWeatherData);
+//        when(mockWeatherRepo.getCurrentWeatherData(any(WeatherParams.class))).thenReturn(subject);
 
         WeatherParams weatherParams = new WeatherParams("Moscow");
-        TestObserver<WeatherData> observer = weatherInteractor.getCurrentWeather(weatherParams)
+        TestObserver<CurrentWeatherData> observer = weatherInteractor.getCurrentWeather(weatherParams)
                 .test();
 
         testScheduler.triggerActions();
         observer.assertNoErrors()
-                .assertValue(weatherData);
+                .assertValue(currentWeatherData);
     }
 }
 

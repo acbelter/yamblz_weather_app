@@ -2,11 +2,10 @@ package com.acbelter.weatherapp.data.repository.weather;
 
 import android.support.annotation.VisibleForTesting;
 
-import com.acbelter.weatherapp.data.weathermodel.currentweather.CurrentWeather;
 import com.acbelter.weatherapp.data.weathermodel.currentweather.Weather;
 import com.acbelter.weatherapp.data.weathermodel.forecast.ExtendedWeather;
 import com.acbelter.weatherapp.data.weathermodel.forecast.WeatherForecastElement;
-import com.acbelter.weatherapp.domain.model.weather.WeatherData;
+import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.domain.model.weather.WeatherType;
@@ -19,7 +18,7 @@ import java.util.Set;
 
 public class WeatherDataConverter {
 
-    public static WeatherData currentWeatherFromNetworkData(CurrentWeather currentWeather, WeatherParams weatherParams) {
+    public static CurrentWeatherData currentWeatherFromNetworkData(com.acbelter.weatherapp.data.weathermodel.currentweather.CurrentWeather currentWeather, WeatherParams weatherParams) {
         if (currentWeather == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
@@ -28,7 +27,7 @@ public class WeatherDataConverter {
             return null;
         }
 
-        WeatherData weatherData = new WeatherData();
+        CurrentWeatherData weatherData = new CurrentWeatherData();
         weatherData.setCityData(weatherParams.getCityData());
         int temperature = TemperatureMetricConverter.getSupportedTemperature(currentWeather.getMain().getTemp(), weatherParams.getMetric());
         weatherData.setTemperature(temperature);
@@ -51,17 +50,17 @@ public class WeatherDataConverter {
 
         WeatherForecast weatherForecast = new WeatherForecast();
         List<WeatherForecastElement> forecastList = extendedWeather.getList();
-        List<WeatherData> forecastWeatherData = new ArrayList<>();
+        List<CurrentWeatherData> forecastCurrentWeatherData = new ArrayList<>();
         for (WeatherForecastElement element : forecastList) {
-            WeatherData weatherData = new WeatherData();
-            weatherData.setCityData(weatherParams.getCityData());
+            CurrentWeatherData currentWeatherData = new CurrentWeatherData();
+            currentWeatherData.setCityData(weatherParams.getCityData());
             int temperature = TemperatureMetricConverter.getSupportedTemperature(element.getMain().getTemp(), weatherParams.getMetric());
-            weatherData.setTemperature(temperature);
-            weatherData.setTemperatureMetric(weatherParams.getMetric());
-            weatherData.setWeatherType(extractWeatherType(element.getWeather()));
-            forecastWeatherData.add(weatherData);
+            currentWeatherData.setTemperature(temperature);
+            currentWeatherData.setTemperatureMetric(weatherParams.getMetric());
+            currentWeatherData.setWeatherType(extractWeatherType(element.getWeather()));
+            forecastCurrentWeatherData.add(currentWeatherData);
         }
-        weatherForecast.setWeatherForecast(forecastWeatherData);
+        weatherForecast.setWeatherForecast(forecastCurrentWeatherData);
         return weatherForecast;
     }
 

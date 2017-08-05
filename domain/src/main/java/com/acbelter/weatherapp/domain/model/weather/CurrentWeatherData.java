@@ -3,7 +3,7 @@ package com.acbelter.weatherapp.domain.model.weather;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 
-public class WeatherData {
+public class CurrentWeatherData {
 
     private CityData cityData;
     private int temperature;
@@ -30,7 +30,7 @@ public class WeatherData {
     private long sunriseTimestamp;
     private long sunsetTimestamp;
 
-    public WeatherData() {
+    public CurrentWeatherData() {
     }
 
     public void setTemperature(int temperature) {
@@ -89,7 +89,7 @@ public class WeatherData {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        WeatherData data = (WeatherData) o;
+        CurrentWeatherData data = (CurrentWeatherData) o;
         return cityData.equals(data.cityData);
     }
 

@@ -1,6 +1,7 @@
 package com.acbelter.weatherapp.data.repository.database;
 
 import com.acbelter.weatherapp.data.database.WeatherDAO;
+import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
 import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
 
@@ -12,8 +13,8 @@ import io.reactivex.Maybe;
 
 public class DatabaseRepoImpl implements DatabaseRepo {
 
-    WeatherDAO weatherDAO;
-    Executor executor;
+    private WeatherDAO weatherDAO;
+    private Executor executor;
 
     public DatabaseRepoImpl(WeatherDAO weatherDAO, Executor executor) {
         this.weatherDAO = weatherDAO;
@@ -21,31 +22,32 @@ public class DatabaseRepoImpl implements DatabaseRepo {
     }
 
     @Override
-    public Flowable<List<FullWeatherModel>> getAllWeatherRecords() {
+    public Flowable<List<CityData>> getAllCities() {
         return weatherDAO.getAllWeatherRecords()
                 .flatMapSingle(databaseWeatherDatas -> Flowable
                         .fromIterable(databaseWeatherDatas)
-                        .map(DatabaseWeatherConverter::fullWeatherFromDatabase)
+                        .map(DatabaseWeatherConverter::fromDatabaseWeatherDataToCityData)
                         .toList());
     }
 
     @Override
     public Maybe<FullWeatherModel> getWeatherByCityName(String cityName) {
-        return null;
+        return weatherDAO.getWeatherByCityName(cityName)
+                .map(DatabaseWeatherConverter::fromDatabaseWeatherDataToFullWeatherModel);
     }
 
     @Override
-    public void insertWeather(FullWeatherModel weather) {
+    public void saveWeather(FullWeatherModel weather) {
         weatherDAO.insertWeather(DatabaseWeatherConverter.fromFullWeatherDataToDatabaseFormat(weather));
     }
 
     @Override
-    public void deleteAllWeatherRecords(String cityName) {
-
+    public void updateWeather(FullWeatherModel weatherModel) {
+        weatherDAO.updateWeather(DatabaseWeatherConverter.fromFullWeatherDataToDatabaseFormat(weatherModel));
     }
 
     @Override
     public void deleteAllWeatherRecords() {
-
+        weatherDAO.deleteAllWeatherRecords();
     }
 }

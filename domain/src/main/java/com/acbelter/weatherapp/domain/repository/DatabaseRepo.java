@@ -1,5 +1,6 @@
 package com.acbelter.weatherapp.domain.repository;
 
+import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
 
 import java.util.List;
@@ -9,13 +10,13 @@ import io.reactivex.Maybe;
 
 public interface DatabaseRepo {
 
-    Flowable<List<FullWeatherModel>> getAllWeatherRecords();
+    Flowable<List<CityData>> getAllCities();
 
     Maybe<FullWeatherModel> getWeatherByCityName(String cityName);
 
-    void insertWeather(FullWeatherModel weather);
+    void saveWeather(FullWeatherModel weatherModel);
 
-    void deleteAllWeatherRecords(String cityName);
+    void updateWeather(FullWeatherModel weatherModel);
 
     void deleteAllWeatherRecords();
 }

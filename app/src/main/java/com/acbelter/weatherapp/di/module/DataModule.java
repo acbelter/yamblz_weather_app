@@ -8,12 +8,16 @@ import com.acbelter.weatherapp.data.database.WeatherDAO;
 import com.acbelter.weatherapp.data.database.WeatherDatabase;
 import com.acbelter.weatherapp.data.network.NetworkService;
 import com.acbelter.weatherapp.data.repository.city.CityRepoImpl;
+import com.acbelter.weatherapp.data.repository.database.DatabaseRepoImpl;
 import com.acbelter.weatherapp.data.repository.preference.SettingsPreference;
 import com.acbelter.weatherapp.data.repository.preference.SettingsRepoImpl;
 import com.acbelter.weatherapp.data.repository.weather.WeatherRepoImpl;
 import com.acbelter.weatherapp.domain.repository.CityRepo;
+import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
 import com.acbelter.weatherapp.domain.repository.SettingsRepo;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
+
+import java.util.concurrent.Executor;
 
 import javax.inject.Singleton;
 
@@ -37,20 +41,26 @@ public class DataModule {
 
     @Provides
     @Singleton
-    CityRepo provideCityRepo(NetworkService networkService, SettingsPreference settingsPreference) {
-        return new CityRepoImpl(networkService, settingsPreference);
-    }
-
-    @Provides
-    @Singleton
-    WeatherRepo provideWeatherRepo(NetworkService networkService, SettingsPreference settingsPreference) {
-        return new WeatherRepoImpl(networkService, settingsPreference);
+    WeatherRepo provideWeatherRepo(NetworkService networkService, SettingsPreference settingsPreference, DatabaseRepo databaseRepo) {
+        return new WeatherRepoImpl(networkService, settingsPreference, databaseRepo);
     }
 
     @Provides
     @Singleton
     SettingsRepo provideSettingsRepo(SettingsPreference settingsPreference) {
         return new SettingsRepoImpl(settingsPreference);
+    }
+
+    @Provides
+    @Singleton
+    CityRepo provideCityRepo(NetworkService networkService, SettingsPreference settingsPreference) {
+        return new CityRepoImpl(networkService, settingsPreference);
+    }
+
+    @Provides
+    @Singleton
+    DatabaseRepo provideDatabaseRepo(WeatherDAO weatherDAO, Executor executor) {
+        return new DatabaseRepoImpl(weatherDAO, executor);
     }
 
     @Provides
