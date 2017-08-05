@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.concurrent.Executor;
 
 import io.reactivex.Flowable;
-import io.reactivex.Maybe;
 
 public class DatabaseRepoImpl implements DatabaseRepo {
 
@@ -31,7 +30,7 @@ public class DatabaseRepoImpl implements DatabaseRepo {
     }
 
     @Override
-    public Maybe<FullWeatherModel> getWeatherByCityName(String cityName) {
+    public Flowable<FullWeatherModel> getWeatherByCityName(String cityName) {
         return weatherDAO.getWeatherByCityName(cityName)
                 .map(DatabaseWeatherConverter::fromDatabaseWeatherDataToFullWeatherModel);
     }

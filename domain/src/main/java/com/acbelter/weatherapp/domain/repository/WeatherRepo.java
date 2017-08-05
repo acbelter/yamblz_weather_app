@@ -3,17 +3,17 @@ package com.acbelter.weatherapp.domain.repository;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 
 public interface WeatherRepo {
 
-    Observable<CurrentWeatherData> getCurrentWeather();
+    Flowable<CurrentWeatherData> getCurrentWeather();
 
-    Observable<CurrentWeatherData> updateCurrentWeather();
+    Flowable<CurrentWeatherData> updateCurrentWeather();
 
-    Observable<WeatherForecast> getForecast();
+    Flowable<WeatherForecast> getForecast();
 
-    Observable<WeatherForecast> updateForecast();
+    Flowable<WeatherForecast> updateForecast();
 
     void saveWeather(CurrentWeatherData currentWeatherData);
 }

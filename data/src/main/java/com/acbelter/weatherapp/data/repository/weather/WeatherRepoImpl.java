@@ -8,7 +8,7 @@ import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 import timber.log.Timber;
 
 public class WeatherRepoImpl implements WeatherRepo {
@@ -24,19 +24,18 @@ public class WeatherRepoImpl implements WeatherRepo {
     }
 
     @Override
-    public Observable<CurrentWeatherData> getCurrentWeather() {
+    public Flowable<CurrentWeatherData> getCurrentWeather() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
-        return settingsPreference.getLastWeatherData()
-                .onErrorResumeNext(networkService.getCurrentWeather(weatherParams)
-                        .map(currentWeather -> WeatherDataConverter.currentWeatherFromNetworkData(currentWeather, weatherParams)))
+        return networkService.getCurrentWeather(weatherParams)
+                .map(currentWeather -> WeatherDataConverter.currentWeatherFromNetworkData(currentWeather, weatherParams))
                 .doOnNext(data -> {
                     Timber.d("Current weather data from network: %s", data);
                 });
     }
 
     @Override
-    public Observable<WeatherForecast> getForecast() {
+    public Flowable<WeatherForecast> getForecast() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
         return networkService.getForecast(weatherParams)
@@ -44,7 +43,7 @@ public class WeatherRepoImpl implements WeatherRepo {
     }
 
     @Override
-    public Observable<CurrentWeatherData> updateCurrentWeather() {
+    public Flowable<CurrentWeatherData> updateCurrentWeather() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
         return networkService.getCurrentWeather(weatherParams)
@@ -52,7 +51,7 @@ public class WeatherRepoImpl implements WeatherRepo {
     }
 
     @Override
-    public Observable<WeatherForecast> updateForecast() {
+    public Flowable<WeatherForecast> updateForecast() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
         return networkService.getForecast(weatherParams)

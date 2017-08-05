@@ -9,7 +9,7 @@ import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 
 public class NetworkServiceImpl implements NetworkService {
 
@@ -29,21 +29,21 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public Observable<CurrentWeather> getCurrentWeather(WeatherParams params) {
+    public Flowable<CurrentWeather> getCurrentWeather(WeatherParams params) {
         return weatherApi.getCurrentWeather(params.getCityData().getFormattedAddress(), locale);
     }
 
     @Override
-    public Observable<ExtendedWeather> getForecast(WeatherParams params) {
+    public Flowable<ExtendedWeather> getForecast(WeatherParams params) {
         return weatherApi.getForecast(params.getCityData().getFormattedAddress(), locale);
     }
 
     @Override
-    public Observable<Location> getLocation(CityParams cityParams) {
+    public Flowable<Location> getLocation(CityParams cityParams) {
         return placesApi.getPlaces(cityParams.getPartOfCityName().trim())
                 .timeout(NETWORK_TIMEOUT, TimeUnit.MILLISECONDS)
                 .flatMap(places ->
-                        Observable.fromIterable(places.getPredictions()))
+                        Flowable.fromIterable(places.getPredictions()))
                 .concatMap(prediction -> locationApi.getLocation(prediction.getPlaceId(), locale));
     }
 }

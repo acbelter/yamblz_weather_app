@@ -6,7 +6,7 @@ import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
 import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 
 public class WeatherInteractor {
@@ -25,35 +25,35 @@ public class WeatherInteractor {
 
     }
 
-    public Observable<FullWeatherModel> getWeather() {
-        return Observable
+    public Flowable<FullWeatherModel> getWeather() {
+        return Flowable
                 .zip(getCurrentWeather(), getForecast(), this::convertCachedWeather)
                 .doOnNext(fullWeatherModel -> databaseRepo.saveWeather(fullWeatherModel))
                 .subscribeOn(schedulerIO)
                 .observeOn(schedulerMain);
     }
 
-    public Observable<FullWeatherModel> updateWeather() {
-        return Observable
+    public Flowable<FullWeatherModel> updateWeather() {
+        return Flowable
                 .zip(updateCurrenWeather(), updateForecast(), this::convertUpdatedWeather)
                 .doOnNext(fullWeatherModel -> databaseRepo.saveWeather(fullWeatherModel))
                 .subscribeOn(schedulerIO)
                 .observeOn(schedulerMain);
     }
 
-    private Observable<CurrentWeatherData> getCurrentWeather() {
+    private Flowable<CurrentWeatherData> getCurrentWeather() {
         return weatherRepo.getCurrentWeather();
     }
 
-    private Observable<WeatherForecast> getForecast() {
+    private Flowable<WeatherForecast> getForecast() {
         return weatherRepo.getForecast();
     }
 
-    private Observable<CurrentWeatherData> updateCurrenWeather() {
+    private Flowable<CurrentWeatherData> updateCurrenWeather() {
         return weatherRepo.updateCurrentWeather();
     }
 
-    private Observable<WeatherForecast> updateForecast() {
+    private Flowable<WeatherForecast> updateForecast() {
         return weatherRepo.updateForecast();
     }
 

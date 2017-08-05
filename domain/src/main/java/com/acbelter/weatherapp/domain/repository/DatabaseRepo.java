@@ -6,13 +6,12 @@ import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
 import java.util.List;
 
 import io.reactivex.Flowable;
-import io.reactivex.Maybe;
 
 public interface DatabaseRepo {
 
     Flowable<List<CityData>> getAllCities();
 
-    Maybe<FullWeatherModel> getWeatherByCityName(String cityName);
+    Flowable<FullWeatherModel> getWeatherByCityName(String cityName);
 
     void saveWeather(FullWeatherModel weatherModel);
 

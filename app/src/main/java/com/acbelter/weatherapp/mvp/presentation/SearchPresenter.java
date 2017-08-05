@@ -46,7 +46,7 @@ public class SearchPresenter extends BasePresenter<SearchView> {
                 .subscribe(weatherData -> {
                             Timber.d("getCurrentWeatherData->onNext()");
 //                            saveWeather(weatherData);
-                            closeActivity();
+
                         },
                         error -> {
                             Timber.d("getCurrentWeatherData->onError(): %s", error.toString());
@@ -56,6 +56,7 @@ public class SearchPresenter extends BasePresenter<SearchView> {
                             Timber.d("getCurrentWeatherData->onComplete()");
                         },
                         disposable -> {
+                            closeActivity();
                             Timber.d("getCurrentWeatherData->onSubscribe()");
                         }
                 ));

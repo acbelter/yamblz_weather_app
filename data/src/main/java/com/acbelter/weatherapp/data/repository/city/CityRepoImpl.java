@@ -6,7 +6,7 @@ import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.city.CityParams;
 import com.acbelter.weatherapp.domain.repository.CityRepo;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 import timber.log.Timber;
 
 public class CityRepoImpl implements CityRepo {
@@ -20,7 +20,7 @@ public class CityRepoImpl implements CityRepo {
     }
 
     @Override
-    public Observable<CityData> getCity(CityParams cityParams) {
+    public Flowable<CityData> getCity(CityParams cityParams) {
         return mNetworkService.getLocation(cityParams)
                 .map(CityDataConverter::fromNetworkData)
                 .doOnNext(data -> {

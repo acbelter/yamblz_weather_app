@@ -6,12 +6,12 @@ import com.acbelter.weatherapp.data.weathermodel.forecast.ExtendedWeather;
 import com.acbelter.weatherapp.domain.model.city.CityParams;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 
 public interface NetworkService {
-    Observable<CurrentWeather> getCurrentWeather(WeatherParams params);
+    Flowable<CurrentWeather> getCurrentWeather(WeatherParams params);
 
-    Observable<ExtendedWeather> getForecast(WeatherParams params);
+    Flowable<ExtendedWeather> getForecast(WeatherParams params);
 
-    Observable<Location> getLocation(CityParams cityParams);
+    Flowable<Location> getLocation(CityParams cityParams);
 }
