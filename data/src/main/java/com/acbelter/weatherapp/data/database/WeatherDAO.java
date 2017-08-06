@@ -18,8 +18,8 @@ public interface WeatherDAO {
     @Query("SELECT * FROM DatabaseWeatherData")
     Flowable<List<DatabaseWeatherData>> getAllWeatherRecords();
 
-    @Query("SELECT * FROM DatabaseWeatherData WHERE city_name = :cityName ")
-    Single<DatabaseWeatherData> getWeatherByCityName(String cityName);
+    @Query("SELECT * FROM DatabaseWeatherData WHERE coordinates = :coordinates ")
+    Single<DatabaseWeatherData> getWeatherByCityName(String coordinates);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertWeather(DatabaseWeatherData weather);

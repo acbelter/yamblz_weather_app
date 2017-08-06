@@ -18,7 +18,7 @@ public interface WeatherApi {
                                                @Query("lon") double longitude,
                                                @Query("lang") String lang);
 
-    @GET("forecast?APPID=" + OPEN_WEATHER_MAP_API_KEY)
+    @GET("forecast/daily?&cnt=16&APPID=" + OPEN_WEATHER_MAP_API_KEY)
     Flowable<ForecastWeather> getForecast(@Query("lat") double latitude,
                                           @Query("lon") double longitude,
                                           @Query("lang") String lang);

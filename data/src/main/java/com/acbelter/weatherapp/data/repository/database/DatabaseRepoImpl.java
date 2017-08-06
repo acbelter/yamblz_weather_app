@@ -1,12 +1,14 @@
 package com.acbelter.weatherapp.data.repository.database;
 
 import com.acbelter.weatherapp.data.database.WeatherDAO;
+import com.acbelter.weatherapp.data.weathermodel.common.Coord;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
+import com.google.gson.Gson;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -35,13 +37,19 @@ public class DatabaseRepoImpl implements DatabaseRepo {
 
     @Override
     public Single<CurrentWeatherData> getCurrentWeather(WeatherParams weatherParams) {
-        return weatherDAO.getWeatherByCityName(weatherParams.getCityData().getFormattedAddress())
+        double latitude = weatherParams.getCityData().getLatitude();
+        double longitude = weatherParams.getCityData().getLongitude();
+        Coord coord = new Coord(latitude, longitude);
+        return weatherDAO.getWeatherByCityName(new Gson().toJson(coord))
                 .map(DatabaseWeatherConverter::fromDatabaseWeatherDataToCurrentWeatherData);
     }
 
     @Override
     public Single<WeatherForecast> getForecastWeather(WeatherParams weatherParams) {
-        return weatherDAO.getWeatherByCityName(weatherParams.getCityData().getFormattedAddress())
+        double latitude = weatherParams.getCityData().getLatitude();
+        double longitude = weatherParams.getCityData().getLongitude();
+        Coord coord = new Coord(latitude, longitude);
+        return weatherDAO.getWeatherByCityName(new Gson().toJson(coord))
                 .map(DatabaseWeatherConverter::fromDatabaseWeatherDataToForecastWeather);
     }
 

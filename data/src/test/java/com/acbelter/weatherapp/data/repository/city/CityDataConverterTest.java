@@ -13,7 +13,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static com.acbelter.weatherapp.data.network.ApiErrors.PlacesApiErrors.OK;
 import static com.acbelter.weatherapp.data.network.ApiErrors.PlacesApiErrors.ZERO_RESULTS;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 @RunWith(MockitoJUnitRunner.class)

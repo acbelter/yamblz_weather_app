@@ -1,6 +1,7 @@
 package com.acbelter.weatherapp.data.repository.database;
 
 import com.acbelter.weatherapp.data.dbmodel.DatabaseWeatherData;
+import com.acbelter.weatherapp.data.weathermodel.common.Coord;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
@@ -15,7 +16,9 @@ public class DatabaseWeatherConverter {
         }
 
         CityData cityData = new CityData();
-        cityData.setFormattedAddress(databaseWeatherData.getCityFullName());
+        Coord coord = new Gson().fromJson(databaseWeatherData.getCoordinates(), Coord.class);
+        cityData.setLatitude(coord.getLat());
+        cityData.setLongitude(coord.getLon());
         cityData.setShortName(databaseWeatherData.getCityShortName());
         return cityData;
     }
@@ -43,12 +46,15 @@ public class DatabaseWeatherConverter {
 
         Gson gson = new Gson();
         String shortName = fullWeatherModel.getCityData().getShortName();
-        String fullName = fullWeatherModel.getCityData().getFormattedAddress();
+        double latitude = fullWeatherModel.getCityData().getLatitude();
+        double longitude = fullWeatherModel.getCityData().getLongitude();
+        Coord coord = new Coord(latitude, longitude);
+        String coordinates = gson.toJson(coord);
         String currentWeather = gson.toJson(fullWeatherModel.getCurrentWeatherData());
         String forecast = gson.toJson(fullWeatherModel.getForrecast());
 
         DatabaseWeatherData databaseWeatherData = new DatabaseWeatherData();
-        databaseWeatherData.setCityFullName(fullName);
+        databaseWeatherData.setCoordinates(coordinates);
         databaseWeatherData.setCityShortName(shortName);
         databaseWeatherData.setCurrentWeather(currentWeather);
         databaseWeatherData.setForecast(forecast);

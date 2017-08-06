@@ -1,4 +1,4 @@
-package com.acbelter.weatherapp.data.weathermodel.common;
+package com.acbelter.weatherapp.data.weathermodel.forecast;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -12,23 +12,20 @@ public class Coord {
     @Expose
     private double lat;
 
-    public Coord(double lon, double lat) {
-        this.lon = lon;
-        this.lat = lat;
-    }
-
-    /**
-     * @return The lon
-     */
     public double getLon() {
         return lon;
     }
 
-    /**
-     * @return The lat
-     */
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
+
     public double getLat() {
         return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
     }
 
 }

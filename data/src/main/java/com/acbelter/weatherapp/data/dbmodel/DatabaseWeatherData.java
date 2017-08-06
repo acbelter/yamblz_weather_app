@@ -5,13 +5,13 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
-@Entity(indices = {@Index(value = {"city_name"},
+@Entity(indices = {@Index(value = {"coordinates"},
         unique = true)})
 public class DatabaseWeatherData {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    @ColumnInfo(name = "city_name")
-    private String cityFullName;
+    @ColumnInfo(name = "coordinates")
+    private String coordinates;
     private String cityShortName;
     private String currentWeather;
     private String forecast;
@@ -24,12 +24,12 @@ public class DatabaseWeatherData {
         this.id = id;
     }
 
-    public String getCityFullName() {
-        return cityFullName;
+    public String getCoordinates() {
+        return coordinates;
     }
 
-    public void setCityFullName(String cityFullName) {
-        this.cityFullName = cityFullName;
+    public void setCoordinates(String coordinates) {
+        this.coordinates = coordinates;
     }
 
     public String getCityShortName() {

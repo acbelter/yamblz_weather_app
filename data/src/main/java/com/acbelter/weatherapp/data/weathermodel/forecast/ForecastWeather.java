@@ -1,10 +1,8 @@
 package com.acbelter.weatherapp.data.weathermodel.forecast;
 
-import com.acbelter.weatherapp.data.weathermodel.common.City;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ForecastWeather {
@@ -23,41 +21,45 @@ public class ForecastWeather {
     private int cnt;
     @SerializedName("list")
     @Expose
-    private List<WeatherForecastElement> weatherForecastElement = new ArrayList<>();
+    private List<ForecastElement> forecastElement = null;
 
-    /**
-     * @return The city
-     */
     public City getCity() {
         return city;
     }
 
-    /**
-     * @return The cod
-     */
+    public void setCity(City city) {
+        this.city = city;
+    }
+
     public String getCod() {
         return cod;
     }
 
-    /**
-     * @return The message
-     */
+    public void setCod(String cod) {
+        this.cod = cod;
+    }
+
     public double getMessage() {
         return message;
     }
 
-    /**
-     * @return The cnt
-     */
+    public void setMessage(double message) {
+        this.message = message;
+    }
+
     public int getCnt() {
         return cnt;
     }
 
-    /**
-     * @return The list
-     */
-    public List<WeatherForecastElement> getList() {
-        return weatherForecastElement;
+    public void setCnt(int cnt) {
+        this.cnt = cnt;
     }
 
+    public java.util.List<ForecastElement> getForecastElement() {
+        return forecastElement;
+    }
+
+    public void setForecastElement(java.util.List<ForecastElement> forecastElement) {
+        this.forecastElement = forecastElement;
+    }
 }

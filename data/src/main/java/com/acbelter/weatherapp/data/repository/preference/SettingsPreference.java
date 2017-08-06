@@ -9,6 +9,8 @@ import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 import com.google.gson.Gson;
 
+import java.util.Locale;
+
 import io.reactivex.Observable;
 import io.reactivex.annotations.Nullable;
 
@@ -38,8 +40,10 @@ public class SettingsPreference {
     public CityData loadCurrentCity() {
         // FIXME Don't use Moscow as default city
         CityData defaultCityData = new CityData();
-        defaultCityData.setFormattedAddress("Moscow, Russia");
-        defaultCityData.setShortName("Moscow");
+        if (Locale.getDefault().getLanguage().equals("ru"))
+            defaultCityData.setShortName("Москва");
+        else
+            defaultCityData.setShortName("Moscow");
         defaultCityData.setLatitude(55.751244f);
         defaultCityData.setLongitude(37.618423f);
         Gson gson = new Gson();

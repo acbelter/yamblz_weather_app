@@ -3,8 +3,8 @@ package com.acbelter.weatherapp.data.repository.weather;
 import android.support.annotation.VisibleForTesting;
 
 import com.acbelter.weatherapp.data.weathermodel.common.Weather;
+import com.acbelter.weatherapp.data.weathermodel.forecast.ForecastElement;
 import com.acbelter.weatherapp.data.weathermodel.forecast.ForecastWeather;
-import com.acbelter.weatherapp.data.weathermodel.forecast.WeatherForecastElement;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
@@ -52,15 +52,15 @@ public class WeatherDataConverter {
         }
 
         WeatherForecast weatherForecast = new WeatherForecast();
-        List<WeatherForecastElement> forecastList = forecastWeather.getList();
+        List<ForecastElement> forecastList = forecastWeather.getForecastElement();
         List<CurrentWeatherData> forecastCurrentWeatherData = new ArrayList<>();
-        for (WeatherForecastElement element : forecastList) {
+        for (ForecastElement element : forecastList) {
             CurrentWeatherData currentWeatherData = new CurrentWeatherData();
             currentWeatherData.setCityData(weatherParams.getCityData());
-            int temperature = TemperatureMetricConverter.getSupportedTemperature(element.getMain().getTemp(), weatherParams.getMetric());
+            int temperature = TemperatureMetricConverter.getSupportedTemperature(element.getTemp().getDay(), weatherParams.getMetric());
             currentWeatherData.setTemperature(temperature);
             currentWeatherData.setTemperatureMetric(weatherParams.getMetric());
-            currentWeatherData.setWeatherType(extractWeatherType(element.getWeather()));
+//            currentWeatherData.setWeatherType(extractWeatherType(element.getgetWeather()));
             forecastCurrentWeatherData.add(currentWeatherData);
         }
         weatherForecast.setWeatherForecast(forecastCurrentWeatherData);

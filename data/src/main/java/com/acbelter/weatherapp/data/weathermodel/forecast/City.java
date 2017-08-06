@@ -1,6 +1,5 @@
-package com.acbelter.weatherapp.data.weathermodel.common;
+package com.acbelter.weatherapp.data.weathermodel.forecast;
 
-import com.acbelter.weatherapp.data.weathermodel.currentweather.Sys;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -21,50 +20,45 @@ public class City {
     @SerializedName("population")
     @Expose
     private int population;
-    @SerializedName("sys")
-    @Expose
-    private Sys sys;
 
-    /**
-     * @return The id
-     */
     public int getId() {
         return id;
     }
 
-    /**
-     * @return The name
-     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
 
-    /**
-     * @return The coord
-     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Coord getCoord() {
         return coord;
     }
 
-    /**
-     * @return The country
-     */
+    public void setCoord(Coord coord) {
+        this.coord = coord;
+    }
+
     public String getCountry() {
         return country;
     }
 
-    /**
-     * @return The population
-     */
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     public int getPopulation() {
         return population;
     }
 
-    /**
-     * @return The sys
-     */
-    public Sys getSys() {
-        return sys;
+    public void setPopulation(int population) {
+        this.population = population;
     }
 
 }
