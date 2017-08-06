@@ -4,6 +4,8 @@ import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
 
+import java.util.List;
+
 import io.reactivex.Flowable;
 
 public interface WeatherRepo {
@@ -12,9 +14,9 @@ public interface WeatherRepo {
 
     Flowable<CurrentWeatherData> updateCurrentWeather();
 
-    Flowable<WeatherForecast> getForecast();
+    Flowable<List<WeatherForecast>> getForecast();
 
-    Flowable<WeatherForecast> updateForecast();
+    Flowable<List<WeatherForecast>> updateForecast();
 
     void saveWeather(FullWeatherModel fullWeatherModel);
 }

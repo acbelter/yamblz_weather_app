@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.domain.model.city.AutocompleteData;
-import com.acbelter.weatherapp.domain.model.weather.WeatherForecastElement;
+import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int VIEW_TYPE_CURRENT = 0;
     private static final int VIEW_TYPE_FORECAST = 1;
 
-    List<WeatherForecastElement> forecast = new ArrayList<>();
+    List<WeatherForecast> forecast = new ArrayList<>();
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -43,7 +43,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             CurrentWeatherViewHolder headerHolder = (CurrentWeatherViewHolder) holder;
             headerHolder.tvCity.setText("city");
         } else if (holder instanceof ForecastWeatherViewHolder) {
-            WeatherForecastElement forecastElement = getItem(position - 1);
+            WeatherForecast forecastElement = getItem(position - 1);
             ForecastWeatherViewHolder genericViewHolder = (ForecastWeatherViewHolder) holder;
             genericViewHolder.tvHighTemp.setText(String.valueOf(forecastElement.getHighTemperature()));
             genericViewHolder.tvLowTemp.setText(String.valueOf(forecastElement.getLowTemperature()));
@@ -51,7 +51,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    private WeatherForecastElement getItem(int position) {
+    private WeatherForecast getItem(int position) {
         return forecast.get(position);
     }
 
@@ -74,7 +74,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return forecast.size() + 1;
     }
 
-    public void update(List<WeatherForecastElement> forecast) {
+    public void update(List<WeatherForecast> forecast) {
         this.forecast = forecast;
         notifyDataSetChanged();
     }

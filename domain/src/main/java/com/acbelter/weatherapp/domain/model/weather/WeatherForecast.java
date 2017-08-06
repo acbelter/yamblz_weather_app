@@ -1,16 +1,39 @@
 package com.acbelter.weatherapp.domain.model.weather;
 
-import java.util.List;
-
 public class WeatherForecast {
 
-    private List<WeatherForecastElement> weatherForecast;
+    private String date;
+    private int highTemperature;
+    private int lowTemperature;
 
-    public List<WeatherForecastElement> getWeatherForecast() {
-        return weatherForecast;
+    public WeatherForecast(String date, int highTemperature, int lowTemperature) {
+
+        this.date = date;
+        this.highTemperature = highTemperature;
+        this.lowTemperature = lowTemperature;
     }
 
-    public void setWeatherForecast(List<WeatherForecastElement> weatherForecast) {
-        this.weatherForecast = weatherForecast;
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getHighTemperature() {
+        return highTemperature;
+    }
+
+    public void setHighTemperature(int highTemperature) {
+        this.highTemperature = highTemperature;
+    }
+
+    public int getLowTemperature() {
+        return lowTemperature;
+    }
+
+    public void setLowTemperature(int lowTemperature) {
+        this.lowTemperature = lowTemperature;
     }
 }

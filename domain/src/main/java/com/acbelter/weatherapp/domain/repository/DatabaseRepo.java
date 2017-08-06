@@ -17,7 +17,7 @@ public interface DatabaseRepo {
 
     Single<CurrentWeatherData> getCurrentWeather(WeatherParams weatherParams);
 
-    Single<WeatherForecast> getForecastWeather(WeatherParams weatherParams);
+    Single<List<WeatherForecast>> getForecastWeather(WeatherParams weatherParams);
 
     void saveWeather(FullWeatherModel weatherModel);
 

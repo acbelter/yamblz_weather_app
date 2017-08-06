@@ -6,6 +6,8 @@ import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
 import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
+import java.util.List;
+
 import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 
@@ -45,7 +47,7 @@ public class WeatherInteractor {
         return weatherRepo.getCurrentWeather();
     }
 
-    private Flowable<WeatherForecast> getForecast() {
+    private Flowable<List<WeatherForecast>> getForecast() {
         return weatherRepo.getForecast();
     }
 
@@ -53,16 +55,16 @@ public class WeatherInteractor {
         return weatherRepo.updateCurrentWeather();
     }
 
-    private Flowable<WeatherForecast> updateForecast() {
+    private Flowable<List<WeatherForecast>> updateForecast() {
         return weatherRepo.updateForecast();
     }
 
-    private FullWeatherModel convertCachedWeather(CurrentWeatherData currentWeatherData, WeatherForecast weatherForecast) {
-        return new FullWeatherModel(currentWeatherData.getCityData(), currentWeatherData, weatherForecast);
+    private FullWeatherModel convertCachedWeather(CurrentWeatherData currentWeatherData, List<WeatherForecast> forecast) {
+        return new FullWeatherModel(currentWeatherData.getCityData(), currentWeatherData, forecast);
     }
 
-    private FullWeatherModel convertUpdatedWeather(CurrentWeatherData currentWeatherData, WeatherForecast weatherForecast) {
-        return new FullWeatherModel(currentWeatherData.getCityData(), currentWeatherData, weatherForecast);
+    private FullWeatherModel convertUpdatedWeather(CurrentWeatherData currentWeatherData, List<WeatherForecast> forecast) {
+        return new FullWeatherModel(currentWeatherData.getCityData(), currentWeatherData, forecast);
     }
 
 

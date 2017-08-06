@@ -9,6 +9,8 @@ import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
+import java.util.List;
+
 import io.reactivex.Flowable;
 import timber.log.Timber;
 
@@ -38,7 +40,7 @@ public class WeatherRepoImpl implements WeatherRepo {
     }
 
     @Override
-    public Flowable<WeatherForecast> getForecast() {
+    public Flowable<List<WeatherForecast>> getForecast() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
         return databaseRepo.getForecastWeather(weatherParams)
@@ -59,7 +61,7 @@ public class WeatherRepoImpl implements WeatherRepo {
     }
 
     @Override
-    public Flowable<WeatherForecast> updateForecast() {
+    public Flowable<List<WeatherForecast>> updateForecast() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
         return networkRepo.getForecastWeather(weatherParams)

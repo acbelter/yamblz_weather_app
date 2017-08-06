@@ -45,7 +45,7 @@ public class DatabaseRepoImpl implements DatabaseRepo {
     }
 
     @Override
-    public Single<WeatherForecast> getForecastWeather(WeatherParams weatherParams) {
+    public Single<List<WeatherForecast>> getForecastWeather(WeatherParams weatherParams) {
         double latitude = weatherParams.getCityData().getLatitude();
         double longitude = weatherParams.getCityData().getLongitude();
         Coord coord = new Coord(latitude, longitude);

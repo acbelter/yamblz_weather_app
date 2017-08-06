@@ -139,7 +139,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
 
     @Override
     public void showWeather(FullWeatherModel weatherData) {
-        adapter.update(weatherData.getForrecast().getWeatherForecast());
+        adapter.update(weatherData.getForrecast());
         swipeRefreshLayout.setRefreshing(false);
         WeatherRes newWeatherRes = new WeatherRes(weatherData.getCurrentWeatherData());
         setWeatherTextColor(newWeatherRes.getTextColorResId());
@@ -153,7 +153,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
 //        weatherImage.setImageResource(newWeatherRes.getWeatherImageResId());
 //        weatherView.setWeather(newWeatherRes.getWeatherStatus());
 //        weatherView.startAnimation();
-        Timber.v("size = " + weatherData.getForrecast().getWeatherForecast().size());
+        Timber.v("size = " + weatherData.getForrecast().size());
     }
 
     private String getCurrentTemperatureString(FullWeatherModel fullWeatherModel) {

@@ -7,6 +7,9 @@ import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.List;
 
 public class DatabaseWeatherConverter {
 
@@ -31,12 +34,17 @@ public class DatabaseWeatherConverter {
         return new Gson().fromJson(databaseWeatherData.getCurrentWeather(), CurrentWeatherData.class);
     }
 
-    public static WeatherForecast fromDatabaseWeatherDataToForecastWeather(DatabaseWeatherData databaseWeatherData) {
+    public static List<WeatherForecast> fromDatabaseWeatherDataToForecastWeather(DatabaseWeatherData databaseWeatherData) {
         if (databaseWeatherData == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
 
-        return new Gson().fromJson(databaseWeatherData.getForecast(), WeatherForecast.class);
+        Gson gson = new Gson();
+
+        return (List<WeatherForecast>) gson
+                .fromJson(databaseWeatherData.getForecast()
+                        , new TypeToken<List<WeatherForecast>>() {
+                        }.getType());
     }
 
     public static DatabaseWeatherData fromFullWeatherDataToDatabaseFormat(FullWeatherModel fullWeatherModel) {
