@@ -7,11 +7,15 @@ import com.acbelter.weatherapp.data.weathermodel.forecast.ForecastElement;
 import com.acbelter.weatherapp.data.weathermodel.forecast.ForecastWeather;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
+import com.acbelter.weatherapp.domain.model.weather.WeatherForecastElement;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.domain.model.weather.WeatherType;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetricConverter;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -42,28 +46,30 @@ public class WeatherDataConverter {
         return weatherData;
     }
 
-    public static WeatherForecast fromNWWeatherDataToForecastWeatherData(ForecastWeather forecastWeather, WeatherParams weatherParams) {
-        if (forecastWeather == null) {
+    public static WeatherForecast fromNWWeatherDataToForecastWeatherData(ForecastWeather forecastNW, WeatherParams weatherParams) {
+        if (forecastNW == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
 
-        if (Integer.valueOf(forecastWeather.getCod()) != 200) {
+        if (Integer.valueOf(forecastNW.getCod()) != 200) {
             return null;
         }
 
         WeatherForecast weatherForecast = new WeatherForecast();
-        List<ForecastElement> forecastList = forecastWeather.getForecastElement();
-        List<CurrentWeatherData> forecastCurrentWeatherData = new ArrayList<>();
-        for (ForecastElement element : forecastList) {
-            CurrentWeatherData currentWeatherData = new CurrentWeatherData();
-            currentWeatherData.setCityData(weatherParams.getCityData());
-            int temperature = TemperatureMetricConverter.getSupportedTemperature(element.getTemp().getDay(), weatherParams.getMetric());
-            currentWeatherData.setTemperature(temperature);
-            currentWeatherData.setTemperatureMetric(weatherParams.getMetric());
-//            currentWeatherData.setWeatherType(extractWeatherType(element.getgetWeather()));
-            forecastCurrentWeatherData.add(currentWeatherData);
+        List<ForecastElement> forecastListNW = forecastNW.getForecastElement();
+        List<WeatherForecastElement> forecastElements = new ArrayList<>();
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        for (ForecastElement element : forecastListNW) {
+            long curTime = element.getDt() * 1000L;
+            date.setTime(curTime);
+            String dateStr = df.format(date);
+            int lowTemp = TemperatureMetricConverter.getSupportedTemperature(element.getTemp().getMin(), weatherParams.getMetric());
+            int highTemp = TemperatureMetricConverter.getSupportedTemperature(element.getTemp().getMax(), weatherParams.getMetric());
+            WeatherForecastElement weatherForecastElement = new WeatherForecastElement(dateStr, lowTemp, highTemp);
+            forecastElements.add(weatherForecastElement);
         }
-        weatherForecast.setWeatherForecast(forecastCurrentWeatherData);
+        weatherForecast.setWeatherForecast(forecastElements);
         return weatherForecast;
     }
 

@@ -55,11 +55,11 @@ public class ForecastWeather {
         this.cnt = cnt;
     }
 
-    public java.util.List<ForecastElement> getForecastElement() {
+    public List<ForecastElement> getForecastElement() {
         return forecastElement;
     }
 
-    public void setForecastElement(java.util.List<ForecastElement> forecastElement) {
+    public void setForecastElement(List<ForecastElement> forecastElement) {
         this.forecastElement = forecastElement;
     }
 }
