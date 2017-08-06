@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.acbelter.weatherapp.R;
-import com.acbelter.weatherapp.domain.model.city.CityData;
+import com.acbelter.weatherapp.domain.model.city.AutocompleteData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +18,10 @@ import butterknife.ButterKnife;
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder> {
 
     public interface OnItemClickListener {
-        void onItemClick(CityData item);
+        void onItemClick(AutocompleteData item);
     }
 
-    private List<CityData> locations;
+    private List<AutocompleteData> locations;
     private OnItemClickListener itemClickListener;
 
     public CityAdapter(OnItemClickListener clickListener) {
@@ -50,7 +50,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
 
     @Override
     public void onBindViewHolder(CityViewHolder viewHolder, int position) {
-        CityData location = locations.get(position);
+        AutocompleteData location = locations.get(position);
         viewHolder.bind(location);
     }
 
@@ -59,7 +59,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
         return locations.size();
     }
 
-    public void update(List<CityData> list) {
+    public void update(List<AutocompleteData> list) {
         locations = list;
         notifyDataSetChanged();
     }
@@ -80,8 +80,8 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(final CityData item) {
-            tvCity.setText(item.getFormattedAddress());
+        public void bind(final AutocompleteData item) {
+            tvCity.setText(item.getCityName());
         }
     }
 }

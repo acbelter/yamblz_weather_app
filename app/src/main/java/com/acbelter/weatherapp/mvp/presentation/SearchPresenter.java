@@ -2,7 +2,7 @@ package com.acbelter.weatherapp.mvp.presentation;
 
 import com.acbelter.weatherapp.domain.interactor.CityInteractor;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
-import com.acbelter.weatherapp.domain.model.city.CityData;
+import com.acbelter.weatherapp.domain.model.city.AutocompleteData;
 import com.acbelter.weatherapp.domain.model.city.CityParams;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
 import com.acbelter.weatherapp.mvp.presentation.common.BasePresenter;
@@ -26,14 +26,15 @@ public class SearchPresenter extends BasePresenter<SearchView> {
             return;
         CityParams cityParams = new CityParams(input);
         unSubscribeOnDetach(cityInteractor.getCityList(cityParams)
-                .subscribe(cityDatas ->
-                                getView().updateCityList(cityDatas),
+                .subscribe(autocompleteDatas ->
+                                getView().updateCityList(autocompleteDatas),
                         throwable -> getView().showError()));
 
     }
 
-    public void saveSelectedCityAndWeather(CityData cityData) {
-        cityInteractor.saveSelectedCity(cityData);
+    public void saveSelectedCityAndWeather(AutocompleteData autocompleteData) {
+        cityInteractor.getCityData(autocompleteData)
+                .subscribe(cityData -> cityInteractor.saveSelectedCity(cityData));
         updateWeather();
     }
 

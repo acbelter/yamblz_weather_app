@@ -16,7 +16,7 @@ import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.CELSIUS;
 import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.fromString;
 
 public class SettingsPreference {
-    private static final String KEY_CURRENT_CITY_NAME = "pref_current_city";
+    private static final String KEY_CURRENT_CITY = "pref_current_city";
     private static final String TEMPERATURE_METRIC_KEY = "pref_temperature_metric";
     private static final String KEY_UPDATE_INTERVAL = "pref_update_interval";
     private static final String KEY_LAST_UPDATE_TIMESTAMP = "pref_last_update_timestamp";
@@ -32,7 +32,7 @@ public class SettingsPreference {
 
     public void saveCurrentCity(CityData cityData) {
         String cityDataStr = new Gson().toJson(cityData);
-        sharedPreferences.edit().putString(KEY_CURRENT_CITY_NAME, cityDataStr).apply();
+        sharedPreferences.edit().putString(KEY_CURRENT_CITY, cityDataStr).apply();
     }
 
     public CityData loadCurrentCity() {
@@ -40,10 +40,12 @@ public class SettingsPreference {
         CityData defaultCityData = new CityData();
         defaultCityData.setFormattedAddress("Moscow, Russia");
         defaultCityData.setShortName("Moscow");
+        defaultCityData.setLatitude(55.751244f);
+        defaultCityData.setLongitude(37.618423f);
         Gson gson = new Gson();
         String defaultStr = gson.toJson(defaultCityData);
 
-        String cityDataStr = sharedPreferences.getString(KEY_CURRENT_CITY_NAME, defaultStr);
+        String cityDataStr = sharedPreferences.getString(KEY_CURRENT_CITY, defaultStr);
         return new Gson().fromJson(cityDataStr, CityData.class);
     }
 

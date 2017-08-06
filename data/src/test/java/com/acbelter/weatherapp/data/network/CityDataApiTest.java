@@ -42,7 +42,7 @@ public class CityDataApiTest {
 
         PublishSubject<Places> subject = PublishSubject.create();
         when(mockPlacesApi.getPlaces(anyString())).thenReturn(subject);
-        networkRepo.getLocation(cityParams);
+        networkRepo.getPlaces(cityParams);
         verify(mockPlacesApi).getPlaces(anyString());
     }
 }

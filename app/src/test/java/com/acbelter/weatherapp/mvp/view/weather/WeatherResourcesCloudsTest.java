@@ -3,6 +3,7 @@ package com.acbelter.weatherapp.ui.weather;
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
 import com.acbelter.weatherapp.domain.model.weather.WeatherType;
+import com.acbelter.weatherapp.mvp.view.weather.WeatherRes;
 import com.acbelter.weatherapp.ui.weather.common.ResourceUtil;
 
 import org.junit.Before;
@@ -10,6 +11,8 @@ import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 
 import xyz.matteobattilana.library.Common.Constants;
+
+import static junit.framework.Assert.assertEquals;
 
 public class WeatherResourcesCloudsTest {
 

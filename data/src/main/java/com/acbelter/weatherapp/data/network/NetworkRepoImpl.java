@@ -1,8 +1,10 @@
 package com.acbelter.weatherapp.data.network;
 
 import com.acbelter.weatherapp.data.locationmodel.Location;
+import com.acbelter.weatherapp.data.placesmodel.Places;
 import com.acbelter.weatherapp.data.weathermodel.currentweather.CurrentWeather;
 import com.acbelter.weatherapp.data.weathermodel.forecast.ForecastWeather;
+import com.acbelter.weatherapp.domain.model.city.AutocompleteData;
 import com.acbelter.weatherapp.domain.model.city.CityParams;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 
@@ -30,20 +32,26 @@ public class NetworkRepoImpl implements NetworkRepo {
 
     @Override
     public Flowable<CurrentWeather> getCurrentWeather(WeatherParams params) {
-        return weatherApi.getCurrentWeather(params.getCityData().getFormattedAddress(), locale);
+        double latitude = params.getCityData().getLatitude();
+        double longitude = params.getCityData().getLongitude();
+        return weatherApi.getCurrentWeather(latitude, longitude, locale);
     }
 
     @Override
     public Flowable<ForecastWeather> getForecastWeather(WeatherParams params) {
-        return weatherApi.getForecast(params.getCityData().getFormattedAddress(), locale);
+        double latitude = params.getCityData().getLatitude();
+        double longitude = params.getCityData().getLongitude();
+        return weatherApi.getForecast(latitude, longitude, locale);
     }
 
     @Override
-    public Flowable<Location> getLocation(CityParams cityParams) {
+    public Flowable<Places> getPlaces(CityParams cityParams) {
         return placesApi.getPlaces(cityParams.getPartOfCityName().trim())
-                .timeout(NETWORK_TIMEOUT, TimeUnit.MILLISECONDS)
-                .flatMap(places ->
-                        Flowable.fromIterable(places.getPredictions()))
-                .concatMap(prediction -> locationApi.getLocation(prediction.getPlaceId(), locale));
+                .timeout(NETWORK_TIMEOUT, TimeUnit.MILLISECONDS);
+    }
+
+    @Override
+    public Flowable<Location> getLocation(AutocompleteData autocompleteData) {
+        return locationApi.getLocation(autocompleteData.getPlaceId(), locale);
     }
 }

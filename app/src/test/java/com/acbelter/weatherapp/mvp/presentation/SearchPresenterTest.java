@@ -5,7 +5,7 @@ import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.city.CityParams;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
-import com.acbelter.weatherapp.ui.search.SearchView;
+import com.acbelter.weatherapp.mvp.view.search.SearchView;
 
 import org.junit.Before;
 import org.junit.Test;

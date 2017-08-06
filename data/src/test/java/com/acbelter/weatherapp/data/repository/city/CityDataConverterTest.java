@@ -31,12 +31,12 @@ public class CityDataConverterTest {
     @Test
     public void testCodeError() {
         location.setStatus(ZERO_RESULTS);
-        assertNull(CityDataConverter.fromNetworkData(location));
+        assertNull(CityDataConverter.fromPlacesToDataList(location));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testCityConverterToNull() {
-        assertNull(CityDataConverter.fromNetworkData(null));
+        assertNull(CityDataConverter.fromPlacesToDataList(null));
     }
 
     @Test
@@ -44,7 +44,7 @@ public class CityDataConverterTest {
         initLocation();
         initCityData();
 
-        CityData testCityData = CityDataConverter.fromNetworkData(location);
+        CityData testCityData = CityDataConverter.fromPlacesToDataList(location);
         assertEquals(testCityData.getFormattedAddress(), cityData.getFormattedAddress());
     }
 

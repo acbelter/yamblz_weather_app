@@ -15,7 +15,7 @@ import android.widget.EditText;
 
 import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
-import com.acbelter.weatherapp.domain.model.city.CityData;
+import com.acbelter.weatherapp.domain.model.city.AutocompleteData;
 import com.acbelter.weatherapp.mvp.presentation.SearchPresenter;
 import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
 import com.acbelter.weatherapp.mvp.view.fragment.BaseFragment;
@@ -30,8 +30,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Predicate;
 
 public class SearchFragment extends BaseFragment implements SearchView, CityAdapter.OnItemClickListener {
 
@@ -98,7 +96,7 @@ public class SearchFragment extends BaseFragment implements SearchView, CityAdap
     }
 
     @Override
-    public void updateCityList(List<CityData> locations) {
+    public void updateCityList(List<AutocompleteData> locations) {
         adapter.update(locations);
     }
 
@@ -158,7 +156,7 @@ public class SearchFragment extends BaseFragment implements SearchView, CityAdap
     }
 
     @Override
-    public void onItemClick(CityData item) {
+    public void onItemClick(AutocompleteData item) {
         presenter.saveSelectedCityAndWeather(item);
     }
 }
