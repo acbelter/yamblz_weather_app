@@ -18,30 +18,18 @@ public class Weather {
     @Expose
     private String icon;
 
-    /**
-     * @return The id
-     */
     public int getId() {
         return id;
     }
 
-    /**
-     * @return The main
-     */
     public String getMain() {
         return main;
     }
 
-    /**
-     * @return The description
-     */
     public String getDescription() {
         return description;
     }
 
-    /**
-     * @return The icon
-     */
     public String getIcon() {
         return icon;
     }

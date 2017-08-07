@@ -9,9 +9,6 @@ public class Rain {
     @Expose
     private double _3h;
 
-    /**
-     * @return The _3h
-     */
     public double get3h() {
         return _3h;
     }

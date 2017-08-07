@@ -11,7 +11,8 @@ import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public class NetworkRepoImpl implements NetworkRepo {
 
@@ -31,27 +32,27 @@ public class NetworkRepoImpl implements NetworkRepo {
     }
 
     @Override
-    public Flowable<CurrentWeather> getCurrentWeather(WeatherParams params) {
+    public Single<CurrentWeather> getCurrentWeather(WeatherParams params) {
         double latitude = params.getCityData().getLatitude();
         double longitude = params.getCityData().getLongitude();
         return weatherApi.getCurrentWeather(latitude, longitude, locale);
     }
 
     @Override
-    public Flowable<ForecastWeather> getForecastWeather(WeatherParams params) {
+    public Single<ForecastWeather> getForecastWeather(WeatherParams params) {
         double latitude = params.getCityData().getLatitude();
         double longitude = params.getCityData().getLongitude();
         return weatherApi.getForecast(latitude, longitude, locale);
     }
 
     @Override
-    public Flowable<Places> getPlaces(CityParams cityParams) {
+    public Observable<Places> getPlaces(CityParams cityParams) {
         return placesApi.getPlaces(cityParams.getPartOfCityName().trim())
                 .timeout(NETWORK_TIMEOUT, TimeUnit.MILLISECONDS);
     }
 
     @Override
-    public Flowable<Location> getLocation(AutocompleteData autocompleteData) {
+    public Single<Location> getLocation(AutocompleteData autocompleteData) {
         return locationApi.getLocation(autocompleteData.getPlaceId(), locale);
     }
 }

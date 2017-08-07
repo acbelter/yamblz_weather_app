@@ -1,5 +1,8 @@
 package com.acbelter.weatherapp.mvp.view.weather;
 
+import android.content.Context;
+import android.support.annotation.ColorRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.acbelter.weatherapp.R;
-import com.acbelter.weatherapp.domain.model.city.AutocompleteData;
-import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
+import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
+import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,7 +24,13 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int VIEW_TYPE_CURRENT = 0;
     private static final int VIEW_TYPE_FORECAST = 1;
 
-    List<WeatherForecast> forecast = new ArrayList<>();
+    private FullWeatherModel fullWeatherModel;
+    private Context context;
+
+    public WeatherAdapter(Context context, FullWeatherModel fullWeatherModel) {
+        this.context = context;
+        this.fullWeatherModel = fullWeatherModel;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -41,18 +48,18 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof CurrentWeatherViewHolder) {
             CurrentWeatherViewHolder headerHolder = (CurrentWeatherViewHolder) holder;
-            headerHolder.tvCity.setText("city");
+            headerHolder.bind(context, fullWeatherModel.getCurrentWeatherFavorites());
         } else if (holder instanceof ForecastWeatherViewHolder) {
-            WeatherForecast forecastElement = getItem(position - 1);
+            ForecastWeatherFavorites forecastElement = getItem(position - 1);
             ForecastWeatherViewHolder genericViewHolder = (ForecastWeatherViewHolder) holder;
-            genericViewHolder.tvHighTemp.setText(String.valueOf(forecastElement.getHighTemperature()));
-            genericViewHolder.tvLowTemp.setText(String.valueOf(forecastElement.getLowTemperature()));
+            genericViewHolder.tvHighTemp.setText(String.valueOf(forecastElement.getMaxTemp()));
+            genericViewHolder.tvLowTemp.setText(String.valueOf(forecastElement.getMinTemp()));
             genericViewHolder.tvDate.setText(forecastElement.getDate());
         }
     }
 
-    private WeatherForecast getItem(int position) {
-        return forecast.get(position);
+    private ForecastWeatherFavorites getItem(int position) {
+        return fullWeatherModel.getForrecast().get(position);
     }
 
 
@@ -71,12 +78,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return forecast.size() + 1;
-    }
-
-    public void update(List<WeatherForecast> forecast) {
-        this.forecast = forecast;
-        notifyDataSetChanged();
+        return fullWeatherModel.getForrecast().size() + 1;
     }
 
     public static class CurrentWeatherViewHolder extends RecyclerView.ViewHolder {
@@ -100,11 +102,24 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(final AutocompleteData item) {
-            tvCity.setText(item.getCityName());
+        public void bind(Context context, CurrentWeatherFavorites weather) {
+
+            setWeatherView(context, weather);
+            tvCity.setText(weather.getCityData().getShortName());
         }
 
-        private void setWeatherView() {
+        private void setWeatherTextColor(Context context, @ColorRes int colorRes) {
+            int color = ContextCompat.getColor(context, colorRes);
+            tvTemperature.setTextColor(color);
+            tvMetric.setTextColor(color);
+            tvCity.setTextColor(color);
+        }
+
+        private void setWeatherView(Context context, CurrentWeatherFavorites weather) {
+            WeatherRes newWeatherRes = new WeatherRes(weather);
+            setWeatherTextColor(context, newWeatherRes.getTextColorResId());
+            contentLayout.setBackgroundColor(
+                    ContextCompat.getColor(context, newWeatherRes.getBackgroundColorResId()));
             weatherView.setWeather(Constants.weatherStatus.SUN)
                     .setRainTime(6000)
                     .setSnowTime(6000)
@@ -114,6 +129,9 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     .setSnowParticles(25)
                     .setFPS(60)
                     .setOrientationMode(Constants.orientationStatus.ENABLE);
+            weatherImage.setImageResource(newWeatherRes.getWeatherImageResId());
+            weatherView.setWeather(newWeatherRes.getWeatherStatus());
+            weatherView.startAnimation();
         }
     }
 

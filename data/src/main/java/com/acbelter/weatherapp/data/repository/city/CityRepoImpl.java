@@ -9,7 +9,8 @@ import com.acbelter.weatherapp.domain.repository.CityRepo;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 import timber.log.Timber;
 
 public class CityRepoImpl implements CityRepo {
@@ -23,7 +24,7 @@ public class CityRepoImpl implements CityRepo {
     }
 
     @Override
-    public Flowable<List<AutocompleteData>> getCityList(CityParams cityParams) {
+    public Observable<List<AutocompleteData>> getCityList(CityParams cityParams) {
         return networkRepo.getPlaces(cityParams)
                 .map(CityDataConverter::fromPlacesToDataList)
                 .doOnNext(data -> {
@@ -32,7 +33,7 @@ public class CityRepoImpl implements CityRepo {
     }
 
     @Override
-    public Flowable<CityData> getCityData(AutocompleteData autocompleteData) {
+    public Single<CityData> getCityData(AutocompleteData autocompleteData) {
         return networkRepo.getLocation(autocompleteData)
                 .map(CityDataConverter::fromLocationToCityData);
     }

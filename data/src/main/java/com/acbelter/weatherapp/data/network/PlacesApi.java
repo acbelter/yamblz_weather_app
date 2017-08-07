@@ -2,7 +2,7 @@ package com.acbelter.weatherapp.data.network;
 
 import com.acbelter.weatherapp.data.placesmodel.Places;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -13,5 +13,5 @@ public interface PlacesApi {
     String BASE_PLACES_URL = "https://maps.googleapis.com/maps/api/place/autocomplete/";
 
     @GET("json?types=(cities)&key=" + GOOGLE_PLACES_API_KEY)
-    Flowable<Places> getPlaces(@Query("input") String input);
+    Observable<Places> getPlaces(@Query("input") String input);
 }

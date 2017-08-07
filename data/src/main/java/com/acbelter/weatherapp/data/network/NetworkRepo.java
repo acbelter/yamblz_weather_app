@@ -8,14 +8,15 @@ import com.acbelter.weatherapp.domain.model.city.AutocompleteData;
 import com.acbelter.weatherapp.domain.model.city.CityParams;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public interface NetworkRepo {
-    Flowable<CurrentWeather> getCurrentWeather(WeatherParams params);
+    Single<CurrentWeather> getCurrentWeather(WeatherParams params);
 
-    Flowable<ForecastWeather> getForecastWeather(WeatherParams params);
+    Single<ForecastWeather> getForecastWeather(WeatherParams params);
 
-    Flowable<Places> getPlaces(CityParams cityParams);
+    Observable<Places> getPlaces(CityParams cityParams);
 
-    Flowable<Location> getLocation(AutocompleteData autocompleteData);
+    Single<Location> getLocation(AutocompleteData autocompleteData);
 }

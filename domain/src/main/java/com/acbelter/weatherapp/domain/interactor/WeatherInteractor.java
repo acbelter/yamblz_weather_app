@@ -1,8 +1,8 @@
 package com.acbelter.weatherapp.domain.interactor;
 
 import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
-import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
-import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
+import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
+import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
 import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
@@ -43,28 +43,28 @@ public class WeatherInteractor {
                 .observeOn(schedulerMain);
     }
 
-    private Flowable<CurrentWeatherData> getCurrentWeather() {
+    private Flowable<CurrentWeatherFavorites> getCurrentWeather() {
         return weatherRepo.getCurrentWeather();
     }
 
-    private Flowable<List<WeatherForecast>> getForecast() {
+    private Flowable<List<ForecastWeatherFavorites>> getForecast() {
         return weatherRepo.getForecast();
     }
 
-    private Flowable<CurrentWeatherData> updateCurrenWeather() {
+    private Flowable<CurrentWeatherFavorites> updateCurrenWeather() {
         return weatherRepo.updateCurrentWeather();
     }
 
-    private Flowable<List<WeatherForecast>> updateForecast() {
+    private Flowable<List<ForecastWeatherFavorites>> updateForecast() {
         return weatherRepo.updateForecast();
     }
 
-    private FullWeatherModel convertCachedWeather(CurrentWeatherData currentWeatherData, List<WeatherForecast> forecast) {
-        return new FullWeatherModel(currentWeatherData.getCityData(), currentWeatherData, forecast);
+    private FullWeatherModel convertCachedWeather(CurrentWeatherFavorites currentWeatherFavorites, List<ForecastWeatherFavorites> forecast) {
+        return new FullWeatherModel(currentWeatherFavorites.getCityData(), currentWeatherFavorites, forecast);
     }
 
-    private FullWeatherModel convertUpdatedWeather(CurrentWeatherData currentWeatherData, List<WeatherForecast> forecast) {
-        return new FullWeatherModel(currentWeatherData.getCityData(), currentWeatherData, forecast);
+    private FullWeatherModel convertUpdatedWeather(CurrentWeatherFavorites currentWeatherFavorites, List<ForecastWeatherFavorites> forecast) {
+        return new FullWeatherModel(currentWeatherFavorites.getCityData(), currentWeatherFavorites, forecast);
     }
 
 

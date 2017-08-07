@@ -1,20 +1,20 @@
 package com.acbelter.weatherapp.domain.model.fullmodel;
 
 import com.acbelter.weatherapp.domain.model.city.CityData;
-import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
-import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
+import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
+import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
 
 import java.util.List;
 
 public class FullWeatherModel {
 
-    CityData cityData;
-    CurrentWeatherData currentWeatherData;
-    List<WeatherForecast> forrecast;
+    private CityData cityData;
+    private CurrentWeatherFavorites currentWeatherFavorites;
+    private List<ForecastWeatherFavorites> forrecast;
 
-    public FullWeatherModel(CityData cityData, CurrentWeatherData currentWeatherData, List<WeatherForecast> forrecast) {
+    public FullWeatherModel(CityData cityData, CurrentWeatherFavorites currentWeatherFavorites, List<ForecastWeatherFavorites> forrecast) {
         this.cityData = cityData;
-        this.currentWeatherData = currentWeatherData;
+        this.currentWeatherFavorites = currentWeatherFavorites;
         this.forrecast = forrecast;
 
     }
@@ -27,19 +27,19 @@ public class FullWeatherModel {
         this.cityData = cityData;
     }
 
-    public CurrentWeatherData getCurrentWeatherData() {
-        return currentWeatherData;
+    public CurrentWeatherFavorites getCurrentWeatherFavorites() {
+        return currentWeatherFavorites;
     }
 
-    public void setCurrentWeatherData(CurrentWeatherData currentWeatherData) {
-        this.currentWeatherData = currentWeatherData;
+    public void setCurrentWeatherFavorites(CurrentWeatherFavorites currentWeatherFavorites) {
+        this.currentWeatherFavorites = currentWeatherFavorites;
     }
 
-    public List<WeatherForecast> getForrecast() {
+    public List<ForecastWeatherFavorites> getForrecast() {
         return forrecast;
     }
 
-    public void setForrecast(List<WeatherForecast> forrecast) {
+    public void setForrecast(List<ForecastWeatherFavorites> forrecast) {
         this.forrecast = forrecast;
     }
 }

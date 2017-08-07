@@ -15,23 +15,14 @@ public class Sys {
     @Expose
     private int sunset;
 
-    /**
-     * @return The country
-     */
     public String getCountry() {
         return country;
     }
 
-    /**
-     * @return The sunrise
-     */
     public int getSunrise() {
         return sunrise;
     }
 
-    /**
-     * @return The sunset
-     */
     public int getSunset() {
         return sunset;
     }

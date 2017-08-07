@@ -4,7 +4,7 @@ import com.acbelter.weatherapp.domain.interactor.CityInteractor;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.city.CityParams;
-import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
+import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
 import com.acbelter.weatherapp.mvp.view.search.SearchView;
 
 import org.junit.Before;
@@ -78,17 +78,17 @@ public class SearchPresenterTest {
 
     @Test
     public void testSaveSelectedCityAndWeather() {
-        CurrentWeatherData currentWeatherData = new CurrentWeatherData();
-        Observable<CurrentWeatherData> weatherSubject = Observable.just(currentWeatherData);
-//        when(mockWeatherInteractor.getCurrentWeatherData(any(WeatherParams.class))).thenReturn(weatherSubject);
+        CurrentWeatherFavorites currentWeatherFavorites = new CurrentWeatherFavorites();
+        Observable<CurrentWeatherFavorites> weatherSubject = Observable.just(currentWeatherFavorites);
+//        when(mockWeatherInteractor.getCurrentWeatherFavorites(any(WeatherParams.class))).thenReturn(weatherSubject);
 
         CityData cityData = new CityData();
         presenter.saveSelectedCityAndWeather(cityData);
 
         testScheduler.triggerActions();
         verify(mockCityInteractor).saveSelectedCity(any(CityData.class));
-//        verify(mockWeatherInteractor).getCurrentWeatherData(any(WeatherParams.class));
-        verify(mockWeatherInteractor).saveWeather(any(CurrentWeatherData.class));
+//        verify(mockWeatherInteractor).getCurrentWeatherFavorites(any(WeatherParams.class));
+        verify(mockWeatherInteractor).saveWeather(any(CurrentWeatherFavorites.class));
         verify(mockView).close();
     }
 }

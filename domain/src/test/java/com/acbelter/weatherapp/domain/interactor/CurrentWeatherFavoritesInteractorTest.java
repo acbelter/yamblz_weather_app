@@ -1,6 +1,6 @@
 package com.acbelter.weatherapp.domain.interactor;
 
-import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
+import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
@@ -16,7 +16,7 @@ import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.TestScheduler;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CurrentWeatherDataInteractorTest {
+public class CurrentWeatherFavoritesInteractorTest {
 
     private WeatherInteractor weatherInteractor;
 
@@ -35,29 +35,29 @@ public class CurrentWeatherDataInteractorTest {
 
     @Test
     public void testGetCityListFromRepo() {
-        CurrentWeatherData currentWeatherData = new CurrentWeatherData();
-        Observable<CurrentWeatherData> subject = Observable.just(currentWeatherData);
-//        when(mockWeatherRepo.getCurrentWeatherData(any(WeatherParams.class))).thenReturn(subject);
+        CurrentWeatherFavorites currentWeatherFavorites = new CurrentWeatherFavorites();
+        Observable<CurrentWeatherFavorites> subject = Observable.just(currentWeatherFavorites);
+//        when(mockWeatherRepo.getCurrentWeatherFavorites(any(WeatherParams.class))).thenReturn(subject);
 
         WeatherParams weatherParams = new WeatherParams("Mos");
         weatherInteractor.getCurrentWeather(weatherParams);
 
-//        verify(mockWeatherRepo).getCurrentWeatherData(any(WeatherParams.class));
+//        verify(mockWeatherRepo).getCurrentWeatherFavorites(any(WeatherParams.class));
     }
 
     @Test
     public void testSendingDataFromRepoToInteractor() {
-        CurrentWeatherData currentWeatherData = new CurrentWeatherData();
-        Observable<CurrentWeatherData> subject = Observable.just(currentWeatherData);
-//        when(mockWeatherRepo.getCurrentWeatherData(any(WeatherParams.class))).thenReturn(subject);
+        CurrentWeatherFavorites currentWeatherFavorites = new CurrentWeatherFavorites();
+        Observable<CurrentWeatherFavorites> subject = Observable.just(currentWeatherFavorites);
+//        when(mockWeatherRepo.getCurrentWeatherFavorites(any(WeatherParams.class))).thenReturn(subject);
 
         WeatherParams weatherParams = new WeatherParams("Moscow");
-        TestObserver<CurrentWeatherData> observer = weatherInteractor.getCurrentWeather(weatherParams)
+        TestObserver<CurrentWeatherFavorites> observer = weatherInteractor.getCurrentWeather(weatherParams)
                 .test();
 
         testScheduler.triggerActions();
         observer.assertNoErrors()
-                .assertValue(currentWeatherData);
+                .assertValue(currentWeatherFavorites);
     }
 }
 

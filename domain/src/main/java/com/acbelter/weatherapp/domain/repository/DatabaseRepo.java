@@ -2,8 +2,8 @@ package com.acbelter.weatherapp.domain.repository;
 
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
-import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
-import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
+import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
+import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 
 import java.util.List;
@@ -15,9 +15,9 @@ public interface DatabaseRepo {
 
     Flowable<List<CityData>> getAllCities();
 
-    Single<CurrentWeatherData> getCurrentWeather(WeatherParams weatherParams);
+    Single<CurrentWeatherFavorites> getCurrentWeather(WeatherParams weatherParams);
 
-    Single<List<WeatherForecast>> getForecastWeather(WeatherParams weatherParams);
+    Single<List<ForecastWeatherFavorites>> getForecastWeather(WeatherParams weatherParams);
 
     void saveWeather(FullWeatherModel weatherModel);
 

@@ -12,16 +12,10 @@ public class Wind {
     @Expose
     private double deg;
 
-    /**
-     * @return The speed
-     */
     public double getSpeed() {
         return speed;
     }
 
-    /**
-     * @return The deg
-     */
     public double getDeg() {
         return deg;
     }

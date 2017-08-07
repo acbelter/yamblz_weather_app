@@ -4,7 +4,7 @@ import com.acbelter.weatherapp.domain.interactor.CityInteractor;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.city.AutocompleteData;
 import com.acbelter.weatherapp.domain.model.city.CityParams;
-import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
+import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
 import com.acbelter.weatherapp.mvp.presentation.common.BasePresenter;
 import com.acbelter.weatherapp.mvp.view.search.SearchView;
 
@@ -45,8 +45,8 @@ public class SearchPresenter extends BasePresenter<SearchView> {
                 .subscribe(fullWeatherModel -> closeActivity()));
     }
 
-    private void saveWeather(CurrentWeatherData currentWeatherData) {
-//        weatherInteractor.saveWeather(currentWeatherData);
+    private void saveWeather(CurrentWeatherFavorites currentWeatherFavorites) {
+//        weatherInteractor.saveWeather(currentWeatherFavorites);
     }
 
     public void closeActivity() {

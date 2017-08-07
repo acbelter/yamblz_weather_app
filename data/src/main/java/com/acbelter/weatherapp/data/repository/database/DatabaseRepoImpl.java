@@ -4,8 +4,8 @@ import com.acbelter.weatherapp.data.database.WeatherDAO;
 import com.acbelter.weatherapp.data.weathermodel.common.Coord;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
-import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
-import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
+import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
+import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
 import com.google.gson.Gson;
@@ -36,7 +36,7 @@ public class DatabaseRepoImpl implements DatabaseRepo {
     }
 
     @Override
-    public Single<CurrentWeatherData> getCurrentWeather(WeatherParams weatherParams) {
+    public Single<CurrentWeatherFavorites> getCurrentWeather(WeatherParams weatherParams) {
         double latitude = weatherParams.getCityData().getLatitude();
         double longitude = weatherParams.getCityData().getLongitude();
         Coord coord = new Coord(latitude, longitude);
@@ -45,7 +45,7 @@ public class DatabaseRepoImpl implements DatabaseRepo {
     }
 
     @Override
-    public Single<List<WeatherForecast>> getForecastWeather(WeatherParams weatherParams) {
+    public Single<List<ForecastWeatherFavorites>> getForecastWeather(WeatherParams weatherParams) {
         double latitude = weatherParams.getCityData().getLatitude();
         double longitude = weatherParams.getCityData().getLongitude();
         Coord coord = new Coord(latitude, longitude);

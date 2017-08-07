@@ -9,9 +9,6 @@ public class Clouds {
     @Expose
     private int all;
 
-    /**
-     * @return The all
-     */
     public int getAll() {
         return all;
     }

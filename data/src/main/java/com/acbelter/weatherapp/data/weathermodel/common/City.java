@@ -25,44 +25,26 @@ public class City {
     @Expose
     private Sys sys;
 
-    /**
-     * @return The id
-     */
     public int getId() {
         return id;
     }
 
-    /**
-     * @return The name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @return The coord
-     */
     public Coord getCoord() {
         return coord;
     }
 
-    /**
-     * @return The country
-     */
     public String getCountry() {
         return country;
     }
 
-    /**
-     * @return The population
-     */
     public int getPopulation() {
         return population;
     }
 
-    /**
-     * @return The sys
-     */
     public Sys getSys() {
         return sys;
     }

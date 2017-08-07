@@ -1,8 +1,7 @@
 package com.acbelter.weatherapp.data.repository.weather;
 
-import com.acbelter.weatherapp.data.weathermodel.currentweather.Main;
 import com.acbelter.weatherapp.data.weathermodel.currentweather.Sys;
-import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
+import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
 import com.acbelter.weatherapp.domain.model.weather.WeatherType;
 
 import org.junit.Before;
@@ -17,21 +16,21 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CurrentWeatherDataConverterTest {
+public class CurrentWeatherFavoritesConverterTest {
 
     private com.acbelter.weatherapp.data.weathermodel.currentweather.CurrentWeather currentWeather;
-    private CurrentWeatherData currentWeatherData;
+    private CurrentWeatherFavorites currentWeatherFavorites;
 
     @Before
     public void setUp() {
-        currentWeatherData = new com.acbelter.weatherapp.data.weathermodel.currentweather.CurrentWeather();
-        currentWeatherData = new CurrentWeatherData();
+        currentWeatherFavorites = new com.acbelter.weatherapp.data.weathermodel.currentweather.CurrentWeather();
+        currentWeatherFavorites = new CurrentWeatherFavorites();
     }
 
     @Test
     public void testCodeError() {
-        currentWeatherData.code = 201;
-        assertNull(WeatherDataConverter.fromNWWeatherDataToCurrentWeatherData(currentWeatherData));
+        currentWeatherFavorites.code = 201;
+        assertNull(WeatherDataConverter.fromNWWeatherDataToCurrentWeatherData(currentWeatherFavorites));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -98,32 +97,32 @@ public class CurrentWeatherDataConverterTest {
         initNetworkWeather();
         initWeatherData();
 
-        CurrentWeatherData testCurrentWeatherData = WeatherDataConverter.fromNWWeatherDataToCurrentWeatherData(currentWeatherData);
-        assertEquals(testCurrentWeatherData.getCity(), currentWeatherData.getCity());
+        CurrentWeatherFavorites testCurrentWeatherFavorites = WeatherDataConverter.fromNWWeatherDataToCurrentWeatherData(currentWeatherFavorites);
+        assertEquals(testCurrentWeatherFavorites.getCity(), currentWeatherFavorites.getCity());
     }
 
     private void initNetworkWeather() {
-        currentWeatherData.code = 200;
-        currentWeatherData.name = "Tambov";
+        currentWeatherFavorites.code = 200;
+        currentWeatherFavorites.name = "Tambov";
         Weather weather = new Weather();
         weather.main = "Clear";
-        currentWeatherData.main = new Main();
+        currentWeatherFavorites.main = new Main();
         List<Weather> weatherList = new ArrayList<>();
         weatherList.add(weather);
-        currentWeatherData.weather = weatherList;
-        currentWeatherData.dt = 1501311011;
+        currentWeatherFavorites.weather = weatherList;
+        currentWeatherFavorites.dt = 1501311011;
         Sys sys = new Sys();
         sys.sunrise = 1501291729;
         sys.sunset = 1501348298;
-        currentWeatherData.sys = sys;
+        currentWeatherFavorites.sys = sys;
     }
 
     private void initWeatherData() {
-        currentWeatherData.setCity("Tambov");
-        currentWeatherData.setTemperature(301.998f);
-        currentWeatherData.setWeatherType(WeatherType.SUN);
-        currentWeatherData.setTimestamp(1501311011000L);
-        currentWeatherData.setSunriseTimestamp(1501291729000L);
-        currentWeatherData.setSunsetTimestamp(1501348298000L);
+        currentWeatherFavorites.setCity("Tambov");
+        currentWeatherFavorites.setTemperature(301.998f);
+        currentWeatherFavorites.setWeatherType(WeatherType.SUN);
+        currentWeatherFavorites.setTimestamp(1501311011000L);
+        currentWeatherFavorites.setSunriseTimestamp(1501291729000L);
+        currentWeatherFavorites.setSunsetTimestamp(1501348298000L);
     }
 }

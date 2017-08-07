@@ -17,16 +17,10 @@ public class Coord {
         this.lat = lat;
     }
 
-    /**
-     * @return The lon
-     */
     public double getLon() {
         return lon;
     }
 
-    /**
-     * @return The lat
-     */
     public double getLat() {
         return lat;
     }

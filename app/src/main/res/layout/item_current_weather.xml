@@ -5,6 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <xyz.matteobattilana.library.WeatherView
+        android:id="@+id/weather_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintWidth_default="spread"
+        android:layout_width="0dp"
+        android:layout_height="1dp" />
+
     <TextView
         android:id="@+id/temperature_text"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -54,12 +62,5 @@
         android:layout_marginTop="@dimen/offset_medium"
         android:scaleType="fitEnd" />
 
-    <xyz.matteobattilana.library.WeatherView
-        android:id="@+id/weather_view"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/location_text"
-        app:layout_constraintWidth_default="spread"
-        android:layout_width="0dp"
-        android:layout_height="1dp" />
+
 </android.support.constraint.ConstraintLayout>

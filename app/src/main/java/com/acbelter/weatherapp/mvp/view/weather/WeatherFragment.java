@@ -68,13 +68,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         this.unbinder = ButterKnife.bind(this, view);
         setSwipeLayout();
-        this.adapter = new WeatherAdapter();
-        this.recyclerView.setAdapter(adapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),
-                DividerItemDecoration.VERTICAL);
-        this.recyclerView.addItemDecoration(dividerItemDecoration);
+
     }
 
 
@@ -139,13 +133,19 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
 
     @Override
     public void showWeather(FullWeatherModel weatherData) {
-        adapter.update(weatherData.getForrecast());
+        this.adapter = new WeatherAdapter(getContext(), weatherData);
+        this.recyclerView.setAdapter(adapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL);
+        this.recyclerView.addItemDecoration(dividerItemDecoration);
         swipeRefreshLayout.setRefreshing(false);
-        WeatherRes newWeatherRes = new WeatherRes(weatherData.getCurrentWeatherData());
+        WeatherRes newWeatherRes = new WeatherRes(weatherData.getCurrentWeatherFavorites());
         setWeatherTextColor(newWeatherRes.getTextColorResId());
         String temperatureStr = getCurrentTemperatureString(weatherData);
 //        tvTemperature.setText(temperatureStr);
-//        String temperatureMetric = convertMetricToString(weatherData.getCurrentWeatherData().getTemperatureMetric());
+//        String temperatureMetric = convertMetricToString(weatherData.getCurrentWeatherFavorites().getTemperatureMetric());
 //        tvMetric.setText(temperatureMetric);
 //        tvCity.setText(weatherData.getCityData().getShortName());
 //        contentLayout.setBackgroundColor(
@@ -157,7 +157,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     }
 
     private String getCurrentTemperatureString(FullWeatherModel fullWeatherModel) {
-        int temperature = fullWeatherModel.getCurrentWeatherData().getTemperature();
+        int temperature = fullWeatherModel.getCurrentWeatherFavorites().getTemperature();
         return String.valueOf(temperature);
     }
 

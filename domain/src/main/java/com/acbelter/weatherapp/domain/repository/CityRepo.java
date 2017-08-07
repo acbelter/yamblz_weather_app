@@ -7,13 +7,14 @@ import com.acbelter.weatherapp.domain.model.city.CityParams;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public interface CityRepo {
 
-    Flowable<List<AutocompleteData>> getCityList(CityParams cityParams);
+    Observable<List<AutocompleteData>> getCityList(CityParams cityParams);
 
-    Flowable<CityData> getCityData(AutocompleteData autocompleteData);
+    Single<CityData> getCityData(AutocompleteData autocompleteData);
 
     void saveCity(CityData cityData);
 

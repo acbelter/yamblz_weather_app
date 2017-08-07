@@ -2,6 +2,7 @@ package com.acbelter.weatherapp.data.weathermodel.currentweather;
 
 import com.acbelter.weatherapp.data.weathermodel.common.Clouds;
 import com.acbelter.weatherapp.data.weathermodel.common.Coord;
+import com.acbelter.weatherapp.data.weathermodel.common.Main;
 import com.acbelter.weatherapp.data.weathermodel.common.Rain;
 import com.acbelter.weatherapp.data.weathermodel.common.Weather;
 import com.acbelter.weatherapp.data.weathermodel.common.Wind;
@@ -47,79 +48,46 @@ public class CurrentWeather {
     @Expose
     private int cod;
 
-    /**
-     * @return The coord
-     */
     public Coord getCoord() {
         return coord;
     }
 
-    /**
-     * @return The sys
-     */
     public Sys getSys() {
         return sys;
     }
 
-    /**
-     * @return The weather
-     */
     public List<Weather> getWeather() {
         return weather;
     }
 
-    /**
-     * @return The main
-     */
     public Main getMain() {
         return main;
     }
 
-    /**
-     * @return The wind
-     */
     public Wind getWind() {
         return wind;
     }
 
-    /**
-     * @return The rain
-     */
     public Rain getRain() {
         return rain;
     }
 
-    /**
-     * @return The clouds
-     */
     public Clouds getClouds() {
         return clouds;
     }
 
-    /**
-     * @return The dt
-     */
     public int getDt() {
         return dt;
     }
 
-    /**
-     * @return The id
-     */
     public int getId() {
         return id;
     }
 
-    /**
-     * @return The name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @return The cod
-     */
     public int getCod() {
         return cod;
     }

@@ -3,12 +3,15 @@ package com.acbelter.weatherapp.data.repository.weather;
 import android.support.annotation.VisibleForTesting;
 
 import com.acbelter.weatherapp.data.weathermodel.common.Weather;
+import com.acbelter.weatherapp.data.weathermodel.currentweather.CurrentWeather;
 import com.acbelter.weatherapp.data.weathermodel.forecast.ForecastElement;
 import com.acbelter.weatherapp.data.weathermodel.forecast.ForecastWeather;
-import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherData;
-import com.acbelter.weatherapp.domain.model.weather.WeatherForecast;
+import com.acbelter.weatherapp.domain.model.city.CityData;
+import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
+import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.domain.model.weather.WeatherType;
+import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetricConverter;
 
 import java.text.DateFormat;
@@ -24,7 +27,7 @@ public class WeatherDataConverter {
     private WeatherDataConverter() {
     }
 
-    public static CurrentWeatherData fromNWWeatherDataToCurrentWeatherData(com.acbelter.weatherapp.data.weathermodel.currentweather.CurrentWeather currentWeather, WeatherParams weatherParams) {
+    public static CurrentWeatherFavorites fromNWWeatherDataToCurrentWeatherData(CurrentWeather currentWeather, WeatherParams weatherParams) {
         if (currentWeather == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
@@ -33,19 +36,25 @@ public class WeatherDataConverter {
             return null;
         }
 
-        CurrentWeatherData weatherData = new CurrentWeatherData();
-        weatherData.setCityData(weatherParams.getCityData());
-        int temperature = TemperatureMetricConverter.getSupportedTemperature(currentWeather.getMain().getTemp(), weatherParams.getMetric());
-        weatherData.setTemperature(temperature);
-        weatherData.setTemperatureMetric(weatherParams.getMetric());
-        weatherData.setWeatherType(extractWeatherType(currentWeather.getWeather()));
-        weatherData.setTimestamp((long) currentWeather.getDt() * 1000);
-        weatherData.setSunriseTimestamp((long) currentWeather.getSys().getSunrise() * 1000);
-        weatherData.setSunsetTimestamp((long) currentWeather.getSys().getSunset() * 1000);
-        return weatherData;
+        int temperature = TemperatureMetricConverter
+                .getSupportedTemperature(currentWeather.getMain().getTemp(), weatherParams.getMetric());
+        CityData cityData = weatherParams.getCityData();
+        WeatherType weatherType = extractWeatherType(currentWeather.getWeather());
+        TemperatureMetric temperatureMetric = weatherParams.getMetric();
+        return new CurrentWeatherFavorites.Builder(temperature, cityData, weatherType, temperatureMetric)
+                .timestamp((long) currentWeather.getDt() * 1000L)
+                .sunriseTimestamp((long) currentWeather.getSys().getSunrise() * 1000L)
+                .sunsetTimestamp((long) currentWeather.getSys().getSunset() * 1000L)
+                .pressure((int) Math.round(currentWeather.getMain().getPressure()))
+                .humidity(currentWeather.getMain().getHumidity())
+                .description(currentWeather.getWeather().get(0).getDescription())
+                .windSpeed((int) Math.round(currentWeather.getWind().getSpeed()))
+                .minTemp((int) Math.round(currentWeather.getMain().getTempMin()))
+                .maxTemp((int) Math.round(currentWeather.getMain().getTempMax()))
+                .build();
     }
 
-    public static List<WeatherForecast> fromNWWeatherDataToForecastWeatherData(ForecastWeather forecastNW, WeatherParams weatherParams) {
+    public static List<ForecastWeatherFavorites> fromNWWeatherDataToForecastWeatherData(ForecastWeather forecastNW, WeatherParams weatherParams) {
         if (forecastNW == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
@@ -56,15 +65,15 @@ public class WeatherDataConverter {
 
 
         List<ForecastElement> forecastListNW = forecastNW.getForecastElement();
-        List<WeatherForecast> weatherForecasts = new ArrayList<>();
+        List<ForecastWeatherFavorites> forecastWeatherFavoritesList = new ArrayList<>();
         for (ForecastElement element : forecastListNW) {
-            WeatherForecast weatherForecast = fromForecastElementToWeatherForecast(element, weatherParams);
-            weatherForecasts.add(weatherForecast);
+            ForecastWeatherFavorites forecastWeatherFavorites = fromForecastElementToWeatherForecast(element, weatherParams);
+            forecastWeatherFavoritesList.add(forecastWeatherFavorites);
         }
-        return weatherForecasts;
+        return forecastWeatherFavoritesList;
     }
 
-    private static WeatherForecast fromForecastElementToWeatherForecast(ForecastElement forecastElement, WeatherParams weatherParams) {
+    private static ForecastWeatherFavorites fromForecastElementToWeatherForecast(ForecastElement forecastElement, WeatherParams weatherParams) {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
         long curTime = forecastElement.getDt() * 1000L;
@@ -72,7 +81,8 @@ public class WeatherDataConverter {
         String dateStr = df.format(date);
         int lowTemp = TemperatureMetricConverter.getSupportedTemperature(forecastElement.getTemp().getMin(), weatherParams.getMetric());
         int highTemp = TemperatureMetricConverter.getSupportedTemperature(forecastElement.getTemp().getMax(), weatherParams.getMetric());
-        return new WeatherForecast(dateStr, lowTemp, highTemp);
+        return new ForecastWeatherFavorites.Builder(dateStr, lowTemp, highTemp)
+                .build();
     }
 
 

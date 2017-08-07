@@ -30,58 +30,34 @@ public class Main {
     @Expose
     private double tempKf;
 
-    /**
-     * @return The temp
-     */
     public double getTemp() {
         return temp;
     }
 
-    /**
-     * @return The tempMin
-     */
     public double getTempMin() {
         return tempMin;
     }
 
-    /**
-     * @return The tempMax
-     */
     public double getTempMax() {
         return tempMax;
     }
 
-    /**
-     * @return The pressure
-     */
     public double getPressure() {
         return pressure;
     }
 
-    /**
-     * @return The seaLevel
-     */
     public double getSeaLevel() {
         return seaLevel;
     }
 
-    /**
-     * @return The grndLevel
-     */
     public double getGrndLevel() {
         return grndLevel;
     }
 
-    /**
-     * @return The humidity
-     */
     public int getHumidity() {
         return humidity;
     }
 
-    /**
-     * @return The tempKf
-     */
     public double getTempKf() {
         return tempKf;
     }
