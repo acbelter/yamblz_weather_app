@@ -51,7 +51,7 @@ public class MainActivityTestTest {
         onView(withId(R.id.units_text)).check(matches(isDisplayed()));
         onView(withId(R.id.location_text)).check(matches(isDisplayed()));
         onView(withId(R.id.weather_image)).check(matches(isDisplayed()));
-        onView(withId(R.id.weather_view)).check(matches(isDisplayed()));
+        onView(withId(R.id.imageViewCurrent)).check(matches(isDisplayed()));
     }
 
     @Test

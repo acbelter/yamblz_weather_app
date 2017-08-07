@@ -1,5 +1,6 @@
 package com.acbelter.weatherapp.ui.weather;
 
+
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
 import com.acbelter.weatherapp.domain.model.weather.WeatherType;
@@ -11,7 +12,7 @@ import org.mockito.MockitoAnnotations;
 
 import xyz.matteobattilana.library.Common.Constants;
 
-public class WeatherResourcesSnowTest {
+public class CurrentWeatherResourcesStormTest {
 
     private CurrentWeatherFavorites currentWeatherFavorites;
     private ResourceUtil resourceUtil;
@@ -21,63 +22,65 @@ public class WeatherResourcesSnowTest {
         MockitoAnnotations.initMocks(this);
 
         this.currentWeatherFavorites = new CurrentWeatherFavorites();
-        this.currentWeatherFavorites.setWeatherType(WeatherType.SNOW);
+        this.currentWeatherFavorites.setWeatherType(WeatherType.STORM);
         this.resourceUtil = new ResourceUtil(currentWeatherFavorites);
     }
 
     @Test
-    public void testTextColorSnowDayResId() {
+    public void testTextColorStormDayResId() {
         resourceUtil.setDayTimestamp();
         WeatherRes weatherRes = new WeatherRes(currentWeatherFavorites);
         assertEquals(R.color.colorTextWeatherLight, weatherRes.getTextColorResId());
     }
 
     @Test
-    public void testTextColorSnowNightResId() {
+    public void testTextColorStormNightResId() {
         resourceUtil.setNightTimestamp();
         WeatherRes weatherRes = new WeatherRes(currentWeatherFavorites);
         assertEquals(R.color.colorTextWeatherLight, weatherRes.getTextColorResId());
     }
 
     @Test
-    public void testWeatherImageSnowDayResId() {
+    public void testWeatherImageStormDayResId() {
         resourceUtil.setDayTimestamp();
         WeatherRes weatherRes = new WeatherRes(currentWeatherFavorites);
-        assertEquals(R.drawable.img_snow, weatherRes.getWeatherImageResId());
+        assertEquals(R.drawable.img_storm, weatherRes.getWeatherImageResId());
     }
 
     @Test
-    public void testWeatherImageSnowNightResId() {
+    public void testWeatherImageStormNightResId() {
         resourceUtil.setNightTimestamp();
         WeatherRes weatherRes = new WeatherRes(currentWeatherFavorites);
-        assertEquals(R.drawable.img_snow, weatherRes.getWeatherImageResId());
+        assertEquals(R.drawable.img_storm, weatherRes.getWeatherImageResId());
     }
 
     @Test
-    public void testBackgroundColorSnowDayResId() {
+    public void testBackgroundColorStormDayResId() {
         resourceUtil.setDayTimestamp();
         WeatherRes weatherRes = new WeatherRes(currentWeatherFavorites);
-        assertEquals(R.color.colorBgWeatherSnow, weatherRes.getBackgroundColorResId());
+        assertEquals(R.color.colorBgWeatherStorm, weatherRes.getBackgroundColorResId());
     }
 
     @Test
-    public void testBackgroundColorSnowNightResId() {
+    public void testBackgroundColorStormNightResId() {
         resourceUtil.setNightTimestamp();
         WeatherRes weatherRes = new WeatherRes(currentWeatherFavorites);
         assertEquals(R.color.colorBgWeatherNight, weatherRes.getBackgroundColorResId());
     }
 
     @Test
-    public void testStatusSnowDayResId() {
+    public void testStatusStormDayResId() {
         resourceUtil.setDayTimestamp();
         WeatherRes weatherRes = new WeatherRes(currentWeatherFavorites);
-        assertEquals(Constants.weatherStatus.SNOW, weatherRes.getWeatherStatus());
+        assertEquals(Constants.weatherStatus.RAIN, weatherRes.getWeatherStatus());
     }
 
     @Test
-    public void testStatusSnowNightResId() {
+    public void testStatusStormNightResId() {
         resourceUtil.setNightTimestamp();
         WeatherRes weatherRes = new WeatherRes(currentWeatherFavorites);
-        assertEquals(Constants.weatherStatus.SNOW, weatherRes.getWeatherStatus());
+        assertEquals(Constants.weatherStatus.RAIN, weatherRes.getWeatherStatus());
     }
 }
+
+

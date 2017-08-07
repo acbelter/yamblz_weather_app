@@ -9,6 +9,13 @@
     <!--Weather screen-->
     <string name="weather">Погода</string>
     <string name="text_weather_error">Не удалось получить погоду</string>
+    <string name="min">мин:</string>
+    <string name="max">макс:</string>
+    <string name="mm">мм</string>
+    <string name="ms">м/с</string>
+    <string name="pressure">Давление:</string>
+    <string name="humidity">Влажность:</string>
+    <string name="wind_speed">Скорость ветра:</string>
 
     <!--Settings screen-->
     <string name="settings_title_temperature">Температура</string>

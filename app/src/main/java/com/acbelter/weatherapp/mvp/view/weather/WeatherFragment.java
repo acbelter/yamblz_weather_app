@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
-import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 import com.acbelter.weatherapp.mvp.presentation.WeatherPresenter;
 import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
 import com.acbelter.weatherapp.mvp.view.fragment.BaseFragment;
@@ -27,8 +26,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import timber.log.Timber;
-
-import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.CELSIUS;
 
 public class WeatherFragment extends BaseFragment implements WeatherView {
 
@@ -141,32 +138,10 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
                 DividerItemDecoration.VERTICAL);
         this.recyclerView.addItemDecoration(dividerItemDecoration);
         swipeRefreshLayout.setRefreshing(false);
-        WeatherRes newWeatherRes = new WeatherRes(weatherData.getCurrentWeatherFavorites());
-        setWeatherTextColor(newWeatherRes.getTextColorResId());
-        String temperatureStr = getCurrentTemperatureString(weatherData);
-//        tvTemperature.setText(temperatureStr);
-//        String temperatureMetric = convertMetricToString(weatherData.getCurrentWeatherFavorites().getTemperatureMetric());
-//        tvMetric.setText(temperatureMetric);
-//        tvCity.setText(weatherData.getCityData().getShortName());
-//        contentLayout.setBackgroundColor(
-//                ContextCompat.getColor(getContext(), newWeatherRes.getBackgroundColorResId()));
-//        weatherImage.setImageResource(newWeatherRes.getWeatherImageResId());
-//        weatherView.setWeather(newWeatherRes.getWeatherStatus());
-//        weatherView.startAnimation();
-        Timber.v("size = " + weatherData.getForrecast().size());
+        CurrentWeatherRes newCurrentWeatherRes = new CurrentWeatherRes(weatherData.getCurrentWeatherFavorites());
+        setWeatherTextColor(newCurrentWeatherRes.getTextColorResId());
     }
 
-    private String getCurrentTemperatureString(FullWeatherModel fullWeatherModel) {
-        int temperature = fullWeatherModel.getCurrentWeatherFavorites().getTemperature();
-        return String.valueOf(temperature);
-    }
-
-    private String convertMetricToString(TemperatureMetric metric) {
-        if (metric == CELSIUS)
-            return getString(R.string.celsius);
-        else
-            return getString(R.string.fahrenheit);
-    }
 
     private void setWeatherTextColor(@ColorRes int colorRes) {
         int color = ContextCompat.getColor(getContext(), colorRes);

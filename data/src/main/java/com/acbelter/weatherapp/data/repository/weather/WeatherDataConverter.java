@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 public class WeatherDataConverter {
@@ -39,9 +40,9 @@ public class WeatherDataConverter {
         int temperature = TemperatureMetricConverter
                 .getSupportedTemperature(currentWeather.getMain().getTemp(), weatherParams.getMetric());
         CityData cityData = weatherParams.getCityData();
-        WeatherType weatherType = extractWeatherType(currentWeather.getWeather());
         TemperatureMetric temperatureMetric = weatherParams.getMetric();
-        return new CurrentWeatherFavorites.Builder(temperature, cityData, weatherType, temperatureMetric)
+        return new CurrentWeatherFavorites.Builder(temperature, cityData, temperatureMetric)
+                .weatherType(extractWeatherType(currentWeather.getWeather()))
                 .timestamp((long) currentWeather.getDt() * 1000L)
                 .sunriseTimestamp((long) currentWeather.getSys().getSunrise() * 1000L)
                 .sunsetTimestamp((long) currentWeather.getSys().getSunset() * 1000L)
@@ -49,8 +50,10 @@ public class WeatherDataConverter {
                 .humidity(currentWeather.getMain().getHumidity())
                 .description(currentWeather.getWeather().get(0).getDescription())
                 .windSpeed((int) Math.round(currentWeather.getWind().getSpeed()))
-                .minTemp((int) Math.round(currentWeather.getMain().getTempMin()))
-                .maxTemp((int) Math.round(currentWeather.getMain().getTempMax()))
+                .minTemp(TemperatureMetricConverter
+                        .getSupportedTemperature(currentWeather.getMain().getTempMin(), weatherParams.getMetric()))
+                .maxTemp(TemperatureMetricConverter
+                        .getSupportedTemperature(currentWeather.getMain().getTempMax(), weatherParams.getMetric()))
                 .build();
     }
 
@@ -74,14 +77,16 @@ public class WeatherDataConverter {
     }
 
     private static ForecastWeatherFavorites fromForecastElementToWeatherForecast(ForecastElement forecastElement, WeatherParams weatherParams) {
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat df = new SimpleDateFormat("dd MMMM", Locale.getDefault());
         Date date = new Date();
         long curTime = forecastElement.getDt() * 1000L;
         date.setTime(curTime);
         String dateStr = df.format(date);
         int lowTemp = TemperatureMetricConverter.getSupportedTemperature(forecastElement.getTemp().getMin(), weatherParams.getMetric());
         int highTemp = TemperatureMetricConverter.getSupportedTemperature(forecastElement.getTemp().getMax(), weatherParams.getMetric());
-        return new ForecastWeatherFavorites.Builder(dateStr, lowTemp, highTemp)
+        TemperatureMetric temperatureMetric = weatherParams.getMetric();
+        return new ForecastWeatherFavorites.Builder(dateStr, lowTemp, highTemp, temperatureMetric)
+                .weatherType(extractWeatherType(forecastElement.getWeather()))
                 .build();
     }
 

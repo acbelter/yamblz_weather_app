@@ -7,8 +7,8 @@ public class CurrentWeatherFavorites {
 
     private int temperature;
     private CityData cityData;
-    private WeatherType weatherType;
     private TemperatureMetric temperatureMetric;
+    private WeatherType weatherType;
     private long timestamp;
     private long sunriseTimestamp;
     private long sunsetTimestamp;
@@ -23,10 +23,10 @@ public class CurrentWeatherFavorites {
         //Requered params
         private final int temperature;
         private final CityData cityData;
-        private final WeatherType weatherType;
         private final TemperatureMetric temperatureMetric;
 
         //Optional params
+        private WeatherType weatherType;
         private long timestamp;
         private long sunriseTimestamp;
         private long sunsetTimestamp;
@@ -37,56 +37,60 @@ public class CurrentWeatherFavorites {
         private int minTemp;
         private int maxTemp;
 
-        public Builder(int temperature, CityData cityData, WeatherType weatherType,
+        public Builder(int temperature, CityData cityData,
                        TemperatureMetric temperatureMetric) {
             this.temperature = temperature;
             this.cityData = cityData;
-            this.weatherType = weatherType;
             this.temperatureMetric = temperatureMetric;
         }
 
+        public Builder weatherType(WeatherType val) {
+            this.weatherType = val;
+            return this;
+        }
+
         public Builder timestamp(long val) {
-            timestamp = val;
+            this.timestamp = val;
             return this;
         }
 
         public Builder sunriseTimestamp(long val) {
-            sunriseTimestamp = val;
+            this.sunriseTimestamp = val;
             return this;
         }
 
         public Builder sunsetTimestamp(long val) {
-            sunsetTimestamp = val;
+            this.sunsetTimestamp = val;
             return this;
         }
 
         public Builder pressure(int val) {
-            pressure = val;
+            this.pressure = val;
             return this;
         }
 
         public Builder humidity(int val) {
-            humidity = val;
+            this.humidity = val;
             return this;
         }
 
         public Builder description(String val) {
-            description = val;
+            this.description = val;
             return this;
         }
 
         public Builder windSpeed(int val) {
-            windSpeed = val;
+            this.windSpeed = val;
             return this;
         }
 
         public Builder minTemp(int val) {
-            minTemp = val;
+            this.minTemp = val;
             return this;
         }
 
         public Builder maxTemp(int val) {
-            maxTemp = val;
+            this.maxTemp = val;
             return this;
         }
 
@@ -98,8 +102,17 @@ public class CurrentWeatherFavorites {
     public CurrentWeatherFavorites(Builder builder) {
         temperature = builder.temperature;
         cityData = builder.cityData;
-        weatherType = builder.weatherType;
         temperatureMetric = builder.temperatureMetric;
+        weatherType = builder.weatherType;
+        timestamp = builder.timestamp;
+        sunriseTimestamp = builder.sunriseTimestamp;
+        sunsetTimestamp = builder.sunsetTimestamp;
+        pressure = builder.pressure;
+        humidity = builder.humidity;
+        description = builder.description;
+        windSpeed = builder.windSpeed;
+        minTemp = builder.minTemp;
+        maxTemp = builder.maxTemp;
     }
 
     public int getTemperature() {

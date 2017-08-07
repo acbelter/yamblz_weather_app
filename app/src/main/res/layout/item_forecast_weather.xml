@@ -1,68 +1,86 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!-- Layout for weather forecast list item for future day (not today) -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:orientation="horizontal">
+    android:background="?android:attr/selectableItemBackground"
+    android:minHeight="?android:listPreferredItemHeight">
 
-    <FrameLayout
-        android:layout_width="60dp"
-        android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/forecastImageView"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        android:scaleType="fitEnd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_default="spread"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_default="spread"
+        tools:ignore="ContentDescription"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        tools:src="@drawable/img_sun" />
 
-        <ImageView
-            android:id="@+id/list_item_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/tvForecastDate"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="7"
-        android:orientation="vertical">
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.516"
+        tools:layout_constraintLeft_creator="1" />
 
-        <TextView
-            android:id="@+id/tvDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="date"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/list_item_forecast_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed"
-            android:textAppearance="?android:textAppearanceSmall" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/tvForecastLow"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="5"
-        android:orientation="vertical">
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:text="low"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvForecastDate"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintRight_creator="1" />
 
-        <TextView
-            android:id="@+id/highTemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="high_temp"
-            android:textAppearance="?android:textAppearanceLarge" />
+    <TextView
+        android:id="@+id/tvForecastHigh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="67dp"
+        android:layout_marginRight="67dp"
+        android:text="high"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvForecastDate"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintRight_creator="1" />
 
-        <TextView
-            android:id="@+id/lowTemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="low_temp"
-            android:textAppearance="?android:textAppearanceSmall" />
-    </LinearLayout>
-</LinearLayout>
+    <TextView
+        android:id="@+id/tvDeg1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="°"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvForecastDate"
+        app:layout_constraintLeft_toRightOf="@+id/tvForecastHigh"
+        tools:layout_constraintLeft_creator="1" />
+
+    <TextView
+        android:id="@+id/tvDeg2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="°"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvForecastDate"
+        app:layout_constraintLeft_toRightOf="@+id/tvForecastLow"
+        tools:layout_constraintLeft_creator="1" />
+
+</android.support.constraint.ConstraintLayout>
