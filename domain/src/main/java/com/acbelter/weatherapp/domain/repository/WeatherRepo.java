@@ -6,17 +6,17 @@ import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 public interface WeatherRepo {
 
-    Flowable<CurrentWeatherFavorites> getCurrentWeather();
+    Single<CurrentWeatherFavorites> getCurrentWeather();
 
-    Flowable<CurrentWeatherFavorites> updateCurrentWeather();
+    Single<CurrentWeatherFavorites> updateCurrentWeather();
 
-    Flowable<List<ForecastWeatherFavorites>> getForecast();
+    Single<List<ForecastWeatherFavorites>> getForecast();
 
-    Flowable<List<ForecastWeatherFavorites>> updateForecast();
+    Single<List<ForecastWeatherFavorites>> updateForecast();
 
     void saveWeather(FullWeatherModel fullWeatherModel);
 }

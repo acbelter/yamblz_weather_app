@@ -70,9 +70,9 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        if (fullWeatherModel != null)
-            return fullWeatherModel.getForrecast().size() + 1;
-        return 0;
+        if (fullWeatherModel == null)
+            return 0;
+        return fullWeatherModel.getForrecast().size() + 1;
     }
 
     public void update(FullWeatherModel fullWeatherModel) {

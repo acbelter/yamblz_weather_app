@@ -11,7 +11,7 @@ import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
+import io.reactivex.Single;
 import timber.log.Timber;
 
 public class WeatherRepoImpl implements WeatherRepo {
@@ -27,50 +27,45 @@ public class WeatherRepoImpl implements WeatherRepo {
     }
 
     @Override
-    public Flowable<CurrentWeatherFavorites> getCurrentWeather() {
+    public Single<CurrentWeatherFavorites> getCurrentWeather() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
         return databaseRepo.getCurrentWeather(weatherParams)
-                .toFlowable()
-                .doOnError(throwable -> Timber.v(throwable, throwable.toString()))
                 .onErrorResumeNext(networkRepo.getCurrentWeather(weatherParams)
-                        .map(currentWeather -> WeatherDataConverter.fromNWWeatherDataToCurrentWeatherData(currentWeather, weatherParams))
-                        .toFlowable())
-                .doOnNext(data -> {
+                        .map(currentWeather -> WeatherDataConverter
+                                .fromNWWeatherDataToCurrentWeatherData(currentWeather, weatherParams)))
+                .doOnSuccess(data -> {
                     Timber.d("Current weather data from network: %s", data);
                 });
     }
 
     @Override
-    public Flowable<List<ForecastWeatherFavorites>> getForecast() {
+    public Single<List<ForecastWeatherFavorites>> getForecast() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
         return databaseRepo.getForecastWeather(weatherParams)
-                .toFlowable()
                 .onErrorResumeNext(networkRepo.getForecastWeather(weatherParams)
-                        .map(forecastWeather -> WeatherDataConverter.fromNWWeatherDataToForecastWeatherData(forecastWeather, weatherParams))
-                        .toFlowable())
-                .doOnNext(data -> {
+                        .map(forecastWeather -> WeatherDataConverter.fromNWWeatherDataToForecastWeatherData(forecastWeather, weatherParams)))
+                .doOnSuccess(data -> {
                     Timber.d("Current weather data from network: %s", data);
                 });
     }
 
     @Override
-    public Flowable<CurrentWeatherFavorites> updateCurrentWeather() {
+    public Single<CurrentWeatherFavorites> updateCurrentWeather() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
         return networkRepo.getCurrentWeather(weatherParams)
-                .map(currentWeather -> WeatherDataConverter.fromNWWeatherDataToCurrentWeatherData(currentWeather, weatherParams))
-                .toFlowable();
+                .map(currentWeather -> WeatherDataConverter.fromNWWeatherDataToCurrentWeatherData(currentWeather, weatherParams));
     }
 
     @Override
-    public Flowable<List<ForecastWeatherFavorites>> updateForecast() {
+    public Single<List<ForecastWeatherFavorites>> updateForecast() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
         return networkRepo.getForecastWeather(weatherParams)
-                .map(extendedWeather -> WeatherDataConverter.fromNWWeatherDataToForecastWeatherData(extendedWeather, weatherParams))
-                .toFlowable();
+                .map(extendedWeather -> WeatherDataConverter
+                        .fromNWWeatherDataToForecastWeatherData(extendedWeather, weatherParams));
     }
 
     @Override
