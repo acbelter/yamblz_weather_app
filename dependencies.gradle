@@ -7,8 +7,6 @@ ext {
     versionCode = 1
     versionName = "1.0"
 
-    weatherViewVersion = "1.2.0"
-
     supportLibraryVersion = "25.4.0"
     constraintLayoutVersion = "1.0.2"
     retrofitVersion = "2.3.0"
@@ -36,10 +34,6 @@ ext {
             design            : "com.android.support:design:$supportLibraryVersion",
             constraintLayout  : "com.android.support.constraint:constraint-layout:$constraintLayoutVersion",
             supportAnnotations: "com.android.support:support-annotations:$supportLibraryVersion"
-    ]
-
-    ui = [
-            weatherView: "com.github.MatteoBattilana:WeatherView:$weatherViewVersion",
     ]
 
     rx = [

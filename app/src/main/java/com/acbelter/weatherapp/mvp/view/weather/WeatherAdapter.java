@@ -18,7 +18,6 @@ import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import xyz.matteobattilana.library.Common.Constants;
 
 import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.CELSIUS;
 
@@ -28,12 +27,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int VIEW_TYPE_FORECAST = 1;
 
     private FullWeatherModel fullWeatherModel;
-    private Context context;
-
-    public WeatherAdapter(Context context, FullWeatherModel fullWeatherModel) {
-        this.context = context;
-        this.fullWeatherModel = fullWeatherModel;
-    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -51,7 +44,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof CurrentWeatherViewHolder) {
             CurrentWeatherViewHolder headerHolder = (CurrentWeatherViewHolder) holder;
-            headerHolder.bind(context, fullWeatherModel.getCurrentWeatherFavorites());
+            headerHolder.bind(fullWeatherModel.getCurrentWeatherFavorites());
         } else if (holder instanceof ForecastWeatherViewHolder) {
             ForecastWeatherFavorites forecastElement = getItem(position - 1);
             ForecastWeatherViewHolder forecastViewHolder = (ForecastWeatherViewHolder) holder;
@@ -62,7 +55,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private ForecastWeatherFavorites getItem(int position) {
         return fullWeatherModel.getForrecast().get(position);
     }
-
 
     @Override
     public int getItemViewType(int position) {
@@ -76,10 +68,16 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return position == 0;
     }
 
-
     @Override
     public int getItemCount() {
-        return fullWeatherModel.getForrecast().size() + 1;
+        if (fullWeatherModel != null)
+            return fullWeatherModel.getForrecast().size() + 1;
+        return 0;
+    }
+
+    public void update(FullWeatherModel fullWeatherModel) {
+        this.fullWeatherModel = fullWeatherModel;
+        notifyDataSetChanged();
     }
 
     public static class CurrentWeatherViewHolder extends RecyclerView.ViewHolder {
@@ -110,19 +108,21 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView getTvHumidityText;
         @BindView(R.id.tvWindText)
         TextView tvWindText;
-        @BindView(R.id.imageViewCurrent)
-        xyz.matteobattilana.library.WeatherView weatherView;
         @BindView(R.id.weather_image)
         ImageView weatherImage;
+
+        private Context context;
 
         public CurrentWeatherViewHolder(final View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);
+
+            this.context = itemView.getContext();
         }
 
-        public void bind(Context context, CurrentWeatherFavorites weather) {
-            setWeatherView(context, weather);
+        public void bind(CurrentWeatherFavorites weather) {
+            setWeatherView(weather);
             tvCity.setText(weather.getCityData().getShortName());
             tvTemperature.setText(String.valueOf(weather.getTemperature()));
             tvMetric.setText(convertMetricToString(weather.getTemperatureMetric(), context));
@@ -157,23 +157,12 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             tvWindText.setTextColor(color);
         }
 
-        private void setWeatherView(Context context, CurrentWeatherFavorites weather) {
+        private void setWeatherView(CurrentWeatherFavorites weather) {
             CurrentWeatherRes newCurrentWeatherRes = new CurrentWeatherRes(weather);
             setWeatherTextColor(context, newCurrentWeatherRes.getTextColorResId());
             contentLayout.setBackgroundColor(
                     ContextCompat.getColor(context, newCurrentWeatherRes.getBackgroundColorResId()));
-            weatherView.setWeather(Constants.weatherStatus.SUN)
-                    .setRainTime(6000)
-                    .setSnowTime(6000)
-                    .setRainAngle(20)
-                    .setSnowAngle(20)
-                    .setRainParticles(25)
-                    .setSnowParticles(25)
-                    .setFPS(60)
-                    .setOrientationMode(Constants.orientationStatus.ENABLE);
             weatherImage.setImageResource(newCurrentWeatherRes.getWeatherImageResId());
-            weatherView.setWeather(newCurrentWeatherRes.getWeatherStatus());
-            weatherView.startAnimation();
         }
     }
 

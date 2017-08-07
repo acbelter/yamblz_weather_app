@@ -32,6 +32,7 @@ public class WeatherRepoImpl implements WeatherRepo {
                 , settingsPreference.loadTemperatureMetric());
         return databaseRepo.getCurrentWeather(weatherParams)
                 .toFlowable()
+                .doOnError(throwable -> Timber.v(throwable, throwable.toString()))
                 .onErrorResumeNext(networkRepo.getCurrentWeather(weatherParams)
                         .map(currentWeather -> WeatherDataConverter.fromNWWeatherDataToCurrentWeatherData(currentWeather, weatherParams))
                         .toFlowable())

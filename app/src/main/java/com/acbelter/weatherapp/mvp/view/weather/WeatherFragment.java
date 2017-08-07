@@ -1,10 +1,8 @@
 package com.acbelter.weatherapp.mvp.view.weather;
 
 import android.os.Bundle;
-import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,12 +33,12 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     @BindView(R.id.rvWeather)
     RecyclerView recyclerView;
 
-    private WeatherAdapter adapter;
-
     private Unbinder unbinder;
 
     @Inject
     WeatherPresenter presenter;
+
+    private WeatherAdapter adapter;
 
     public static WeatherFragment newInstance() {
         return new WeatherFragment();
@@ -65,29 +63,30 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         this.unbinder = ButterKnife.bind(this, view);
         setSwipeLayout();
-
+        setAdapter();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.getWeather();
+    }
+
+    private void setAdapter() {
+        this.adapter = new WeatherAdapter();
+        recyclerView.setAdapter(adapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL);
+        this.recyclerView.addItemDecoration(dividerItemDecoration);
+    }
 
     private void setSwipeLayout() {
         swipeRefreshLayout.setColorSchemeResources(
                 R.color.colorPrimary,
                 R.color.colorPrimaryDark);
         swipeRefreshLayout.setOnRefreshListener(() -> presenter.updateWeather());
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        presenter.getWeather();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
     }
 
     @Override
@@ -101,7 +100,6 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         presenter.onDetach();
     }
 
@@ -130,24 +128,8 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
 
     @Override
     public void showWeather(FullWeatherModel weatherData) {
-        this.adapter = new WeatherAdapter(getContext(), weatherData);
-        this.recyclerView.setAdapter(adapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),
-                DividerItemDecoration.VERTICAL);
-        this.recyclerView.addItemDecoration(dividerItemDecoration);
+        adapter.update(weatherData);
         swipeRefreshLayout.setRefreshing(false);
-        CurrentWeatherRes newCurrentWeatherRes = new CurrentWeatherRes(weatherData.getCurrentWeatherFavorites());
-        setWeatherTextColor(newCurrentWeatherRes.getTextColorResId());
-    }
-
-
-    private void setWeatherTextColor(@ColorRes int colorRes) {
-        int color = ContextCompat.getColor(getContext(), colorRes);
-//        tvTemperature.setTextColor(color);
-//        tvMetric.setTextColor(color);
-//        tvCity.setTextColor(color);
     }
 
     @Override

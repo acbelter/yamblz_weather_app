@@ -46,6 +46,7 @@ public class WeatherScheduleJob extends Job {
                 .subscribe(settingsModel
                         -> weatherInteractor.updateWeather()
                         .subscribe(fullWeatherModel -> {
+                        }, e -> {
                         }));
     }
 
