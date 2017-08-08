@@ -20,7 +20,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import timber.log.Timber;
 
 import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.CELSIUS;
 import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.FAHRENHEIT;
@@ -67,7 +66,6 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
         super.onCreate(savedInstanceState);
 
         App.getInstance().plusActivityComponent().inject(this);
-
         presenter.onAttach(this);
     }
 
@@ -80,7 +78,6 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         unbinder = ButterKnife.bind(this, view);
-
         rgTempMetric.setOnCheckedChangeListener((radioGroup, checkedId) -> saveTemperatureMetric(radioGroup));
         rgUpdateInterval.setOnCheckedChangeListener((radioGroup, checkedId) -> saveUpdateInterval(radioGroup));
     }
@@ -88,7 +85,6 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
     @Override
     public void onResume() {
         super.onResume();
-
         presenter.showSettings();
     }
 
@@ -135,20 +131,17 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
         unbinder.unbind();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         presenter.onDetach();
     }
 
     @Override
     public void setSettings(SettingsData settingsData) {
-        Timber.v("Metric = " + settingsData.getMetric().getUnit());
         setTemperatureMetric(settingsData.getMetric());
         setUpdateInterval(settingsData.getUpdateWeatherInterval());
     }

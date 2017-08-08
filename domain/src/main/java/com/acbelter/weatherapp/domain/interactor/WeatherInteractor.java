@@ -30,12 +30,20 @@ public class WeatherInteractor {
     public Single<FullWeatherModel> getWeather() {
         return Single
                 .zip(getCurrentWeather(), getForecast(), this::convertCachedWeather)
-                .doOnSuccess(fullWeatherModel -> databaseRepo.saveWeather(fullWeatherModel))
+                .doOnSuccess(fullWeatherModel -> databaseRepo.updateWeather(fullWeatherModel))
                 .subscribeOn(schedulerIO)
                 .observeOn(schedulerMain);
     }
 
     public Single<FullWeatherModel> updateWeather() {
+        return Single
+                .zip(updateCurrenWeather(), updateForecast(), this::convertUpdatedWeather)
+                .doOnSuccess(fullWeatherModel -> databaseRepo.updateWeather(fullWeatherModel))
+                .subscribeOn(schedulerIO)
+                .observeOn(schedulerMain);
+    }
+
+    public Single<FullWeatherModel> addNewWeather() {
         return Single
                 .zip(updateCurrenWeather(), updateForecast(), this::convertUpdatedWeather)
                 .doOnSuccess(fullWeatherModel -> databaseRepo.saveWeather(fullWeatherModel))

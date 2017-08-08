@@ -7,6 +7,7 @@ import com.acbelter.weatherapp.domain.repository.CityRepo;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 
@@ -28,7 +29,7 @@ public class CityInteractor {
                 .observeOn(schedulerMain);
     }
 
-    public Single<List<CityData>> getFavorites() {
+    public Flowable<List<CityData>> getFavorites() {
         return cityRepo.getFavoritesCities()
                 .subscribeOn(schedulerIO)
                 .observeOn(schedulerMain);

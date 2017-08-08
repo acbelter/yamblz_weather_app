@@ -19,7 +19,7 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView> {
     public void showCityList() {
         if (getView() != null)
             unSubscribeOnDetach(cityInteractor.getFavorites()
-                    .subscribe((cityDatas, throwable) -> getView().showCityList(cityDatas)));
+                    .subscribe(cityDatas -> getView().showCityList(cityDatas)));
     }
 
     public void showSelectedWeather(CityData cityData) {
