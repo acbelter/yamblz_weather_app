@@ -53,8 +53,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    CityRepo provideCityRepo(NetworkRepo networkRepo, SettingsPreference settingsPreference) {
-        return new CityRepoImpl(networkRepo, settingsPreference);
+    CityRepo provideCityRepo(NetworkRepo networkRepo, DatabaseRepo databaseRepo, SettingsPreference settingsPreference) {
+        return new CityRepoImpl(networkRepo, databaseRepo, settingsPreference);
     }
 
     @Provides

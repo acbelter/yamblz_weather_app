@@ -1,4 +1,4 @@
-package com.acbelter.weatherapp.mvp.view.weather;
+package com.acbelter.weatherapp.mvp.view.weather.adapter;
 
 import android.content.Context;
 import android.support.annotation.ColorRes;
@@ -16,6 +16,8 @@ import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
 import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetricConverter;
+import com.acbelter.weatherapp.mvp.view.weather.resources.CurrentWeatherRes;
+import com.acbelter.weatherapp.mvp.view.weather.resources.ForecastWeatherRes;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

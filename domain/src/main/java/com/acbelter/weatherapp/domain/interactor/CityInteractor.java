@@ -7,7 +7,6 @@ import com.acbelter.weatherapp.domain.repository.CityRepo;
 
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 
@@ -23,8 +22,14 @@ public class CityInteractor {
         this.schedulerMain = schedulerMain;
     }
 
-    public Observable<List<AutocompleteData>> getCityList(CityParams cityParams) {
+    public Single<List<AutocompleteData>> getCityList(CityParams cityParams) {
         return cityRepo.getCityList(cityParams)
+                .subscribeOn(schedulerIO)
+                .observeOn(schedulerMain);
+    }
+
+    public Single<List<CityData>> getFavorites() {
+        return cityRepo.getFavoritesCities()
                 .subscribeOn(schedulerIO)
                 .observeOn(schedulerMain);
     }

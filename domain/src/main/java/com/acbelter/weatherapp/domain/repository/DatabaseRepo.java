@@ -8,12 +8,11 @@ import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 public interface DatabaseRepo {
 
-    Flowable<List<CityData>> getAllCities();
+    Single<List<CityData>> getAllCities();
 
     Single<CurrentWeatherFavorites> getCurrentWeather(WeatherParams weatherParams);
 

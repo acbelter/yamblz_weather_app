@@ -3,7 +3,7 @@ package com.acbelter.weatherapp.ui.weather;
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
 import com.acbelter.weatherapp.domain.model.weather.WeatherType;
-import com.acbelter.weatherapp.mvp.view.weather.CurrentWeatherRes;
+import com.acbelter.weatherapp.mvp.view.weather.resources.CurrentWeatherRes;
 import com.acbelter.weatherapp.ui.weather.common.ResourceUtil;
 
 import org.junit.Before;

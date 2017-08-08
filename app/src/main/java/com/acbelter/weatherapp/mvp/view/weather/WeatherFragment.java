@@ -17,6 +17,7 @@ import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
 import com.acbelter.weatherapp.mvp.presentation.WeatherPresenter;
 import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
 import com.acbelter.weatherapp.mvp.view.fragment.BaseFragment;
+import com.acbelter.weatherapp.mvp.view.weather.adapter.WeatherAdapter;
 
 import javax.inject.Inject;
 

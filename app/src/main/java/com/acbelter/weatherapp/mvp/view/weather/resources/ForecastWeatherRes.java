@@ -1,4 +1,4 @@
-package com.acbelter.weatherapp.mvp.view.weather;
+package com.acbelter.weatherapp.mvp.view.weather.resources;
 
 import android.support.annotation.DrawableRes;
 

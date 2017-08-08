@@ -3,74 +3,105 @@ package com.acbelter.weatherapp.mvp.view.activity;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
+import com.acbelter.weatherapp.domain.model.city.CityData;
+import com.acbelter.weatherapp.mvp.presentation.MainActivityPresenter;
 import com.acbelter.weatherapp.mvp.view.about.InfoFragment;
+import com.acbelter.weatherapp.mvp.view.activity.adapter.FavoritesCitiesAdapter;
 import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
 import com.acbelter.weatherapp.mvp.view.search.SearchFragment;
 import com.acbelter.weatherapp.mvp.view.settings.SettingsFragment;
 import com.acbelter.weatherapp.mvp.view.weather.WeatherFragment;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity implements
-        NavigationView.OnNavigationItemSelectedListener, DrawerLocker {
+public class MainActivity extends AppCompatActivity implements DrawerLocker, MainActivityView {
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-    @BindView(R.id.nav_view)
-    NavigationView nvDrawer;
+    @BindView(R.id.rvFavoritesCities)
+    RecyclerView recyclerView;
+    @BindView(R.id.tvSettings)
+    TextView tvSettings;
+    @BindView(R.id.tvInfo)
+    TextView tvInfo;
+    @BindView(R.id.etSearchOnHeader)
+    EditText etSearch;
+
     private ActionBarDrawerToggle toggle;
+
+    @Inject
+    MainActivityPresenter presenter;
+
+    private FavoritesCitiesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        setupDrawerContent(nvDrawer);
+        setupToolbar();
+
+        App.getInstance().plusActivityComponent().inject(this);
+        setAdapter();
+        presenter.onAttach(this);
+        presenter.showCityList();
 
         if (savedInstanceState == null) {
             WeatherFragment weatherFragment = WeatherFragment.newInstance();
             getSupportFragmentManager().beginTransaction().add(R.id.content_frame, weatherFragment, WeatherFragment.class.getSimpleName()).commit();
         }
 
+        tvSettings.setOnClickListener(view -> {
+            showFragment(SettingsFragment.class);
+            drawerLayout.closeDrawer(GravityCompat.START);
+        });
+        tvInfo.setOnClickListener(view -> {
+            showFragment(InfoFragment.class);
+            drawerLayout.closeDrawer(GravityCompat.START);
+        });
+
         initSearchEdittext();
     }
 
-    private void initSearchEdittext() {
-        View header = nvDrawer.getHeaderView(0);
-        EditText etSearch = (EditText) header.findViewById(R.id.etSearchOnHeader);
+    private void setAdapter() {
+        adapter = new FavoritesCitiesAdapter();
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+    }
 
+    private void initSearchEdittext() {
         etSearch.setOnTouchListener((view, motionEvent) -> {
             if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
                 showFragment(SearchFragment.class);
                 drawerLayout.closeDrawers();
             }
-
-            return true;
-        });
-    }
-
-    private void setupDrawerContent(NavigationView navigationView) {
-        setupToolbar();
-        navigationView.setNavigationItemSelectedListener(item -> {
-            selectDrawerItem(item);
             return true;
         });
     }
@@ -114,33 +145,6 @@ public class MainActivity extends AppCompatActivity implements
             super.onBackPressed();
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        selectDrawerItem(item);
-        return true;
-    }
-
-    void selectDrawerItem(MenuItem menuItem) {
-        Class fragmentClass;
-        switch (menuItem.getItemId()) {
-            case R.id.nav_view:
-                fragmentClass = WeatherFragment.class;
-                break;
-            case R.id.nav_settings:
-                fragmentClass = SettingsFragment.class;
-                break;
-            case R.id.nav_info:
-                fragmentClass = InfoFragment.class;
-                break;
-            default:
-                fragmentClass = WeatherFragment.class;
-        }
-
-        showFragment(fragmentClass);
-
-        drawerLayout.closeDrawer(GravityCompat.START);
-    }
-
     private void showFragment(Class fragmentClass) {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(fragmentClass.getSimpleName());
         if (fragment == null) {
@@ -176,5 +180,11 @@ public class MainActivity extends AppCompatActivity implements
         toggle.setDrawerIndicatorEnabled(true);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         toggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_UNLOCKED);
+    }
+
+    @Override
+    public void showCityList(List<CityData> cities) {
+        Timber.v("SIZE_CITIES = " + cities.size());
+        adapter.update(cities);
     }
 }

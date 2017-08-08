@@ -10,13 +10,12 @@ import com.acbelter.weatherapp.data.dbmodel.DatabaseWeatherData;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 @Dao
 public interface WeatherDAO {
     @Query("SELECT * FROM DatabaseWeatherData")
-    Flowable<List<DatabaseWeatherData>> getAllWeatherRecords();
+    Single<List<DatabaseWeatherData>> getAllWeatherRecords();
 
     @Query("SELECT * FROM DatabaseWeatherData WHERE coordinates = :coordinates ")
     Single<DatabaseWeatherData> getWeatherByCityName(String coordinates);

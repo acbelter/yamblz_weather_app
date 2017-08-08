@@ -48,7 +48,7 @@ public class CityDataConverter {
         return cityData;
     }
 
-    private static AutocompleteData convert(Prediction prediction) {
+    public static AutocompleteData convert(Prediction prediction) {
         return new AutocompleteData(prediction.getDescription(), prediction.getPlaceId());
     }
 }
