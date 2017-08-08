@@ -56,7 +56,7 @@ public class DatabaseWeatherConverter {
         String shortName = fullWeatherModel.getCityData().getShortName();
         double latitude = fullWeatherModel.getCityData().getLatitude();
         double longitude = fullWeatherModel.getCityData().getLongitude();
-        Coord coord = new Coord(latitude, longitude);
+        Coord coord = new Coord(longitude, latitude);
         String coordinates = gson.toJson(coord);
         String currentWeather = gson.toJson(fullWeatherModel.getCurrentWeatherFavorites());
         String forecast = gson.toJson(fullWeatherModel.getForrecast());

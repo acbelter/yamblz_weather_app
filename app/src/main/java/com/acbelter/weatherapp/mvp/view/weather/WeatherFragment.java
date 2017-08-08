@@ -30,15 +30,13 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
 
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
-
     @BindView(R.id.rvWeather)
     RecyclerView recyclerView;
-
-    private Unbinder unbinder;
 
     @Inject
     WeatherPresenter presenter;
 
+    private Unbinder unbinder;
     private WeatherAdapter adapter;
 
     public static WeatherFragment newInstance() {

@@ -32,16 +32,12 @@ public class SearchPresenter extends BasePresenter<SearchView> {
     }
 
     public void saveSelectedCityAndWeather(AutocompleteData autocompleteData) {
-        cityInteractor.getCityData(autocompleteData)
-                .subscribe(cityData -> cityInteractor.saveSelectedCity(cityData));
-        updateWeather();
-    }
-
-    private void updateWeather() {
-        if (getView() == null)
-            return;
-        unSubscribeOnDetach(weatherInteractor.updateWeather()
-                .subscribe(fullWeatherModel -> closeActivity()));
+        unSubscribeOnDetach(cityInteractor.getCityData(autocompleteData)
+                .doOnSuccess(cityData -> {
+                    weatherInteractor.updateWeather();
+                    closeActivity();
+                })
+                .subscribe(cityData -> cityInteractor.saveSelectedCity(cityData)));
     }
 
     public void closeActivity() {

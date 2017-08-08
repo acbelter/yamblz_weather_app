@@ -1,6 +1,7 @@
 package com.acbelter.weatherapp.mvp.presentation;
 
 import com.acbelter.weatherapp.domain.interactor.CityInteractor;
+import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.mvp.presentation.common.BasePresenter;
 import com.acbelter.weatherapp.mvp.view.activity.MainActivityView;
 
@@ -17,6 +18,13 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView> {
 
     public void showCityList() {
         if (getView() != null)
-            cityInteractor.getFavorites().subscribe((cityDatas, throwable) -> getView().showCityList(cityDatas));
+            unSubscribeOnDetach(cityInteractor.getFavorites()
+                    .subscribe((cityDatas, throwable) -> getView().showCityList(cityDatas)));
+    }
+
+    public void showSelectedWeather(CityData cityData) {
+        cityInteractor.saveSelectedCity(cityData);
+        if (getView() != null)
+            getView().showWeather();
     }
 }

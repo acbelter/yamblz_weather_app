@@ -17,10 +17,16 @@ import butterknife.ButterKnife;
 
 public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCitiesAdapter.FavoritesCitiesViewHolder> {
 
-    private List<CityData> favoritesCities;
+    public interface OnItemClickListener {
+        void onItemClick(CityData item);
+    }
 
-    public FavoritesCitiesAdapter() {
+    private List<CityData> favoritesCities;
+    private OnItemClickListener itemClickListener;
+
+    public FavoritesCitiesAdapter(OnItemClickListener clickListener) {
         this.favoritesCities = new ArrayList<>();
+        itemClickListener = clickListener;
 
         setHasStableIds(true);
     }
@@ -28,7 +34,14 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
     @Override
     public FavoritesCitiesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.favorites_city_item, parent, false);
-        return new FavoritesCitiesViewHolder(view);
+
+        FavoritesCitiesViewHolder viewHolder = new FavoritesCitiesViewHolder(view);
+        view.setOnClickListener(it -> {
+            int adapterPosition = viewHolder.getAdapterPosition();
+            if (adapterPosition != RecyclerView.NO_POSITION)
+                itemClicked(adapterPosition);
+        });
+        return viewHolder;
     }
 
     @Override
@@ -47,6 +60,9 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
         return favoritesCities.get(position).hashCode();
     }
 
+    private void itemClicked(int position) {
+        itemClickListener.onItemClick(favoritesCities.get(position));
+    }
 
     public void update(List<CityData> cities) {
         favoritesCities = cities;

@@ -34,9 +34,9 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity implements DrawerLocker, MainActivityView {
+public class MainActivity extends AppCompatActivity implements DrawerLocker
+        , MainActivityView, FavoritesCitiesAdapter.OnItemClickListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker, Mai
         App.getInstance().plusActivityComponent().inject(this);
         setAdapter();
         presenter.onAttach(this);
-        presenter.showCityList();
 
         if (savedInstanceState == null) {
             WeatherFragment weatherFragment = WeatherFragment.newInstance();
@@ -88,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker, Mai
     }
 
     private void setAdapter() {
-        adapter = new FavoritesCitiesAdapter();
+        adapter = new FavoritesCitiesAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this,
@@ -100,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker, Mai
         etSearch.setOnTouchListener((view, motionEvent) -> {
             if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
                 showFragment(SearchFragment.class);
-                drawerLayout.closeDrawers();
+                drawerLayout.closeDrawer(GravityCompat.START);
             }
             return true;
         });
@@ -110,7 +109,14 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker, Mai
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
         toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            @Override
+            public void onDrawerStateChanged(int newState) {
+                if (newState == DrawerLayout.STATE_SETTLING && !drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    presenter.showCityList();
+                }
+            }
+        };
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         toggle.setToolbarNavigationClickListener(view -> {
@@ -118,8 +124,13 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker, Mai
                 getSupportFragmentManager().popBackStack();
                 setDrawerUnlocked();
             }
-            Timber.v("click");
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.showCityList();
     }
 
     @Override
@@ -132,6 +143,12 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker, Mai
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         toggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        presenter.onDetach();
     }
 
     @Override
@@ -184,7 +201,27 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker, Mai
 
     @Override
     public void showCityList(List<CityData> cities) {
-        Timber.v("SIZE_CITIES = " + cities.size());
         adapter.update(cities);
+    }
+
+    @Override
+    public void showWeather() {
+        clearBackStack();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, WeatherFragment.newInstance(), WeatherFragment.class.getSimpleName())
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit();
+        drawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    private void clearBackStack() {
+        for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); ++i) {
+            getSupportFragmentManager().popBackStack();
+        }
+    }
+
+    @Override
+    public void onItemClick(CityData item) {
+        presenter.showSelectedWeather(item);
     }
 }
