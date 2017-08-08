@@ -10,16 +10,17 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="31dp"
-        android:layout_marginRight="31dp"
+        android:layout_marginRight="30dp"
         android:scaleType="fitEnd"
         app:layout_constraintHeight_default="spread"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvTemp"
         app:layout_constraintWidth_default="spread"
         tools:ignore="ContentDescription"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1"
-        tools:src="@drawable/img_sun" />
+        tools:src="@drawable/img_sun"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvTemp"
@@ -28,17 +29,14 @@
         android:layout_marginBottom="18dp"
         android:layout_marginLeft="29dp"
         android:layout_marginStart="29dp"
-        android:layout_marginTop="18dp"
         android:gravity="center_vertical"
         android:text="20"
         android:textSize="110sp"
         app:layout_constraintBottom_toBottomOf="@+id/weather_image"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageViewCurrent"
         app:layout_constraintVertical_bias="0.0"
         tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        tools:layout_constraintLeft_creator="1" />
 
     <TextView
         android:id="@+id/tvLocation"
@@ -53,7 +51,7 @@
         android:textSize="25sp"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="44dp"
+        android:layout_marginLeft="29dp"
         android:layout_marginTop="50dp"
         app:layout_constraintTop_toBottomOf="@+id/tvTemp" />
 
@@ -64,9 +62,13 @@
         android:layout_height="wrap_content"
         android:text="Clear"
         android:textSize="25sp"
-        app:layout_constraintLeft_toLeftOf="@+id/weather_image"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvLocation" />
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvLocation"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/tvPressure"
@@ -74,40 +76,30 @@
         android:layout_height="wrap_content"
         android:text="742"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="19dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescription"
-        app:layout_constraintLeft_toLeftOf="@+id/tvDescription" />
+        app:layout_constraintLeft_toRightOf="@+id/tvPressureText"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvPressureText"
+        android:layout_marginStart="5dp" />
 
     <TextView
         android:id="@+id/tvHumidity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="30%"
-        app:layout_constraintLeft_toLeftOf="@+id/tvPressure"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvPressure"
-        android:layout_marginLeft="31dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="@+id/tvDescription"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginStart="31dp"
-        android:layout_marginEnd="8dp" />
+        app:layout_constraintLeft_toRightOf="@+id/tvHumidityText"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvHumidityText"
+        android:layout_marginStart="5dp" />
 
     <TextView
         android:id="@+id/tvWind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="3m/s"
-        tools:layout_constraintTop_creator="1"
-        app:layout_constraintTop_toBottomOf="@+id/tvHumidity"
-        android:layout_marginTop="7dp"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginEnd="1dp"
-        app:layout_constraintRight_toRightOf="@+id/tvHumidityText"
-        android:layout_marginRight="1dp" />
+        app:layout_constraintLeft_toRightOf="@+id/tvWindText"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvWindText"
+        android:layout_marginStart="8dp" />
 
     <TextView
         android:id="@+id/tvMetric"
@@ -137,44 +129,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ms"
+        android:layout_marginStart="7dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvWind"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="@+id/tvHumidity" />
+        tools:layout_constraintBaseline_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/tvWind"
+        android:layout_marginLeft="7dp" />
 
     <TextView
         android:id="@+id/tvPressureText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pressure"
-        app:layout_constraintRight_toLeftOf="@+id/tvPressure"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvPressure"
-        tools:layout_constraintBaseline_creator="1"
-        android:layout_marginRight="5dp"
-        android:layout_marginEnd="5dp" />
+        app:layout_constraintLeft_toLeftOf="@+id/tvDescription"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
 
     <TextView
         android:id="@+id/tvHumidityText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/humidity"
-        app:layout_constraintRight_toLeftOf="@+id/tvHumidity"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvHumidity"
-        tools:layout_constraintBaseline_creator="1"
-        android:layout_marginRight="7dp"
-        android:layout_marginEnd="7dp" />
+        app:layout_constraintLeft_toLeftOf="@+id/tvPressureText"
+        android:layout_marginTop="7dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvPressureText" />
 
     <TextView
         android:id="@+id/tvWindText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/wind_speed"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvWind"
-        tools:layout_constraintBaseline_creator="1"
-        android:layout_marginEnd="12dp"
-        app:layout_constraintRight_toLeftOf="@+id/tvWind"
-        android:layout_marginRight="12dp" />
+        app:layout_constraintLeft_toLeftOf="@+id/tvHumidityText"
+        android:layout_marginTop="7dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvHumidityText"
+        android:layout_marginLeft="8dp" />
 
 </android.support.constraint.ConstraintLayout>

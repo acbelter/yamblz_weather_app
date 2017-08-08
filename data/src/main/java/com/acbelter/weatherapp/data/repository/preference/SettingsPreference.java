@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.settings.SettingsData;
-import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 import com.google.gson.Gson;
 
@@ -67,24 +66,6 @@ public class SettingsPreference {
 
     public long getLastUpdateTimestamp() {
         return sharedPreferences.getLong(KEY_LAST_UPDATE_TIMESTAMP, 0L);
-    }
-
-    public void setLastWeatherData(CurrentWeatherFavorites currentWeatherFavorites) {
-        if (currentWeatherFavorites == null) {
-            sharedPreferences.edit().remove(KEY_LAST_WEATHER_DATA).apply();
-            return;
-        }
-
-        String weatherDataJson = new Gson().toJson(currentWeatherFavorites);
-        sharedPreferences.edit().putString(KEY_LAST_WEATHER_DATA, weatherDataJson).apply();
-    }
-
-    public
-    @Nullable
-    Observable<CurrentWeatherFavorites> getLastWeatherData() {
-        String weatherDataJson = sharedPreferences.getString(KEY_LAST_WEATHER_DATA, null);
-        CurrentWeatherFavorites currentWeatherFavorites = new Gson().fromJson(weatherDataJson, CurrentWeatherFavorites.class);
-        return Observable.fromCallable(() -> currentWeatherFavorites);
     }
 
     public void saveTemperatureMetric(TemperatureMetric metric) {

@@ -15,6 +15,7 @@ import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
 import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
+import com.acbelter.weatherapp.domain.utils.TemperatureMetricConverter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -124,14 +125,14 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public void bind(CurrentWeatherFavorites weather) {
             setWeatherView(weather);
             tvCity.setText(weather.getCityData().getShortName());
-            tvTemperature.setText(String.valueOf(weather.getTemperature()));
+            int temperature = TemperatureMetricConverter.getSupportedTemperature(weather.getTemperature(), weather.getTemperatureMetric());
+            tvTemperature.setText(String.valueOf(temperature));
             tvMetric.setText(convertMetricToString(weather.getTemperatureMetric(), context));
             String humidity = String.valueOf(weather.getHumidity()) + " %";
             tvHumidity.setText(humidity);
             tvWind.setText(String.valueOf(weather.getWindSpeed()));
             tvDescription.setText(weather.getDescription());
             tvPressure.setText(String.valueOf(weather.getPressure()));
-
         }
 
         private String convertMetricToString(TemperatureMetric metric, Context context) {
@@ -184,8 +185,10 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public void bind(ForecastWeatherFavorites forecastElement) {
             setWeatherView(forecastElement);
-            tvMaxTemp.setText(String.valueOf(forecastElement.getMaxTemp()));
-            tvMinTemp.setText(String.valueOf(forecastElement.getMinTemp()));
+            int minTemp = TemperatureMetricConverter.getSupportedTemperature(forecastElement.getMinTemp(), forecastElement.getTemperatureMetric());
+            tvMinTemp.setText(String.valueOf(minTemp));
+            int maxTemp = TemperatureMetricConverter.getSupportedTemperature(forecastElement.getMaxTemp(), forecastElement.getTemperatureMetric());
+            tvMaxTemp.setText(String.valueOf(maxTemp));
             tvDate.setText(forecastElement.getDate());
         }
 

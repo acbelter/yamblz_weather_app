@@ -12,7 +12,6 @@ import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.domain.model.weather.WeatherType;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
-import com.acbelter.weatherapp.domain.utils.TemperatureMetricConverter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,6 +27,24 @@ public class WeatherDataConverter {
     private WeatherDataConverter() {
     }
 
+    public static CurrentWeatherFavorites updateCurrentWeatherMetric(CurrentWeatherFavorites currentWeatherFavorites, TemperatureMetric temperatureMetric) {
+        if (currentWeatherFavorites == null) {
+            throw new IllegalArgumentException("Converted object must be not null");
+        }
+
+        currentWeatherFavorites.setTemperatureMetric(temperatureMetric);
+        return currentWeatherFavorites;
+    }
+
+    public static ForecastWeatherFavorites updateForecastWeatherMetric(ForecastWeatherFavorites forecastWeatherFavorites, TemperatureMetric temperatureMetric) {
+        if (forecastWeatherFavorites == null) {
+            throw new IllegalArgumentException("Converted object must be not null");
+        }
+
+        forecastWeatherFavorites.setTemperatureMetric(temperatureMetric);
+        return forecastWeatherFavorites;
+    }
+
     public static CurrentWeatherFavorites fromNWWeatherDataToCurrentWeatherData(CurrentWeather currentWeather, WeatherParams weatherParams) {
         if (currentWeather == null) {
             throw new IllegalArgumentException("Converted object must be not null");
@@ -37,8 +54,7 @@ public class WeatherDataConverter {
             return null;
         }
 
-        int temperature = TemperatureMetricConverter
-                .getSupportedTemperature(currentWeather.getMain().getTemp(), weatherParams.getMetric());
+        double temperature = currentWeather.getMain().getTemp();
         CityData cityData = weatherParams.getCityData();
         TemperatureMetric temperatureMetric = weatherParams.getMetric();
         return new CurrentWeatherFavorites.Builder(temperature, cityData, temperatureMetric)
@@ -50,10 +66,8 @@ public class WeatherDataConverter {
                 .humidity(currentWeather.getMain().getHumidity())
                 .description(currentWeather.getWeather().get(0).getDescription())
                 .windSpeed((int) Math.round(currentWeather.getWind().getSpeed()))
-                .minTemp(TemperatureMetricConverter
-                        .getSupportedTemperature(currentWeather.getMain().getTempMin(), weatherParams.getMetric()))
-                .maxTemp(TemperatureMetricConverter
-                        .getSupportedTemperature(currentWeather.getMain().getTempMax(), weatherParams.getMetric()))
+                .minTemp(currentWeather.getMain().getTempMin())
+                .maxTemp(currentWeather.getMain().getTempMax())
                 .build();
     }
 
@@ -65,7 +79,6 @@ public class WeatherDataConverter {
         if (Integer.valueOf(forecastNW.getCod()) != 200) {
             return null;
         }
-
 
         List<ForecastElement> forecastListNW = forecastNW.getForecastElement();
         List<ForecastWeatherFavorites> forecastWeatherFavoritesList = new ArrayList<>();
@@ -82,8 +95,8 @@ public class WeatherDataConverter {
         long curTime = forecastElement.getDt() * 1000L;
         date.setTime(curTime);
         String dateStr = df.format(date);
-        int lowTemp = TemperatureMetricConverter.getSupportedTemperature(forecastElement.getTemp().getMin(), weatherParams.getMetric());
-        int highTemp = TemperatureMetricConverter.getSupportedTemperature(forecastElement.getTemp().getMax(), weatherParams.getMetric());
+        double lowTemp = forecastElement.getTemp().getMin();
+        double highTemp = forecastElement.getTemp().getMax();
         TemperatureMetric temperatureMetric = weatherParams.getMetric();
         return new ForecastWeatherFavorites.Builder(dateStr, lowTemp, highTemp, temperatureMetric)
                 .weatherType(extractWeatherType(forecastElement.getWeather()))

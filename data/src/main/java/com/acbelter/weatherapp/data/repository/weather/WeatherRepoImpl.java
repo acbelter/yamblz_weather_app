@@ -11,6 +11,7 @@ import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import timber.log.Timber;
 
@@ -31,6 +32,7 @@ public class WeatherRepoImpl implements WeatherRepo {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
         return databaseRepo.getCurrentWeather(weatherParams)
+                .map(currentWeatherFavorites -> WeatherDataConverter.updateCurrentWeatherMetric(currentWeatherFavorites, weatherParams.getMetric()))
                 .onErrorResumeNext(networkRepo.getCurrentWeather(weatherParams)
                         .map(currentWeather -> WeatherDataConverter
                                 .fromNWWeatherDataToCurrentWeatherData(currentWeather, weatherParams)))
@@ -44,6 +46,10 @@ public class WeatherRepoImpl implements WeatherRepo {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
         return databaseRepo.getForecastWeather(weatherParams)
+                .flatMap(forecastList -> Observable.fromIterable(forecastList)
+                        .map(element -> WeatherDataConverter
+                                .updateForecastWeatherMetric(element, weatherParams.getMetric()))
+                        .toList())
                 .onErrorResumeNext(networkRepo.getForecastWeather(weatherParams)
                         .map(forecastWeather -> WeatherDataConverter.fromNWWeatherDataToForecastWeatherData(forecastWeather, weatherParams)))
                 .doOnSuccess(data -> {

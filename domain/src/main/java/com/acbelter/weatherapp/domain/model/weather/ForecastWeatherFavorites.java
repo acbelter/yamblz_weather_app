@@ -5,8 +5,8 @@ import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 public class ForecastWeatherFavorites {
 
     private String date;
-    private int maxTemp;
-    private int minTemp;
+    private double maxTemp;
+    private double minTemp;
     private TemperatureMetric temperatureMetric;
     private WeatherType weatherType;
 
@@ -14,14 +14,14 @@ public class ForecastWeatherFavorites {
         //Requered params
 
         private final String date;
-        private final int highTemperature;
-        private final int lowTemperature;
+        private final double highTemperature;
+        private final double lowTemperature;
         private final TemperatureMetric temperatureMetric;
 
         //Optional params
         private WeatherType weatherType;
 
-        public Builder(String date, int highTemperature, int lowTemperature, TemperatureMetric temperatureMetric) {
+        public Builder(String date, double highTemperature, double lowTemperature, TemperatureMetric temperatureMetric) {
             this.date = date;
             this.highTemperature = highTemperature;
             this.lowTemperature = lowTemperature;
@@ -50,11 +50,11 @@ public class ForecastWeatherFavorites {
         return date;
     }
 
-    public int getMaxTemp() {
+    public double getMaxTemp() {
         return maxTemp;
     }
 
-    public int getMinTemp() {
+    public double getMinTemp() {
         return minTemp;
     }
 
@@ -64,5 +64,9 @@ public class ForecastWeatherFavorites {
 
     public TemperatureMetric getTemperatureMetric() {
         return temperatureMetric;
+    }
+
+    public void setTemperatureMetric(TemperatureMetric temperatureMetric) {
+        this.temperatureMetric = temperatureMetric;
     }
 }

@@ -5,7 +5,7 @@ import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 
 public class CurrentWeatherFavorites {
 
-    private int temperature;
+    private double temperature;
     private CityData cityData;
     private TemperatureMetric temperatureMetric;
     private WeatherType weatherType;
@@ -16,12 +16,12 @@ public class CurrentWeatherFavorites {
     private int humidity;
     private String description;
     private int windSpeed;
-    private int minTemp;
-    private int maxTemp;
+    private double minTemp;
+    private double maxTemp;
 
     public static class Builder {
         //Requered params
-        private final int temperature;
+        private final double temperature;
         private final CityData cityData;
         private final TemperatureMetric temperatureMetric;
 
@@ -34,10 +34,10 @@ public class CurrentWeatherFavorites {
         private int humidity;
         private String description;
         private int windSpeed;
-        private int minTemp;
-        private int maxTemp;
+        private double minTemp;
+        private double maxTemp;
 
-        public Builder(int temperature, CityData cityData,
+        public Builder(double temperature, CityData cityData,
                        TemperatureMetric temperatureMetric) {
             this.temperature = temperature;
             this.cityData = cityData;
@@ -84,12 +84,12 @@ public class CurrentWeatherFavorites {
             return this;
         }
 
-        public Builder minTemp(int val) {
+        public Builder minTemp(double val) {
             this.minTemp = val;
             return this;
         }
 
-        public Builder maxTemp(int val) {
+        public Builder maxTemp(double val) {
             this.maxTemp = val;
             return this;
         }
@@ -115,7 +115,7 @@ public class CurrentWeatherFavorites {
         maxTemp = builder.maxTemp;
     }
 
-    public int getTemperature() {
+    public double getTemperature() {
         return temperature;
     }
 
@@ -129,6 +129,10 @@ public class CurrentWeatherFavorites {
 
     public TemperatureMetric getTemperatureMetric() {
         return temperatureMetric;
+    }
+
+    public void setTemperatureMetric(TemperatureMetric temperatureMetric) {
+        this.temperatureMetric = temperatureMetric;
     }
 
     public long getTimestamp() {
@@ -159,11 +163,11 @@ public class CurrentWeatherFavorites {
         return windSpeed;
     }
 
-    public int getMinTemp() {
+    public double getMinTemp() {
         return minTemp;
     }
 
-    public int getMaxTemp() {
+    public double getMaxTemp() {
         return maxTemp;
     }
 
