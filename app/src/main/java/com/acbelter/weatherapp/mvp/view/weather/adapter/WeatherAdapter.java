@@ -118,9 +118,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public CurrentWeatherViewHolder(final View itemView) {
             super(itemView);
-
             ButterKnife.bind(this, itemView);
-
             this.context = itemView.getContext();
         }
 

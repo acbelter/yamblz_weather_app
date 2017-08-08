@@ -65,7 +65,6 @@ public class SearchFragment extends BaseFragment implements SearchView, CityAdap
     @Override
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
-
         presenter.onAttach(this);
     }
 

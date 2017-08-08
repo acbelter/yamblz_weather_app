@@ -36,7 +36,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements DrawerLocker
-        , MainActivityView, FavoritesCitiesAdapter.OnItemClickListener {
+        , MainActivityView
+        , FavoritesCitiesAdapter.OnItemClickListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -71,7 +72,11 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
 
         if (savedInstanceState == null) {
             WeatherFragment weatherFragment = WeatherFragment.newInstance();
-            getSupportFragmentManager().beginTransaction().add(R.id.content_frame, weatherFragment, WeatherFragment.class.getSimpleName()).commit();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.content_frame, weatherFragment, WeatherFragment.class.getSimpleName())
+                    .addToBackStack(null)
+                    .commit();
         }
 
         tvSettings.setOnClickListener(view -> {
@@ -201,7 +206,13 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
 
     @Override
     public void showCityList(List<CityData> cities) {
-        adapter.update(cities);
+        if (cities.isEmpty()) {
+            clearBackStack();
+            showFragment(SearchFragment.class);
+        } else {
+            showFragment(WeatherFragment.class);
+            adapter.update(cities);
+        }
     }
 
     @Override

@@ -46,7 +46,6 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     @Override
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
-
         presenter.onAttach(this);
     }
 
@@ -63,11 +62,6 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
         this.unbinder = ButterKnife.bind(this, view);
         setSwipeLayout();
         setAdapter();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         presenter.getWeather();
     }
 
@@ -128,7 +122,6 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     @Override
     public void showWeather(FullWeatherModel weatherData) {
         adapter.update(weatherData);
-        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

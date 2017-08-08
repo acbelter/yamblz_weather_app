@@ -25,4 +25,11 @@ public class AutocompleteData {
     public void setPlaceId(String placeId) {
         this.placeId = placeId;
     }
+
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + (cityName == null ? 0 : cityName.hashCode());
+        result = 31 * result + (placeId == null ? 0 : placeId.hashCode());
+        return result;
+    }
 }
