@@ -82,8 +82,8 @@ public class WeatherDataConverter {
 
         List<ForecastElement> forecastListNW = forecastNW.getForecastElement();
         List<ForecastWeatherFavorites> forecastWeatherFavoritesList = new ArrayList<>();
-        for (ForecastElement element : forecastListNW) {
-            ForecastWeatherFavorites forecastWeatherFavorites = fromForecastElementToWeatherForecast(element, weatherParams);
+        for (int i = 1; i < forecastListNW.size(); ++i) { //skip first element
+            ForecastWeatherFavorites forecastWeatherFavorites = fromForecastElementToWeatherForecast(forecastListNW.get(i), weatherParams);
             forecastWeatherFavoritesList.add(forecastWeatherFavorites);
         }
         return forecastWeatherFavoritesList;
@@ -102,7 +102,6 @@ public class WeatherDataConverter {
                 .weatherType(extractWeatherType(forecastElement.getWeather()))
                 .build();
     }
-
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     static WeatherType extractWeatherType(List<Weather> weatherList) {
