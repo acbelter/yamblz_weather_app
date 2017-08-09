@@ -25,7 +25,12 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
     public void updateWeather() {
         if (getView() == null)
             return;
+        getView().startLoading();
         unSubscribeOnDetach(weatherInteractor.updateWeather()
-                .subscribe(weatherData -> getView().showWeather(weatherData), throwable -> getView().showError()));
+                .subscribe(weatherData -> {
+                            getView().showWeather(weatherData);
+                            getView().stopLoading();
+                        }
+                        , throwable -> getView().showError()));
     }
 }

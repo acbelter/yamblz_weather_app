@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import timber.log.Timber;
 
 import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.CELSIUS;
 import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.FAHRENHEIT;
@@ -131,6 +132,8 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        App.getInstance().releaseActivityComponent();
+        Timber.d("Remove weather component");
         unbinder.unbind();
     }
 

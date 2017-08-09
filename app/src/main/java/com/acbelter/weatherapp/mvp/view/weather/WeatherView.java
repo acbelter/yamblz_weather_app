@@ -5,7 +5,9 @@ import com.acbelter.weatherapp.mvp.view.common.BaseView;
 
 public interface WeatherView extends BaseView {
 
-    void showWeatherLoading();
+    void startLoading();
+
+    void stopLoading();
 
     void showWeather(FullWeatherModel weatherData);
 

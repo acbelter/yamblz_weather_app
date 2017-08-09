@@ -71,20 +71,15 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
         presenter.onAttach(this);
 
         if (savedInstanceState == null) {
-            WeatherFragment weatherFragment = WeatherFragment.newInstance();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.content_frame, weatherFragment, WeatherFragment.class.getSimpleName())
-                    .addToBackStack(null)
-                    .commit();
+            addFragment(WeatherFragment.class);
         }
 
         tvSettings.setOnClickListener(view -> {
-            showFragment(SettingsFragment.class);
+            replaceFragment(SettingsFragment.class);
             drawerLayout.closeDrawer(GravityCompat.START);
         });
         tvInfo.setOnClickListener(view -> {
-            showFragment(InfoFragment.class);
+            replaceFragment(InfoFragment.class);
             drawerLayout.closeDrawer(GravityCompat.START);
         });
 
@@ -103,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     private void initSearchEdittext() {
         etSearch.setOnTouchListener((view, motionEvent) -> {
             if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
-                showFragment(SearchFragment.class);
+                replaceFragment(SearchFragment.class);
                 drawerLayout.closeDrawer(GravityCompat.START);
             }
             return true;
@@ -154,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     public void onStop() {
         super.onStop();
         presenter.onDetach();
+        App.getInstance().releaseActivityComponent();
     }
 
     @Override
@@ -167,7 +163,23 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
             super.onBackPressed();
     }
 
-    private void showFragment(Class fragmentClass) {
+    private void addFragment(Class fragmentClass) {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(fragmentClass.getSimpleName());
+        if (fragment == null) {
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.content_frame, fragment, fragmentClass.getSimpleName())
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack(null)
+                        .commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void replaceFragment(Class fragmentClass) {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(fragmentClass.getSimpleName());
         if (fragment == null) {
             try {
@@ -208,20 +220,15 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     public void showCityList(List<CityData> cities) {
         if (cities.isEmpty()) {
             clearBackStack();
-            showFragment(SearchFragment.class);
+            addFragment(SearchFragment.class);
         } else {
-            showFragment(WeatherFragment.class);
+            replaceFragment(WeatherFragment.class);
             adapter.update(cities);
         }
     }
 
     @Override
     public void showWeather() {
-        clearBackStack();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, WeatherFragment.newInstance(), WeatherFragment.class.getSimpleName())
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .commit();
         drawerLayout.closeDrawer(GravityCompat.START);
     }
 

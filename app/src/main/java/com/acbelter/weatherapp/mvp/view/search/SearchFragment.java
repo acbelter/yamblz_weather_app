@@ -128,7 +128,6 @@ public class SearchFragment extends BaseFragment implements SearchView, CityAdap
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
         unbinder.unbind();
     }
 

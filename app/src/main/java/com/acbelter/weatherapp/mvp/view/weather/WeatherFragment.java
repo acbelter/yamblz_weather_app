@@ -1,5 +1,6 @@
 package com.acbelter.weatherapp.mvp.view.weather;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -26,7 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import timber.log.Timber;
 
-public class WeatherFragment extends BaseFragment implements WeatherView {
+public class WeatherFragment extends BaseFragment implements WeatherView, SharedPreferences.OnSharedPreferenceChangeListener {
 
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -35,6 +36,9 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
 
     @Inject
     WeatherPresenter presenter;
+
+    @Inject
+    SharedPreferences preferences;
 
     private Unbinder unbinder;
     private WeatherAdapter adapter;
@@ -63,6 +67,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
         setSwipeLayout();
         setAdapter();
         presenter.getWeather();
+        preferences.registerOnSharedPreferenceChangeListener(this);
     }
 
     private void setAdapter() {
@@ -88,6 +93,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
         App.getInstance().releaseActivityComponent();
         Timber.d("Remove weather component");
         unbinder.unbind();
+        preferences.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -112,11 +118,16 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
     }
 
     @Override
-    public void showWeatherLoading() {
+    public void startLoading() {
         if (swipeRefreshLayout.isRefreshing()) {
             return;
         }
         swipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void stopLoading() {
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -126,11 +137,15 @@ public class WeatherFragment extends BaseFragment implements WeatherView {
 
     @Override
     public void showError() {
-        swipeRefreshLayout.setRefreshing(false);
         Snackbar errorSnackbar =
                 Snackbar.make(swipeRefreshLayout, R.string.text_weather_error, Snackbar.LENGTH_LONG);
         errorSnackbar.setAction(R.string.ok, v -> {
         });
         errorSnackbar.show();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        presenter.getWeather();
     }
 }
