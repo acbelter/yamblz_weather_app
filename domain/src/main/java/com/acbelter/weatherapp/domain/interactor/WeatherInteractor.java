@@ -13,11 +13,11 @@ import io.reactivex.Single;
 
 public class WeatherInteractor {
 
-    private WeatherRepo weatherRepo;
-    private DatabaseRepo databaseRepo;
+    private final WeatherRepo weatherRepo;
+    private final DatabaseRepo databaseRepo;
 
-    private Scheduler schedulerIO;
-    private Scheduler schedulerMain;
+    private final Scheduler schedulerIO;
+    private final Scheduler schedulerMain;
 
     public WeatherInteractor(WeatherRepo weatherRepo, DatabaseRepo databaseRepo, Scheduler schedulersIO, Scheduler schedulerMain) {
         this.weatherRepo = weatherRepo;
@@ -30,7 +30,7 @@ public class WeatherInteractor {
     public Single<FullWeatherModel> getWeather() {
         return Single
                 .zip(getCurrentWeather(), getForecast(), this::convertCachedWeather)
-                .doOnSuccess(fullWeatherModel -> databaseRepo.updateWeather(fullWeatherModel))
+                .doOnSuccess(databaseRepo::updateWeather)
                 .subscribeOn(schedulerIO)
                 .observeOn(schedulerMain);
     }
@@ -38,7 +38,7 @@ public class WeatherInteractor {
     public Single<FullWeatherModel> updateWeather() {
         return Single
                 .zip(updateCurrenWeather(), updateForecast(), this::convertUpdatedWeather)
-                .doOnSuccess(fullWeatherModel -> databaseRepo.updateWeather(fullWeatherModel))
+                .doOnSuccess(databaseRepo::updateWeather)
                 .subscribeOn(schedulerIO)
                 .observeOn(schedulerMain);
     }
@@ -46,7 +46,7 @@ public class WeatherInteractor {
     public Single<FullWeatherModel> addNewWeather() {
         return Single
                 .zip(updateCurrenWeather(), updateForecast(), this::convertUpdatedWeather)
-                .doOnSuccess(fullWeatherModel -> databaseRepo.saveWeather(fullWeatherModel))
+                .doOnSuccess(databaseRepo::saveWeather)
                 .subscribeOn(schedulerIO)
                 .observeOn(schedulerMain);
     }

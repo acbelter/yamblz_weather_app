@@ -22,7 +22,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
     }
 
     private List<AutocompleteData> locations;
-    private OnItemClickListener itemClickListener;
+    private final OnItemClickListener itemClickListener;
 
     public CityAdapter(OnItemClickListener clickListener) {
         locations = new ArrayList<>();

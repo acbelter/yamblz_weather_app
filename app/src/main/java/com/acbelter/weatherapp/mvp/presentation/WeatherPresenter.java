@@ -8,7 +8,7 @@ import javax.inject.Inject;
 
 public class WeatherPresenter extends BasePresenter<WeatherView> {
 
-    private WeatherInteractor weatherInteractor;
+    private final WeatherInteractor weatherInteractor;
 
     @Inject
     public WeatherPresenter(WeatherInteractor weatherInteractor) {

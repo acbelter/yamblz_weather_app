@@ -15,7 +15,8 @@ import timber.log.Timber;
 
 @Module
 public class AppModule {
-    private Context appContext;
+
+    private final Context appContext;
 
     public AppModule(Context context) {
         appContext = context.getApplicationContext();

@@ -11,9 +11,9 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 
-public class DatabaseWeatherConverter {
+class DatabaseWeatherConverter {
 
-    public static CityData fromDatabaseWeatherDataToCityData(DatabaseWeatherData databaseWeatherData) {
+    static CityData fromDatabaseWeatherDataToCityData(DatabaseWeatherData databaseWeatherData) {
         if (databaseWeatherData == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
@@ -39,9 +39,7 @@ public class DatabaseWeatherConverter {
             throw new IllegalArgumentException("Converted object must be not null");
         }
 
-        Gson gson = new Gson();
-
-        return (List<ForecastWeatherFavorites>) gson
+        return new Gson()
                 .fromJson(databaseWeatherData.getForecast()
                         , new TypeToken<List<ForecastWeatherFavorites>>() {
                         }.getType());

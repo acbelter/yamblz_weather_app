@@ -22,7 +22,7 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
     }
 
     private List<CityData> favoritesCities;
-    private OnItemClickListener itemClickListener;
+    private final OnItemClickListener itemClickListener;
 
     public FavoritesCitiesAdapter(OnItemClickListener clickListener) {
         this.favoritesCities = new ArrayList<>();

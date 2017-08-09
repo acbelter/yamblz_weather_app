@@ -9,7 +9,7 @@ import io.reactivex.Observable;
 
 public class SettingsInteractor {
 
-    private SettingsRepo settingsRepo;
+    private final SettingsRepo settingsRepo;
 
     public SettingsInteractor(SettingsRepo settingsRepo) {
         this.settingsRepo = settingsRepo;

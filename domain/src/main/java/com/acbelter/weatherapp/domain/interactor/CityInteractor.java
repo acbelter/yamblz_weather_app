@@ -13,9 +13,9 @@ import io.reactivex.Single;
 
 public class CityInteractor {
 
-    private CityRepo cityRepo;
-    private Scheduler schedulerIO;
-    private Scheduler schedulerMain;
+    private final CityRepo cityRepo;
+    private final Scheduler schedulerIO;
+    private final Scheduler schedulerMain;
 
     public CityInteractor(CityRepo cityRepo, Scheduler schedulerIO, Scheduler schedulerMain) {
         this.cityRepo = cityRepo;

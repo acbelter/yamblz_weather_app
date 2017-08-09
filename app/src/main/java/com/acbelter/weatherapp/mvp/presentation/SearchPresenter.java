@@ -11,8 +11,8 @@ import javax.inject.Inject;
 
 public class SearchPresenter extends BasePresenter<SearchView> {
 
-    private CityInteractor cityInteractor;
-    private WeatherInteractor weatherInteractor;
+    private final CityInteractor cityInteractor;
+    private final WeatherInteractor weatherInteractor;
 
     @Inject
     public SearchPresenter(CityInteractor cityInteractor, WeatherInteractor weatherInteractor) {
@@ -40,7 +40,7 @@ public class SearchPresenter extends BasePresenter<SearchView> {
                 }));
     }
 
-    public void closeActivity() {
+    private void closeActivity() {
         if (getView() != null)
             getView().close();
     }

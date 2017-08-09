@@ -22,12 +22,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-public class WeatherDataConverter {
+class WeatherDataConverter {
 
     private WeatherDataConverter() {
     }
 
-    public static CurrentWeatherFavorites updateCurrentWeatherMetric(CurrentWeatherFavorites currentWeatherFavorites, TemperatureMetric temperatureMetric) {
+    static CurrentWeatherFavorites updateCurrentWeatherMetric(CurrentWeatherFavorites currentWeatherFavorites, TemperatureMetric temperatureMetric) {
         if (currentWeatherFavorites == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
@@ -36,7 +36,7 @@ public class WeatherDataConverter {
         return currentWeatherFavorites;
     }
 
-    public static ForecastWeatherFavorites updateForecastWeatherMetric(ForecastWeatherFavorites forecastWeatherFavorites, TemperatureMetric temperatureMetric) {
+    static ForecastWeatherFavorites updateForecastWeatherMetric(ForecastWeatherFavorites forecastWeatherFavorites, TemperatureMetric temperatureMetric) {
         if (forecastWeatherFavorites == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
@@ -45,7 +45,7 @@ public class WeatherDataConverter {
         return forecastWeatherFavorites;
     }
 
-    public static CurrentWeatherFavorites fromNWWeatherDataToCurrentWeatherData(CurrentWeather currentWeather, WeatherParams weatherParams) {
+    static CurrentWeatherFavorites fromNWWeatherDataToCurrentWeatherData(CurrentWeather currentWeather, WeatherParams weatherParams) {
         if (currentWeather == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
@@ -71,7 +71,7 @@ public class WeatherDataConverter {
                 .build();
     }
 
-    public static List<ForecastWeatherFavorites> fromNWWeatherDataToForecastWeatherData(ForecastWeather forecastNW, WeatherParams weatherParams) {
+    static List<ForecastWeatherFavorites> fromNWWeatherDataToForecastWeatherData(ForecastWeather forecastNW, WeatherParams weatherParams) {
         if (forecastNW == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }

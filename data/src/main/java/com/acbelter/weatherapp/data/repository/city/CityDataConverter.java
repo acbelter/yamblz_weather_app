@@ -11,9 +11,9 @@ import java.util.List;
 
 import static com.acbelter.weatherapp.data.network.ApiErrors.PlacesApiErrors.OK;
 
-public class CityDataConverter {
+class CityDataConverter {
 
-    public static List<AutocompleteData> fromPlacesToDataList(Places places) {
+    static List<AutocompleteData> fromPlacesToDataList(Places places) {
 
         if (places == null) {
             throw new IllegalArgumentException("Converted object must be not null");

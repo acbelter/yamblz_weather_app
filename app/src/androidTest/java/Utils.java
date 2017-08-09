@@ -6,15 +6,15 @@ import android.net.NetworkInfo;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 
-public class Utils {
+class Utils {
 
-    private ActivityTestRule activityTestRule;
+    private final ActivityTestRule activityTestRule;
 
-    public Utils(ActivityTestRule activityTestRule) {
+    Utils(ActivityTestRule activityTestRule) {
         this.activityTestRule = activityTestRule;
     }
 
-    public void rotateScreen() {
+    void rotateScreen() {
         int orientation = InstrumentationRegistry.getTargetContext().getResources().getConfiguration().orientation;
 
         activityTestRule.getActivity().setRequestedOrientation(
@@ -22,7 +22,7 @@ public class Utils {
                         ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
-    public boolean isNetworkAvailable() {
+    boolean isNetworkAvailable() {
 
         ConnectivityManager connectivityManager = (ConnectivityManager) activityTestRule.getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();

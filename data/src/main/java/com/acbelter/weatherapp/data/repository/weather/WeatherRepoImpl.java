@@ -17,9 +17,9 @@ import timber.log.Timber;
 
 public class WeatherRepoImpl implements WeatherRepo {
 
-    private NetworkRepo networkRepo;
-    private SettingsPreference settingsPreference;
-    private DatabaseRepo databaseRepo;
+    private final NetworkRepo networkRepo;
+    private final SettingsPreference settingsPreference;
+    private final DatabaseRepo databaseRepo;
 
     public WeatherRepoImpl(NetworkRepo networkRepo, SettingsPreference settingsPreference, DatabaseRepo databaseRepo) {
         this.networkRepo = networkRepo;
@@ -36,9 +36,7 @@ public class WeatherRepoImpl implements WeatherRepo {
                 .onErrorResumeNext(networkRepo.getCurrentWeather(weatherParams)
                         .map(currentWeather -> WeatherDataConverter
                                 .fromNWWeatherDataToCurrentWeatherData(currentWeather, weatherParams)))
-                .doOnSuccess(data -> {
-                    Timber.d("Current weather data from network: %s", data);
-                });
+                .doOnSuccess(data -> Timber.d("Current weather data from network: %s", data));
     }
 
     @Override
@@ -52,9 +50,7 @@ public class WeatherRepoImpl implements WeatherRepo {
                         .toList())
                 .onErrorResumeNext(networkRepo.getForecastWeather(weatherParams)
                         .map(forecastWeather -> WeatherDataConverter.fromNWWeatherDataToForecastWeatherData(forecastWeather, weatherParams)))
-                .doOnSuccess(data -> {
-                    Timber.d("Current weather data from network: %s", data);
-                });
+                .doOnSuccess(data -> Timber.d("Current weather data from network: %s", data));
     }
 
     @Override

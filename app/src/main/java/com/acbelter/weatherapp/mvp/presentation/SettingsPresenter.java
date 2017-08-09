@@ -13,7 +13,7 @@ import timber.log.Timber;
 
 public class SettingsPresenter extends BasePresenter<SettingsView> {
 
-    private SettingsInteractor settingsInteractor;
+    private final SettingsInteractor settingsInteractor;
 
     @Inject
     WeatherScheduleJob scheduleJob;
@@ -29,12 +29,8 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
         if (getView() == null)
             return;
         unSubscribeOnDetach(settingsInteractor.getUserSettings()
-                .subscribe(settings -> {
-                            getView().setSettings(settings);
-                        }
-                        , error -> {
-                            Timber.v("ERROR_SETTINGS = " + error);
-                        }));
+                .subscribe(settings -> getView().setSettings(settings)
+                        , error -> Timber.v("ERROR_SETTINGS = " + error)));
     }
 
     public void saveTemperatureMetric(TemperatureMetric metric) {

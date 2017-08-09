@@ -11,9 +11,9 @@ public class BasePresenter<V extends BaseView> {
 
     private V view;
 
-    private CompositeDisposable disposable = new CompositeDisposable();
+    private final CompositeDisposable disposable = new CompositeDisposable();
 
-    public void unSubscribeOnDetach(Disposable... disposables) {
+    protected void unSubscribeOnDetach(Disposable... disposables) {
         disposable.addAll(disposables);
     }
 

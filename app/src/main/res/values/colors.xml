@@ -6,14 +6,9 @@
 
     <color name="colorNavHeader">@color/colorPrimary</color>
     <color name="colorNavHeaderText">@android:color/white</color>
-    <color name="colorTextShadow">@android:color/darker_gray</color>
     <color name="colorTextWeatherLight">@android:color/white</color>
     <color name="colorTextWeatherDark">@android:color/black</color>
 
-    <color name="sunshine_light_blue">#ff64c2f4</color>
-    <color name="sunshine_blue">#ff1ca8f4</color>
-
-    <color name="colorBgWeatherDefault">@color/colorPrimary</color>
     <color name="colorBgWeatherNight">#37474F</color>
     <color name="colorBgWeatherSun">#4FC3F7</color>
     <color name="colorBgWeatherClouds">#B3E5FC</color>

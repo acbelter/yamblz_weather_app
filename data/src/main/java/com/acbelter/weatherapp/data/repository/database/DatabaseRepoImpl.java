@@ -11,7 +11,6 @@ import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
 import com.google.gson.Gson;
 
 import java.util.List;
-import java.util.concurrent.Executor;
 
 import io.reactivex.Flowable;
 import io.reactivex.Single;
@@ -19,11 +18,9 @@ import io.reactivex.Single;
 public class DatabaseRepoImpl implements DatabaseRepo {
 
     private WeatherDAO weatherDAO;
-    private Executor executor;
 
-    public DatabaseRepoImpl(WeatherDAO weatherDAO, Executor executor) {
+    public DatabaseRepoImpl(WeatherDAO weatherDAO) {
         this.weatherDAO = weatherDAO;
-        this.executor = executor;
     }
 
     @Override

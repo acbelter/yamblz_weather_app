@@ -23,9 +23,9 @@ public class SettingsPreference {
     private static final String KEY_LAST_UPDATE_TIMESTAMP = "pref_last_update_timestamp";
     private static final String KEY_LAST_WEATHER_DATA = "pref_last_weather_data";
 
-    private static final long MIN_UPDATE_INTERVAL = 1 * 60 * 60 * 1000; // interval is 1 hour
+    private static final long MIN_UPDATE_INTERVAL = 60 * 60 * 1000; // interval is 1 hour
 
-    private SharedPreferences sharedPreferences;
+    private final SharedPreferences sharedPreferences;
 
     public SettingsPreference(SharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;

@@ -114,7 +114,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @BindView(R.id.weather_image)
         ImageView weatherImage;
 
-        private Context context;
+        private final Context context;
 
         public CurrentWeatherViewHolder(final View itemView) {
             super(itemView);

@@ -11,7 +11,7 @@ public class ApiErrors {
         REQUEST_DENIED("REQUEST_DENIED"),
         INVALID_REQUEST("INVALID_REQUEST");
 
-        String error;
+        final String error;
 
         PlacesApiErrors(String error) {
             this.error = error;
@@ -33,7 +33,7 @@ public class ApiErrors {
         INVALID_REQUEST("INVALID_REQUEST"),
         NOT_FOUND("NOT_FOUND");
 
-        String error;
+        final String error;
 
         LocationApiErrors(String error) {
             this.error = error;

@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <integer name="anim_fade_duration">500</integer>
-    <integer name="anim_bg_duration">1000</integer>
-</resources>

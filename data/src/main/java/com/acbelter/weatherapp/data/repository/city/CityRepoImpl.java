@@ -17,9 +17,9 @@ import timber.log.Timber;
 
 public class CityRepoImpl implements CityRepo {
 
-    private NetworkRepo networkRepo;
-    private DatabaseRepo databaseRepo;
-    private SettingsPreference settingsPreference;
+    private final NetworkRepo networkRepo;
+    private final DatabaseRepo databaseRepo;
+    private final SettingsPreference settingsPreference;
 
     public CityRepoImpl(NetworkRepo networkRepo, DatabaseRepo databaseRepo, SettingsPreference settingsPreference) {
         this.networkRepo = networkRepo;
@@ -33,9 +33,7 @@ public class CityRepoImpl implements CityRepo {
                 .flatMap(places -> Observable.fromIterable(places.getPredictions()))
                 .map(CityDataConverter::convert)
                 .toList()
-                .doOnSuccess(data -> {
-                    Timber.d("Current city data from network: %s", data);
-                });
+                .doOnSuccess(data -> Timber.d("Current city data from network: %s", data));
     }
 
     @Override

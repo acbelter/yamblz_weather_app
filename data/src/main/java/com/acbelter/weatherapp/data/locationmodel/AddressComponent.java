@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class AddressComponent {
+class AddressComponent {
 
     @SerializedName("long_name")
     @Expose

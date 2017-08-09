@@ -32,7 +32,7 @@ public class SettingsData {
         }
     }
 
-    public SettingsData(Builder builder) {
+    private SettingsData(Builder builder) {
         metric = builder.metric;
         updateWeatherInterval = builder.updateWeatherInterval;
         cityData = builder.cityData;

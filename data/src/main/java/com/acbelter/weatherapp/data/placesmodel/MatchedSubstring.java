@@ -3,7 +3,7 @@ package com.acbelter.weatherapp.data.placesmodel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MatchedSubstring {
+class MatchedSubstring {
 
     @SerializedName("length")
     @Expose

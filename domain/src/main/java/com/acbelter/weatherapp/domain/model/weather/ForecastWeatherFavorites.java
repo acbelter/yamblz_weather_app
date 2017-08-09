@@ -38,7 +38,7 @@ public class ForecastWeatherFavorites {
         }
     }
 
-    public ForecastWeatherFavorites(Builder builder) {
+    private ForecastWeatherFavorites(Builder builder) {
         date = builder.date;
         maxTemp = builder.highTemperature;
         minTemp = builder.lowTemperature;

@@ -9,7 +9,7 @@ import io.reactivex.Observable;
 
 public class SettingsRepoImpl implements SettingsRepo {
 
-    private SettingsPreference preference;
+    private final SettingsPreference preference;
 
     public SettingsRepoImpl(SettingsPreference preference) {
         this.preference = preference;

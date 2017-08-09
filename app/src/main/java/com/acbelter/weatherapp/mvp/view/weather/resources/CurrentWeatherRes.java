@@ -67,16 +67,8 @@ public class CurrentWeatherRes {
         }
 
         CurrentWeatherRes that = (CurrentWeatherRes) o;
-        if (weatherImageResId != that.weatherImageResId) {
-            return false;
-        }
-        if (backgroundColorResId != that.backgroundColorResId) {
-            return false;
-        }
-        if (textColorResId != that.textColorResId) {
-            return false;
-        }
-        return true;
+        return ((weatherImageResId != that.weatherImageResId)
+                || (backgroundColorResId != that.backgroundColorResId) || (textColorResId != that.textColorResId));
     }
 
     @Override

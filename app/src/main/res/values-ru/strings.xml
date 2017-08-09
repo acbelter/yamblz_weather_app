@@ -2,15 +2,11 @@
 <resources>
     <!--Common resources-->
     <string name="app_name">YamblzWeatherApp</string>
-    <string name="nav_drawer_open">Открыть боковую панель</string>
-    <string name="nav_drawer_close">Закрыть боковую панель</string>
     <string name="ok">OK</string>
 
     <!--Weather screen-->
     <string name="weather">Погода</string>
     <string name="text_weather_error">Не удалось получить погоду</string>
-    <string name="min">мин:</string>
-    <string name="max">макс:</string>
     <string name="mm">мм</string>
     <string name="ms">м/с</string>
     <string name="pressure">Давление:</string>
@@ -20,8 +16,6 @@
     <!--Settings screen-->
     <string name="settings_title_temperature">Температура</string>
     <string name="settings">Настройки</string>
-    <string name="weather_settings">Настройки погоды</string>
-    <string name="weather_update_setting">Настройка обновления погоды</string>
     <string name="update_interval">Интервал обновления</string>
 
     <string name="min_15">15 минут</string>

@@ -41,7 +41,7 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
     @Inject
     SettingsPresenter presenter;
 
-    private static final long INTERVAL_MULTIPLEXOR = 1 * 60 * 1000;
+    private static final long INTERVAL_MULTIPLEXOR = 60 * 1000;
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -107,7 +107,7 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
     }
 
     private void saveUpdateInterval(RadioGroup radioGroup) {
-        long interval = 0;
+        long interval;
         switch (radioGroup.getCheckedRadioButtonId()) {
             case R.id.rbMin15:
                 interval = 15 * INTERVAL_MULTIPLEXOR;

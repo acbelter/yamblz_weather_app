@@ -16,9 +16,9 @@ import io.reactivex.Single;
 
 public class NetworkRepoImpl implements NetworkRepo {
 
-    private WeatherApi weatherApi;
-    private PlacesApi placesApi;
-    private LocationApi locationApi;
+    private final WeatherApi weatherApi;
+    private final PlacesApi placesApi;
+    private final LocationApi locationApi;
 
     private String locale;
 
