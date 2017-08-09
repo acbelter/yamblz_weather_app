@@ -9,8 +9,6 @@ import com.acbelter.weatherapp.scheduler.WeatherScheduleJob;
 
 import javax.inject.Inject;
 
-import timber.log.Timber;
-
 public class SettingsPresenter extends BasePresenter<SettingsView> {
 
     private final SettingsInteractor settingsInteractor;
@@ -29,8 +27,7 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
         if (getView() == null)
             return;
         unSubscribeOnDetach(settingsInteractor.getUserSettings()
-                .subscribe(settings -> getView().setSettings(settings)
-                        , error -> Timber.v("ERROR_SETTINGS = " + error)));
+                .subscribe(settings -> getView().setSettings(settings)));
     }
 
     public void saveTemperatureMetric(TemperatureMetric metric) {

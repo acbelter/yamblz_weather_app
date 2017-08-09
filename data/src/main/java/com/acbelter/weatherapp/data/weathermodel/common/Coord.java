@@ -12,7 +12,7 @@ public class Coord {
     @Expose
     private double lat;
 
-    public Coord(double lon, double lat) {
+    public Coord(double lat, double lon) {
         this.lon = lon;
         this.lat = lat;
     }

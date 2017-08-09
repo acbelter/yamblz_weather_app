@@ -1,6 +1,5 @@
 package com.acbelter.weatherapp.data.dbmodel;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
@@ -10,10 +9,9 @@ import android.arch.persistence.room.PrimaryKey;
 public class DatabaseWeatherData {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    @ColumnInfo(name = "coordinates")
     private String coordinates;
     private String cityShortName;
-    private String currentWeather;
+    private String current;
     private String forecast;
 
     public int getId() {
@@ -40,12 +38,12 @@ public class DatabaseWeatherData {
         this.cityShortName = cityShortName;
     }
 
-    public String getCurrentWeather() {
-        return currentWeather;
+    public String getCurrent() {
+        return current;
     }
 
-    public void setCurrentWeather(String currentWeather) {
-        this.currentWeather = currentWeather;
+    public void setCurrent(String current) {
+        this.current = current;
     }
 
     public String getForecast() {

@@ -32,10 +32,13 @@ public class WeatherRepoImpl implements WeatherRepo {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
         return databaseRepo.getCurrentWeather(weatherParams)
-                .map(currentWeatherFavorites -> WeatherDataConverter.updateCurrentWeatherMetric(currentWeatherFavorites, weatherParams.getMetric()))
+                .map(currentWeatherFavorites ->
+                        WeatherDataConverter.updateCurrentWeatherMetric(currentWeatherFavorites, weatherParams.getMetric()))
+                .doOnSuccess(data -> Timber.v("Current data from DB: %s", data))
                 .onErrorResumeNext(networkRepo.getCurrentWeather(weatherParams)
-                        .map(currentWeather -> WeatherDataConverter
-                                .fromNWWeatherDataToCurrentWeatherData(currentWeather, weatherParams)))
+                        .map(currentWeather ->
+                                WeatherDataConverter
+                                        .fromNWWeatherDataToCurrentWeatherData(currentWeather, weatherParams)))
                 .doOnSuccess(data -> Timber.d("Current weather data from network: %s", data));
     }
 
@@ -48,9 +51,10 @@ public class WeatherRepoImpl implements WeatherRepo {
                         .map(element -> WeatherDataConverter
                                 .updateForecastWeatherMetric(element, weatherParams.getMetric()))
                         .toList())
+                .doOnSuccess(data -> Timber.d("Forecast weather data from DB: %s", data))
                 .onErrorResumeNext(networkRepo.getForecastWeather(weatherParams)
                         .map(forecastWeather -> WeatherDataConverter.fromNWWeatherDataToForecastWeatherData(forecastWeather, weatherParams)))
-                .doOnSuccess(data -> Timber.d("Current weather data from network: %s", data));
+                .doOnSuccess(data -> Timber.d("Forecast weather data from network: %s", data));
     }
 
     @Override

@@ -35,7 +35,7 @@ public class WeatherScheduleJob extends Job {
     @NonNull
     @Override
     protected Result onRunJob(Params params) {
-        Timber.v("onRunJob");
+        Timber.v("Run Job");
         serializeCurrentWeather();
 
         return Result.SUCCESS;
@@ -51,7 +51,7 @@ public class WeatherScheduleJob extends Job {
     }
 
     public void startJob() {
-        Timber.v("startJob");
+        Timber.v("start Job");
         if (BuildConfig.DEBUG)
             settingsInteractor.getUserSettings().subscribe(settings ->
                     new JobRequest.Builder(TAG)

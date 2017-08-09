@@ -31,7 +31,7 @@ class DatabaseWeatherConverter {
             throw new IllegalArgumentException("Converted object must be not null");
         }
 
-        return new Gson().fromJson(databaseWeatherData.getCurrentWeather(), CurrentWeatherFavorites.class);
+        return new Gson().fromJson(databaseWeatherData.getCurrent(), CurrentWeatherFavorites.class);
     }
 
     public static List<ForecastWeatherFavorites> fromDatabaseWeatherDataToForecastWeather(DatabaseWeatherData databaseWeatherData) {
@@ -54,7 +54,7 @@ class DatabaseWeatherConverter {
         String shortName = fullWeatherModel.getCityData().getShortName();
         double latitude = fullWeatherModel.getCityData().getLatitude();
         double longitude = fullWeatherModel.getCityData().getLongitude();
-        Coord coord = new Coord(longitude, latitude);
+        Coord coord = new Coord(latitude, longitude);
         String coordinates = gson.toJson(coord);
         String currentWeather = gson.toJson(fullWeatherModel.getCurrentWeatherFavorites());
         String forecast = gson.toJson(fullWeatherModel.getForrecast());
@@ -62,7 +62,7 @@ class DatabaseWeatherConverter {
         DatabaseWeatherData databaseWeatherData = new DatabaseWeatherData();
         databaseWeatherData.setCoordinates(coordinates);
         databaseWeatherData.setCityShortName(shortName);
-        databaseWeatherData.setCurrentWeather(currentWeather);
+        databaseWeatherData.setCurrent(currentWeather);
         databaseWeatherData.setForecast(forecast);
         return databaseWeatherData;
     }

@@ -19,7 +19,8 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
         if (getView() == null)
             return;
         unSubscribeOnDetach(weatherInteractor.getWeather()
-                .subscribe(fullWeatherModel -> getView().showWeather(fullWeatherModel)));
+                .subscribe(fullWeatherModel -> getView().showWeather(fullWeatherModel)
+                        , throwable -> getView().showError()));
     }
 
     public void updateWeather() {
@@ -29,8 +30,11 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
         unSubscribeOnDetach(weatherInteractor.updateWeather()
                 .subscribe(weatherData -> {
                             getView().showWeather(weatherData);
-                            getView().stopLoading();
+
                         }
-                        , throwable -> getView().showError()));
+                        , throwable -> {
+                            getView().stopLoading();
+                            getView().showError();
+                        }));
     }
 }

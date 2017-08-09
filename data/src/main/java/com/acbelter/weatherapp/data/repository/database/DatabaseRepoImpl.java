@@ -14,6 +14,7 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import io.reactivex.Single;
+import timber.log.Timber;
 
 public class DatabaseRepoImpl implements DatabaseRepo {
 
@@ -38,6 +39,7 @@ public class DatabaseRepoImpl implements DatabaseRepo {
         double longitude = weatherParams.getCityData().getLongitude();
         Coord coord = new Coord(latitude, longitude);
         return weatherDAO.getWeatherByCityName(new Gson().toJson(coord))
+                .doOnError(throwable -> Timber.v("Can't get data from DB = " + throwable.toString()))
                 .map(DatabaseWeatherConverter::fromDatabaseWeatherDataToCurrentWeatherData);
     }
 

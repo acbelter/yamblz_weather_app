@@ -24,7 +24,5 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView> {
 
     public void showSelectedWeather(CityData cityData) {
         cityInteractor.saveSelectedCity(cityData);
-        if (getView() != null)
-            getView().showWeather();
     }
 }

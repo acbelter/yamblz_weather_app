@@ -227,11 +227,6 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
         }
     }
 
-    @Override
-    public void showWeather() {
-        drawerLayout.closeDrawer(GravityCompat.START);
-    }
-
     private void clearBackStack() {
         for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); ++i) {
             getSupportFragmentManager().popBackStack();
@@ -241,5 +236,6 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     @Override
     public void onItemClick(CityData item) {
         presenter.showSelectedWeather(item);
+        drawerLayout.closeDrawer(GravityCompat.START);
     }
 }

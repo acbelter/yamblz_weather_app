@@ -12,6 +12,7 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public interface NetworkRepo {
+
     Single<CurrentWeather> getCurrentWeather(WeatherParams params);
 
     Single<ForecastWeather> getForecastWeather(WeatherParams params);
