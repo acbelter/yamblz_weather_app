@@ -1,5 +1,8 @@
 package com.acbelter.weatherapp.data.repository.city;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.acbelter.weatherapp.data.locationmodel.Location;
 import com.acbelter.weatherapp.data.placesmodel.Places;
 import com.acbelter.weatherapp.data.placesmodel.Prediction;
@@ -13,7 +16,12 @@ import static com.acbelter.weatherapp.data.network.ApiErrors.PlacesApiErrors.OK;
 
 class CityDataConverter {
 
-    static List<AutocompleteData> fromPlacesToDataList(Places places) {
+    private CityDataConverter() {
+    }
+
+    static
+    @Nullable
+    List<AutocompleteData> fromPlacesToDataList(@Nullable Places places) {
 
         if (places == null) {
             throw new IllegalArgumentException("Converted object must be not null");
@@ -32,7 +40,9 @@ class CityDataConverter {
         return cityList;
     }
 
-    public static CityData fromLocationToCityData(Location location) {
+    static
+    @Nullable
+    CityData fromLocationToCityData(@Nullable Location location) {
 
         if (location == null) {
             throw new IllegalArgumentException("Converted object must be not null");
@@ -41,14 +51,14 @@ class CityDataConverter {
         if (!location.getStatus().equals(OK.getError())) {
             return null;
         }
-        CityData cityData = new CityData();
-        cityData.setShortName(location.getResult().getName());
-        cityData.setLatitude(location.getResult().getGeometry().getLocation().getLat());
-        cityData.setLongitude(location.getResult().getGeometry().getLocation().getLng());
-        return cityData;
+        return new CityData.Builder(location.getResult().getGeometry().getLocation().getLat()
+                , location.getResult().getGeometry().getLocation().getLng())
+                .shortName(location.getResult().getName()).build();
     }
 
-    public static AutocompleteData convert(Prediction prediction) {
+    static
+    @NonNull
+    AutocompleteData convert(@NonNull Prediction prediction) {
         return new AutocompleteData(prediction.getDescription(), prediction.getPlaceId());
     }
 }

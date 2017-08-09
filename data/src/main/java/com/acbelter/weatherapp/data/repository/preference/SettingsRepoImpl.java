@@ -1,5 +1,8 @@
 package com.acbelter.weatherapp.data.repository.preference;
 
+import android.support.annotation.MainThread;
+import android.support.annotation.NonNull;
+
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.settings.SettingsData;
 import com.acbelter.weatherapp.domain.repository.SettingsRepo;
@@ -9,29 +12,26 @@ import io.reactivex.Observable;
 
 public class SettingsRepoImpl implements SettingsRepo {
 
+    @NonNull
     private final SettingsPreference preference;
 
-    public SettingsRepoImpl(SettingsPreference preference) {
+    public SettingsRepoImpl(@NonNull SettingsPreference preference) {
         this.preference = preference;
     }
 
     @Override
+    @MainThread
     public Observable<SettingsData> getUserSettings() {
         return preference.loadUserSettings();
     }
 
     @Override
-    public void saveTemperatureMetric(TemperatureMetric metric) {
+    public void saveTemperatureMetric(@NonNull TemperatureMetric metric) {
         preference.saveTemperatureMetric(metric);
     }
 
     @Override
-    public void saveUpdateInterval(long interval) {
+    public void saveUpdateInterval(@NonNull long interval) {
         preference.saveUpdateInterval(interval);
-    }
-
-    @Override
-    public void saveSelectedCity(CityData cityData) {
-        preference.saveCurrentCity(cityData);
     }
 }

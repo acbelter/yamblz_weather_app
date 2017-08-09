@@ -1,6 +1,7 @@
 package com.acbelter.weatherapp.domain.repository;
 
-import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
+import android.support.annotation.WorkerThread;
+
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
 import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
 
@@ -10,13 +11,15 @@ import io.reactivex.Single;
 
 public interface WeatherRepo {
 
+    @WorkerThread
     Single<CurrentWeatherFavorites> getCurrentWeather();
 
+    @WorkerThread
     Single<CurrentWeatherFavorites> updateCurrentWeather();
 
+    @WorkerThread
     Single<List<ForecastWeatherFavorites>> getForecast();
 
+    @WorkerThread
     Single<List<ForecastWeatherFavorites>> updateForecast();
-
-    void saveWeather(FullWeatherModel fullWeatherModel);
 }

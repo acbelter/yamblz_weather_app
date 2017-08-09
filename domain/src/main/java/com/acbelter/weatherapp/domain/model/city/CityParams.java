@@ -1,19 +1,19 @@
 package com.acbelter.weatherapp.domain.model.city;
 
+import android.support.annotation.NonNull;
+
 public class CityParams {
 
-    private String mPartOfCityName;
+    @NonNull
+    private String partOfCityName;
 
-    public CityParams(String partOfCityName) {
-        mPartOfCityName = partOfCityName;
+    public CityParams(@NonNull String partOfCityName) {
+        this.partOfCityName = partOfCityName;
     }
 
-    public String getPartOfCityName() {
-        return mPartOfCityName;
+    public
+    @NonNull
+    String getPartOfCityName() {
+        return partOfCityName;
     }
-
-    public void setPartOfCityName(String partOfCityName) {
-        mPartOfCityName = partOfCityName;
-    }
-
 }

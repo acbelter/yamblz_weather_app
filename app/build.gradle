@@ -54,26 +54,33 @@ android {
 dependencies {
     compile project(path: ':data')
     compile project(path: ':domain')
+
     compile support.appCompat
     compile support.design
     compile support.constraintLayout
+
     compile rx.rxAndroid
     compile rx.rxJava2
     compile rx.rxBinding
     compile rx.rxBindingDesign
+
     compile lib.dagger2
     annotationProcessor compiler.dagger2
+
     compile lib.butterknife
     annotationProcessor compiler.butterknife
+
     compile lib.gson
-    compile lib.timber
-    compile lib.androidJob
     compile utils.stetho
+    compile lib.timber
+
+    compile lib.androidJob
+
     androidTestCompile uiTest.espressoCore
     androidTestCompile uiTest.espressoContrib
     androidTestCompile uiTest.runner
+
     testCompile unitTest.junit
     testCompile unitTest.mockito
     testCompile unitTest.assertJ
-    compile 'com.android.support:support-v4:25.3.1'
 }

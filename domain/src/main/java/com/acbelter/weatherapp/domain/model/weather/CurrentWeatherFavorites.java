@@ -1,22 +1,40 @@
 package com.acbelter.weatherapp.domain.model.weather;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 
+import static com.acbelter.weatherapp.domain.model.weather.WeatherType.SUN;
+
 public class CurrentWeatherFavorites {
 
+    @NonNull
     private double temperature;
+    @NonNull
     private CityData cityData;
+    @NonNull
     private TemperatureMetric temperatureMetric;
+    @NonNull
     private WeatherType weatherType;
+    @NonNull
     private long timestamp;
+    @NonNull
     private long sunriseTimestamp;
+    @NonNull
     private long sunsetTimestamp;
+    @NonNull
     private int pressure;
+    @NonNull
     private int humidity;
+    @NonNull
     private String description;
+    @NonNull
     private int windSpeed;
+    @Nullable
     private double minTemp;
+    @Nullable
     private double maxTemp;
 
     public static class Builder {
@@ -26,16 +44,16 @@ public class CurrentWeatherFavorites {
         private final TemperatureMetric temperatureMetric;
 
         //Optional params
-        private WeatherType weatherType;
-        private long timestamp;
-        private long sunriseTimestamp;
-        private long sunsetTimestamp;
-        private int pressure;
-        private int humidity;
-        private String description;
-        private int windSpeed;
-        private double minTemp;
-        private double maxTemp;
+        private WeatherType weatherType = SUN;
+        private long timestamp = 0L;
+        private long sunriseTimestamp = 0L;
+        private long sunsetTimestamp = 0L;
+        private int pressure = 0;
+        private int humidity = 0;
+        private String description = "";
+        private int windSpeed = 0;
+        private double minTemp = 0f;
+        private double maxTemp = 0f;
 
         public Builder(double temperature, CityData cityData,
                        TemperatureMetric temperatureMetric) {
@@ -94,7 +112,9 @@ public class CurrentWeatherFavorites {
             return this;
         }
 
-        public CurrentWeatherFavorites build() {
+        public
+        @NonNull
+        CurrentWeatherFavorites build() {
             return new CurrentWeatherFavorites(this);
         }
     }
@@ -115,66 +135,81 @@ public class CurrentWeatherFavorites {
         maxTemp = builder.maxTemp;
     }
 
+    @NonNull
     public double getTemperature() {
         return temperature;
     }
 
+    @NonNull
     public CityData getCityData() {
         return cityData;
     }
 
+    @NonNull
     public WeatherType getWeatherType() {
         return weatherType;
     }
 
+    @NonNull
     public TemperatureMetric getTemperatureMetric() {
         return temperatureMetric;
     }
 
-    public void setTemperatureMetric(TemperatureMetric temperatureMetric) {
+    public void setTemperatureMetric(@NonNull TemperatureMetric temperatureMetric) {
         this.temperatureMetric = temperatureMetric;
     }
 
+    @NonNull
     public long getTimestamp() {
         return timestamp;
     }
 
+    @NonNull
     public long getSunriseTimestamp() {
         return sunriseTimestamp;
     }
 
+    @NonNull
     public long getSunsetTimestamp() {
         return sunsetTimestamp;
     }
 
+    @NonNull
     public int getPressure() {
         return pressure;
     }
 
+    @NonNull
     public int getHumidity() {
         return humidity;
     }
 
+    @NonNull
     public String getDescription() {
         return description;
     }
 
+    @NonNull
     public int getWindSpeed() {
         return windSpeed;
     }
 
+    @Nullable
     public double getMinTemp() {
         return minTemp;
     }
 
+    @Nullable
     public double getMaxTemp() {
         return maxTemp;
     }
 
+    @NonNull
     public boolean isDay() {
         return timestamp > sunriseTimestamp && timestamp < sunsetTimestamp;
     }
 
+    @NonNull
     public boolean isNight() {
         return !isDay();
     }

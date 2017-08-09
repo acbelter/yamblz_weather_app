@@ -1,5 +1,7 @@
 package com.acbelter.weatherapp.mvp.view.activity.adapter;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +23,14 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
         void onItemClick(CityData item);
     }
 
+    @NonNull
     private List<CityData> favoritesCities;
+    @NonNull
     private final OnItemClickListener itemClickListener;
 
-    public FavoritesCitiesAdapter(OnItemClickListener clickListener) {
+    public FavoritesCitiesAdapter(@NonNull OnItemClickListener clickListener) {
         this.favoritesCities = new ArrayList<>();
-        itemClickListener = clickListener;
+        this.itemClickListener = clickListener;
 
         setHasStableIds(true);
     }
@@ -64,23 +68,25 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
         itemClickListener.onItemClick(favoritesCities.get(position));
     }
 
-    public void update(List<CityData> cities) {
+    public void update(@Nullable List<CityData> cities) {
+        if (cities == null)
+            return;
         favoritesCities = cities;
         notifyDataSetChanged();
     }
 
-    public static class FavoritesCitiesViewHolder extends RecyclerView.ViewHolder {
+    static class FavoritesCitiesViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tvFavoriteCity)
         TextView tvCity;
 
-        public FavoritesCitiesViewHolder(final View itemView) {
+        FavoritesCitiesViewHolder(final View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(final CityData item) {
+        void bind(final CityData item) {
             tvCity.setText(item.getShortName());
         }
     }

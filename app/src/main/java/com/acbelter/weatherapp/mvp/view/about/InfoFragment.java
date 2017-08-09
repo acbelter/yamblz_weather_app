@@ -1,6 +1,7 @@
 package com.acbelter.weatherapp.mvp.view.about;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class InfoFragment extends BaseFragment implements InfoView {
     @BindView(R.id.version_text)
     TextView versionText;
 
+    @Nullable
     private Unbinder unbinder;
 
     @Inject
@@ -80,8 +82,8 @@ public class InfoFragment extends BaseFragment implements InfoView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
-        unbinder.unbind();
+        if (unbinder != null)
+            unbinder.unbind();
     }
 
     @Override

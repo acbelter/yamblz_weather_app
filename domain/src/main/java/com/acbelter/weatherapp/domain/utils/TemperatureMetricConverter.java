@@ -1,8 +1,11 @@
 package com.acbelter.weatherapp.domain.utils;
 
+import android.support.annotation.NonNull;
+
 public class TemperatureMetricConverter {
 
-    public static int getSupportedTemperature(double temperatureInKelvin, TemperatureMetric metric) {
+    @NonNull
+    public static int getSupportedTemperature(@NonNull double temperatureInKelvin, @NonNull TemperatureMetric metric) {
         switch (metric) {
             case CELSIUS:
                 return (int) Math.round(temperatureInKelvin - 273.15);

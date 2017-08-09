@@ -3,6 +3,8 @@ package com.acbelter.weatherapp.mvp.view.activity;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -52,11 +54,13 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     @BindView(R.id.etSearchOnHeader)
     EditText etSearch;
 
+    @Nullable
     private ActionBarDrawerToggle toggle;
 
     @Inject
     MainActivityPresenter presenter;
 
+    @Nullable
     private FavoritesCitiesAdapter adapter;
 
     @Override
@@ -136,13 +140,15 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        toggle.syncState();
+        if (toggle != null)
+            toggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        toggle.onConfigurationChanged(newConfig);
+        if (toggle != null)
+            toggle.onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -196,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     }
 
     @Override
-    public void setDrawerEnable(boolean enabled) {
+    public void setDrawerEnable(@NonNull boolean enabled) {
         if (enabled)
             setDrawerUnlocked();
         else
@@ -204,14 +210,16 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     }
 
     private void setDrawerLocked() {
-        toggle.setDrawerIndicatorEnabled(false);
+        if (toggle != null)
+            toggle.setDrawerIndicatorEnabled(false);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         toggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         toolbar.setNavigationIcon(R.drawable.ic_close);
     }
 
     private void setDrawerUnlocked() {
-        toggle.setDrawerIndicatorEnabled(true);
+        if (toggle != null)
+            toggle.setDrawerIndicatorEnabled(true);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         toggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
@@ -223,7 +231,8 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
             addFragment(SearchFragment.class);
         } else {
             replaceFragment(WeatherFragment.class);
-            adapter.update(cities);
+            if (adapter != null)
+                adapter.update(cities);
         }
     }
 

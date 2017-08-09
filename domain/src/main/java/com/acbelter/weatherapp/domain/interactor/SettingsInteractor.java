@@ -1,6 +1,8 @@
 package com.acbelter.weatherapp.domain.interactor;
 
-import com.acbelter.weatherapp.domain.model.city.CityData;
+import android.support.annotation.MainThread;
+import android.support.annotation.NonNull;
+
 import com.acbelter.weatherapp.domain.model.settings.SettingsData;
 import com.acbelter.weatherapp.domain.repository.SettingsRepo;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
@@ -9,25 +11,23 @@ import io.reactivex.Observable;
 
 public class SettingsInteractor {
 
+    @NonNull
     private final SettingsRepo settingsRepo;
 
-    public SettingsInteractor(SettingsRepo settingsRepo) {
+    public SettingsInteractor(@NonNull SettingsRepo settingsRepo) {
         this.settingsRepo = settingsRepo;
     }
 
+    @MainThread
     public Observable<SettingsData> getUserSettings() {
         return settingsRepo.getUserSettings();
     }
 
-    public void saveTemperatureMetric(TemperatureMetric metric) {
+    public void saveTemperatureMetric(@NonNull TemperatureMetric metric) {
         settingsRepo.saveTemperatureMetric(metric);
     }
 
-    public void saveUpdateInterval(long interval) {
+    public void saveUpdateInterval(@NonNull long interval) {
         settingsRepo.saveUpdateInterval(interval);
-    }
-
-    public void saveSelectedCity(CityData cityData) {
-        settingsRepo.saveSelectedCity(cityData);
     }
 }

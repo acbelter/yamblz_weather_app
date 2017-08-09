@@ -1,5 +1,7 @@
 package com.acbelter.weatherapp.mvp.presentation;
 
+import android.support.annotation.NonNull;
+
 import com.acbelter.weatherapp.domain.interactor.CityInteractor;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.city.AutocompleteData;
@@ -11,16 +13,18 @@ import javax.inject.Inject;
 
 public class SearchPresenter extends BasePresenter<SearchView> {
 
+    @NonNull
     private final CityInteractor cityInteractor;
+    @NonNull
     private final WeatherInteractor weatherInteractor;
 
     @Inject
-    public SearchPresenter(CityInteractor cityInteractor, WeatherInteractor weatherInteractor) {
+    public SearchPresenter(@NonNull CityInteractor cityInteractor, @NonNull WeatherInteractor weatherInteractor) {
         this.cityInteractor = cityInteractor;
         this.weatherInteractor = weatherInteractor;
     }
 
-    public void showCityList(String input) {
+    public void showCityList(@NonNull String input) {
         if (getView() == null)
             return;
         CityParams cityParams = new CityParams(input);
@@ -31,11 +35,11 @@ public class SearchPresenter extends BasePresenter<SearchView> {
 
     }
 
-    public void saveSelectedCityAndWeather(AutocompleteData autocompleteData) {
+    public void saveSelectedCityAndWeather(@NonNull AutocompleteData autocompleteData) {
         unSubscribeOnDetach(cityInteractor.getCityData(autocompleteData)
                 .subscribe(cityData -> {
                     cityInteractor.saveSelectedCity(cityData);
-                    weatherInteractor.addNewWeather().subscribe();
+                    weatherInteractor.getNewWeatherAndSaveToDB().subscribe();
                     closeActivity();
                 }));
     }

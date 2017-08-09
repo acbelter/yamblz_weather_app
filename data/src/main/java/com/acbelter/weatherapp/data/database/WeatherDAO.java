@@ -26,7 +26,4 @@ public interface WeatherDAO {
 
     @Update
     void updateWeather(DatabaseWeatherData weather);
-
-    @Query("DELETE FROM DatabaseWeatherData")
-    void deleteAllWeatherRecords();
 }

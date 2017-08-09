@@ -1,5 +1,7 @@
 package com.acbelter.weatherapp.mvp.view.search.adapter;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +23,12 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
         void onItemClick(AutocompleteData item);
     }
 
+    @NonNull
     private List<AutocompleteData> locations;
+    @NonNull
     private final OnItemClickListener itemClickListener;
 
-    public CityAdapter(OnItemClickListener clickListener) {
+    public CityAdapter(@NonNull OnItemClickListener clickListener) {
         locations = new ArrayList<>();
         itemClickListener = clickListener;
 
@@ -59,7 +63,9 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
         return locations.size();
     }
 
-    public void update(List<AutocompleteData> list) {
+    public void update(@Nullable List<AutocompleteData> list) {
+        if (list == null)
+            return;
         locations = list;
         notifyDataSetChanged();
     }
@@ -69,18 +75,18 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
         return locations.get(position).hashCode();
     }
 
-    public static class CityViewHolder extends RecyclerView.ViewHolder {
+    static class CityViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tvCity)
         TextView tvCity;
 
-        public CityViewHolder(final View itemView) {
+        CityViewHolder(final View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(final AutocompleteData item) {
+        void bind(final AutocompleteData item) {
             tvCity.setText(item.getCityName());
         }
     }

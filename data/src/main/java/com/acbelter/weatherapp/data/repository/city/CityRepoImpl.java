@@ -1,5 +1,9 @@
 package com.acbelter.weatherapp.data.repository.city;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
+
 import com.acbelter.weatherapp.data.network.NetworkRepo;
 import com.acbelter.weatherapp.data.repository.preference.SettingsPreference;
 import com.acbelter.weatherapp.domain.model.city.AutocompleteData;
@@ -17,18 +21,22 @@ import timber.log.Timber;
 
 public class CityRepoImpl implements CityRepo {
 
+    @NonNull
     private final NetworkRepo networkRepo;
+    @NonNull
     private final DatabaseRepo databaseRepo;
+    @NonNull
     private final SettingsPreference settingsPreference;
 
-    public CityRepoImpl(NetworkRepo networkRepo, DatabaseRepo databaseRepo, SettingsPreference settingsPreference) {
+    public CityRepoImpl(@NonNull NetworkRepo networkRepo, @NonNull DatabaseRepo databaseRepo, @NonNull SettingsPreference settingsPreference) {
         this.networkRepo = networkRepo;
         this.databaseRepo = databaseRepo;
         this.settingsPreference = settingsPreference;
     }
 
     @Override
-    public Single<List<AutocompleteData>> getCityList(CityParams cityParams) {
+    @WorkerThread
+    public Single<List<AutocompleteData>> getCityList(@NonNull CityParams cityParams) {
         return networkRepo.getPlaces(cityParams)
                 .flatMap(places -> Observable.fromIterable(places.getPredictions()))
                 .map(CityDataConverter::convert)
@@ -37,18 +45,21 @@ public class CityRepoImpl implements CityRepo {
     }
 
     @Override
+    @WorkerThread
     public Flowable<List<CityData>> getFavoritesCities() {
         return databaseRepo.getAllCities();
     }
 
     @Override
-    public Single<CityData> getCityData(AutocompleteData autocompleteData) {
+    @WorkerThread
+    public Single<CityData> getCityData(@Nullable AutocompleteData autocompleteData) {
         return networkRepo.getLocation(autocompleteData)
                 .map(CityDataConverter::fromLocationToCityData);
     }
 
     @Override
-    public void saveCity(CityData cityData) {
+    @WorkerThread
+    public void saveCity(@NonNull CityData cityData) {
         settingsPreference.saveCurrentCity(cityData);
     }
 }

@@ -4,6 +4,23 @@ import io.reactivex.annotations.NonNull;
 
 public class ApiErrors {
 
+    public enum OpenWeatherApiErrors {
+        OK("OK"),
+        INVALID_REQUEST("INVALID_REQUEST");
+
+        final String error;
+
+        OpenWeatherApiErrors(String error) {
+            this.error = error;
+        }
+
+        public
+        @NonNull
+        String getError() {
+            return error;
+        }
+    }
+
     public enum PlacesApiErrors {
         OK("OK"),
         ZERO_RESULTS("ZERO_RESULTS"),

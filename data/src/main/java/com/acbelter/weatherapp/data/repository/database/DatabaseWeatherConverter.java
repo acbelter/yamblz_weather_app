@@ -1,5 +1,8 @@
 package com.acbelter.weatherapp.data.repository.database;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.acbelter.weatherapp.data.dbmodel.DatabaseWeatherData;
 import com.acbelter.weatherapp.data.weathermodel.common.Coord;
 import com.acbelter.weatherapp.domain.model.city.CityData;
@@ -13,20 +16,26 @@ import java.util.List;
 
 class DatabaseWeatherConverter {
 
-    static CityData fromDatabaseWeatherDataToCityData(DatabaseWeatherData databaseWeatherData) {
+    private DatabaseWeatherConverter() {
+    }
+
+    static
+    @NonNull
+    CityData fromDatabaseWeatherDataToCityData(@Nullable DatabaseWeatherData databaseWeatherData) {
+
         if (databaseWeatherData == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
 
-        CityData cityData = new CityData();
         Coord coord = new Gson().fromJson(databaseWeatherData.getCoordinates(), Coord.class);
-        cityData.setLatitude(coord.getLat());
-        cityData.setLongitude(coord.getLon());
-        cityData.setShortName(databaseWeatherData.getCityShortName());
-        return cityData;
+        return new CityData.Builder(coord.getLat(), coord.getLon())
+                .shortName(databaseWeatherData.getCityShortName()).build();
     }
 
-    public static CurrentWeatherFavorites fromDatabaseWeatherDataToCurrentWeatherData(DatabaseWeatherData databaseWeatherData) {
+    static
+    @NonNull
+    CurrentWeatherFavorites fromDatabaseWeatherDataToCurrentWeatherData(@Nullable DatabaseWeatherData databaseWeatherData) {
+
         if (databaseWeatherData == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
@@ -34,7 +43,10 @@ class DatabaseWeatherConverter {
         return new Gson().fromJson(databaseWeatherData.getCurrent(), CurrentWeatherFavorites.class);
     }
 
-    public static List<ForecastWeatherFavorites> fromDatabaseWeatherDataToForecastWeather(DatabaseWeatherData databaseWeatherData) {
+    static
+    @NonNull
+    List<ForecastWeatherFavorites> fromDatabaseWeatherDataToForecastWeather(@Nullable DatabaseWeatherData databaseWeatherData) {
+
         if (databaseWeatherData == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
@@ -45,7 +57,10 @@ class DatabaseWeatherConverter {
                         }.getType());
     }
 
-    public static DatabaseWeatherData fromFullWeatherDataToDatabaseFormat(FullWeatherModel fullWeatherModel) {
+    static
+    @NonNull
+    DatabaseWeatherData fromFullWeatherDataToDatabaseFormat(@Nullable FullWeatherModel fullWeatherModel) {
+
         if (fullWeatherModel == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }

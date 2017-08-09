@@ -40,7 +40,9 @@ public class WeatherFragment extends BaseFragment implements WeatherView, Shared
     @Inject
     SharedPreferences preferences;
 
+    @Nullable
     private Unbinder unbinder;
+    @Nullable
     private WeatherAdapter adapter;
 
     public static WeatherFragment newInstance() {
@@ -92,7 +94,8 @@ public class WeatherFragment extends BaseFragment implements WeatherView, Shared
         super.onDestroyView();
         App.getInstance().releaseActivityComponent();
         Timber.d("Remove weather component");
-        unbinder.unbind();
+        if (unbinder != null)
+            unbinder.unbind();
         preferences.unregisterOnSharedPreferenceChangeListener(this);
     }
 
@@ -131,8 +134,9 @@ public class WeatherFragment extends BaseFragment implements WeatherView, Shared
     }
 
     @Override
-    public void showWeather(FullWeatherModel weatherData) {
-        adapter.update(weatherData);
+    public void showWeather(@Nullable FullWeatherModel weatherData) {
+        if (adapter != null)
+            adapter.update(weatherData);
     }
 
     @Override

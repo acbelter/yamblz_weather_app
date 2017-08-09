@@ -23,52 +23,58 @@ public class SettingsPreference {
     private static final String KEY_LAST_UPDATE_TIMESTAMP = "pref_last_update_timestamp";
     private static final String KEY_LAST_WEATHER_DATA = "pref_last_weather_data";
 
+    @NonNull
     private static final long MIN_UPDATE_INTERVAL = 60 * 60 * 1000; // interval is 1 hour
 
+    @NonNull
     private final SharedPreferences sharedPreferences;
 
-    public SettingsPreference(SharedPreferences sharedPreferences) {
+    public SettingsPreference(@NonNull SharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
     }
 
-    public void saveCurrentCity(CityData cityData) {
+    public void saveCurrentCity(@NonNull CityData cityData) {
         String cityDataStr = new Gson().toJson(cityData);
         sharedPreferences.edit().putString(KEY_CURRENT_CITY, cityDataStr).apply();
     }
 
+    @NonNull
     public CityData loadCurrentCity() {
-        // FIXME Don't use Moscow as default city
-        CityData defaultCityData = new CityData();
+        CityData defaultCityData;
         if (Locale.getDefault().getLanguage().equals("ru"))
-            defaultCityData.setShortName("Москва");
+            defaultCityData = new CityData.Builder(55.751244f, 37.618423f)
+                    .shortName("Москва")
+                    .build();
         else
-            defaultCityData.setShortName("Moscow");
-        defaultCityData.setLatitude(55.751244f);
-        defaultCityData.setLongitude(37.618423f);
-        Gson gson = new Gson();
-        String defaultStr = gson.toJson(defaultCityData);
+            defaultCityData = new CityData.Builder(55.751244f, 37.618423f)
+                    .shortName("Moscow")
+                    .build();
+        String defaultStr = new Gson().toJson(defaultCityData);
 
         String cityDataStr = sharedPreferences.getString(KEY_CURRENT_CITY, defaultStr);
         return new Gson().fromJson(cityDataStr, CityData.class);
     }
 
-    public void saveUpdateInterval(long interval) {
+    void saveUpdateInterval(@NonNull long interval) {
         sharedPreferences.edit().putLong(KEY_UPDATE_INTERVAL, interval).apply();
     }
 
-    public long loadUpdateInterval() {
+    @NonNull
+    long loadUpdateInterval() {
         return sharedPreferences.getLong(KEY_UPDATE_INTERVAL, MIN_UPDATE_INTERVAL);
     }
 
-    public void setLastUpdateTimestamp(long timestamp) {
+    public void setLastUpdateTimestamp(@NonNull long timestamp) {
         sharedPreferences.edit().putLong(KEY_LAST_UPDATE_TIMESTAMP, timestamp).apply();
     }
 
-    public long getLastUpdateTimestamp() {
+    public
+    @NonNull
+    long getLastUpdateTimestamp() {
         return sharedPreferences.getLong(KEY_LAST_UPDATE_TIMESTAMP, 0L);
     }
 
-    public void saveTemperatureMetric(TemperatureMetric metric) {
+    public void saveTemperatureMetric(@NonNull TemperatureMetric metric) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TEMPERATURE_METRIC_KEY, metric.getUnit());
         editor.apply();
@@ -81,7 +87,6 @@ public class SettingsPreference {
         return fromString(metric);
     }
 
-    public
     @NonNull
     Observable<SettingsData> loadUserSettings() {
         TemperatureMetric metric = loadTemperatureMetric();

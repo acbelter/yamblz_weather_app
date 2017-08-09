@@ -1,29 +1,27 @@
 package com.acbelter.weatherapp.domain.model.city;
 
+import android.support.annotation.Nullable;
+
 public class AutocompleteData {
 
+    @Nullable
     private String cityName;
+    @Nullable
     private String placeId;
 
-    public AutocompleteData(String cityName, String placeId) {
+    public AutocompleteData(@Nullable String cityName, @Nullable String placeId) {
         this.cityName = cityName;
         this.placeId = placeId;
     }
 
+    @Nullable
     public String getCityName() {
         return cityName;
     }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
-
+    @Nullable
     public String getPlaceId() {
         return placeId;
-    }
-
-    public void setPlaceId(String placeId) {
-        this.placeId = placeId;
     }
 
     public int hashCode() {

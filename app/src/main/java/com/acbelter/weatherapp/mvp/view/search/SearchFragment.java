@@ -2,6 +2,7 @@ package com.acbelter.weatherapp.mvp.view.search;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DividerItemDecoration;
@@ -43,10 +44,12 @@ public class SearchFragment extends BaseFragment implements SearchView, CityAdap
     @Inject
     SearchPresenter presenter;
 
+    @Nullable
     private CityAdapter adapter;
 
     private static final long TYPING_DELAY = 400;
 
+    @Nullable
     private Unbinder unbinder;
 
     public static SearchFragment newInstance() {
@@ -95,8 +98,9 @@ public class SearchFragment extends BaseFragment implements SearchView, CityAdap
     }
 
     @Override
-    public void updateCityList(List<AutocompleteData> locations) {
-        adapter.update(locations);
+    public void updateCityList(@Nullable List<AutocompleteData> locations) {
+        if (adapter != null)
+            adapter.update(locations);
     }
 
     @Override
@@ -128,13 +132,13 @@ public class SearchFragment extends BaseFragment implements SearchView, CityAdap
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+        if (unbinder != null)
+            unbinder.unbind();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         presenter.onDetach();
     }
 

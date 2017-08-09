@@ -1,5 +1,8 @@
 package com.acbelter.weatherapp.data.network;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.WorkerThread;
+
 import com.acbelter.weatherapp.data.locationmodel.Location;
 import com.acbelter.weatherapp.data.placesmodel.Places;
 import com.acbelter.weatherapp.data.weathermodel.currentweather.CurrentWeather;
@@ -16,15 +19,21 @@ import io.reactivex.Single;
 
 public class NetworkRepoImpl implements NetworkRepo {
 
+    @NonNull
     private final WeatherApi weatherApi;
+
+    @NonNull
     private final PlacesApi placesApi;
+
+    @NonNull
     private final LocationApi locationApi;
 
+    @NonNull
     private String locale;
 
     private static final int NETWORK_TIMEOUT = 5000;
 
-    public NetworkRepoImpl(WeatherApi weatherApi, PlacesApi placesApi, LocationApi locationApi) {
+    public NetworkRepoImpl(@NonNull WeatherApi weatherApi, @NonNull PlacesApi placesApi, @NonNull LocationApi locationApi) {
         this.weatherApi = weatherApi;
         this.placesApi = placesApi;
         this.locationApi = locationApi;
@@ -32,27 +41,31 @@ public class NetworkRepoImpl implements NetworkRepo {
     }
 
     @Override
-    public Single<CurrentWeather> getCurrentWeather(WeatherParams params) {
+    @WorkerThread
+    public Single<CurrentWeather> getCurrentWeather(@NonNull WeatherParams params) {
         double latitude = params.getCityData().getLatitude();
         double longitude = params.getCityData().getLongitude();
         return weatherApi.getCurrentWeather(latitude, longitude, locale);
     }
 
     @Override
-    public Single<ForecastWeather> getForecastWeather(WeatherParams params) {
+    @WorkerThread
+    public Single<ForecastWeather> getForecastWeather(@NonNull WeatherParams params) {
         double latitude = params.getCityData().getLatitude();
         double longitude = params.getCityData().getLongitude();
         return weatherApi.getForecast(latitude, longitude, locale);
     }
 
     @Override
-    public Observable<Places> getPlaces(CityParams cityParams) {
+    @WorkerThread
+    public Observable<Places> getPlaces(@NonNull CityParams cityParams) {
         return placesApi.getPlaces(cityParams.getPartOfCityName().trim())
                 .timeout(NETWORK_TIMEOUT, TimeUnit.MILLISECONDS);
     }
 
     @Override
-    public Single<Location> getLocation(AutocompleteData autocompleteData) {
+    @WorkerThread
+    public Single<Location> getLocation(@NonNull AutocompleteData autocompleteData) {
         return locationApi.getLocation(autocompleteData.getPlaceId(), locale);
     }
 }

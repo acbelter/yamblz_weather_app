@@ -1,5 +1,9 @@
 package com.acbelter.weatherapp.domain.repository;
 
+import android.support.annotation.MainThread;
+import android.support.annotation.NonNull;
+import android.support.annotation.WorkerThread;
+
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
@@ -13,15 +17,18 @@ import io.reactivex.Single;
 
 public interface DatabaseRepo {
 
+    @WorkerThread
     Flowable<List<CityData>> getAllCities();
 
-    Single<CurrentWeatherFavorites> getCurrentWeather(WeatherParams weatherParams);
+    @WorkerThread
+    Single<CurrentWeatherFavorites> getCurrentWeather(@NonNull WeatherParams weatherParams);
 
-    Single<List<ForecastWeatherFavorites>> getForecastWeather(WeatherParams weatherParams);
+    @WorkerThread
+    Single<List<ForecastWeatherFavorites>> getForecastWeather(@NonNull WeatherParams weatherParams);
 
-    void saveWeather(FullWeatherModel weatherModel);
+    @MainThread
+    void saveWeather(@NonNull FullWeatherModel weatherModel);
 
-    void updateWeather(FullWeatherModel weatherModel);
-
-    void deleteAllWeatherRecords();
+    @MainThread
+    void updateWeather(@NonNull FullWeatherModel weatherModel);
 }

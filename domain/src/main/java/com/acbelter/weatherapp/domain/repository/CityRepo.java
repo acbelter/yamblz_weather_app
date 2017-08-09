@@ -1,6 +1,11 @@
 package com.acbelter.weatherapp.domain.repository;
 
 
+import android.support.annotation.MainThread;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
+
 import com.acbelter.weatherapp.domain.model.city.AutocompleteData;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.city.CityParams;
@@ -12,12 +17,16 @@ import io.reactivex.Single;
 
 public interface CityRepo {
 
-    Single<List<AutocompleteData>> getCityList(CityParams cityParams);
+    @WorkerThread
+    Single<List<AutocompleteData>> getCityList(@NonNull CityParams cityParams);
 
+    @WorkerThread
     Flowable<List<CityData>> getFavoritesCities();
 
-    Single<CityData> getCityData(AutocompleteData autocompleteData);
+    @WorkerThread
+    Single<CityData> getCityData(@Nullable AutocompleteData autocompleteData);
 
-    void saveCity(CityData cityData);
+    @MainThread
+    void saveCity(@NonNull CityData cityData);
 
 }

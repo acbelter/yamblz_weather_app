@@ -1,33 +1,53 @@
 package com.acbelter.weatherapp.domain.model.city;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 public class CityData {
 
-    private String shortName;
+    @NonNull
     private double latitude;
+    @NonNull
     private double longitude;
+    @Nullable
+    private String shortName;
 
-    public CityData() {
+    public static class Builder {
+        //Requered params
+        private final double latitude;
+        private final double longitude;
 
+        //Optional params
+        private String shortName = "";
+
+        public Builder(double latitude, double longitude) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+
+        public Builder shortName(String val) {
+            shortName = val;
+            return this;
+        }
+
+        public CityData build() {
+            return new CityData(this);
+        }
     }
 
+    private CityData(Builder builder) {
+        latitude = builder.latitude;
+        longitude = builder.longitude;
+        shortName = builder.shortName;
+    }
+
+    @Nullable
     public String getShortName() {
         return shortName;
     }
 
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
     public double getLatitude() {
         return latitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
     }
 
     public double getLongitude() {

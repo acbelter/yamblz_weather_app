@@ -1,5 +1,7 @@
 package com.acbelter.weatherapp.mvp.presentation;
 
+import android.support.annotation.NonNull;
+
 import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.domain.interactor.SettingsInteractor;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
@@ -11,13 +13,14 @@ import javax.inject.Inject;
 
 public class SettingsPresenter extends BasePresenter<SettingsView> {
 
+    @NonNull
     private final SettingsInteractor settingsInteractor;
 
     @Inject
     WeatherScheduleJob scheduleJob;
 
     @Inject
-    public SettingsPresenter(SettingsInteractor settingsInteractor) {
+    public SettingsPresenter(@NonNull SettingsInteractor settingsInteractor) {
         this.settingsInteractor = settingsInteractor;
 
         App.getInstance().getAppComponent().inject(this);
@@ -30,11 +33,11 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
                 .subscribe(settings -> getView().setSettings(settings)));
     }
 
-    public void saveTemperatureMetric(TemperatureMetric metric) {
+    public void saveTemperatureMetric(@NonNull TemperatureMetric metric) {
         settingsInteractor.saveTemperatureMetric(metric);
     }
 
-    public void saveUpdateInterval(long interval) {
+    public void saveUpdateInterval(@NonNull long interval) {
         settingsInteractor.saveUpdateInterval(interval);
 
         scheduleJob.startJob();

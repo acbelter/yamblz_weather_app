@@ -19,6 +19,9 @@ android {
 }
 
 dependencies {
+
+    compile support.supportAnnotations
+
     compile rx.rxJava2
     compile rx.rxAndroid
 

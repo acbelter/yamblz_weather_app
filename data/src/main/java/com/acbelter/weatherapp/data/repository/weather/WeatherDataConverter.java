@@ -1,5 +1,7 @@
 package com.acbelter.weatherapp.data.repository.weather;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 
 import com.acbelter.weatherapp.data.weathermodel.common.Weather;
@@ -27,7 +29,10 @@ class WeatherDataConverter {
     private WeatherDataConverter() {
     }
 
-    static CurrentWeatherFavorites updateCurrentWeatherMetric(CurrentWeatherFavorites currentWeatherFavorites, TemperatureMetric temperatureMetric) {
+    static
+    @NonNull
+    CurrentWeatherFavorites updateCurrentWeatherMetric(@Nullable CurrentWeatherFavorites currentWeatherFavorites, @Nullable TemperatureMetric temperatureMetric) {
+
         if (currentWeatherFavorites == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
@@ -36,7 +41,9 @@ class WeatherDataConverter {
         return currentWeatherFavorites;
     }
 
-    static ForecastWeatherFavorites updateForecastWeatherMetric(ForecastWeatherFavorites forecastWeatherFavorites, TemperatureMetric temperatureMetric) {
+    static
+    @NonNull
+    ForecastWeatherFavorites updateForecastWeatherMetric(@Nullable ForecastWeatherFavorites forecastWeatherFavorites, @Nullable TemperatureMetric temperatureMetric) {
         if (forecastWeatherFavorites == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
@@ -45,7 +52,10 @@ class WeatherDataConverter {
         return forecastWeatherFavorites;
     }
 
-    static CurrentWeatherFavorites fromNWWeatherDataToCurrentWeatherData(CurrentWeather currentWeather, WeatherParams weatherParams) {
+    static
+    @Nullable
+    CurrentWeatherFavorites fromNWWeatherDataToCurrentWeatherData(@Nullable CurrentWeather currentWeather, @NonNull WeatherParams weatherParams) {
+
         if (currentWeather == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
@@ -71,7 +81,9 @@ class WeatherDataConverter {
                 .build();
     }
 
-    static List<ForecastWeatherFavorites> fromNWWeatherDataToForecastWeatherData(ForecastWeather forecastNW, WeatherParams weatherParams) {
+    static
+    @Nullable
+    List<ForecastWeatherFavorites> fromNWWeatherDataToForecastWeatherData(@Nullable ForecastWeather forecastNW, @NonNull WeatherParams weatherParams) {
         if (forecastNW == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
@@ -89,7 +101,9 @@ class WeatherDataConverter {
         return forecastWeatherFavoritesList;
     }
 
-    private static ForecastWeatherFavorites fromForecastElementToWeatherForecast(ForecastElement forecastElement, WeatherParams weatherParams) {
+    private static
+    @NonNull
+    ForecastWeatherFavorites fromForecastElementToWeatherForecast(@NonNull ForecastElement forecastElement, @NonNull WeatherParams weatherParams) {
         DateFormat df = new SimpleDateFormat("dd MMMM", Locale.getDefault());
         Date date = new Date();
         long curTime = forecastElement.getDt() * 1000L;
@@ -104,8 +118,12 @@ class WeatherDataConverter {
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    static WeatherType extractWeatherType(List<Weather> weatherList) {
+    static
+    @NonNull
+    WeatherType extractWeatherType(@Nullable List<Weather> weatherList) {
         Set<String> weatherStringTypes = new HashSet<>();
+        if (weatherList == null)
+            throw new NullPointerException("Weather list is null");
         for (Weather weather : weatherList) {
             weatherStringTypes.add(weather.getMain());
         }

@@ -2,6 +2,8 @@ package com.acbelter.weatherapp.mvp.view.weather.adapter;
 
 import android.content.Context;
 import android.support.annotation.ColorRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,6 +31,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int VIEW_TYPE_CURRENT = 0;
     private static final int VIEW_TYPE_FORECAST = 1;
 
+    @Nullable
     private FullWeatherModel fullWeatherModel;
 
     @Override
@@ -47,15 +50,24 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof CurrentWeatherViewHolder) {
             CurrentWeatherViewHolder headerHolder = (CurrentWeatherViewHolder) holder;
-            headerHolder.bind(fullWeatherModel.getCurrentWeatherFavorites());
+            if (fullWeatherModel != null)
+                headerHolder.bind(fullWeatherModel.getCurrentWeatherFavorites());
         } else if (holder instanceof ForecastWeatherViewHolder) {
-            ForecastWeatherFavorites forecastElement = getItem(position - 1);
-            ForecastWeatherViewHolder forecastViewHolder = (ForecastWeatherViewHolder) holder;
-            forecastViewHolder.bind(forecastElement);
+            try {
+                ForecastWeatherFavorites forecastElement = getItem(position - 1);
+                ForecastWeatherViewHolder forecastViewHolder = (ForecastWeatherViewHolder) holder;
+                forecastViewHolder.bind(forecastElement);
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private ForecastWeatherFavorites getItem(int position) {
+    private
+    @NonNull
+    ForecastWeatherFavorites getItem(int position) throws NullPointerException {
+        if (fullWeatherModel == null)
+            throw new NullPointerException("FullWeatherModel is null");
         return fullWeatherModel.getForrecast().get(position);
     }
 
@@ -78,12 +90,14 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return fullWeatherModel.getForrecast().size() + 1;
     }
 
-    public void update(FullWeatherModel fullWeatherModel) {
+    public void update(@Nullable FullWeatherModel fullWeatherModel) {
+        if (fullWeatherModel == null)
+            return;
         this.fullWeatherModel = fullWeatherModel;
         notifyDataSetChanged();
     }
 
-    public static class CurrentWeatherViewHolder extends RecyclerView.ViewHolder {
+    static class CurrentWeatherViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.content_layout)
         ViewGroup contentLayout;
@@ -116,13 +130,13 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         private final Context context;
 
-        public CurrentWeatherViewHolder(final View itemView) {
+        CurrentWeatherViewHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.context = itemView.getContext();
         }
 
-        public void bind(CurrentWeatherFavorites weather) {
+        void bind(CurrentWeatherFavorites weather) {
             setWeatherView(weather);
             tvCity.setText(weather.getCityData().getShortName());
             int temperature = TemperatureMetricConverter.getSupportedTemperature(weather.getTemperature(), weather.getTemperatureMetric());
@@ -167,7 +181,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    public static class ForecastWeatherViewHolder extends RecyclerView.ViewHolder {
+    static class ForecastWeatherViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tvForecastHigh)
         TextView tvMaxTemp;
         @BindView(R.id.tvForecastLow)
@@ -177,13 +191,13 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @BindView(R.id.forecastImageView)
         ImageView iwForecast;
 
-        public ForecastWeatherViewHolder(final View itemView) {
+        ForecastWeatherViewHolder(final View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(ForecastWeatherFavorites forecastElement) {
+        void bind(ForecastWeatherFavorites forecastElement) {
             setWeatherView(forecastElement);
             int minTemp = TemperatureMetricConverter.getSupportedTemperature(forecastElement.getMinTemp(), forecastElement.getTemperatureMetric());
             tvMinTemp.setText(String.valueOf(minTemp));

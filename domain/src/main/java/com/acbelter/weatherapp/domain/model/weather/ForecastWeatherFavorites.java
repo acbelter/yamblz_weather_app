@@ -1,13 +1,20 @@
 package com.acbelter.weatherapp.domain.model.weather;
 
+import android.support.annotation.NonNull;
+
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 
 public class ForecastWeatherFavorites {
 
+    @NonNull
     private String date;
+    @NonNull
     private double maxTemp;
+    @NonNull
     private double minTemp;
+    @NonNull
     private TemperatureMetric temperatureMetric;
+    @NonNull
     private WeatherType weatherType;
 
     public static class Builder {
@@ -46,27 +53,32 @@ public class ForecastWeatherFavorites {
         weatherType = builder.weatherType;
     }
 
+    @NonNull
     public String getDate() {
         return date;
     }
 
+    @NonNull
     public double getMaxTemp() {
         return maxTemp;
     }
 
+    @NonNull
     public double getMinTemp() {
         return minTemp;
     }
 
+    @NonNull
     public WeatherType getWeatherType() {
         return weatherType;
     }
 
+    @NonNull
     public TemperatureMetric getTemperatureMetric() {
         return temperatureMetric;
     }
 
-    public void setTemperatureMetric(TemperatureMetric temperatureMetric) {
+    public void setTemperatureMetric(@NonNull TemperatureMetric temperatureMetric) {
         this.temperatureMetric = temperatureMetric;
     }
 }

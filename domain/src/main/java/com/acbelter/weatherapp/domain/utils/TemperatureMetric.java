@@ -6,6 +6,7 @@ public enum TemperatureMetric {
     CELSIUS("metric"),
     FAHRENHEIT("imperial");
 
+    @NonNull
     private String unit;
 
     TemperatureMetric(String unit) {

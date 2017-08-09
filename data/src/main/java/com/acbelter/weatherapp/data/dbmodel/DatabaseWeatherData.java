@@ -3,15 +3,20 @@ package com.acbelter.weatherapp.data.dbmodel;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 @Entity(indices = {@Index(value = {"coordinates"},
         unique = true)})
 public class DatabaseWeatherData {
     @PrimaryKey(autoGenerate = true)
     private int id;
+    @NonNull
     private String coordinates;
+    @NonNull
     private String cityShortName;
+    @NonNull
     private String current;
+    @NonNull
     private String forecast;
 
     public int getId() {
@@ -22,35 +27,43 @@ public class DatabaseWeatherData {
         this.id = id;
     }
 
-    public String getCoordinates() {
+    public
+    @NonNull
+    String getCoordinates() {
         return coordinates;
     }
 
-    public void setCoordinates(String coordinates) {
+    public void setCoordinates(@NonNull String coordinates) {
         this.coordinates = coordinates;
     }
 
-    public String getCityShortName() {
+    public
+    @NonNull
+    String getCityShortName() {
         return cityShortName;
     }
 
-    public void setCityShortName(String cityShortName) {
+    public void setCityShortName(@NonNull String cityShortName) {
         this.cityShortName = cityShortName;
     }
 
-    public String getCurrent() {
+    public
+    @NonNull
+    String getCurrent() {
         return current;
     }
 
-    public void setCurrent(String current) {
+    public void setCurrent(@NonNull String current) {
         this.current = current;
     }
 
-    public String getForecast() {
+    public
+    @NonNull
+    String getForecast() {
         return forecast;
     }
 
-    public void setForecast(String forecast) {
+    public void setForecast(@NonNull String forecast) {
         this.forecast = forecast;
     }
 }

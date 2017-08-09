@@ -1,6 +1,7 @@
 package com.acbelter.weatherapp.mvp.view.settings;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.FAHRENHEIT;
 
 public class SettingsFragment extends BaseFragment implements SettingsView {
 
+    @Nullable
     private Unbinder unbinder;
 
     @BindView(R.id.rgTempMetric)
@@ -134,7 +136,8 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
         super.onDestroyView();
         App.getInstance().releaseActivityComponent();
         Timber.d("Remove weather component");
-        unbinder.unbind();
+        if (unbinder != null)
+            unbinder.unbind();
     }
 
     @Override

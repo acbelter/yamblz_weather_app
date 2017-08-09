@@ -1,5 +1,9 @@
 package com.acbelter.weatherapp.data.repository.database;
 
+import android.support.annotation.MainThread;
+import android.support.annotation.NonNull;
+import android.support.annotation.WorkerThread;
+
 import com.acbelter.weatherapp.data.database.WeatherDAO;
 import com.acbelter.weatherapp.data.weathermodel.common.Coord;
 import com.acbelter.weatherapp.domain.model.city.CityData;
@@ -18,13 +22,15 @@ import timber.log.Timber;
 
 public class DatabaseRepoImpl implements DatabaseRepo {
 
+    @NonNull
     private WeatherDAO weatherDAO;
 
-    public DatabaseRepoImpl(WeatherDAO weatherDAO) {
+    public DatabaseRepoImpl(@NonNull WeatherDAO weatherDAO) {
         this.weatherDAO = weatherDAO;
     }
 
     @Override
+    @WorkerThread
     public Flowable<List<CityData>> getAllCities() {
         return weatherDAO.getAllWeatherRecords()
                 .flatMapSingle(databaseWeatherDatas -> Flowable
@@ -34,7 +40,8 @@ public class DatabaseRepoImpl implements DatabaseRepo {
     }
 
     @Override
-    public Single<CurrentWeatherFavorites> getCurrentWeather(WeatherParams weatherParams) {
+    @WorkerThread
+    public Single<CurrentWeatherFavorites> getCurrentWeather(@NonNull WeatherParams weatherParams) {
         double latitude = weatherParams.getCityData().getLatitude();
         double longitude = weatherParams.getCityData().getLongitude();
         Coord coord = new Coord(latitude, longitude);
@@ -44,7 +51,8 @@ public class DatabaseRepoImpl implements DatabaseRepo {
     }
 
     @Override
-    public Single<List<ForecastWeatherFavorites>> getForecastWeather(WeatherParams weatherParams) {
+    @WorkerThread
+    public Single<List<ForecastWeatherFavorites>> getForecastWeather(@NonNull WeatherParams weatherParams) {
         double latitude = weatherParams.getCityData().getLatitude();
         double longitude = weatherParams.getCityData().getLongitude();
         Coord coord = new Coord(latitude, longitude);
@@ -53,17 +61,14 @@ public class DatabaseRepoImpl implements DatabaseRepo {
     }
 
     @Override
-    public void saveWeather(FullWeatherModel weather) {
+    @MainThread
+    public void saveWeather(@NonNull FullWeatherModel weather) {
         weatherDAO.insertWeather(DatabaseWeatherConverter.fromFullWeatherDataToDatabaseFormat(weather));
     }
 
     @Override
-    public void updateWeather(FullWeatherModel weatherModel) {
+    @MainThread
+    public void updateWeather(@NonNull FullWeatherModel weatherModel) {
         weatherDAO.updateWeather(DatabaseWeatherConverter.fromFullWeatherDataToDatabaseFormat(weatherModel));
-    }
-
-    @Override
-    public void deleteAllWeatherRecords() {
-        weatherDAO.deleteAllWeatherRecords();
     }
 }

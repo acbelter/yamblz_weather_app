@@ -1,8 +1,10 @@
 package com.acbelter.weatherapp.data.repository.weather;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.WorkerThread;
+
 import com.acbelter.weatherapp.data.network.NetworkRepo;
 import com.acbelter.weatherapp.data.repository.preference.SettingsPreference;
-import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
 import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
@@ -17,17 +19,21 @@ import timber.log.Timber;
 
 public class WeatherRepoImpl implements WeatherRepo {
 
+    @NonNull
     private final NetworkRepo networkRepo;
+    @NonNull
     private final SettingsPreference settingsPreference;
+    @NonNull
     private final DatabaseRepo databaseRepo;
 
-    public WeatherRepoImpl(NetworkRepo networkRepo, SettingsPreference settingsPreference, DatabaseRepo databaseRepo) {
+    public WeatherRepoImpl(@NonNull NetworkRepo networkRepo, @NonNull SettingsPreference settingsPreference, @NonNull DatabaseRepo databaseRepo) {
         this.networkRepo = networkRepo;
         this.settingsPreference = settingsPreference;
         this.databaseRepo = databaseRepo;
     }
 
     @Override
+    @WorkerThread
     public Single<CurrentWeatherFavorites> getCurrentWeather() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
@@ -43,6 +49,7 @@ public class WeatherRepoImpl implements WeatherRepo {
     }
 
     @Override
+    @WorkerThread
     public Single<List<ForecastWeatherFavorites>> getForecast() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
@@ -58,6 +65,7 @@ public class WeatherRepoImpl implements WeatherRepo {
     }
 
     @Override
+    @WorkerThread
     public Single<CurrentWeatherFavorites> updateCurrentWeather() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
@@ -66,16 +74,12 @@ public class WeatherRepoImpl implements WeatherRepo {
     }
 
     @Override
+    @WorkerThread
     public Single<List<ForecastWeatherFavorites>> updateForecast() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
         return networkRepo.getForecastWeather(weatherParams)
                 .map(extendedWeather -> WeatherDataConverter
                         .fromNWWeatherDataToForecastWeatherData(extendedWeather, weatherParams));
-    }
-
-    @Override
-    public void saveWeather(FullWeatherModel fullWeatherModel) {
-        databaseRepo.saveWeather(fullWeatherModel);
     }
 }
