@@ -1,11 +1,13 @@
 package com.acbelter.weatherapp.mvp.view.activity.adapter;
 
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.acbelter.weatherapp.R;
@@ -31,8 +33,6 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
     public FavoritesCitiesAdapter(@NonNull OnItemClickListener clickListener) {
         this.favoritesCities = new ArrayList<>();
         this.itemClickListener = clickListener;
-
-        setHasStableIds(true);
     }
 
     @Override
@@ -42,8 +42,9 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
         FavoritesCitiesViewHolder viewHolder = new FavoritesCitiesViewHolder(view);
         view.setOnClickListener(it -> {
             int adapterPosition = viewHolder.getAdapterPosition();
-            if (adapterPosition != RecyclerView.NO_POSITION)
+            if (adapterPosition != RecyclerView.NO_POSITION) {
                 itemClicked(adapterPosition);
+            }
         });
         return viewHolder;
     }
@@ -52,16 +53,14 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
     public void onBindViewHolder(FavoritesCitiesViewHolder viewHolder, int position) {
         CityData city = favoritesCities.get(position);
         viewHolder.bind(city);
+        if (position == 0) {
+            viewHolder.setVisible();
+        }
     }
 
     @Override
     public int getItemCount() {
         return favoritesCities.size();
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return favoritesCities.get(position).hashCode();
     }
 
     private void itemClicked(int position) {
@@ -79,6 +78,8 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
 
         @BindView(R.id.tvFavoriteCity)
         TextView tvCity;
+        @BindView(R.id.ivFavoriteFlag)
+        ImageView ivFavorite;
 
         FavoritesCitiesViewHolder(final View itemView) {
             super(itemView);
@@ -88,6 +89,11 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
 
         void bind(final CityData item) {
             tvCity.setText(item.getShortName());
+        }
+
+        void setVisible() {
+            ivFavorite.setVisibility(View.VISIBLE);
+            tvCity.setTypeface(null, Typeface.BOLD);
         }
     }
 }

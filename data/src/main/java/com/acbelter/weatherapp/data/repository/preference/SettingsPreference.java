@@ -10,7 +10,6 @@ import com.google.gson.Gson;
 
 import java.util.Locale;
 
-import io.reactivex.Observable;
 import io.reactivex.annotations.Nullable;
 
 import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.CELSIUS;
@@ -21,7 +20,6 @@ public class SettingsPreference {
     private static final String TEMPERATURE_METRIC_KEY = "pref_temperature_metric";
     private static final String KEY_UPDATE_INTERVAL = "pref_update_interval";
     private static final String KEY_LAST_UPDATE_TIMESTAMP = "pref_last_update_timestamp";
-    private static final String KEY_LAST_WEATHER_DATA = "pref_last_weather_data";
 
     @NonNull
     private static final long MIN_UPDATE_INTERVAL = 60 * 60 * 1000; // interval is 1 hour
@@ -42,11 +40,11 @@ public class SettingsPreference {
     public CityData loadCurrentCity() {
         CityData defaultCityData;
         if (Locale.getDefault().getLanguage().equals("ru"))
-            defaultCityData = new CityData.Builder(55.751244f, 37.618423f)
+            defaultCityData = new CityData.Builder(55.751244f, 37.618423f, 0L)
                     .shortName("Москва")
                     .build();
         else
-            defaultCityData = new CityData.Builder(55.751244f, 37.618423f)
+            defaultCityData = new CityData.Builder(55.751244f, 37.618423f, 0L)
                     .shortName("Moscow")
                     .build();
         String defaultStr = new Gson().toJson(defaultCityData);
@@ -88,10 +86,10 @@ public class SettingsPreference {
     }
 
     @NonNull
-    Observable<SettingsData> loadUserSettings() {
+    SettingsData loadUserSettings() {
         TemperatureMetric metric = loadTemperatureMetric();
         long interval = loadUpdateInterval();
         CityData cityData = loadCurrentCity();
-        return Observable.fromCallable(() -> new SettingsData.Builder(metric, interval).cityData(cityData).build());
+        return new SettingsData.Builder(metric, interval).cityData(cityData).build();
     }
 }

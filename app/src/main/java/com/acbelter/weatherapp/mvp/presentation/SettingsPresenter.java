@@ -29,8 +29,7 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
     public void showSettings() {
         if (getView() == null)
             return;
-        unSubscribeOnDetach(settingsInteractor.getUserSettings()
-                .subscribe(settings -> getView().setSettings(settings)));
+        getView().setSettings(settingsInteractor.getUserSettings());
     }
 
     public void saveTemperatureMetric(@NonNull TemperatureMetric metric) {

@@ -33,7 +33,7 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
         unSubscribeOnDetach(weatherInteractor.updateWeather()
                 .subscribe(weatherData -> {
                             getView().showWeather(weatherData);
-
+                            getView().stopLoading();
                         }
                         , throwable -> {
                             getView().stopLoading();

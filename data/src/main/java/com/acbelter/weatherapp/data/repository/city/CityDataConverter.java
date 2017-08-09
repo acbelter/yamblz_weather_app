@@ -10,6 +10,7 @@ import com.acbelter.weatherapp.domain.model.city.AutocompleteData;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static com.acbelter.weatherapp.data.network.ApiErrors.PlacesApiErrors.OK;
@@ -51,8 +52,10 @@ class CityDataConverter {
         if (!location.getStatus().equals(OK.getError())) {
             return null;
         }
+        Calendar calendar = Calendar.getInstance();
+        long timestamp = calendar.getTimeInMillis();
         return new CityData.Builder(location.getResult().getGeometry().getLocation().getLat()
-                , location.getResult().getGeometry().getLocation().getLng())
+                , location.getResult().getGeometry().getLocation().getLng(), timestamp)
                 .shortName(location.getResult().getName()).build();
     }
 

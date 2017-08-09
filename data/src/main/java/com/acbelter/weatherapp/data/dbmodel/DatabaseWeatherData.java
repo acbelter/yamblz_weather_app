@@ -18,6 +18,17 @@ public class DatabaseWeatherData {
     private String current;
     @NonNull
     private String forecast;
+    @NonNull
+    private String timestamp;
+
+    @NonNull
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(@NonNull String timestamp) {
+        this.timestamp = timestamp;
+    }
 
     public int getId() {
         return id;

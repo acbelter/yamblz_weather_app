@@ -54,7 +54,7 @@ public class SettingsData {
     }
 
     @NonNull
-    public CityData getSelectedCityName() {
+    public CityData getSelectedCity() {
         return this.cityData;
     }
 }

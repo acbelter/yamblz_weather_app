@@ -7,8 +7,6 @@ import com.acbelter.weatherapp.domain.model.settings.SettingsData;
 import com.acbelter.weatherapp.domain.repository.SettingsRepo;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 
-import io.reactivex.Observable;
-
 public class SettingsInteractor {
 
     @NonNull
@@ -19,7 +17,7 @@ public class SettingsInteractor {
     }
 
     @MainThread
-    public Observable<SettingsData> getUserSettings() {
+    public SettingsData getUserSettings() {
         return settingsRepo.getUserSettings();
     }
 

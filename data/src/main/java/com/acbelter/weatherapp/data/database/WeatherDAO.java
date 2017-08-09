@@ -15,10 +15,10 @@ import io.reactivex.Single;
 
 @Dao
 public interface WeatherDAO {
-    @Query("SELECT * FROM DatabaseWeatherData")
+    @Query("SELECT * FROM DatabaseWeatherData ORDER BY timestamp DESC")
     Flowable<List<DatabaseWeatherData>> getAllWeatherRecords();
 
-    @Query("SELECT * FROM DatabaseWeatherData WHERE coordinates = :coordinates ")
+    @Query("SELECT * FROM DatabaseWeatherData WHERE coordinates = :coordinates")
     Single<DatabaseWeatherData> getWeatherByCityName(String coordinates);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

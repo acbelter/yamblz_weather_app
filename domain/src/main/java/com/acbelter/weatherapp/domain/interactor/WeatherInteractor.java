@@ -91,8 +91,4 @@ public class WeatherInteractor {
     private FullWeatherModel convertUpdatedWeather(@NonNull CurrentWeatherFavorites currentWeatherFavorites, @NonNull List<ForecastWeatherFavorites> forecast) {
         return new FullWeatherModel(currentWeatherFavorites.getCityData(), currentWeatherFavorites, forecast);
     }
-
-    public void saveWeather(@NonNull FullWeatherModel fullWeatherModel) {
-        databaseRepo.saveWeather(fullWeatherModel);
-    }
 }

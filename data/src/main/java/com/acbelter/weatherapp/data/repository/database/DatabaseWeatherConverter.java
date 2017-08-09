@@ -27,8 +27,10 @@ class DatabaseWeatherConverter {
             throw new IllegalArgumentException("Converted object must be not null");
         }
 
-        Coord coord = new Gson().fromJson(databaseWeatherData.getCoordinates(), Coord.class);
-        return new CityData.Builder(coord.getLat(), coord.getLon())
+        Gson gson = new Gson();
+        Coord coord = gson.fromJson(databaseWeatherData.getCoordinates(), Coord.class);
+        long timestamp = gson.fromJson(databaseWeatherData.getTimestamp(), Long.class);
+        return new CityData.Builder(coord.getLat(), coord.getLon(), timestamp)
                 .shortName(databaseWeatherData.getCityShortName()).build();
     }
 
@@ -73,12 +75,15 @@ class DatabaseWeatherConverter {
         String coordinates = gson.toJson(coord);
         String currentWeather = gson.toJson(fullWeatherModel.getCurrentWeatherFavorites());
         String forecast = gson.toJson(fullWeatherModel.getForrecast());
+        String timestamp = gson.toJson(fullWeatherModel.getCityData().getTimestamp());
 
         DatabaseWeatherData databaseWeatherData = new DatabaseWeatherData();
         databaseWeatherData.setCoordinates(coordinates);
-        databaseWeatherData.setCityShortName(shortName);
+        if (shortName != null)
+            databaseWeatherData.setCityShortName(shortName);
         databaseWeatherData.setCurrent(currentWeather);
         databaseWeatherData.setForecast(forecast);
+        databaseWeatherData.setTimestamp(timestamp);
         return databaseWeatherData;
     }
 }

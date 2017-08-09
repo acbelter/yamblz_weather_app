@@ -11,18 +11,22 @@ public class CityData {
     private double longitude;
     @Nullable
     private String shortName;
+    @NonNull
+    private long timestamp;
 
     public static class Builder {
         //Requered params
         private final double latitude;
         private final double longitude;
+        private final long timestamp;
 
         //Optional params
         private String shortName = "";
 
-        public Builder(double latitude, double longitude) {
+        public Builder(double latitude, double longitude, long timestamp) {
             this.latitude = latitude;
             this.longitude = longitude;
+            this.timestamp = timestamp;
         }
 
         public Builder shortName(String val) {
@@ -39,6 +43,7 @@ public class CityData {
         latitude = builder.latitude;
         longitude = builder.longitude;
         shortName = builder.shortName;
+        timestamp = builder.timestamp;
     }
 
     @Nullable
@@ -52,6 +57,14 @@ public class CityData {
 
     public double getLongitude() {
         return longitude;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     @Override
@@ -71,6 +84,7 @@ public class CityData {
         result = 31 * result + (shortName == null ? 0 : shortName.hashCode());
         result = 31 * result + Double.valueOf(latitude).hashCode();
         result = 31 * result + Double.valueOf(longitude).hashCode();
+        result = 31 * result + Long.valueOf(timestamp).hashCode();
         return result;
     }
 
@@ -79,6 +93,7 @@ public class CityData {
         return "(shortName = " + shortName +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
+                ", timestamp=" + timestamp +
                 ")";
     }
 }

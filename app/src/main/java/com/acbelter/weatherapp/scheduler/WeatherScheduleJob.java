@@ -6,6 +6,7 @@ import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.BuildConfig;
 import com.acbelter.weatherapp.domain.interactor.SettingsInteractor;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
+import com.acbelter.weatherapp.domain.model.settings.SettingsData;
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobRequest;
 
@@ -42,34 +43,30 @@ public class WeatherScheduleJob extends Job {
     }
 
     private void serializeCurrentWeather() {
-        settingsInteractor.getUserSettings()
-                .subscribe(settingsModel
-                        -> weatherInteractor.updateWeather()
-                        .subscribe(fullWeatherModel -> {
-                        }, e -> {
-                        }));
+        weatherInteractor.updateWeather().subscribe(fullWeatherModel -> {
+        }, e -> {
+        });
     }
 
     public void startJob() {
         Timber.v("start Job");
         if (BuildConfig.DEBUG)
-            settingsInteractor.getUserSettings().subscribe(settings ->
-                    new JobRequest.Builder(TAG)
-                            .setPeriodic(TimeUnit.MILLISECONDS.toMillis(61000)
-                                    , TimeUnit.MILLISECONDS.toMillis(35000))
-                            .setUpdateCurrent(true)
-                            .setPersisted(true)
-                            .build()
-                            .schedule());
-        else
-            settingsInteractor.getUserSettings().subscribe(settings ->
-                    new JobRequest.Builder(TAG)
-                            .setPeriodic(TimeUnit.MILLISECONDS.toMillis(settings.getUpdateWeatherInterval())
-                                    , TimeUnit.MILLISECONDS.toMillis((long) ((double) settings.getUpdateWeatherInterval() * FLEX_TIME_PERCENT)))
-                            .setUpdateCurrent(true)
-                            .setPersisted(true)
-                            .build()
-                            .schedule());
-
+            new JobRequest.Builder(TAG)
+                    .setPeriodic(TimeUnit.MILLISECONDS.toMillis(61000)
+                            , TimeUnit.MILLISECONDS.toMillis(35000))
+                    .setUpdateCurrent(true)
+                    .setPersisted(true)
+                    .build()
+                    .schedule();
+        else {
+            SettingsData settingsData = settingsInteractor.getUserSettings();
+            new JobRequest.Builder(TAG)
+                    .setPeriodic(TimeUnit.MILLISECONDS.toMillis(settingsData.getUpdateWeatherInterval())
+                            , TimeUnit.MILLISECONDS.toMillis((long) ((double) settingsData.getUpdateWeatherInterval() * FLEX_TIME_PERCENT)))
+                    .setUpdateCurrent(true)
+                    .setPersisted(true)
+                    .build()
+                    .schedule();
+        }
     }
 }
