@@ -10,7 +10,12 @@
         android:id="@+id/rvFavoritesCities"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8" />
+        android:layout_weight="6" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorAccent" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,31 +23,38 @@
         android:layout_weight="1">
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/imageView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:contentDescription="@null"
             android:layout_marginStart="20dp"
-            android:background="@drawable/ic_settings" />
+            android:background="@drawable/ic_edit_black_24dp"
+            android:contentDescription="@null" />
 
         <TextView
-            android:id="@+id/tvSettings"
+            android:id="@+id/tvEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
-            android:layout_toEndOf="@+id/imageView3"
-            android:layout_toRightOf="@+id/imageView3"
+            android:layout_toEndOf="@+id/imageView1"
+            android:layout_toRightOf="@+id/imageView1"
+            android:background="?selectableItemBackgroundBorderless"
             android:clickable="true"
             android:gravity="center_vertical"
-            android:text="@string/settings" />
+            android:text="@string/edit" />
 
     </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -57,9 +69,42 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:contentDescription="@null"
             android:layout_marginStart="20dp"
-            android:background="@drawable/ic_help" />
+            android:background="@drawable/ic_settings"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:id="@+id/tvSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/imageView2"
+            android:layout_toRightOf="@+id/imageView2"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:text="@string/settings" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/ic_help"
+            android:contentDescription="@null" />
 
         <TextView
             android:id="@+id/tvInfo"
@@ -68,8 +113,9 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
-            android:layout_toEndOf="@+id/imageView2"
-            android:layout_toRightOf="@+id/imageView2"
+            android:layout_toEndOf="@+id/imageView3"
+            android:layout_toRightOf="@+id/imageView3"
+            android:background="?selectableItemBackgroundBorderless"
             android:clickable="true"
             android:gravity="center_vertical"
             android:text="@string/about" />

@@ -17,6 +17,8 @@ import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
 import com.acbelter.weatherapp.domain.repository.SettingsRepo;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
+import java.util.concurrent.Executor;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -57,8 +59,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    DatabaseRepo provideDatabaseRepo(WeatherDAO weatherDAO) {
-        return new DatabaseRepoImpl(weatherDAO);
+    DatabaseRepo provideDatabaseRepo(WeatherDAO weatherDAO, Executor executor) {
+        return new DatabaseRepoImpl(weatherDAO, executor);
     }
 
     @Provides

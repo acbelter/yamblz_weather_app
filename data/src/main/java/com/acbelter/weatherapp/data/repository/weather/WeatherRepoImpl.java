@@ -5,6 +5,7 @@ import android.support.annotation.WorkerThread;
 
 import com.acbelter.weatherapp.data.network.NetworkRepo;
 import com.acbelter.weatherapp.data.repository.preference.SettingsPreference;
+import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
 import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
@@ -37,7 +38,7 @@ public class WeatherRepoImpl implements WeatherRepo {
     public Single<CurrentWeatherFavorites> getCurrentWeather() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
-        return databaseRepo.getCurrentWeather(weatherParams)
+        return databaseRepo.getCurrentWeather(weatherParams.getCityData())
                 .map(currentWeatherFavorites ->
                         WeatherDataConverter.updateCurrentWeatherMetric(currentWeatherFavorites, weatherParams.getMetric()))
                 .doOnSuccess(data -> Timber.v("Current data from DB: %s", data))
@@ -53,7 +54,7 @@ public class WeatherRepoImpl implements WeatherRepo {
     public Single<List<ForecastWeatherFavorites>> getForecast() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
-        return databaseRepo.getForecastWeather(weatherParams)
+        return databaseRepo.getForecastWeather(weatherParams.getCityData())
                 .flatMap(forecastList -> Observable.fromIterable(forecastList)
                         .map(element -> WeatherDataConverter
                                 .updateForecastWeatherMetric(element, weatherParams.getMetric()))
@@ -81,5 +82,11 @@ public class WeatherRepoImpl implements WeatherRepo {
         return networkRepo.getForecastWeather(weatherParams)
                 .map(extendedWeather -> WeatherDataConverter
                         .fromNWWeatherDataToForecastWeatherData(extendedWeather, weatherParams));
+    }
+
+    @Override
+    @WorkerThread
+    public void deleteWeather(CityData cityData) {
+        databaseRepo.deleteWeather(cityData);
     }
 }

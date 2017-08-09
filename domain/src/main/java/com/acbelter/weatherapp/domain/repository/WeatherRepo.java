@@ -2,6 +2,7 @@ package com.acbelter.weatherapp.domain.repository;
 
 import android.support.annotation.WorkerThread;
 
+import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
 import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
 
@@ -22,4 +23,7 @@ public interface WeatherRepo {
 
     @WorkerThread
     Single<List<ForecastWeatherFavorites>> updateForecast();
+
+    @WorkerThread
+    void deleteWeather(CityData cityData);
 }

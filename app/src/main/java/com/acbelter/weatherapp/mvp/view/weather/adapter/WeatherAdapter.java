@@ -210,6 +210,5 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ForecastWeatherRes forecastWeatherRes = new ForecastWeatherRes(weather);
             iwForecast.setImageResource(forecastWeatherRes.getWeatherImageResId());
         }
-
     }
 }

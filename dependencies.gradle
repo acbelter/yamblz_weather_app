@@ -33,7 +33,7 @@ ext {
             appCompat         : "com.android.support:appcompat-v7:$supportLibraryVersion",
             design            : "com.android.support:design:$supportLibraryVersion",
             constraintLayout  : "com.android.support.constraint:constraint-layout:$constraintLayoutVersion",
-            supportAnnotations: "com.android.support:support-annotations:$supportLibraryVersion"
+            supportAnnotations: "com.android.support:support-annotations:$supportLibraryVersion",
     ]
 
     rx = [

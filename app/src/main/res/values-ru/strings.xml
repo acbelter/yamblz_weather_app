@@ -4,6 +4,9 @@
     <string name="app_name">YamblzWeatherApp</string>
     <string name="ok">OK</string>
 
+    <!--NavigationView screen-->
+    <string name="edit">Редактировать</string>
+
     <!--Weather screen-->
     <string name="weather">Погода</string>
     <string name="text_weather_error">Не удалось получить погоду</string>

@@ -2,8 +2,8 @@ package com.acbelter.weatherapp.mvp.view.activity;
 
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     TextView tvSettings;
     @BindView(R.id.tvInfo)
     TextView tvInfo;
+    @BindView(R.id.tvEdit)
+    TextView tvEdit;
     @BindView(R.id.etSearchOnHeader)
     EditText etSearch;
 
@@ -85,6 +87,15 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
         tvInfo.setOnClickListener(view -> {
             replaceFragment(InfoFragment.class);
             drawerLayout.closeDrawer(GravityCompat.START);
+        });
+        tvEdit.setOnClickListener(view -> {
+            if (adapter != null) {
+                if (adapter.isShowDeleteButton())
+                    tvEdit.setTypeface(null, Typeface.NORMAL);
+                else
+                    tvEdit.setTypeface(null, Typeface.BOLD);
+                adapter.showDeleteButton(!adapter.isShowDeleteButton());
+            }
         });
 
         initSearchEdittext();
@@ -202,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     }
 
     @Override
-    public void setDrawerEnable(@NonNull boolean enabled) {
+    public void setDrawerEnable(boolean enabled) {
         if (enabled)
             setDrawerUnlocked();
         else
@@ -246,5 +257,13 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     public void onItemClick(CityData item) {
         presenter.showSelectedWeather(item);
         drawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    @Override
+    public void deleteItem(CityData item) {
+        presenter.deleteItem(item);
+        tvEdit.setTypeface(null, Typeface.NORMAL);
+        if (adapter != null)
+            adapter.showDeleteButton(!adapter.isShowDeleteButton());
     }
 }

@@ -22,8 +22,11 @@ public interface WeatherDAO {
     Single<DatabaseWeatherData> getWeatherByCityName(String coordinates);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertWeather(DatabaseWeatherData weather);
+    void addWeather(DatabaseWeatherData weather);
 
     @Update
     void updateWeather(DatabaseWeatherData weather);
+
+    @Query("DELETE FROM DatabaseWeatherData WHERE coordinates = :coordinates")
+    void deleteWeather(String coordinates);
 }

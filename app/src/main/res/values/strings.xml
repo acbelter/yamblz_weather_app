@@ -11,6 +11,9 @@
     <string name="app_name">YamblzWeatherApp</string>
     <string name="ok">OK</string>
 
+    <!--NavigationView screen-->
+    <string name="edit">Edit</string>
+
     <!--Weather screen-->
     <string name="weather">Weather</string>
     <string name="text_weather_error">Failed to get weather</string>

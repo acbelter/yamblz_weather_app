@@ -19,20 +19,28 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCitiesAdapter.FavoritesCitiesViewHolder> {
 
     public interface OnItemClickListener {
         void onItemClick(CityData item);
+
+        void deleteItem(CityData item);
     }
 
     @NonNull
     private List<CityData> favoritesCities;
     @NonNull
     private final OnItemClickListener itemClickListener;
+    @NonNull
+    private boolean isShow;
 
     public FavoritesCitiesAdapter(@NonNull OnItemClickListener clickListener) {
         this.favoritesCities = new ArrayList<>();
         this.itemClickListener = clickListener;
+        this.isShow = false;
     }
 
     @Override
@@ -46,6 +54,13 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
                 itemClicked(adapterPosition);
             }
         });
+
+        viewHolder.ivDelete.setOnClickListener(delete -> {
+            int adapterPosition = viewHolder.getAdapterPosition();
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                deleteItem(adapterPosition);
+            }
+        });
         return viewHolder;
     }
 
@@ -53,6 +68,7 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
     public void onBindViewHolder(FavoritesCitiesViewHolder viewHolder, int position) {
         CityData city = favoritesCities.get(position);
         viewHolder.bind(city);
+        viewHolder.showDeleteButton(isShow);
         if (position == 0) {
             viewHolder.setVisible();
         }
@@ -67,11 +83,26 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
         itemClickListener.onItemClick(favoritesCities.get(position));
     }
 
+    private void deleteItem(int position) {
+        itemClickListener.deleteItem(favoritesCities.get(position));
+    }
+
     public void update(@Nullable List<CityData> cities) {
         if (cities == null)
             return;
         favoritesCities = cities;
         notifyDataSetChanged();
+    }
+
+    public void showDeleteButton(@NonNull boolean show) {
+        this.isShow = show;
+        notifyDataSetChanged();
+    }
+
+    public
+    @NonNull
+    boolean isShowDeleteButton() {
+        return isShow;
     }
 
     static class FavoritesCitiesViewHolder extends RecyclerView.ViewHolder {
@@ -80,6 +111,8 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
         TextView tvCity;
         @BindView(R.id.ivFavoriteFlag)
         ImageView ivFavorite;
+        @BindView(R.id.ivDelete)
+        ImageView ivDelete;
 
         FavoritesCitiesViewHolder(final View itemView) {
             super(itemView);
@@ -92,8 +125,15 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
         }
 
         void setVisible() {
-            ivFavorite.setVisibility(View.VISIBLE);
+            ivFavorite.setVisibility(VISIBLE);
             tvCity.setTypeface(null, Typeface.BOLD);
+        }
+
+        void showDeleteButton(boolean isShow) {
+            if (isShow)
+                ivDelete.setVisibility(VISIBLE);
+            else
+                ivDelete.setVisibility(INVISIBLE);
         }
     }
 }
