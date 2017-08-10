@@ -5,8 +5,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,18 +15,16 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.mvp.presentation.MainActivityPresenter;
-import com.acbelter.weatherapp.mvp.view.about.InfoFragment;
+import com.acbelter.weatherapp.mvp.presentation.navigation.Router;
 import com.acbelter.weatherapp.mvp.view.activity.adapter.FavoritesCitiesAdapter;
 import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
-import com.acbelter.weatherapp.mvp.view.search.SearchFragment;
-import com.acbelter.weatherapp.mvp.view.settings.SettingsFragment;
-import com.acbelter.weatherapp.mvp.view.weather.WeatherFragment;
 
 import java.util.List;
 
@@ -47,12 +43,14 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     DrawerLayout drawerLayout;
     @BindView(R.id.rvFavoritesCities)
     RecyclerView recyclerView;
-    @BindView(R.id.tvSettings)
-    TextView tvSettings;
-    @BindView(R.id.tvInfo)
-    TextView tvInfo;
+    @BindView(R.id.rvSettings)
+    RelativeLayout rvSettings;
+    @BindView(R.id.rvInfo)
+    RelativeLayout rvInfo;
     @BindView(R.id.tvEdit)
     TextView tvEdit;
+    @BindView(R.id.rvEdit)
+    RelativeLayout rvEdit;
     @BindView(R.id.etSearchOnHeader)
     EditText etSearch;
 
@@ -65,6 +63,10 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     @Nullable
     private FavoritesCitiesAdapter adapter;
 
+    private Router router;
+
+    private boolean twoPain;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,19 +78,26 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
         setAdapter();
         presenter.onAttach(this);
 
-        if (savedInstanceState == null) {
-            addFragment(WeatherFragment.class);
+        this.router = new Router(this);
+        this.twoPain = false;
+        if (findViewById(R.id.detail_fragment_container) != null) {
+            twoPain = true;
+            router.showDetailsFragment(0, twoPain);
         }
 
-        tvSettings.setOnClickListener(view -> {
-            replaceFragment(SettingsFragment.class);
+        if (savedInstanceState == null) {
+            router.showWeatherListFragment();
+        }
+
+        rvSettings.setOnClickListener(view -> {
+            router.showSettingsFragment();
             drawerLayout.closeDrawer(GravityCompat.START);
         });
-        tvInfo.setOnClickListener(view -> {
-            replaceFragment(InfoFragment.class);
+        rvInfo.setOnClickListener(view -> {
+            router.showInfoFragment();
             drawerLayout.closeDrawer(GravityCompat.START);
         });
-        tvEdit.setOnClickListener(view -> {
+        rvEdit.setOnClickListener(view -> {
             if (adapter != null) {
                 if (adapter.isShowDeleteButton())
                     tvEdit.setTypeface(null, Typeface.NORMAL);
@@ -113,7 +122,9 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     private void initSearchEdittext() {
         etSearch.setOnTouchListener((view, motionEvent) -> {
             if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
-                replaceFragment(SearchFragment.class);
+                router.showSearchFragment();
+                if (twoPain)
+                    router.showErrorFragment();
                 drawerLayout.closeDrawer(GravityCompat.START);
             }
             return true;
@@ -180,38 +191,6 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
             super.onBackPressed();
     }
 
-    private void addFragment(Class fragmentClass) {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(fragmentClass.getSimpleName());
-        if (fragment == null) {
-            try {
-                fragment = (Fragment) fragmentClass.newInstance();
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.content_frame, fragment, fragmentClass.getSimpleName())
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .addToBackStack(null)
-                        .commit();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void replaceFragment(Class fragmentClass) {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(fragmentClass.getSimpleName());
-        if (fragment == null) {
-            try {
-                fragment = (Fragment) fragmentClass.newInstance();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, fragment, fragmentClass.getSimpleName())
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .addToBackStack(null)
-                        .commit();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     @Override
     public void setDrawerEnable(boolean enabled) {
         if (enabled)
@@ -221,11 +200,13 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     }
 
     private void setDrawerLocked() {
-        if (toggle != null)
-            toggle.setDrawerIndicatorEnabled(false);
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        toggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        toolbar.setNavigationIcon(R.drawable.ic_close);
+        if (!twoPain) {
+            if (toggle != null)
+                toggle.setDrawerIndicatorEnabled(false);
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            toggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            toolbar.setNavigationIcon(R.drawable.ic_close);
+        }
     }
 
     private void setDrawerUnlocked() {
@@ -238,18 +219,11 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     @Override
     public void showCityList(List<CityData> cities) {
         if (cities.isEmpty()) {
-            clearBackStack();
-            addFragment(SearchFragment.class);
+            router.showSearchFragment();
         } else {
-            replaceFragment(WeatherFragment.class);
+            router.showWeatherListFragment();
             if (adapter != null)
                 adapter.update(cities);
-        }
-    }
-
-    private void clearBackStack() {
-        for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); ++i) {
-            getSupportFragmentManager().popBackStack();
         }
     }
 
@@ -257,8 +231,8 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     public void onItemClick(CityData item) {
         presenter.showSelectedWeather(item);
         drawerLayout.closeDrawer(GravityCompat.START);
-        if (getSupportFragmentManager().getBackStackEntryCount() > 1)
-            getSupportFragmentManager().popBackStack();
+        if (twoPain)
+            router.showDetailsFragment(0, twoPain);
     }
 
     @Override

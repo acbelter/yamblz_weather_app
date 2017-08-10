@@ -15,4 +15,5 @@ public class UtilsModule {
     public WeatherScheduleJob provideWeatherScheduleJob() {
         return new WeatherScheduleJob();
     }
+
 }

@@ -92,10 +92,10 @@ class WeatherDataConverter {
         TemperatureMetric temperatureMetric = weatherParams.getMetric();
         return new ForecastWeatherElement.Builder(dateStr, lowTemp, highTemp, temperatureMetric)
                 .weatherType(extractWeatherType(forecastElement.getWeather()))
-                .pressure((int)Math.round(forecastElement.getPressure()))
+                .pressure((int) Math.round(forecastElement.getPressure()))
                 .humidity(forecastElement.getHumidity())
                 .description(forecastElement.getWeather().get(0).getDescription())
-                .windSpeed((int)Math.round(forecastElement.getSpeed()))
+                .windSpeed((int) Math.round(forecastElement.getSpeed()))
                 .build();
     }
 

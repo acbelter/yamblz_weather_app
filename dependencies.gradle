@@ -52,7 +52,7 @@ ext {
             gson              : "com.google.code.gson:gson:$gsonVersion",
             loggingInterceptor: "com.squareup.okhttp3:logging-interceptor:$okhttp3Version",
             timber            : "com.jakewharton.timber:timber:$timberVersion",
-            androidJob        : "com.evernote:android-job:$androidJobVersion"
+            androidJob        : "com.evernote:android-job:$androidJobVersion",
     ]
 
     db = [

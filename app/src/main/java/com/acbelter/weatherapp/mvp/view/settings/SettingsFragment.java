@@ -91,7 +91,6 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
         presenter.showSettings();
     }
 
-
     private void saveTemperatureMetric(RadioGroup radioGroup) {
         TemperatureMetric metric;
         switch (radioGroup.getCheckedRadioButtonId()) {
@@ -129,7 +128,6 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
         }
         presenter.saveUpdateInterval(interval);
     }
-
 
     @Override
     public void onDestroyView() {

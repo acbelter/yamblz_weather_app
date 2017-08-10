@@ -16,6 +16,8 @@ import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherElement;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetricConverter;
 import com.acbelter.weatherapp.mvp.presentation.DetailPresenter;
+import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
+import com.acbelter.weatherapp.mvp.view.error.ErrorFragment;
 import com.acbelter.weatherapp.mvp.view.fragment.BaseFragment;
 import com.acbelter.weatherapp.mvp.view.weather.resources.ForecastWeatherRes;
 
@@ -100,8 +102,6 @@ public class DetailFragment extends BaseFragment implements DetailView {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         this.unbinder = ButterKnife.bind(this, view);
         presenter.getWeather();
-
-
     }
 
     private String convertMetricToString(TemperatureMetric metric, Context context) {
@@ -138,7 +138,7 @@ public class DetailFragment extends BaseFragment implements DetailView {
 
     @Override
     protected void setDrawableEnabled() {
-        getActivity().setTitle(R.string.weather);
+        ((DrawerLocker) getActivity()).setDrawerEnable(false);
     }
 
     @Override

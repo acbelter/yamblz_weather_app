@@ -46,6 +46,9 @@
     <string name="city_name">City name</string>
     <string name="get_city_list_error">Can\'t get city weatherList</string>
 
+    <!--About screen-->
+    <string name="no_data">No data</string>
+
     <!--Test strings-->
     <string name="version_test">Version</string>
 

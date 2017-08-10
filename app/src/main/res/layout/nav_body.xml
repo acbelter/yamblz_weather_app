@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="256dp"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
@@ -13,14 +13,17 @@
         android:layout_weight="6" />
 
     <FrameLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="1dp"
         android:background="@color/colorAccent" />
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:id="@+id/rvEdit"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true">
 
         <ImageView
             android:id="@+id/imageView1"
@@ -36,15 +39,13 @@
 
         <TextView
             android:id="@+id/tvEdit"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
             android:layout_toEndOf="@+id/imageView1"
             android:layout_toRightOf="@+id/imageView1"
-            android:background="?selectableItemBackgroundBorderless"
-            android:clickable="true"
             android:gravity="center_vertical"
             android:text="@string/edit" />
 
@@ -57,9 +58,12 @@
 
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:id="@+id/rvSettings"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true">
 
         <ImageView
             android:id="@+id/imageView2"
@@ -75,24 +79,25 @@
 
         <TextView
             android:id="@+id/tvSettings"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
             android:layout_toEndOf="@+id/imageView2"
             android:layout_toRightOf="@+id/imageView2"
-            android:background="?selectableItemBackgroundBorderless"
-            android:clickable="true"
             android:gravity="center_vertical"
             android:text="@string/settings" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:id="@+id/rvInfo"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true">
 
         <ImageView
             android:id="@+id/imageView3"
@@ -108,15 +113,13 @@
 
         <TextView
             android:id="@+id/tvInfo"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
             android:layout_toEndOf="@+id/imageView3"
             android:layout_toRightOf="@+id/imageView3"
-            android:background="?selectableItemBackgroundBorderless"
-            android:clickable="true"
             android:gravity="center_vertical"
             android:text="@string/about" />
     </RelativeLayout>

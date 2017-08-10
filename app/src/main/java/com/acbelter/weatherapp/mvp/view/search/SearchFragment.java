@@ -158,7 +158,7 @@ public class SearchFragment extends BaseFragment implements SearchView, CityAdap
     }
 
     @Override
-    public void onItemClick(AutocompleteData item) {
+    public void onCityItemClick(AutocompleteData item) {
         presenter.saveSelectedCityAndWeather(item);
     }
 }

@@ -19,7 +19,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCitiesAdapter.FavoritesCitiesViewHolder> {
@@ -34,7 +33,6 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
     private List<CityData> favoritesCities;
     @NonNull
     private final OnItemClickListener itemClickListener;
-    @NonNull
     private boolean isShowDeleteBtn;
 
     public FavoritesCitiesAdapter(@NonNull OnItemClickListener clickListener) {
@@ -70,7 +68,7 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
         viewHolder.bind(city);
         viewHolder.showDeleteButton(isShowDeleteBtn);
         if (position == 0) {
-            viewHolder.setVisible();
+            viewHolder.setFavoritesVisible();
         }
     }
 
@@ -94,14 +92,12 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
         notifyDataSetChanged();
     }
 
-    public void showDeleteButton(@NonNull boolean show) {
+    public void showDeleteButton(boolean show) {
         this.isShowDeleteBtn = show;
         notifyDataSetChanged();
     }
 
-    public
-    @NonNull
-    boolean isShowDeleteButton() {
+    public boolean isShowDeleteButton() {
         return isShowDeleteBtn;
     }
 
@@ -124,7 +120,7 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
             tvCity.setText(item.getShortName());
         }
 
-        void setVisible() {
+        void setFavoritesVisible() {
             ivFavorite.setVisibility(VISIBLE);
             tvCity.setTypeface(null, Typeface.BOLD);
         }
@@ -133,7 +129,7 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
             if (isShow)
                 ivDelete.setVisibility(VISIBLE);
             else
-                ivDelete.setVisibility(INVISIBLE);
+                ivDelete.setVisibility(View.INVISIBLE);
         }
     }
 }

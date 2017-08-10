@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder> {
 
     public interface OnItemClickListener {
-        void onItemClick(AutocompleteData item);
+        void onCityItemClick(AutocompleteData item);
     }
 
     @NonNull
@@ -49,7 +49,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
     }
 
     private void itemClicked(int position) {
-        itemClickListener.onItemClick(locations.get(position));
+        itemClickListener.onCityItemClick(locations.get(position));
     }
 
     @Override

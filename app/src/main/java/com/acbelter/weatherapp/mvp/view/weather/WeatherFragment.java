@@ -4,8 +4,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,10 +16,10 @@ import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
 import com.acbelter.weatherapp.mvp.presentation.WeatherPresenter;
+import com.acbelter.weatherapp.mvp.presentation.navigation.Router;
 import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
 import com.acbelter.weatherapp.mvp.view.fragment.BaseFragment;
 import com.acbelter.weatherapp.mvp.view.weather.adapter.WeatherAdapter;
-import com.acbelter.weatherapp.mvp.view.weather.details.DetailFragment;
 
 import javax.inject.Inject;
 
@@ -49,6 +47,8 @@ public class WeatherFragment extends BaseFragment implements WeatherView
     @Nullable
     private WeatherAdapter adapter;
 
+    private Router router;
+
     public static WeatherFragment newInstance() {
         return new WeatherFragment();
     }
@@ -57,6 +57,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         presenter.onAttach(this);
+        router = new Router(getActivity());
     }
 
     @Nullable
@@ -159,18 +160,9 @@ public class WeatherFragment extends BaseFragment implements WeatherView
 
     @Override
     public void onItemClick(int position) {
-        Fragment fragment = getActivity().getSupportFragmentManager().findFragmentByTag(DetailFragment.class.getSimpleName());
-        if (fragment == null) {
-            try {
-                fragment = DetailFragment.newInstance(position);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, fragment, DetailFragment.class.getSimpleName())
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .addToBackStack(null)
-                        .commit();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        boolean twoPain = false;
+        if (getActivity().findViewById(R.id.detail_fragment_container) != null)
+            twoPain = true;
+        router.showDetailsFragment(position, twoPain);
     }
 }
