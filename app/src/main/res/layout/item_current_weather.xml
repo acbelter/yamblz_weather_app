@@ -10,7 +10,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="31dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginRight="31dp"
         android:scaleType="fitEnd"
         app:layout_constraintHeight_default="spread"
         app:layout_constraintRight_toRightOf="parent"
@@ -161,8 +161,18 @@
         android:text="@string/wind_speed"
         app:layout_constraintLeft_toLeftOf="@+id/tvHumidityText"
         android:layout_marginTop="6dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvHumidityText"
-        android:layout_marginLeft="-9dp"
-        android:layout_marginStart="-9dp" />
+        app:layout_constraintTop_toBottomOf="@+id/tvHumidityText" />
+
+    <TextView
+        android:id="@+id/tvPercentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/percent"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvHumidityText"
+        tools:layout_constraintBaseline_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/tvHumidity"
+        android:layout_marginLeft="8dp" />
 
 </android.support.constraint.ConstraintLayout>

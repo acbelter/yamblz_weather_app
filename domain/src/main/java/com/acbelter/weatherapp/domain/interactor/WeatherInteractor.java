@@ -7,7 +7,7 @@ import android.support.annotation.WorkerThread;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
-import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
+import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherElement;
 import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
@@ -75,7 +75,7 @@ public class WeatherInteractor {
     }
 
     @WorkerThread
-    private Single<List<ForecastWeatherFavorites>> getForecast() {
+    private Single<List<ForecastWeatherElement>> getForecast() {
         return weatherRepo.getForecast();
     }
 
@@ -85,17 +85,17 @@ public class WeatherInteractor {
     }
 
     @WorkerThread
-    private Single<List<ForecastWeatherFavorites>> updateForecast() {
+    private Single<List<ForecastWeatherElement>> updateForecast() {
         return weatherRepo.updateForecast();
     }
 
     @NonNull
-    private FullWeatherModel convertCachedWeather(@NonNull CurrentWeatherFavorites currentWeatherFavorites, @NonNull List<ForecastWeatherFavorites> forecast) {
+    private FullWeatherModel convertCachedWeather(@NonNull CurrentWeatherFavorites currentWeatherFavorites, @NonNull List<ForecastWeatherElement> forecast) {
         return new FullWeatherModel(currentWeatherFavorites.getCityData(), currentWeatherFavorites, forecast);
     }
 
     @NonNull
-    private FullWeatherModel convertUpdatedWeather(@NonNull CurrentWeatherFavorites currentWeatherFavorites, @NonNull List<ForecastWeatherFavorites> forecast) {
+    private FullWeatherModel convertUpdatedWeather(@NonNull CurrentWeatherFavorites currentWeatherFavorites, @NonNull List<ForecastWeatherElement> forecast) {
         return new FullWeatherModel(currentWeatherFavorites.getCityData(), currentWeatherFavorites, forecast);
     }
 }

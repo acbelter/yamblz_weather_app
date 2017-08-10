@@ -22,6 +22,7 @@
     <string name="pressure">Pressure:</string>
     <string name="humidity">Humidity:</string>
     <string name="wind_speed">Wind speed:</string>
+    <string name="percent" translatable="false">%</string>
 
     <!--Settings screen-->
     <string name="settings_title_temperature">Temperature</string>
@@ -47,4 +48,5 @@
 
     <!--Test strings-->
     <string name="version_test">Version</string>
+
 </resources>

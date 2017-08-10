@@ -7,6 +7,7 @@ import com.acbelter.weatherapp.mvp.view.activity.MainActivity;
 import com.acbelter.weatherapp.mvp.view.search.SearchFragment;
 import com.acbelter.weatherapp.mvp.view.settings.SettingsFragment;
 import com.acbelter.weatherapp.mvp.view.weather.WeatherFragment;
+import com.acbelter.weatherapp.mvp.view.weather.details.DetailFragment;
 import com.acbelter.weatherapp.scheduler.WeatherScheduleJob;
 
 import dagger.Subcomponent;
@@ -18,6 +19,8 @@ public interface ActivityComponent {
     void inject(MainActivity activity);
 
     void inject(WeatherFragment weatherFragment);
+
+    void inject(DetailFragment detailFragment);
 
     void inject(InfoFragment infoFragment);
 

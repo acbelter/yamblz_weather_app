@@ -257,6 +257,8 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     public void onItemClick(CityData item) {
         presenter.showSelectedWeather(item);
         drawerLayout.closeDrawer(GravityCompat.START);
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1)
+            getSupportFragmentManager().popBackStack();
     }
 
     @Override

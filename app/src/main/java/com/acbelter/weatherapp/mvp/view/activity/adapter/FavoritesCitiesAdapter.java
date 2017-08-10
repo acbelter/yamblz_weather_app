@@ -35,12 +35,12 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
     @NonNull
     private final OnItemClickListener itemClickListener;
     @NonNull
-    private boolean isShow;
+    private boolean isShowDeleteBtn;
 
     public FavoritesCitiesAdapter(@NonNull OnItemClickListener clickListener) {
         this.favoritesCities = new ArrayList<>();
         this.itemClickListener = clickListener;
-        this.isShow = false;
+        this.isShowDeleteBtn = false;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
     public void onBindViewHolder(FavoritesCitiesViewHolder viewHolder, int position) {
         CityData city = favoritesCities.get(position);
         viewHolder.bind(city);
-        viewHolder.showDeleteButton(isShow);
+        viewHolder.showDeleteButton(isShowDeleteBtn);
         if (position == 0) {
             viewHolder.setVisible();
         }
@@ -95,14 +95,14 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
     }
 
     public void showDeleteButton(@NonNull boolean show) {
-        this.isShow = show;
+        this.isShowDeleteBtn = show;
         notifyDataSetChanged();
     }
 
     public
     @NonNull
     boolean isShowDeleteButton() {
-        return isShow;
+        return isShowDeleteBtn;
     }
 
     static class FavoritesCitiesViewHolder extends RecyclerView.ViewHolder {

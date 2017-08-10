@@ -3,14 +3,14 @@ package com.acbelter.weatherapp.mvp.view.weather.resources;
 import android.support.annotation.DrawableRes;
 
 import com.acbelter.weatherapp.R;
-import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
+import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherElement;
 
 public class ForecastWeatherRes {
 
     @DrawableRes
     private int weatherImageResId;
 
-    public ForecastWeatherRes(ForecastWeatherFavorites data) {
+    public ForecastWeatherRes(ForecastWeatherElement data) {
         switch (data.getWeatherType()) {
             case SUN:
                 weatherImageResId = R.drawable.img_sun;

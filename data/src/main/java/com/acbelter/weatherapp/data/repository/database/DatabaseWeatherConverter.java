@@ -8,7 +8,7 @@ import com.acbelter.weatherapp.data.weathermodel.common.Coord;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
-import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
+import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherElement;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -47,7 +47,7 @@ class DatabaseWeatherConverter {
 
     static
     @NonNull
-    List<ForecastWeatherFavorites> fromDatabaseWeatherDataToForecastWeather(@Nullable DatabaseWeatherData databaseWeatherData) {
+    List<ForecastWeatherElement> fromDatabaseWeatherDataToForecastWeather(@Nullable DatabaseWeatherData databaseWeatherData) {
 
         if (databaseWeatherData == null) {
             throw new IllegalArgumentException("Converted object must be not null");
@@ -55,7 +55,7 @@ class DatabaseWeatherConverter {
 
         return new Gson()
                 .fromJson(databaseWeatherData.getForecast()
-                        , new TypeToken<List<ForecastWeatherFavorites>>() {
+                        , new TypeToken<List<ForecastWeatherElement>>() {
                         }.getType());
     }
 

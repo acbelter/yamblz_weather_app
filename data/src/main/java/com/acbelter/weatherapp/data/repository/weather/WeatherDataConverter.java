@@ -7,17 +7,15 @@ import android.support.annotation.VisibleForTesting;
 import com.acbelter.weatherapp.data.weathermodel.common.Weather;
 import com.acbelter.weatherapp.data.weathermodel.currentweather.CurrentWeather;
 import com.acbelter.weatherapp.data.weathermodel.forecast.ForecastElement;
-import com.acbelter.weatherapp.data.weathermodel.forecast.ForecastWeather;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
-import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
+import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherElement;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.domain.model.weather.WeatherType;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -43,13 +41,13 @@ class WeatherDataConverter {
 
     static
     @NonNull
-    ForecastWeatherFavorites updateForecastWeatherMetric(@Nullable ForecastWeatherFavorites forecastWeatherFavorites, @Nullable TemperatureMetric temperatureMetric) {
-        if (forecastWeatherFavorites == null) {
+    ForecastWeatherElement updateForecastWeatherMetric(@Nullable ForecastWeatherElement forecastWeatherElement, @Nullable TemperatureMetric temperatureMetric) {
+        if (forecastWeatherElement == null) {
             throw new IllegalArgumentException("Converted object must be not null");
         }
 
-        forecastWeatherFavorites.setTemperatureMetric(temperatureMetric);
-        return forecastWeatherFavorites;
+        forecastWeatherElement.setTemperatureMetric(temperatureMetric);
+        return forecastWeatherElement;
     }
 
     static
@@ -82,28 +80,8 @@ class WeatherDataConverter {
     }
 
     static
-    @Nullable
-    List<ForecastWeatherFavorites> fromNWWeatherDataToForecastWeatherData(@Nullable ForecastWeather forecastNW, @NonNull WeatherParams weatherParams) {
-        if (forecastNW == null) {
-            throw new IllegalArgumentException("Converted object must be not null");
-        }
-
-        if (Integer.valueOf(forecastNW.getCod()) != 200) {
-            return null;
-        }
-
-        List<ForecastElement> forecastListNW = forecastNW.getForecastElement();
-        List<ForecastWeatherFavorites> forecastWeatherFavoritesList = new ArrayList<>();
-        for (int i = 1; i < forecastListNW.size(); ++i) { //skip first element
-            ForecastWeatherFavorites forecastWeatherFavorites = fromForecastElementToWeatherForecast(forecastListNW.get(i), weatherParams);
-            forecastWeatherFavoritesList.add(forecastWeatherFavorites);
-        }
-        return forecastWeatherFavoritesList;
-    }
-
-    private static
     @NonNull
-    ForecastWeatherFavorites fromForecastElementToWeatherForecast(@NonNull ForecastElement forecastElement, @NonNull WeatherParams weatherParams) {
+    ForecastWeatherElement fromForecastElementToWeatherForecast(@NonNull ForecastElement forecastElement, @NonNull WeatherParams weatherParams) {
         DateFormat df = new SimpleDateFormat("dd MMMM", Locale.getDefault());
         Date date = new Date();
         long curTime = forecastElement.getDt() * 1000L;
@@ -112,8 +90,12 @@ class WeatherDataConverter {
         double lowTemp = forecastElement.getTemp().getMin();
         double highTemp = forecastElement.getTemp().getMax();
         TemperatureMetric temperatureMetric = weatherParams.getMetric();
-        return new ForecastWeatherFavorites.Builder(dateStr, lowTemp, highTemp, temperatureMetric)
+        return new ForecastWeatherElement.Builder(dateStr, lowTemp, highTemp, temperatureMetric)
                 .weatherType(extractWeatherType(forecastElement.getWeather()))
+                .pressure((int)Math.round(forecastElement.getPressure()))
+                .humidity(forecastElement.getHumidity())
+                .description(forecastElement.getWeather().get(0).getDescription())
+                .windSpeed((int)Math.round(forecastElement.getSpeed()))
                 .build();
     }
 

@@ -83,4 +83,5 @@ dependencies {
     testCompile unitTest.junit
     testCompile unitTest.mockito
     testCompile unitTest.assertJ
+    compile 'com.android.support:support-v4:25.3.1'
 }

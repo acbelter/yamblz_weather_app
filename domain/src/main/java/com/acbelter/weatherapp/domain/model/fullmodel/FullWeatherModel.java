@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
-import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
+import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherElement;
 
 import java.util.List;
 
@@ -15,9 +15,9 @@ public class FullWeatherModel {
     @NonNull
     private CurrentWeatherFavorites currentWeatherFavorites;
     @NonNull
-    private List<ForecastWeatherFavorites> forrecast;
+    private List<ForecastWeatherElement> forrecast;
 
-    public FullWeatherModel(@NonNull CityData cityData, @NonNull CurrentWeatherFavorites currentWeatherFavorites, @NonNull List<ForecastWeatherFavorites> forrecast) {
+    public FullWeatherModel(@NonNull CityData cityData, @NonNull CurrentWeatherFavorites currentWeatherFavorites, @NonNull List<ForecastWeatherElement> forrecast) {
         this.cityData = cityData;
         this.currentWeatherFavorites = currentWeatherFavorites;
         this.forrecast = forrecast;
@@ -43,11 +43,11 @@ public class FullWeatherModel {
     }
 
     @NonNull
-    public List<ForecastWeatherFavorites> getForrecast() {
+    public List<ForecastWeatherElement> getForrecast() {
         return forrecast;
     }
 
-    public void setForrecast(@NonNull List<ForecastWeatherFavorites> forrecast) {
+    public void setForrecast(@NonNull List<ForecastWeatherElement> forrecast) {
         this.forrecast = forrecast;
     }
 }

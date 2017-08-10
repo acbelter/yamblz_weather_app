@@ -4,7 +4,7 @@ import android.support.annotation.WorkerThread;
 
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
-import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
+import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherElement;
 
 import java.util.List;
 
@@ -19,10 +19,10 @@ public interface WeatherRepo {
     Single<CurrentWeatherFavorites> updateCurrentWeather();
 
     @WorkerThread
-    Single<List<ForecastWeatherFavorites>> getForecast();
+    Single<List<ForecastWeatherElement>> getForecast();
 
     @WorkerThread
-    Single<List<ForecastWeatherFavorites>> updateForecast();
+    Single<List<ForecastWeatherElement>> updateForecast();
 
     @WorkerThread
     void deleteWeather(CityData cityData);

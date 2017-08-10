@@ -6,7 +6,7 @@ import android.support.annotation.WorkerThread;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
-import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
+import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherElement;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public interface DatabaseRepo {
     Single<CurrentWeatherFavorites> getCurrentWeather(@NonNull CityData cityData);
 
     @WorkerThread
-    Single<List<ForecastWeatherFavorites>> getForecastWeather(@NonNull CityData cityData);
+    Single<List<ForecastWeatherElement>> getForecastWeather(@NonNull CityData cityData);
 
     @WorkerThread
     void saveWeather(@NonNull FullWeatherModel weatherModel);

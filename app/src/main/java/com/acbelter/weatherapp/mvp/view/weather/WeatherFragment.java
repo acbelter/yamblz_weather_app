@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +21,7 @@ import com.acbelter.weatherapp.mvp.presentation.WeatherPresenter;
 import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
 import com.acbelter.weatherapp.mvp.view.fragment.BaseFragment;
 import com.acbelter.weatherapp.mvp.view.weather.adapter.WeatherAdapter;
+import com.acbelter.weatherapp.mvp.view.weather.details.DetailFragment;
 
 import javax.inject.Inject;
 
@@ -27,7 +30,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import timber.log.Timber;
 
-public class WeatherFragment extends BaseFragment implements WeatherView, SharedPreferences.OnSharedPreferenceChangeListener {
+public class WeatherFragment extends BaseFragment implements WeatherView
+        , SharedPreferences.OnSharedPreferenceChangeListener, WeatherAdapter.OnItemClickListener {
 
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -73,7 +77,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView, Shared
     }
 
     private void setAdapter() {
-        this.adapter = new WeatherAdapter();
+        this.adapter = new WeatherAdapter(this);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -151,5 +155,22 @@ public class WeatherFragment extends BaseFragment implements WeatherView, Shared
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         presenter.getWeather();
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Fragment fragment = getActivity().getSupportFragmentManager().findFragmentByTag(DetailFragment.class.getSimpleName());
+        if (fragment == null) {
+            try {
+                fragment = DetailFragment.newInstance(position);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, fragment, DetailFragment.class.getSimpleName())
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack(null)
+                        .commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -5,9 +5,10 @@ import android.support.annotation.WorkerThread;
 
 import com.acbelter.weatherapp.data.network.NetworkRepo;
 import com.acbelter.weatherapp.data.repository.preference.SettingsPreference;
+import com.acbelter.weatherapp.data.weathermodel.forecast.ForecastWeather;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
-import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
+import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherElement;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
@@ -51,7 +52,7 @@ public class WeatherRepoImpl implements WeatherRepo {
 
     @Override
     @WorkerThread
-    public Single<List<ForecastWeatherFavorites>> getForecast() {
+    public Single<List<ForecastWeatherElement>> getForecast() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
         return databaseRepo.getForecastWeather(weatherParams.getCityData())
@@ -61,7 +62,11 @@ public class WeatherRepoImpl implements WeatherRepo {
                         .toList())
                 .doOnSuccess(data -> Timber.d("Forecast weather data from DB: %s", data))
                 .onErrorResumeNext(networkRepo.getForecastWeather(weatherParams)
-                        .map(forecastWeather -> WeatherDataConverter.fromNWWeatherDataToForecastWeatherData(forecastWeather, weatherParams)))
+                        .map(ForecastWeather::getForecastElement)
+                        .flatMap(forecastElements -> Observable.fromIterable(forecastElements)
+                                .skip(1) //skip forecast for current day
+                                .map(forecastElement -> WeatherDataConverter.fromForecastElementToWeatherForecast(forecastElement, weatherParams))
+                                .toList()))
                 .doOnSuccess(data -> Timber.d("Forecast weather data from network: %s", data));
     }
 
@@ -76,12 +81,15 @@ public class WeatherRepoImpl implements WeatherRepo {
 
     @Override
     @WorkerThread
-    public Single<List<ForecastWeatherFavorites>> updateForecast() {
+    public Single<List<ForecastWeatherElement>> updateForecast() {
         WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
                 , settingsPreference.loadTemperatureMetric());
         return networkRepo.getForecastWeather(weatherParams)
-                .map(extendedWeather -> WeatherDataConverter
-                        .fromNWWeatherDataToForecastWeatherData(extendedWeather, weatherParams));
+                .map(ForecastWeather::getForecastElement)
+                .flatMap(forecastElements -> Observable.fromIterable(forecastElements)
+                        .skip(1) //skip forecast for current day
+                        .map(forecastElement -> WeatherDataConverter.fromForecastElementToWeatherForecast(forecastElement, weatherParams))
+                        .toList());
     }
 
     @Override

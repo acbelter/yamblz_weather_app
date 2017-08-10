@@ -8,7 +8,7 @@ import com.acbelter.weatherapp.data.weathermodel.common.Coord;
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
-import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
+import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherElement;
 import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
 import com.google.gson.Gson;
 
@@ -54,7 +54,7 @@ public class DatabaseRepoImpl implements DatabaseRepo {
 
     @Override
     @WorkerThread
-    public Single<List<ForecastWeatherFavorites>> getForecastWeather(@NonNull CityData cityData) {
+    public Single<List<ForecastWeatherElement>> getForecastWeather(@NonNull CityData cityData) {
         double latitude = cityData.getLatitude();
         double longitude = cityData.getLongitude();
         Coord coord = new Coord(latitude, longitude);

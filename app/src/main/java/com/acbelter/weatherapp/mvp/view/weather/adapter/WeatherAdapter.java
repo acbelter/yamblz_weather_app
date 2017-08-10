@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.domain.model.fullmodel.FullWeatherModel;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
-import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherFavorites;
+import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherElement;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetricConverter;
 import com.acbelter.weatherapp.mvp.view.weather.resources.CurrentWeatherRes;
@@ -28,20 +28,37 @@ import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.CELSIUS;
 
 public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
     private static final int VIEW_TYPE_CURRENT = 0;
     private static final int VIEW_TYPE_FORECAST = 1;
 
     @Nullable
     private FullWeatherModel fullWeatherModel;
+    @NonNull
+    private final OnItemClickListener itemClickListener;
+
+    public WeatherAdapter(@NonNull OnItemClickListener clickListener) {
+        this.itemClickListener = clickListener;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_CURRENT) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_current_weather, parent, false);
-            return new CurrentWeatherViewHolder(v);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_current_weather, parent, false);
+            return new CurrentWeatherViewHolder(view);
         } else if (viewType == VIEW_TYPE_FORECAST) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_forecast_weather, parent, false);
-            return new ForecastWeatherViewHolder(v);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_forecast_weather, parent, false);
+            RecyclerView.ViewHolder forecastViewHolder = new ForecastWeatherViewHolder(view);
+            view.setOnClickListener(it -> {
+                int adapterPosition = forecastViewHolder.getAdapterPosition();
+                if (adapterPosition != RecyclerView.NO_POSITION && adapterPosition != 0) {
+                    itemClicked(adapterPosition - 1);
+                }
+            });
+            return forecastViewHolder;
         }
         return null;
     }
@@ -54,7 +71,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 headerHolder.bind(fullWeatherModel.getCurrentWeatherFavorites());
         } else if (holder instanceof ForecastWeatherViewHolder) {
             try {
-                ForecastWeatherFavorites forecastElement = getItem(position - 1);
+                ForecastWeatherElement forecastElement = getItem(position - 1);
                 ForecastWeatherViewHolder forecastViewHolder = (ForecastWeatherViewHolder) holder;
                 forecastViewHolder.bind(forecastElement);
             } catch (NullPointerException e) {
@@ -65,7 +82,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private
     @NonNull
-    ForecastWeatherFavorites getItem(int position) throws NullPointerException {
+    ForecastWeatherElement getItem(int position) throws NullPointerException {
         if (fullWeatherModel == null)
             throw new NullPointerException("FullWeatherModel is null");
         return fullWeatherModel.getForrecast().get(position);
@@ -81,6 +98,10 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private boolean isPositionHeader(int position) {
         return position == 0;
+    }
+
+    private void itemClicked(int position) {
+        itemClickListener.onItemClick(position);
     }
 
     @Override
@@ -125,6 +146,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView getTvHumidityText;
         @BindView(R.id.tvWindText)
         TextView tvWindText;
+        @BindView(R.id.tvPercentage)
+        TextView tvPersentage;
         @BindView(R.id.weather_image)
         ImageView weatherImage;
 
@@ -142,7 +165,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             int temperature = TemperatureMetricConverter.getSupportedTemperature(weather.getTemperature(), weather.getTemperatureMetric());
             tvTemperature.setText(String.valueOf(temperature));
             tvMetric.setText(convertMetricToString(weather.getTemperatureMetric(), context));
-            String humidity = String.valueOf(weather.getHumidity()) + " %";
+            String humidity = String.valueOf(weather.getHumidity());
             tvHumidity.setText(humidity);
             tvWind.setText(String.valueOf(weather.getWindSpeed()));
             tvDescription.setText(weather.getDescription());
@@ -170,6 +193,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             tvPressureText.setTextColor(color);
             getTvHumidityText.setTextColor(color);
             tvWindText.setTextColor(color);
+            tvPersentage.setTextColor(color);
         }
 
         private void setWeatherView(CurrentWeatherFavorites weather) {
@@ -197,7 +221,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ButterKnife.bind(this, itemView);
         }
 
-        void bind(ForecastWeatherFavorites forecastElement) {
+        void bind(ForecastWeatherElement forecastElement) {
             setWeatherView(forecastElement);
             int minTemp = TemperatureMetricConverter.getSupportedTemperature(forecastElement.getMinTemp(), forecastElement.getTemperatureMetric());
             tvMinTemp.setText(String.valueOf(minTemp));
@@ -206,7 +230,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             tvDate.setText(forecastElement.getDate());
         }
 
-        private void setWeatherView(ForecastWeatherFavorites weather) {
+        private void setWeatherView(ForecastWeatherElement weather) {
             ForecastWeatherRes forecastWeatherRes = new ForecastWeatherRes(weather);
             iwForecast.setImageResource(forecastWeatherRes.getWeatherImageResId());
         }
