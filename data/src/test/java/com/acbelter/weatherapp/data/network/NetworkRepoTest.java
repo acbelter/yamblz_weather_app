@@ -32,10 +32,8 @@ public class NetworkRepoTest {
 
     @Mock
     WeatherApi mockWeatherApi;
-
     @Mock
     PlacesApi mockPlacesApi;
-
     @Mock
     LocationApi mockLocationApi;
 

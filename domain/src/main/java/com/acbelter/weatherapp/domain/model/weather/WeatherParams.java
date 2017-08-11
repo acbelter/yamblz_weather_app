@@ -14,10 +14,8 @@ public class WeatherParams {
     private TemperatureMetric metric;
 
     public WeatherParams(@NonNull CityData cityData, @Nullable TemperatureMetric metric) {
-
         this.cityData = cityData;
         this.metric = metric;
-
     }
 
     public
