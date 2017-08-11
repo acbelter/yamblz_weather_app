@@ -1,6 +1,5 @@
 package com.acbelter.weatherapp.domain.interactor;
 
-import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 
@@ -55,7 +54,7 @@ public class WeatherInteractor {
                 .observeOn(schedulerMain);
     }
 
-    @MainThread
+    @WorkerThread
     public void deleteWeather(@NonNull CityData cityData) {
         weatherRepo.deleteWeather(cityData);
     }
@@ -70,32 +69,32 @@ public class WeatherInteractor {
     }
 
     @WorkerThread
-    private Single<CurrentWeatherFavorites> getCurrentWeather() {
+    Single<CurrentWeatherFavorites> getCurrentWeather() {
         return weatherRepo.getCurrentWeather();
     }
 
     @WorkerThread
-    private Single<List<ForecastWeatherElement>> getForecast() {
+    Single<List<ForecastWeatherElement>> getForecast() {
         return weatherRepo.getForecast();
     }
 
     @WorkerThread
-    private Single<CurrentWeatherFavorites> updateCurrenWeather() {
+    Single<CurrentWeatherFavorites> updateCurrenWeather() {
         return weatherRepo.updateCurrentWeather();
     }
 
     @WorkerThread
-    private Single<List<ForecastWeatherElement>> updateForecast() {
+    Single<List<ForecastWeatherElement>> updateForecast() {
         return weatherRepo.updateForecast();
     }
 
     @NonNull
-    private FullWeatherModel convertCachedWeather(@NonNull CurrentWeatherFavorites currentWeatherFavorites, @NonNull List<ForecastWeatherElement> forecast) {
+    FullWeatherModel convertCachedWeather(@NonNull CurrentWeatherFavorites currentWeatherFavorites, @NonNull List<ForecastWeatherElement> forecast) {
         return new FullWeatherModel(currentWeatherFavorites.getCityData(), currentWeatherFavorites, forecast);
     }
 
     @NonNull
-    private FullWeatherModel convertUpdatedWeather(@NonNull CurrentWeatherFavorites currentWeatherFavorites, @NonNull List<ForecastWeatherElement> forecast) {
+    FullWeatherModel convertUpdatedWeather(@NonNull CurrentWeatherFavorites currentWeatherFavorites, @NonNull List<ForecastWeatherElement> forecast) {
         return new FullWeatherModel(currentWeatherFavorites.getCityData(), currentWeatherFavorites, forecast);
     }
 }

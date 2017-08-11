@@ -1,6 +1,7 @@
 package com.acbelter.weatherapp.domain.model.weather;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 
@@ -8,7 +9,7 @@ import static com.acbelter.weatherapp.domain.model.weather.WeatherType.SUN;
 
 public class ForecastWeatherElement {
 
-    @NonNull
+    @Nullable
     private String date;
     @NonNull
     private double maxTemp;
@@ -19,33 +20,33 @@ public class ForecastWeatherElement {
     @NonNull
     private WeatherType weatherType;
     @NonNull
-    private int pressure;
+    private double pressure;
     @NonNull
     private int humidity;
-    @NonNull
+    @Nullable
     private String description;
     @NonNull
-    private int windSpeed;
+    private double windSpeed;
 
     public static class Builder {
         //Requered params
 
         private final String date;
-        private final double highTemperature;
-        private final double lowTemperature;
+        private final double maxTemp;
+        private final double minTemp;
         private final TemperatureMetric temperatureMetric;
 
         //Optional params
         private WeatherType weatherType = SUN;
-        private int pressure = 0;
+        private double pressure = 0;
         private int humidity = 0;
         private String description = "";
-        private int windSpeed = 0;
+        private double windSpeed = 0.0;
 
-        public Builder(String date, double highTemperature, double lowTemperature, TemperatureMetric temperatureMetric) {
+        public Builder(String date, double minTemp, double maxTemp, TemperatureMetric temperatureMetric) {
             this.date = date;
-            this.highTemperature = highTemperature;
-            this.lowTemperature = lowTemperature;
+            this.maxTemp = maxTemp;
+            this.minTemp = minTemp;
             this.temperatureMetric = temperatureMetric;
         }
 
@@ -54,7 +55,7 @@ public class ForecastWeatherElement {
             return this;
         }
 
-        public Builder pressure(int val) {
+        public Builder pressure(double val) {
             this.pressure = val;
             return this;
         }
@@ -69,7 +70,7 @@ public class ForecastWeatherElement {
             return this;
         }
 
-        public Builder windSpeed(int val) {
+        public Builder windSpeed(double val) {
             this.windSpeed = val;
             return this;
         }
@@ -81,8 +82,8 @@ public class ForecastWeatherElement {
 
     private ForecastWeatherElement(Builder builder) {
         date = builder.date;
-        maxTemp = builder.highTemperature;
-        minTemp = builder.lowTemperature;
+        maxTemp = builder.maxTemp;
+        minTemp = builder.minTemp;
         temperatureMetric = builder.temperatureMetric;
         weatherType = builder.weatherType;
         pressure = builder.pressure;
@@ -91,7 +92,7 @@ public class ForecastWeatherElement {
         windSpeed = builder.windSpeed;
     }
 
-    @NonNull
+    @Nullable
     public String getDate() {
         return date;
     }
@@ -112,7 +113,7 @@ public class ForecastWeatherElement {
     }
 
     @NonNull
-    public int getPressure() {
+    public double getPressure() {
         return pressure;
     }
 
@@ -121,13 +122,13 @@ public class ForecastWeatherElement {
         return humidity;
     }
 
-    @NonNull
+    @Nullable
     public String getDescription() {
         return description;
     }
 
     @NonNull
-    public int getWindSpeed() {
+    public double getWindSpeed() {
         return windSpeed;
     }
 
@@ -138,5 +139,55 @@ public class ForecastWeatherElement {
 
     public void setTemperatureMetric(@NonNull TemperatureMetric temperatureMetric) {
         this.temperatureMetric = temperatureMetric;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ForecastWeatherElement data = (ForecastWeatherElement) o;
+        if (date != null)
+        return (date.equals(data.date))
+                && (Double.compare(maxTemp, data.maxTemp) == 0)
+                && (Double.compare(minTemp, data.minTemp) == 0)
+                && (temperatureMetric == data.temperatureMetric)
+                && (weatherType == data.weatherType)
+                && (pressure == data.pressure)
+                && (humidity == data.humidity)
+                && (description.equals(data.description))
+                && (windSpeed == data.windSpeed);
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + (date == null ? 0 : date.hashCode());
+        result = 31 * result + Double.valueOf(minTemp).hashCode();
+        result = 31 * result + Double.valueOf(maxTemp).hashCode();
+        result = 31 * result + temperatureMetric.hashCode();
+        result = 31 * result + weatherType.hashCode();
+        result = 31 * result + Double.valueOf(pressure).hashCode();
+        result = 31 * result + humidity;
+        result = 31 * result + (description == null ? 0 : description.hashCode());
+        result = 31 * result + Double.valueOf(windSpeed).hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "( date=" + date +
+                ", minTemp=" + minTemp +
+                ", maxTemp=" + maxTemp +
+                ", temperatureMetric =" + temperatureMetric +
+                ", pressure=" + pressure +
+                ", humidity=" + humidity +
+                ", description=" + description +
+                ", windSpeed=" + windSpeed +
+                ")";
     }
 }

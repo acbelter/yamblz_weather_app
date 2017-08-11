@@ -73,9 +73,10 @@ public class CurrentWeatherRes {
 
     @Override
     public int hashCode() {
-        int result = weatherImageResId;
+        int result = 17;
         result = 31 * result + backgroundColorResId;
         result = 31 * result + textColorResId;
+        result = 31 * result + weatherImageResId;
         return result;
     }
 

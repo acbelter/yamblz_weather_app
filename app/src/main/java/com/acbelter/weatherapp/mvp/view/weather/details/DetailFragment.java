@@ -150,8 +150,8 @@ public class DetailFragment extends BaseFragment implements DetailView {
     public void showWeather(FullWeatherModel weather) {
         ForecastWeatherElement forecast = weather.getForrecast().get(position);
         setWeatherView(forecast);
-        int maxTemp = TemperatureMetricConverter.getSupportedTemperature(forecast.getMaxTemp(), forecast.getTemperatureMetric());
-        int minTemp = TemperatureMetricConverter.getSupportedTemperature(forecast.getMinTemp(), forecast.getTemperatureMetric());
+        int maxTemp = TemperatureMetricConverter.getSupportedTemperature(Math.round(forecast.getMaxTemp()), forecast.getTemperatureMetric());
+        int minTemp = TemperatureMetricConverter.getSupportedTemperature(Math.round(forecast.getMinTemp()), forecast.getTemperatureMetric());
         tvMaxTemp.setText(String.valueOf(maxTemp));
         tvMinTemp.setText(String.valueOf(minTemp));
         tvDate.setText(forecast.getDate());
@@ -159,7 +159,7 @@ public class DetailFragment extends BaseFragment implements DetailView {
         tvMetricMax.setText(convertMetricToString(forecast.getTemperatureMetric(), getContext()));
         tvDescription.setText(forecast.getDescription());
         tvHumidity.setText(String.valueOf(forecast.getHumidity()));
-        tvPressure.setText(String.valueOf(forecast.getPressure()));
-        tvWind.setText(String.valueOf(forecast.getWindSpeed()));
+        tvPressure.setText(String.valueOf(Math.round(forecast.getPressure())));
+        tvWind.setText(String.valueOf(Math.round(forecast.getWindSpeed())));
     }
 }

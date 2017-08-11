@@ -1,5 +1,7 @@
 package com.acbelter.weatherapp.data.placesmodel;
 
+import android.support.annotation.VisibleForTesting;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -37,6 +39,11 @@ public class Prediction {
         return description;
     }
 
+    @VisibleForTesting
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getId() {
         return id;
     }
@@ -47,6 +54,11 @@ public class Prediction {
 
     public String getPlaceId() {
         return placeId;
+    }
+
+    @VisibleForTesting
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
     }
 
     public String getReference() {

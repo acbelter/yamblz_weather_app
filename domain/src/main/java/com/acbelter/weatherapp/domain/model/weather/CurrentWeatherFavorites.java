@@ -25,16 +25,16 @@ public class CurrentWeatherFavorites {
     @NonNull
     private long sunsetTimestamp;
     @NonNull
-    private int pressure;
+    private double pressure;
     @NonNull
     private int humidity;
-    @NonNull
+    @Nullable
     private String description;
     @NonNull
-    private int windSpeed;
-    @Nullable
+    private double windSpeed;
+    @NonNull
     private double minTemp;
-    @Nullable
+    @NonNull
     private double maxTemp;
 
     public static class Builder {
@@ -48,10 +48,10 @@ public class CurrentWeatherFavorites {
         private long timestamp = 0L;
         private long sunriseTimestamp = 0L;
         private long sunsetTimestamp = 0L;
-        private int pressure = 0;
+        private double pressure = 0;
         private int humidity = 0;
         private String description = "";
-        private int windSpeed = 0;
+        private double windSpeed = 0;
         private double minTemp = 0f;
         private double maxTemp = 0f;
 
@@ -82,7 +82,7 @@ public class CurrentWeatherFavorites {
             return this;
         }
 
-        public Builder pressure(int val) {
+        public Builder pressure(double val) {
             this.pressure = val;
             return this;
         }
@@ -97,7 +97,7 @@ public class CurrentWeatherFavorites {
             return this;
         }
 
-        public Builder windSpeed(int val) {
+        public Builder windSpeed(double val) {
             this.windSpeed = val;
             return this;
         }
@@ -112,9 +112,8 @@ public class CurrentWeatherFavorites {
             return this;
         }
 
-        public
         @NonNull
-        CurrentWeatherFavorites build() {
+        public CurrentWeatherFavorites build() {
             return new CurrentWeatherFavorites(this);
         }
     }
@@ -175,7 +174,7 @@ public class CurrentWeatherFavorites {
     }
 
     @NonNull
-    public int getPressure() {
+    public double getPressure() {
         return pressure;
     }
 
@@ -184,13 +183,13 @@ public class CurrentWeatherFavorites {
         return humidity;
     }
 
-    @NonNull
+    @Nullable
     public String getDescription() {
         return description;
     }
 
     @NonNull
-    public int getWindSpeed() {
+    public double getWindSpeed() {
         return windSpeed;
     }
 
@@ -223,12 +222,39 @@ public class CurrentWeatherFavorites {
             return false;
         }
         CurrentWeatherFavorites data = (CurrentWeatherFavorites) o;
-        return cityData.equals(data.cityData);
+        return (Double.compare(temperature, data.temperature) == 0)
+                && (cityData.equals(data.cityData))
+                && (temperatureMetric == data.temperatureMetric)
+                && (weatherType == data.weatherType)
+                && (timestamp == data.timestamp)
+                && (sunsetTimestamp == data.sunsetTimestamp)
+                && (sunriseTimestamp == data.sunriseTimestamp)
+                && (pressure == data.pressure)
+                && (humidity == data.humidity)
+                && (description.equals(data.description))
+                && (windSpeed == data.windSpeed)
+                && (Double.compare(minTemp, data.minTemp) == 0)
+                && (Double.compare(maxTemp, data.maxTemp) == 0);
+
     }
 
     @Override
     public int hashCode() {
-        return cityData.hashCode();
+        int result = 17;
+        result = 31 * result + Double.valueOf(temperature).hashCode();
+        result = 31 * result + cityData.hashCode();
+        result = 31 * result + temperatureMetric.hashCode();
+        result = 31 * result + weatherType.hashCode();
+        result = 31 * result + Long.valueOf(timestamp).hashCode();
+        result = 31 * result + Long.valueOf(sunriseTimestamp).hashCode();
+        result = 31 * result + Long.valueOf(sunsetTimestamp).hashCode();
+        result = 31 * result + Double.valueOf(pressure).hashCode();
+        result = 31 * result + humidity;
+        result = 31 * result + (description == null ? 0 : description.hashCode());
+        result = 31 * result + Double.valueOf(windSpeed).hashCode();
+        result = 31 * result + Double.valueOf(minTemp).hashCode();
+        result = 31 * result + Double.valueOf(maxTemp).hashCode();
+        return result;
     }
 
     @Override

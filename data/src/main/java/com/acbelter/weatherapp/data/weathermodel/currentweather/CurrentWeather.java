@@ -1,5 +1,7 @@
 package com.acbelter.weatherapp.data.weathermodel.currentweather;
 
+import android.support.annotation.VisibleForTesting;
+
 import com.acbelter.weatherapp.data.weathermodel.common.Clouds;
 import com.acbelter.weatherapp.data.weathermodel.common.Coord;
 import com.acbelter.weatherapp.data.weathermodel.common.Main;
@@ -52,6 +54,11 @@ public class CurrentWeather {
         return coord;
     }
 
+    @VisibleForTesting
+    public void setCode(int cod) {
+        this.cod = cod;
+    }
+
     public Sys getSys() {
         return sys;
     }
@@ -60,8 +67,18 @@ public class CurrentWeather {
         return weather;
     }
 
+    @VisibleForTesting
+    public void setWeather(List<Weather> weather) {
+        this.weather = weather;
+    }
+
     public Main getMain() {
         return main;
+    }
+
+    @VisibleForTesting
+    public void setMain(Main main) {
+        this.main = main;
     }
 
     public Wind getWind() {

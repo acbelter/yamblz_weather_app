@@ -57,4 +57,33 @@ public class SettingsData {
     public CityData getSelectedCity() {
         return this.cityData;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof SettingsData))
+            return false;
+        SettingsData settingsData = (SettingsData) o;
+        return (metric == settingsData.getMetric())
+                && (updateWeatherInterval == settingsData.updateWeatherInterval)
+                && (cityData.equals(settingsData.cityData));
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + metric.hashCode();
+        result = 31 * result + Long.valueOf(updateWeatherInterval).hashCode();
+        result = 31 * result + cityData.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "(metric = " + metric +
+                ", updateWeatherInterval=" + updateWeatherInterval +
+                ", cityData=" + cityData +
+                ")";
+    }
 }

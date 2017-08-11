@@ -20,9 +20,8 @@ class CityDataConverter {
     private CityDataConverter() {
     }
 
-    static
     @Nullable
-    List<AutocompleteData> fromPlacesToDataList(@Nullable Places places) {
+    static List<AutocompleteData> fromPlacesToDataList(@Nullable Places places) {
 
         if (places == null) {
             throw new IllegalArgumentException("Converted object must be not null");
@@ -41,9 +40,8 @@ class CityDataConverter {
         return cityList;
     }
 
-    static
     @Nullable
-    CityData fromLocationToCityData(@Nullable Location location) {
+    static CityData fromLocationToCityData(@Nullable Location location) {
 
         if (location == null) {
             throw new IllegalArgumentException("Converted object must be not null");
@@ -59,9 +57,8 @@ class CityDataConverter {
                 .shortName(location.getResult().getName()).build();
     }
 
-    static
     @NonNull
-    AutocompleteData convert(@NonNull Prediction prediction) {
+    static AutocompleteData convert(@NonNull Prediction prediction) {
         return new AutocompleteData(prediction.getDescription(), prediction.getPlaceId());
     }
 }

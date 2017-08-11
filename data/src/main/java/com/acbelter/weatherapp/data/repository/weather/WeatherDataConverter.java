@@ -35,6 +35,10 @@ class WeatherDataConverter {
             throw new IllegalArgumentException("Converted object must be not null");
         }
 
+        if (temperatureMetric == null) {
+            throw new NullPointerException("Metric must be not null");
+        }
+
         currentWeatherFavorites.setTemperatureMetric(temperatureMetric);
         return currentWeatherFavorites;
     }
@@ -46,13 +50,16 @@ class WeatherDataConverter {
             throw new IllegalArgumentException("Converted object must be not null");
         }
 
+        if (temperatureMetric == null) {
+            throw new NullPointerException("Metric must be not null");
+        }
+
         forecastWeatherElement.setTemperatureMetric(temperatureMetric);
         return forecastWeatherElement;
     }
 
-    static
     @Nullable
-    CurrentWeatherFavorites fromNWWeatherDataToCurrentWeatherData(@Nullable CurrentWeather currentWeather, @NonNull WeatherParams weatherParams) {
+    static CurrentWeatherFavorites fromNWWeatherDataToCurrentWeatherData(@Nullable CurrentWeather currentWeather, @NonNull WeatherParams weatherParams) {
 
         if (currentWeather == null) {
             throw new IllegalArgumentException("Converted object must be not null");
@@ -70,10 +77,10 @@ class WeatherDataConverter {
                 .timestamp((long) currentWeather.getDt() * 1000L)
                 .sunriseTimestamp((long) currentWeather.getSys().getSunrise() * 1000L)
                 .sunsetTimestamp((long) currentWeather.getSys().getSunset() * 1000L)
-                .pressure((int) Math.round(currentWeather.getMain().getPressure()))
+                .pressure(currentWeather.getMain().getPressure())
                 .humidity(currentWeather.getMain().getHumidity())
                 .description(currentWeather.getWeather().get(0).getDescription())
-                .windSpeed((int) Math.round(currentWeather.getWind().getSpeed()))
+                .windSpeed(currentWeather.getWind().getSpeed())
                 .minTemp(currentWeather.getMain().getTempMin())
                 .maxTemp(currentWeather.getMain().getTempMax())
                 .build();
@@ -82,27 +89,27 @@ class WeatherDataConverter {
     static
     @NonNull
     ForecastWeatherElement fromForecastElementToWeatherForecast(@NonNull ForecastElement forecastElement, @NonNull WeatherParams weatherParams) {
+
         DateFormat df = new SimpleDateFormat("dd MMMM", Locale.getDefault());
         Date date = new Date();
         long curTime = forecastElement.getDt() * 1000L;
         date.setTime(curTime);
         String dateStr = df.format(date);
-        double lowTemp = forecastElement.getTemp().getMin();
-        double highTemp = forecastElement.getTemp().getMax();
+        double minTemp = forecastElement.getTemp().getMin();
+        double maxTemp = forecastElement.getTemp().getMax();
         TemperatureMetric temperatureMetric = weatherParams.getMetric();
-        return new ForecastWeatherElement.Builder(dateStr, lowTemp, highTemp, temperatureMetric)
+        return new ForecastWeatherElement.Builder(dateStr, minTemp, maxTemp, temperatureMetric)
                 .weatherType(extractWeatherType(forecastElement.getWeather()))
-                .pressure((int) Math.round(forecastElement.getPressure()))
+                .pressure(forecastElement.getPressure())
                 .humidity(forecastElement.getHumidity())
                 .description(forecastElement.getWeather().get(0).getDescription())
-                .windSpeed((int) Math.round(forecastElement.getSpeed()))
+                .windSpeed(forecastElement.getSpeed())
                 .build();
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    static
     @NonNull
-    WeatherType extractWeatherType(@Nullable List<Weather> weatherList) {
+    static WeatherType extractWeatherType(@Nullable List<Weather> weatherList) {
         Set<String> weatherStringTypes = new HashSet<>();
         if (weatherList == null)
             throw new NullPointerException("Weather list is null");

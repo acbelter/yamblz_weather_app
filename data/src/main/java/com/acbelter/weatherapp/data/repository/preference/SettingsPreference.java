@@ -19,7 +19,6 @@ public class SettingsPreference {
     private static final String KEY_CURRENT_CITY = "pref_current_city";
     private static final String TEMPERATURE_METRIC_KEY = "pref_temperature_metric";
     private static final String KEY_UPDATE_INTERVAL = "pref_update_interval";
-    private static final String KEY_LAST_UPDATE_TIMESTAMP = "pref_last_update_timestamp";
 
     @NonNull
     private static final long MIN_UPDATE_INTERVAL = 60 * 60 * 1000; // interval is 1 hour
@@ -53,23 +52,12 @@ public class SettingsPreference {
         return new Gson().fromJson(cityDataStr, CityData.class);
     }
 
-    void saveUpdateInterval(@NonNull long interval) {
+    void saveUpdateInterval(long interval) {
         sharedPreferences.edit().putLong(KEY_UPDATE_INTERVAL, interval).apply();
     }
 
-    @NonNull
     long loadUpdateInterval() {
         return sharedPreferences.getLong(KEY_UPDATE_INTERVAL, MIN_UPDATE_INTERVAL);
-    }
-
-    public void setLastUpdateTimestamp(@NonNull long timestamp) {
-        sharedPreferences.edit().putLong(KEY_LAST_UPDATE_TIMESTAMP, timestamp).apply();
-    }
-
-    public
-    @NonNull
-    long getLastUpdateTimestamp() {
-        return sharedPreferences.getLong(KEY_LAST_UPDATE_TIMESTAMP, 0L);
     }
 
     public void saveTemperatureMetric(@NonNull TemperatureMetric metric) {

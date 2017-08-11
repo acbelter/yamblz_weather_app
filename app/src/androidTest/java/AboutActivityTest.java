@@ -1,10 +1,14 @@
 import android.support.test.filters.LargeTest;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.data.BuildConfig;
+import com.acbelter.weatherapp.data.weathermodel.common.Main;
+import com.acbelter.weatherapp.mvp.view.activity.MainActivity;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -18,9 +22,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 @LargeTest
 public class AboutActivityTest {
 
-//    @Rule
-//    public ActivityTestRule<InfoActivity> mActivityRule =
-//            new ActivityTestRule(InfoActivity.class);
+    @Rule
+    public ActivityTestRule<MainActivity> mActivityRule =
+            new ActivityTestRule(MainActivity.class);
 
     private Utils utils;
 

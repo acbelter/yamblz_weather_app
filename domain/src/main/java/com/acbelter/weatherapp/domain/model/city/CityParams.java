@@ -11,9 +11,8 @@ public class CityParams {
         this.partOfCityName = partOfCityName;
     }
 
-    public
     @NonNull
-    String getPartOfCityName() {
+    public String getPartOfCityName() {
         return partOfCityName;
     }
 }

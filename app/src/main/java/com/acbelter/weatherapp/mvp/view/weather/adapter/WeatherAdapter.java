@@ -167,9 +167,9 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             tvMetric.setText(convertMetricToString(weather.getTemperatureMetric(), context));
             String humidity = String.valueOf(weather.getHumidity());
             tvHumidity.setText(humidity);
-            tvWind.setText(String.valueOf(weather.getWindSpeed()));
+            tvWind.setText(String.valueOf(Math.round(weather.getWindSpeed())));
             tvDescription.setText(weather.getDescription());
-            tvPressure.setText(String.valueOf(weather.getPressure()));
+            tvPressure.setText(String.valueOf(Math.round(weather.getPressure())));
         }
 
         private String convertMetricToString(TemperatureMetric metric, Context context) {

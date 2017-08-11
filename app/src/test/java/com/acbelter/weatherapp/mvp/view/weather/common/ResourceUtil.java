@@ -1,4 +1,4 @@
-package com.acbelter.weatherapp.ui.weather.common;
+package com.acbelter.weatherapp.mvp.view.weather.common;
 
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
 
@@ -23,20 +23,20 @@ public class ResourceUtil {
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         calendar.set(Calendar.HOUR_OF_DAY, 21);
         timestamp = calendar.getTimeInMillis();
-        currentWeatherFavorites.setTimestamp(timestamp);
+//        currentWeatherFavorites.setTimestamp(timestamp);
     }
 
     public void setDayTimestamp() {
         long sunriseTimestamp = timestamp - 1;
-        currentWeatherFavorites.setSunriseTimestamp(sunriseTimestamp);
-        long sunsetTimestamp = timestamp + 1;
-        currentWeatherFavorites.setSunsetTimestamp(sunsetTimestamp);
+//        currentWeatherFavorites.setSunriseTimestamp(sunriseTimestamp);
+//        long sunsetTimestamp = timestamp + 1;
+//        currentWeatherFavorites.setSunsetTimestamp(sunsetTimestamp);
     }
 
     public void setNightTimestamp() {
         long sunriseTimestamp = timestamp + 1;
-        currentWeatherFavorites.setSunriseTimestamp(sunriseTimestamp);
-        long sunsetTimestamp = timestamp - 1;
-        currentWeatherFavorites.setSunsetTimestamp(sunsetTimestamp);
+//        currentWeatherFavorites.setSunriseTimestamp(sunriseTimestamp);
+//        long sunsetTimestamp = timestamp - 1;
+//        currentWeatherFavorites.setSunsetTimestamp(sunsetTimestamp);
     }
 }
