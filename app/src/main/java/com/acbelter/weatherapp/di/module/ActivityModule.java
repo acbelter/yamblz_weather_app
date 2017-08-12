@@ -33,6 +33,5 @@ public class ActivityModule {
     @ActivityScope
     SettingsInteractor provideSettingsInteractor(SettingsRepo settingsRepo) {
         return new SettingsInteractor(settingsRepo);
-
     }
 }

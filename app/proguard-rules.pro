@@ -56,3 +56,10 @@
 -keepattributes *Annotation*
 -keep class sun.misc.Unsafe { *; }
 -keep class com.acbelter.weatherapp.data.netmodel.** { *; }
+
+#Stetho
+-keep class com.facebook.stetho.** { *; }
+
+#Room
+-dontwarn android.arch.util.paging.CountedDataSource
+-dontwarn android.arch.persistence.room.paging.LimitOffsetDataSource

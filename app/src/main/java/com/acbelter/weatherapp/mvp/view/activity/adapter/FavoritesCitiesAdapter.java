@@ -83,6 +83,8 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
 
     private void deleteItem(int position) {
         itemClickListener.deleteItem(favoritesCities.get(position));
+        favoritesCities.remove(position);
+        notifyItemRemoved(position);
     }
 
     public void update(@Nullable List<CityData> cities) {

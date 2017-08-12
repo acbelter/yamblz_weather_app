@@ -15,7 +15,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.TestScheduler;
 
@@ -53,7 +52,7 @@ public class CityInteractorTest {
     @Test
     public void testGetFavorites() {
         List<CityData> cityDataList = new ArrayList<>();
-        Flowable<List<CityData>> subject = Flowable.just(cityDataList);
+        Single<List<CityData>> subject = Single.fromCallable(() -> cityDataList);
         when(mockCityRepo.getFavoritesCities()).thenReturn(subject);
 
         cityInteractor.getFavorites();

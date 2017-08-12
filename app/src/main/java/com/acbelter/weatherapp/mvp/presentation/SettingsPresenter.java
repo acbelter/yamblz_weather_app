@@ -16,14 +16,13 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
     @NonNull
     private final SettingsInteractor settingsInteractor;
 
-    @Inject
+    @NonNull
     WeatherScheduleJob scheduleJob;
 
     @Inject
-    public SettingsPresenter(@NonNull SettingsInteractor settingsInteractor) {
+    public SettingsPresenter(@NonNull SettingsInteractor settingsInteractor, @NonNull WeatherScheduleJob weatherScheduleJob) {
         this.settingsInteractor = settingsInteractor;
-
-        App.getInstance().getAppComponent().inject(this);
+        this.scheduleJob = weatherScheduleJob;
     }
 
     public void showSettings() {
@@ -38,7 +37,6 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
 
     public void saveUpdateInterval(@NonNull long interval) {
         settingsInteractor.saveUpdateInterval(interval);
-
         scheduleJob.startJob();
     }
 }

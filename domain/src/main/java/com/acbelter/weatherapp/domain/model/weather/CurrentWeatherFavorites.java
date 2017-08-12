@@ -2,6 +2,7 @@ package com.acbelter.weatherapp.domain.model.weather;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 
 import com.acbelter.weatherapp.domain.model.city.CityData;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
@@ -134,7 +135,6 @@ public class CurrentWeatherFavorites {
         maxTemp = builder.maxTemp;
     }
 
-    @NonNull
     public double getTemperature() {
         return temperature;
     }
@@ -149,6 +149,11 @@ public class CurrentWeatherFavorites {
         return weatherType;
     }
 
+    @VisibleForTesting
+    public void setWeatherType(@NonNull WeatherType weatherType) {
+        this.weatherType = weatherType;
+    }
+
     @NonNull
     public TemperatureMetric getTemperatureMetric() {
         return temperatureMetric;
@@ -158,27 +163,40 @@ public class CurrentWeatherFavorites {
         this.temperatureMetric = temperatureMetric;
     }
 
-    @NonNull
     public long getTimestamp() {
         return timestamp;
     }
 
-    @NonNull
+    @Nullable
+    @VisibleForTesting
+    public void setTimestamp(long time) {
+        this.timestamp = time;
+    }
+
     public long getSunriseTimestamp() {
         return sunriseTimestamp;
     }
 
     @NonNull
+    @VisibleForTesting
+    public void setSunriseTimestamp(long time) {
+        this.sunriseTimestamp = time;
+    }
+
     public long getSunsetTimestamp() {
         return sunsetTimestamp;
     }
 
     @NonNull
+    @VisibleForTesting
+    public void setSunsetTimestamp(long time) {
+        this.sunsetTimestamp = time;
+    }
+
     public double getPressure() {
         return pressure;
     }
 
-    @NonNull
     public int getHumidity() {
         return humidity;
     }
@@ -188,27 +206,22 @@ public class CurrentWeatherFavorites {
         return description;
     }
 
-    @NonNull
     public double getWindSpeed() {
         return windSpeed;
     }
 
-    @Nullable
     public double getMinTemp() {
         return minTemp;
     }
 
-    @Nullable
     public double getMaxTemp() {
         return maxTemp;
     }
 
-    @NonNull
     public boolean isDay() {
         return timestamp > sunriseTimestamp && timestamp < sunsetTimestamp;
     }
 
-    @NonNull
     public boolean isNight() {
         return !isDay();
     }

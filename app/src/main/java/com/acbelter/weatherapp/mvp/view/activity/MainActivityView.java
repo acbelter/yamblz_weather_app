@@ -8,4 +8,6 @@ import java.util.List;
 public interface MainActivityView extends BaseView {
 
     void showCityList(List<CityData> cities);
+
+    void showSearchFragment();
 }

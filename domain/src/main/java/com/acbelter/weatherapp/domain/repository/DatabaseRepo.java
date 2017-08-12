@@ -16,7 +16,7 @@ import io.reactivex.Single;
 public interface DatabaseRepo {
 
     @WorkerThread
-    Flowable<List<CityData>> getAllCities();
+    Single<List<CityData>> getAllCities();
 
     @WorkerThread
     Single<CurrentWeatherFavorites> getCurrentWeather(@NonNull CityData cityData);

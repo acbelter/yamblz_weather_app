@@ -37,7 +37,7 @@ public class CityInteractor {
     }
 
     @WorkerThread
-    public Flowable<List<CityData>> getFavorites() {
+    public Single<List<CityData>> getFavorites() {
         return cityRepo.getFavoritesCities()
                 .subscribeOn(schedulerIO)
                 .observeOn(schedulerMain);

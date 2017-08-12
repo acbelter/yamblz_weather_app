@@ -46,7 +46,7 @@ public class CityRepoImpl implements CityRepo {
 
     @Override
     @WorkerThread
-    public Flowable<List<CityData>> getFavoritesCities() {
+    public Single<List<CityData>> getFavoritesCities() {
         return databaseRepo.getAllCities();
     }
 

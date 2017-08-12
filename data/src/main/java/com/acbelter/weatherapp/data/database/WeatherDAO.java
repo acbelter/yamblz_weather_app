@@ -16,7 +16,7 @@ import io.reactivex.Single;
 @Dao
 public interface WeatherDAO {
     @Query("SELECT * FROM DatabaseWeatherData ORDER BY timestamp DESC")
-    Flowable<List<DatabaseWeatherData>> getAllWeatherRecords();
+    Single<List<DatabaseWeatherData>> getAllWeatherRecords();
 
     @Query("SELECT * FROM DatabaseWeatherData WHERE coordinates = :coordinates")
     Single<DatabaseWeatherData> getWeatherByCityName(String coordinates);

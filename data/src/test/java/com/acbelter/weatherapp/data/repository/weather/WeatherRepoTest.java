@@ -54,7 +54,7 @@ public class WeatherRepoTest {
 //        when(mockNetworkRepo.getCurrentWeather(weatherParams)).thenReturn(subjectNW);
 //
 //        weatherRepo.getCurrentWeather();
-
+//
 //        verify(mockDatabaseRepo).getCurrentWeather(cityData);
     }
 }

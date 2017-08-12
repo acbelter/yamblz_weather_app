@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
         }
 
         rvSettings.setOnClickListener(view -> {
-            router.showSettingsFragment();
+            router.showSettingsFragment(twoPain);
             drawerLayout.closeDrawer(GravityCompat.START);
         });
         rvInfo.setOnClickListener(view -> {
@@ -225,6 +225,11 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
             if (adapter != null)
                 adapter.update(cities);
         }
+    }
+
+    @Override
+    public void showSearchFragment() {
+        router.showSearchFragment();
     }
 
     @Override

@@ -21,7 +21,7 @@ public interface CityRepo {
     Single<List<AutocompleteData>> getCityList(@NonNull CityParams cityParams);
 
     @WorkerThread
-    Flowable<List<CityData>> getFavoritesCities();
+    Single<List<CityData>> getFavoritesCities();
 
     @WorkerThread
     Single<CityData> getCityData(@Nullable AutocompleteData autocompleteData);

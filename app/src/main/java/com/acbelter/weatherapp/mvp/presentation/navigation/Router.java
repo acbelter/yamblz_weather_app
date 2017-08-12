@@ -77,15 +77,24 @@ public class Router {
         }
     }
 
-    public void showSettingsFragment() {
+    public void showSettingsFragment(boolean twoPain) {
         Fragment fragment = ((FragmentActivity) activity).getSupportFragmentManager().findFragmentByTag(SettingsFragment.class.getSimpleName());
         if (fragment == null) {
-            fragment = SettingsFragment.newInstance();
-            ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, fragment, SettingsFragment.class.getSimpleName())
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .addToBackStack(null)
-                    .commit();
+            if (twoPain) {
+                fragment = SettingsFragment.newInstance();
+                ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.detail_fragment_container, fragment, SettingsFragment.class.getSimpleName())
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack(null)
+                        .commit();
+            } else {
+                fragment = SettingsFragment.newInstance();
+                ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, fragment, SettingsFragment.class.getSimpleName())
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack(null)
+                        .commit();
+            }
         }
     }
 

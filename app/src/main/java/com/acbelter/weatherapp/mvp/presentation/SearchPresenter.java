@@ -39,7 +39,8 @@ public class SearchPresenter extends BasePresenter<SearchView> {
         unSubscribeOnDetach(cityInteractor.getCityData(autocompleteData)
                 .subscribe(cityData -> {
                     cityInteractor.saveSelectedCity(cityData);
-                    weatherInteractor.getNewWeatherAndSaveToDB().subscribe();
+                    weatherInteractor.getNewWeatherAndSaveToDB()
+                            .subscribe();
                     closeActivity();
                 }));
     }

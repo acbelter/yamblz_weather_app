@@ -19,6 +19,4 @@ import dagger.Component;
         UtilsModule.class})
 public interface AppComponent {
     ActivityComponent addWeatherComponent(ActivityModule activityModule);
-
-    void inject(SettingsPresenter presenter);
-}
+    }
