@@ -5,7 +5,6 @@ import com.acbelter.weatherapp.di.module.AppModule;
 import com.acbelter.weatherapp.di.module.DataModule;
 import com.acbelter.weatherapp.di.module.NetworkModule;
 import com.acbelter.weatherapp.di.module.UtilsModule;
-import com.acbelter.weatherapp.mvp.presentation.SettingsPresenter;
 
 import javax.inject.Singleton;
 
@@ -19,4 +18,4 @@ import dagger.Component;
         UtilsModule.class})
 public interface AppComponent {
     ActivityComponent addWeatherComponent(ActivityModule activityModule);
-    }
+}

@@ -2,7 +2,6 @@ package com.acbelter.weatherapp.mvp.presentation;
 
 import android.support.annotation.NonNull;
 
-import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.domain.interactor.SettingsInteractor;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 import com.acbelter.weatherapp.mvp.presentation.common.BasePresenter;

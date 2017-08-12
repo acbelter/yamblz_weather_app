@@ -61,13 +61,10 @@ public class MainActivityPresenterTest {
         when(mockCityInteractor.getFavorites()).thenReturn(subject);
         SettingsData settingsData = new SettingsData.Builder(CELSIUS, 0L).build();
         when(mockSettingsInteractor.getUserSettings()).thenReturn(settingsData);
-        when(mockSettingsData.getSelectedCity()).thenReturn(cityData);
 
         presenter.showCityList();
 
-        verify(mockSettingsInteractor).getUserSettings();
-        verify(mockSettingsData).getSelectedCity();
-//        verify(mockSettingsData).getSelectedCity();
+        verify(mockCityInteractor).getFavorites();
         verify(mockView).showCityList(list);
     }
 
@@ -90,8 +87,5 @@ public class MainActivityPresenterTest {
         presenter.deleteItem(cityData);
 
         verify(mockCityInteractor).getFavorites();
-        verify(mockSettingsInteractor).getUserSettings();
-        verify(mockView).showCityList(list);
-//        verify(mockCityInteractor).saveSelectedCity(cityData);
     }
 }

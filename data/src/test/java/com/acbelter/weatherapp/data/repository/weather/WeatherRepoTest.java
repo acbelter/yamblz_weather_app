@@ -2,13 +2,8 @@ package com.acbelter.weatherapp.data.repository.weather;
 
 import com.acbelter.weatherapp.data.network.NetworkRepo;
 import com.acbelter.weatherapp.data.repository.preference.SettingsPreference;
-import com.acbelter.weatherapp.data.weathermodel.currentweather.CurrentWeather;
-import com.acbelter.weatherapp.domain.model.city.CityData;
-import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
-import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
 import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
-import com.google.gson.Gson;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,12 +11,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import io.reactivex.Single;
-
-import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.CELSIUS;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class WeatherRepoTest {

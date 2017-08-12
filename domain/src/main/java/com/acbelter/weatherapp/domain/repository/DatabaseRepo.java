@@ -10,7 +10,6 @@ import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherElement;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 public interface DatabaseRepo {

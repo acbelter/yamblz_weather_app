@@ -1,7 +1,5 @@
 package com.acbelter.weatherapp.data.weathermodel.common;
 
-import android.support.annotation.VisibleForTesting;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

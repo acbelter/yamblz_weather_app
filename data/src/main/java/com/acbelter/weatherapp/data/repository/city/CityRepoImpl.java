@@ -14,7 +14,6 @@ import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import timber.log.Timber;

@@ -151,15 +151,15 @@ public class ForecastWeatherElement {
         }
         ForecastWeatherElement data = (ForecastWeatherElement) o;
         if (date != null)
-        return (date.equals(data.date))
-                && (Double.compare(maxTemp, data.maxTemp) == 0)
-                && (Double.compare(minTemp, data.minTemp) == 0)
-                && (temperatureMetric == data.temperatureMetric)
-                && (weatherType == data.weatherType)
-                && (pressure == data.pressure)
-                && (humidity == data.humidity)
-                && (description.equals(data.description))
-                && (windSpeed == data.windSpeed);
+            return (date.equals(data.date))
+                    && (Double.compare(maxTemp, data.maxTemp) == 0)
+                    && (Double.compare(minTemp, data.minTemp) == 0)
+                    && (temperatureMetric == data.temperatureMetric)
+                    && (weatherType == data.weatherType)
+                    && (pressure == data.pressure)
+                    && (humidity == data.humidity)
+                    && (description.equals(data.description))
+                    && (windSpeed == data.windSpeed);
         return false;
     }
 

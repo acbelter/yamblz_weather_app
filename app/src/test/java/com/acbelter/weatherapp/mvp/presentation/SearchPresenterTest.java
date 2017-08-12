@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Single;
-import io.reactivex.schedulers.TestScheduler;
 
 import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.CELSIUS;
 import static org.mockito.Matchers.any;

@@ -12,7 +12,6 @@ import com.acbelter.weatherapp.domain.model.city.CityParams;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 public interface CityRepo {

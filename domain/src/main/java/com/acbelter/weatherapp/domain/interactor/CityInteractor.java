@@ -10,7 +10,6 @@ import com.acbelter.weatherapp.domain.repository.CityRepo;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 

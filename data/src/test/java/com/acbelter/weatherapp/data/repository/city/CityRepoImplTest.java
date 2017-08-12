@@ -27,7 +27,6 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
-import io.reactivex.subscribers.TestSubscriber;
 
 import static com.acbelter.weatherapp.data.network.ApiErrors.PlacesApiErrors.OK;
 import static org.mockito.Matchers.any;

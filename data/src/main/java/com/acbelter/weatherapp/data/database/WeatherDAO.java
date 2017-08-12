@@ -10,7 +10,6 @@ import com.acbelter.weatherapp.data.dbmodel.DatabaseWeatherData;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 @Dao
