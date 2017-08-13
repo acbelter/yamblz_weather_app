@@ -19,6 +19,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.CELSIUS;
@@ -57,7 +58,7 @@ public class MainActivityPresenterTest {
         CityData cityData = new CityData.Builder(0, 0, 0L).build();
         List<CityData> list = new ArrayList<>();
         list.add(cityData);
-        Single<List<CityData>> subject = Single.fromCallable(() -> list);
+        Flowable<List<CityData>> subject = Flowable.fromCallable(() -> list);
         when(mockCityInteractor.getFavorites()).thenReturn(subject);
         SettingsData settingsData = new SettingsData.Builder(CELSIUS, 0L).build();
         when(mockSettingsInteractor.getUserSettings()).thenReturn(settingsData);
@@ -79,7 +80,7 @@ public class MainActivityPresenterTest {
         CityData cityData = new CityData.Builder(0, 0, 0L).build();
         List<CityData> list = new ArrayList<>();
         list.add(cityData);
-        Single<List<CityData>> subject = Single.fromCallable(() -> list);
+        Flowable<List<CityData>> subject = Flowable.fromCallable(() -> list);
         when(mockCityInteractor.getFavorites()).thenReturn(subject);
         SettingsData settingsData = new SettingsData.Builder(CELSIUS, 0L).build();
         when(mockSettingsInteractor.getUserSettings()).thenReturn(settingsData);

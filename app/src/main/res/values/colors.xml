@@ -4,7 +4,6 @@
     <color name="colorPrimaryDark">@android:color/black</color>
     <color name="colorAccent">@android:color/black</color>
 
-    <color name="colorNavHeader">@color/colorPrimary</color>
     <color name="colorNavHeaderText">@android:color/white</color>
     <color name="colorTextWeatherLight">@android:color/white</color>
     <color name="colorTextWeatherDark">@android:color/black</color>
@@ -13,6 +12,7 @@
     <color name="textColorMinTemp">#92A7B4</color>
     <color name="textColorDetails">#3A789C</color>
     <color name="forecastItemBackground">#FFF8E7</color>
+    <color name="backgroundTranslucent">#BFFFFFFF</color>
 
     <color name="colorBgWeatherNight">#37474F</color>
     <color name="colorBgWeatherSun">#4FC3F7</color>

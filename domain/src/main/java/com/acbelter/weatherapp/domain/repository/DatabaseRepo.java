@@ -10,12 +10,13 @@ import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherElement;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 public interface DatabaseRepo {
 
     @WorkerThread
-    Single<List<CityData>> getAllCities();
+    Flowable<List<CityData>> getAllCities();
 
     @WorkerThread
     Single<CurrentWeatherFavorites> getCurrentWeather(@NonNull CityData cityData);

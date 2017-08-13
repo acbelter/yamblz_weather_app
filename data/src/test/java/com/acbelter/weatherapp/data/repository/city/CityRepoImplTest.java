@@ -24,9 +24,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
+import io.reactivex.subscribers.TestSubscriber;
 
 import static com.acbelter.weatherapp.data.network.ApiErrors.PlacesApiErrors.OK;
 import static org.mockito.Matchers.any;
@@ -90,7 +92,7 @@ public class CityRepoImplTest {
         CityData cityData = new CityData.Builder(0, 0, 0L).build();
         List<CityData> list = new ArrayList<>();
         list.add(cityData);
-        Single<List<CityData>> subject = Single.fromCallable(() -> list);
+        Flowable<List<CityData>> subject = Flowable.fromCallable(() -> list);
         when(mockDatabaseRepo.getAllCities()).thenReturn(subject);
 
         cityRepo.getFavoritesCities();
@@ -103,10 +105,10 @@ public class CityRepoImplTest {
         CityData cityData = new CityData.Builder(0, 0, 0L).build();
         List<CityData> list = new ArrayList<>();
         list.add(cityData);
-        Single<List<CityData>> subject = Single.fromCallable(() -> list);
+        Flowable<List<CityData>> subject = Flowable.fromCallable(() -> list);
         when(mockDatabaseRepo.getAllCities()).thenReturn(subject);
 
-        TestObserver<List<CityData>> observer = cityRepo.getFavoritesCities()
+        TestSubscriber<List<CityData>> observer = cityRepo.getFavoritesCities()
                 .test();
 
         observer.assertNoErrors()

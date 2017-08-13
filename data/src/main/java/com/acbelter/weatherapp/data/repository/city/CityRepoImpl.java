@@ -14,6 +14,7 @@ import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import timber.log.Timber;
@@ -45,7 +46,7 @@ public class CityRepoImpl implements CityRepo {
 
     @Override
     @WorkerThread
-    public Single<List<CityData>> getFavoritesCities() {
+    public Flowable<List<CityData>> getFavoritesCities() {
         return databaseRepo.getAllCities();
     }
 

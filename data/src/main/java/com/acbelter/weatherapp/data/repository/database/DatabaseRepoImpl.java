@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import java.util.List;
 import java.util.concurrent.Executor;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import timber.log.Timber;
@@ -33,9 +34,9 @@ public class DatabaseRepoImpl implements DatabaseRepo {
 
     @Override
     @WorkerThread
-    public Single<List<CityData>> getAllCities() {
+    public Flowable<List<CityData>> getAllCities() {
         return weatherDAO.getAllWeatherRecords()
-                .flatMap(databaseWeatherDatas -> Observable
+                .flatMapSingle(databaseWeatherDatas -> Flowable
                         .fromIterable(databaseWeatherDatas)
                         .map(DatabaseWeatherConverter::fromDatabaseWeatherDataToCityData)
                         .toList());
