@@ -82,7 +82,7 @@ public class Router {
         if (fragment == null) {
             fragment = SettingsFragment.newInstance();
             ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, fragment, SettingsFragment.class.getSimpleName())
+                    .replace(R.id.detail_fragment_container, fragment, SettingsFragment.class.getSimpleName())
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .addToBackStack(null)
                     .commit();
@@ -94,11 +94,10 @@ public class Router {
         if (fragment == null) {
             fragment = InfoFragment.newInstance();
             ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, fragment, InfoFragment.class.getSimpleName())
+                    .replace(R.id.detail_fragment_container, fragment, InfoFragment.class.getSimpleName())
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .addToBackStack(null)
                     .commit();
         }
     }
-
 }

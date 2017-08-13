@@ -71,7 +71,6 @@ public class SearchFragment extends BaseFragment implements SearchView, CityAdap
         presenter.onAttach(this);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
