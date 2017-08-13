@@ -13,7 +13,6 @@
 
     <!--NavigationView screen-->
     <string name="edit">Edit</string>
-    <string name="add">Add</string>
 
     <!--Weather screen-->
     <string name="weather">Weather</string>
@@ -38,7 +37,6 @@
     <!--About screen-->
     <string name="about">About</string>
     <string name="version">Version %1$s</string>
-    <string name="author_text">Author: acbelter</string>
     <string name="weather_images_license_text">Weather images are designed by Linector from Flaticon</string>
 
     <!--About screen-->
@@ -46,9 +44,6 @@
     <string name="city_search">City search</string>
     <string name="city_name">City name</string>
     <string name="get_city_list_error">Can\'t get city weatherList</string>
-
-    <!--About screen-->
-    <string name="no_data">No data</string>
 
     <!--Test strings-->
     <string name="version_test">Version</string>

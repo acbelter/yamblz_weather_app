@@ -48,8 +48,6 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     RelativeLayout rvSettings;
     @BindView(R.id.rvInfo)
     RelativeLayout rvInfo;
-    @BindView(R.id.rvAdd)
-    RelativeLayout rvAdd;
     @BindView(R.id.tvEdit)
     TextView tvEdit;
     @BindView(R.id.rvEdit)
@@ -110,10 +108,6 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
             }
         });
 
-        rvAdd.setOnClickListener(view -> {
-            if (twoPain)
-                router.showSearchFragment();
-        });
         initSearchEdittext();
     }
 

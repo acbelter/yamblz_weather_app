@@ -8,6 +8,7 @@
     <color name="colorNavHeaderText">@android:color/white</color>
     <color name="colorTextWeatherLight">@android:color/white</color>
     <color name="colorTextWeatherDark">@android:color/black</color>
+    <color name="detailsBackground">#B3D9F0</color>
 
     <color name="colorBgWeatherNight">#37474F</color>
     <color name="colorBgWeatherSun">#4FC3F7</color>

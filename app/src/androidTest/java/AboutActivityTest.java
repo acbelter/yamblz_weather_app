@@ -3,7 +3,6 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.acbelter.weatherapp.R;
-import com.acbelter.weatherapp.data.BuildConfig;
 import com.acbelter.weatherapp.mvp.view.activity.MainActivity;
 
 import org.junit.Before;
@@ -29,7 +28,7 @@ public class AboutActivityTest {
 
     @Before
     public void initUtils() {
-//        utils = new Utils(mActivityRule);
+        utils = new Utils(mActivityRule);
     }
 
     @Test
@@ -44,7 +43,6 @@ public class AboutActivityTest {
         onView(withId(R.id.icon)).check(matches(isDisplayed()));
         onView(withId(R.id.app_name_text)).check(matches(isDisplayed()));
         onView(withId(R.id.version_text)).check(matches(isDisplayed()));
-        onView(withId(R.id.author_text)).check(matches(isDisplayed()));
         onView(withId(R.id.images_license_text)).check(matches(isDisplayed()));
     }
 
@@ -56,12 +54,7 @@ public class AboutActivityTest {
     @Test
     public void checkVersionText() {
         onView(withId(R.id.version_text))
-                .check(matches(withText(mActivityRule.getActivity().getString(R.string.version_test) + " " + BuildConfig.VERSION_NAME)));
-    }
-
-    @Test
-    public void checkAuthorNameText() {
-        onView(withId(R.id.author_text)).check(matches(withText(mActivityRule.getActivity().getString(R.string.author_text))));
+                .check(matches(withText(mActivityRule.getActivity().getString(R.string.version_test))));
     }
 
     @Test

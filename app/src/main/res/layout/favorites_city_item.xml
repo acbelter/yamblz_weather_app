@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
@@ -19,19 +20,21 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:background="@drawable/ic_location_on_black_24dp"
         android:layout_marginTop="20dp"
-        android:visibility="invisible" />
+        android:background="@drawable/ic_location_on_black_24dp"
+        android:visibility="invisible"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/ivDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/ivFavoriteFlag"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:background="@drawable/ic_delete_forever_black_24dp"
         android:visibility="invisible"
-        android:layout_alignTop="@+id/ivFavoriteFlag"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        tools:ignore="ContentDescription" />
 </RelativeLayout>
