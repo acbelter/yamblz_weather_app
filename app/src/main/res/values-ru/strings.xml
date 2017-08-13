@@ -6,7 +6,6 @@
 
     <!--NavigationView screen-->
     <string name="edit">Редактировать</string>
-    <string name="add">Добавить город</string>
 
     <!--Weather screen-->
     <string name="weather">Погода</string>
@@ -30,7 +29,6 @@
     <!--About screen-->
     <string name="about">О программе</string>
     <string name="version">Версия %1$s</string>
-    <string name="author_text">Автор: acbelter</string>
     <string name="weather_images_license_text">Иконки погоды от Linector с сервиса Flaticon</string>
 
     <!--About screen-->
@@ -38,9 +36,6 @@
     <string name="city_search">Поиск города</string>
     <string name="city_name">Название города</string>
     <string name="get_city_list_error">Невозможно получить список городов</string>
-
-    <!--About screen-->
-    <string name="no_data">Нет данных</string>
 
     <!--Test strings-->
     <string name="version_test">Версия</string>

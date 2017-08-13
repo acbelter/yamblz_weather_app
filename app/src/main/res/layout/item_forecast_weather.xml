@@ -16,70 +16,80 @@
         android:scaleType="fitEnd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_default="spread"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_default="spread"
         tools:ignore="ContentDescription"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1"
-        tools:src="@drawable/img_sun" />
+        tools:src="@drawable/img_sun"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp" />
 
     <TextView
         android:id="@+id/tvForecastDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="25dp"
         android:text="date"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.516"
-        tools:layout_constraintLeft_creator="1" />
+        app:layout_constraintBottom_toBottomOf="@+id/forecastImageView"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toTopOf="@+id/forecastImageView"
+        android:layout_marginTop="8dp"
+        app:layout_constraintVertical_bias="0.6"
+        app:layout_constraintLeft_toRightOf="@+id/forecastImageView"
+        android:layout_marginLeft="25dp" />
 
     <TextView
         android:id="@+id/tvForecastLow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
         android:text="low"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvForecastDate"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintRight_creator="1" />
+        android:textSize="@dimen/forecast_item_min_temp_text_size"
+        app:layout_constraintLeft_toLeftOf="@+id/tvForecastHigh"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp" />
 
     <TextView
         android:id="@+id/tvForecastHigh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="67dp"
-        android:layout_marginRight="67dp"
+        android:layout_marginEnd="64dp"
         android:text="high"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvForecastDate"
+        android:textSize="@dimen/forecast_item_max_temp_text_size"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintRight_creator="1" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="77dp" />
 
     <TextView
         android:id="@+id/tvDeg1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/gradus"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvForecastDate"
+        android:textSize="@dimen/forecast_item_max_temp_text_size"
         app:layout_constraintLeft_toRightOf="@+id/tvForecastHigh"
-        tools:layout_constraintLeft_creator="1" />
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvForecastHigh" />
 
     <TextView
         android:id="@+id/tvDeg2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/gradus"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvForecastDate"
+        android:textSize="@dimen/forecast_item_min_temp_text_size"
         app:layout_constraintLeft_toRightOf="@+id/tvForecastLow"
-        tools:layout_constraintLeft_creator="1" />
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvForecastLow"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/tvDeg1"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginEnd="8dp" />
 
 </android.support.constraint.ConstraintLayout>

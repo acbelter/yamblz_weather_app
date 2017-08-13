@@ -4,14 +4,19 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="horizontal"
-    android:weightSum="5">
+    android:baselineAligned="false">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="3"
+        android:background="@color/detailsBackground"
         android:orientation="vertical"
+        android:fitsSystemWindows="false"
         android:weightSum="10">
+
+        <include layout="@layout/nav_header" />
+
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/input_layout_name"
@@ -32,40 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5" />
-
-        <RelativeLayout
-            android:id="@+id/rvAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true">
-
-            <ImageView
-                android:id="@+id/ivAdd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
-                android:background="@drawable/ic_add_black_24dp"
-                android:contentDescription="@null" />
-
-            <TextView
-                android:id="@+id/tvAdd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_toEndOf="@+id/ivAdd"
-                android:layout_toRightOf="@+id/ivAdd"
-                android:gravity="center_vertical"
-                android:text="@string/add" />
-
-        </RelativeLayout>
 
         <FrameLayout
             android:layout_width="wrap_content"
@@ -106,10 +77,10 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="2" />
 
         <RelativeLayout
             android:id="@+id/rvSettings"
@@ -183,7 +154,7 @@
         android:id="@+id/fragment_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3" />
+        android:layout_weight="7" />
 
     <FrameLayout
         android:id="@+id/detail_fragment_container"

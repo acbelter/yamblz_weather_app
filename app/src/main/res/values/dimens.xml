@@ -7,4 +7,23 @@
     <dimen name="settings_text_size">18sp</dimen>
     <dimen name="toggle_button_width">45dp</dimen>
     <dimen name="settings_text_radiobutton_size">12sp</dimen>
+    <dimen name="details_max_temp_text_size">110sp</dimen>
+    <dimen name="details_max_temp_text_size_large">150sp</dimen>
+    <dimen name="details_min_temp_text_size">60sp</dimen>
+    <dimen name="details_min_temp_text_size_large">90sp</dimen>
+    <dimen name="details_date_text_size">30sp</dimen>
+    <dimen name="details_date_text_size_large">50sp</dimen>
+    <dimen name="cilcius_sign">25sp</dimen>
+    <dimen name="cilcius_sign_large">35sp</dimen>
+    <dimen name="details_description_text_size">25sp</dimen>
+    <dimen name="details_description_text_size_large">50sp</dimen>
+    <dimen name="details_params_text_size">15sp</dimen>
+    <dimen name="details_params_text_size_large">25sp</dimen>
+    <dimen name="forecast_item_max_temp_text_size">15sp</dimen>
+    <dimen name="forecast_item_min_temp_text_size">12sp</dimen>
+    <dimen name="app_name_in_header_text_size">20sp</dimen>
+
+    <dimen name="header_icon_size">48dp</dimen>
+    <dimen name="weather_icon_details">100dp</dimen>
+    <dimen name="weather_icon_details_large">204dp</dimen>
 </resources>
