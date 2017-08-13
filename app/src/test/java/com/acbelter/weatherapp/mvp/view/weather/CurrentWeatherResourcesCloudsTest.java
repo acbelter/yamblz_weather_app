@@ -1,15 +1,11 @@
 package com.acbelter.weatherapp.mvp.view.weather;
 
-import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
 import com.acbelter.weatherapp.mvp.view.weather.common.ResourceUtil;
-import com.acbelter.weatherapp.mvp.view.weather.resources.CurrentWeatherRes;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
-
-import static junit.framework.Assert.assertEquals;
 
 public class CurrentWeatherResourcesCloudsTest {
 

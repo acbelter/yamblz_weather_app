@@ -3,7 +3,6 @@ package com.acbelter.weatherapp.mvp.view.search;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
@@ -39,7 +39,7 @@ public class SearchFragment extends BaseFragment implements SearchView, CityAdap
     @BindView(R.id.rvCityList)
     RecyclerView recyclerView;
     @BindView(R.id.content_layout)
-    ConstraintLayout constraintLayout;
+    LinearLayout constraintLayout;
 
     @Inject
     SearchPresenter presenter;

@@ -4,7 +4,6 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.data.BuildConfig;
-import com.acbelter.weatherapp.data.weathermodel.common.Main;
 import com.acbelter.weatherapp.mvp.view.activity.MainActivity;
 
 import org.junit.Before;

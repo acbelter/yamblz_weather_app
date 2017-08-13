@@ -39,6 +39,8 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
         this.favoritesCities = new ArrayList<>();
         this.itemClickListener = clickListener;
         this.isShowDeleteBtn = false;
+
+        setHasStableIds(true);
     }
 
     @Override
@@ -68,7 +70,9 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
         viewHolder.bind(city);
         viewHolder.showDeleteButton(isShowDeleteBtn);
         if (position == 0) {
-            viewHolder.setFavoritesVisible();
+            viewHolder.setFavoritesVisible(true);
+        } else {
+            viewHolder.setFavoritesVisible(false);
         }
     }
 
@@ -77,8 +81,17 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
         return favoritesCities.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return favoritesCities.get(position).hashCode();
+    }
+
     private void itemClicked(int position) {
-        itemClickListener.onCityItemClick(favoritesCities.get(position));
+        CityData cityData = favoritesCities.get(position);
+        itemClickListener.onCityItemClick(cityData);
+        favoritesCities.remove(position);
+        favoritesCities.add(0, cityData);
+        notifyItemRangeChanged(0, position);
     }
 
     private void deleteItem(int position) {
@@ -122,9 +135,14 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
             tvCity.setText(item.getShortName());
         }
 
-        void setFavoritesVisible() {
-            ivFavorite.setVisibility(VISIBLE);
-            tvCity.setTypeface(null, Typeface.BOLD);
+        void setFavoritesVisible(boolean visible) {
+            if (visible) {
+                ivFavorite.setVisibility(VISIBLE);
+                tvCity.setTypeface(null, Typeface.BOLD);
+            } else {
+                ivFavorite.setVisibility(View.INVISIBLE);
+                tvCity.setTypeface(null, Typeface.NORMAL);
+            }
         }
 
         void showDeleteButton(boolean isShow) {

@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.acbelter.weatherapp.R;
 import com.acbelter.weatherapp.mvp.view.about.InfoFragment;
-import com.acbelter.weatherapp.mvp.view.error.ErrorFragment;
 import com.acbelter.weatherapp.mvp.view.search.SearchFragment;
 import com.acbelter.weatherapp.mvp.view.settings.SettingsFragment;
 import com.acbelter.weatherapp.mvp.view.weather.WeatherFragment;
@@ -21,24 +20,35 @@ public class Router {
         this.activity = activity;
     }
 
-    public void showDetailsFragment(int position) {
-        Fragment fragment = ((FragmentActivity) activity).getSupportFragmentManager().findFragmentByTag(DetailFragment.class.getSimpleName());
+    public void addWeatherFragment() {
+        Fragment fragment = ((FragmentActivity) activity).getSupportFragmentManager().findFragmentByTag(WeatherFragment.class.getSimpleName());
         if (fragment == null) {
-            fragment = DetailFragment.newInstance(position);
+            fragment = WeatherFragment.newInstance();
             ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, fragment, DetailFragment.class.getSimpleName())
+                    .add(R.id.fragment_container, fragment, WeatherFragment.class.getSimpleName())
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit();
+        }
+    }
+
+    public void replaceWeatherFragment() {
+        Fragment fragment = ((FragmentActivity) activity).getSupportFragmentManager().findFragmentByTag(WeatherFragment.class.getSimpleName());
+        if (fragment == null) {
+            fragment = WeatherFragment.newInstance();
+            ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, fragment, WeatherFragment.class.getSimpleName())
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .addToBackStack(null)
                     .commit();
         }
     }
 
-    public void showWeatherListFragment() {
-        Fragment fragment = ((FragmentActivity) activity).getSupportFragmentManager().findFragmentByTag(WeatherFragment.class.getSimpleName());
+    public void showDetailsFragment(int position) {
+        Fragment fragment = ((FragmentActivity) activity).getSupportFragmentManager().findFragmentByTag(DetailFragment.class.getSimpleName());
         if (fragment == null) {
-            fragment = WeatherFragment.newInstance();
+            fragment = DetailFragment.newInstance(position);
             ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, fragment, WeatherFragment.class.getSimpleName())
+                    .replace(R.id.fragment_container, fragment, DetailFragment.class.getSimpleName())
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .addToBackStack(null)
                     .commit();
@@ -54,18 +64,7 @@ public class Router {
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .addToBackStack(null)
                     .commit();
-        }
-    }
-
-    public void showErrorFragment() {
-        Fragment fragment = ((FragmentActivity) activity).getSupportFragmentManager().findFragmentByTag(ErrorFragment.class.getSimpleName());
-        if (fragment == null) {
-            fragment = ErrorFragment.newInstance();
-            ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.detail_fragment_container, fragment, ErrorFragment.class.getSimpleName())
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .addToBackStack(null)
-                    .commit();
+            ((FragmentActivity) activity).getSupportFragmentManager().executePendingTransactions();
         }
     }
 

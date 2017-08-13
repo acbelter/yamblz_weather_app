@@ -3,8 +3,6 @@ package com.acbelter.weatherapp.mvp.presentation;
 import com.acbelter.weatherapp.domain.interactor.CityInteractor;
 import com.acbelter.weatherapp.domain.interactor.WeatherInteractor;
 import com.acbelter.weatherapp.domain.model.city.CityData;
-import com.acbelter.weatherapp.domain.model.city.CityParams;
-import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
 import com.acbelter.weatherapp.mvp.view.search.SearchView;
 
 import org.junit.Before;
@@ -18,14 +16,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.Single;
 import io.reactivex.schedulers.TestScheduler;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyListOf;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SearchPresenterTest {

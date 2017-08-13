@@ -85,12 +85,10 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
         this.twoPain = false;
         if (findViewById(R.id.detail_fragment_container) != null) {
             twoPain = true;
-            router.showWeatherListFragment();
-//            router.showDetailsFragment(0, twoPain);
         }
 
         if (savedInstanceState == null) {
-            router.showWeatherListFragment();
+            router.addWeatherFragment();
         }
 
         rvSettings.setOnClickListener(view -> {
@@ -231,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
         if (cities.isEmpty()) {
             router.showSearchFragment();
         } else {
-            router.showWeatherListFragment();
+            router.replaceWeatherFragment();
             if (adapter != null)
                 adapter.update(cities);
         }
@@ -242,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
         presenter.showSelectedWeather(item);
         if (!twoPain)
             drawerLayout.closeDrawer(GravityCompat.START);
-        router.showWeatherListFragment();
+        router.replaceWeatherFragment();
     }
 
     @Override

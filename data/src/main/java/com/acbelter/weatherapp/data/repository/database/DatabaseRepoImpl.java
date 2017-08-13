@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.concurrent.Executor;
 
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import timber.log.Timber;
 

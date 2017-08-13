@@ -38,7 +38,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void inject();
 
-    private void hideKeyboard(){
+    private void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.HIDE_NOT_ALWAYS, 0);
     }
