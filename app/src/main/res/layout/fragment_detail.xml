@@ -1,0 +1,221 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_layout_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/detailsBackground"
+    tools:context=".mvp.view.activity.MainActivity">
+
+    <ImageView
+        android:id="@+id/ivDetais"
+        android:layout_width="@dimen/weather_icon_details"
+        android:layout_height="@dimen/weather_icon_details"
+        android:layout_marginEnd="31dp"
+        android:layout_marginRight="31dp"
+        android:layout_marginTop="104dp"
+        android:scaleType="fitEnd"
+        app:layout_constraintHeight_default="spread"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_default="spread"
+        tools:ignore="ContentDescription"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        tools:src="@drawable/img_sun" />
+
+    <TextView
+        android:id="@+id/tvDetaisMaxTemp"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_marginLeft="29dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:text="20"
+        android:textSize="@dimen/details_max_temp_text_size"
+        app:layout_constraintLeft_toLeftOf="@+id/tvDetailsDate"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailsDate"
+        tools:layout_constraintLeft_creator="1" />
+
+
+    <TextView
+        android:id="@+id/tvDetaisDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:text="@string/weather"
+        android:textSize="@dimen/details_description_text_size"
+        app:layout_constraintLeft_toLeftOf="@+id/tvDetailsMinTemp"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailsMinTemp"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/tvDetaisPressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:text="747"
+        android:textColor="@color/textColorDetails"
+        android:textSize="@dimen/details_params_text_size"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvDetailsPressureText"
+        app:layout_constraintLeft_toRightOf="@+id/tvDetailsPressureText"
+        tools:layout_constraintLeft_creator="1" />
+
+    <TextView
+        android:id="@+id/tvDetaisHumidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp"
+        android:text="34"
+        android:textSize="@dimen/details_params_text_size"
+        android:textColor="@color/textColorDetails"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvDetailsHumidityText"
+        app:layout_constraintLeft_toRightOf="@+id/tvDetailsHumidityText"
+        tools:layout_constraintBaseline_creator="1"
+        tools:layout_constraintLeft_creator="1" />
+
+    <TextView
+        android:id="@+id/tvDetaisWind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text="3"
+        android:textColor="@color/textColorDetails"
+        android:textSize="@dimen/details_params_text_size"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvDetailsWindText"
+        app:layout_constraintLeft_toRightOf="@+id/tvDetailsWindText" />
+
+    <TextView
+        android:id="@+id/tvDetailsMetricMax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/celsius"
+        android:textSize="@dimen/cilcius_sign"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvDetaisMaxTemp"
+        app:layout_constraintLeft_toRightOf="@+id/tvDetaisMaxTemp"
+        tools:layout_constraintLeft_creator="1" />
+
+    <TextView
+        android:id="@+id/tvDetailsMetricMin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/celsius"
+        android:textColor="@color/textColorMinTemp"
+        android:textSize="@dimen/cilcius_sign"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvDetailsMinTemp"
+        app:layout_constraintLeft_toRightOf="@+id/tvDetailsMinTemp"
+        tools:layout_constraintLeft_creator="1" />
+
+    <TextView
+        android:id="@+id/tvDetailsmm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:layout_marginStart="7dp"
+        android:text="@string/mm"
+        android:textColor="@color/textColorDetails"
+        android:textSize="@dimen/details_params_text_size"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvDetaisPressure"
+        app:layout_constraintLeft_toRightOf="@+id/tvDetaisPressure"
+        tools:layout_constraintLeft_creator="1" />
+
+    <TextView
+        android:id="@+id/tvDetailsms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:layout_marginStart="7dp"
+        android:text="@string/ms"
+        android:textColor="@color/textColorDetails"
+        android:textSize="@dimen/details_params_text_size"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvDetaisWind"
+        app:layout_constraintLeft_toRightOf="@+id/tvDetaisWind"
+        tools:layout_constraintBaseline_creator="1"
+        tools:layout_constraintLeft_creator="1" />
+
+    <TextView
+        android:id="@+id/tvDetailsPressureText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/pressure"
+        android:textSize="@dimen/details_params_text_size"
+        android:textColor="@color/textColorDetails"
+        app:layout_constraintLeft_toLeftOf="@+id/tvDetaisDescription"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetaisDescription" />
+
+    <TextView
+        android:id="@+id/tvDetailsHumidityText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/humidity"
+        android:textColor="@color/textColorDetails"
+        android:textSize="@dimen/details_params_text_size"
+        app:layout_constraintLeft_toLeftOf="@+id/tvDetailsPressureText"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailsPressureText"
+        tools:layout_constraintLeft_creator="1" />
+
+    <TextView
+        android:id="@+id/tvDetailsWindText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:text="@string/wind_speed"
+        android:textColor="@color/textColorDetails"
+        android:textSize="@dimen/details_params_text_size"
+        app:layout_constraintLeft_toLeftOf="@+id/tvDetailsHumidityText"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailsHumidityText"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/tvDetailsDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:text="Date"
+        android:textColor="@color/textColorDate"
+        android:textSize="@dimen/details_date_text_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/tvDetailsMinTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="18"
+        android:textColor="@color/textColorMinTemp"
+        android:textSize="@dimen/details_min_temp_text_size"
+        app:layout_constraintLeft_toLeftOf="@+id/tvDetaisMaxTemp"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetaisMaxTemp"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/tvDetailPercentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/percent"
+        android:textColor="@color/textColorDetails"
+        android:textSize="@dimen/details_params_text_size"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvDetailsHumidityText"
+        app:layout_constraintLeft_toRightOf="@+id/tvDetaisHumidity"
+        tools:layout_constraintBaseline_creator="1"
+        tools:layout_constraintLeft_creator="1" />
+
+</android.support.constraint.ConstraintLayout>

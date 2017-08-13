@@ -1,0 +1,79 @@
+package com.acbelter.weatherapp.di.module;
+
+import android.arch.persistence.room.Room;
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.acbelter.weatherapp.data.database.WeatherDAO;
+import com.acbelter.weatherapp.data.database.WeatherDatabase;
+import com.acbelter.weatherapp.data.network.NetworkRepo;
+import com.acbelter.weatherapp.data.repository.city.CityRepoImpl;
+import com.acbelter.weatherapp.data.repository.database.DatabaseRepoImpl;
+import com.acbelter.weatherapp.data.repository.preference.SettingsPreference;
+import com.acbelter.weatherapp.data.repository.preference.SettingsRepoImpl;
+import com.acbelter.weatherapp.data.repository.weather.WeatherRepoImpl;
+import com.acbelter.weatherapp.domain.repository.CityRepo;
+import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
+import com.acbelter.weatherapp.domain.repository.SettingsRepo;
+import com.acbelter.weatherapp.domain.repository.WeatherRepo;
+
+import java.util.concurrent.Executor;
+
+import javax.inject.Singleton;
+
+import dagger.Module;
+import dagger.Provides;
+
+@Module
+public class DataModule {
+
+    @Provides
+    @Singleton
+    SharedPreferences provideSharedPreferences(Context context) {
+        return context.getSharedPreferences("storage", Context.MODE_PRIVATE);
+    }
+
+    @Provides
+    @Singleton
+    SettingsPreference providePreferences(SharedPreferences sharedPreferences) {
+        return new SettingsPreference(sharedPreferences);
+    }
+
+    @Provides
+    @Singleton
+    WeatherRepo provideWeatherRepo(NetworkRepo networkRepo, SettingsPreference settingsPreference, DatabaseRepo databaseRepo) {
+        return new WeatherRepoImpl(networkRepo, settingsPreference, databaseRepo);
+    }
+
+    @Provides
+    @Singleton
+    SettingsRepo provideSettingsRepo(SettingsPreference settingsPreference) {
+        return new SettingsRepoImpl(settingsPreference);
+    }
+
+    @Provides
+    @Singleton
+    CityRepo provideCityRepo(NetworkRepo networkRepo, DatabaseRepo databaseRepo, SettingsPreference settingsPreference) {
+        return new CityRepoImpl(networkRepo, databaseRepo, settingsPreference);
+    }
+
+    @Provides
+    @Singleton
+    DatabaseRepo provideDatabaseRepo(WeatherDAO weatherDAO, Executor executor) {
+        return new DatabaseRepoImpl(weatherDAO, executor);
+    }
+
+    @Provides
+    @Singleton
+    public WeatherDAO getWeatherDAO(WeatherDatabase weatherDatabase) {
+        return weatherDatabase.weatherDAO();
+    }
+
+    @Singleton
+    @Provides
+    public WeatherDatabase getWeatherDatabase(Context context) {
+        return Room.databaseBuilder(context.getApplicationContext(),
+                WeatherDatabase.class, "weather.db")
+                .build();
+    }
+}

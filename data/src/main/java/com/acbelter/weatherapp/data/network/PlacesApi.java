@@ -1,5 +1,7 @@
 package com.acbelter.weatherapp.data.network;
 
+import android.support.annotation.WorkerThread;
+
 import com.acbelter.weatherapp.data.placesmodel.Places;
 
 import io.reactivex.Observable;
@@ -13,5 +15,6 @@ public interface PlacesApi {
     String BASE_PLACES_URL = "https://maps.googleapis.com/maps/api/place/autocomplete/";
 
     @GET("json?types=(cities)&key=" + GOOGLE_PLACES_API_KEY)
+    @WorkerThread
     Observable<Places> getPlaces(@Query("input") String input);
 }

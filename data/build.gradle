@@ -16,14 +16,25 @@ android {
         versionName rootProject.ext.versionName
     }
 
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties["keyAlias"]
+            keyPassword keystoreProperties["keyPassword"]
+            storeFile file(keystoreProperties["storeFile"])
+            storePassword keystoreProperties["storePassword"]
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    buildTypes.each {
-        it.buildConfigField "String", "OPEN_WEATHER_MAP_API_KEY", keystoreProperties["OPEN_WEATHER_MAP_API_KEY"]
-        it.buildConfigField "String", "GOOGLE_PLACES_API_KEY", keystoreProperties["GOOGLE_PLACES_API_KEY"]
+    buildTypes {
+        buildTypes.each {
+            it.buildConfigField "String", "OPEN_WEATHER_MAP_API_KEY", keystoreProperties["OPEN_WEATHER_MAP_API_KEY"]
+            it.buildConfigField "String", "GOOGLE_PLACES_API_KEY", keystoreProperties["GOOGLE_PLACES_API_KEY"]
+        }
     }
 }
 
@@ -35,11 +46,14 @@ dependencies {
     compile rx.rxJava2
     compile lib.retrofit2
     compile lib.retrofit2_adapter
-    compile lib.retrofit2_scalars
     compile lib.retrofit2_gson
     compile lib.gson
     compile lib.loggingInterceptor
     compile lib.timber
+
+    compile db.room
+    compile db.roomRx
+    annotationProcessor db.roomPersistence
 
     compile lib.dagger2
     annotationProcessor compiler.dagger2

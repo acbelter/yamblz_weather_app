@@ -8,31 +8,30 @@ ext {
     versionName = "1.0"
 
     supportLibraryVersion = "25.4.0"
+    constraintLayoutVersion = "1.0.2"
     retrofitVersion = "2.3.0"
     daggerVersion = "2.11"
     rxJava2Version = "2.1.0"
     rxAndroidVersion = "2.0.1"
-    moxyVersion = "1.5.3"
     butterknifeVersion = "8.6.0"
     rxBindingVersion = "2.0.0"
+    timberVersion = "4.5.1"
+    androidJobVersion = "1.1.11"
+    gsonVersion = "2.8.1"
+    okhttp3Version = "3.8.1"
+    roomVersion = "1.0.0-alpha5"
+    stethoVersion = "1.5.0"
 
     mockitoVersion = "1.10.19"
     junitVersion = "4.12"
     assertJVersion = "2.5.0"
-    espressoVersion = "3.0.0"
-    testRunnerVersion = "1.0.0"
     robolectricVersion = "3.4"
 
     support = [
             appCompat         : "com.android.support:appcompat-v7:$supportLibraryVersion",
             design            : "com.android.support:design:$supportLibraryVersion",
-            constraintLayout  : "com.android.support.constraint:constraint-layout:1.0.2",
-            supportAnnotations: "com.android.support:support-annotations:$supportLibraryVersion"
-    ]
-
-    ui = [
-            weatherView  : "com.github.MatteoBattilana:WeatherView:1.2.0",
-            fixPreference: "com.takisoft.fix:preference-v7:25.4.0.3",
+            constraintLayout  : "com.android.support.constraint:constraint-layout:$constraintLayoutVersion",
+            supportAnnotations: "com.android.support:support-annotations:$supportLibraryVersion",
     ]
 
     rx = [
@@ -44,21 +43,28 @@ ext {
 
     lib = [
             dagger2           : "com.google.dagger:dagger:$daggerVersion",
-            moxy              : "com.arello-mobile:moxy:$moxyVersion",
-            moxyAppCompat     : "com.arello-mobile:moxy-app-compat:$moxyVersion",
             butterknife       : "com.jakewharton:butterknife:$butterknifeVersion",
             retrofit2         : "com.squareup.retrofit2:retrofit:$retrofitVersion",
             retrofit2_adapter : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
-            retrofit2_scalars : "com.squareup.retrofit2:converter-scalars:$retrofitVersion",
             retrofit2_gson    : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
-            gson              : "com.google.code.gson:gson:2.8.1",
-            loggingInterceptor: "com.squareup.okhttp3:logging-interceptor:3.8.1",
-            timber            : "com.jakewharton.timber:timber:4.5.1",
+            gson              : "com.google.code.gson:gson:$gsonVersion",
+            loggingInterceptor: "com.squareup.okhttp3:logging-interceptor:$okhttp3Version",
+            timber            : "com.jakewharton.timber:timber:$timberVersion",
+            androidJob        : "com.evernote:android-job:$androidJobVersion",
+    ]
+
+    db = [
+            room           : "android.arch.persistence.room:runtime:$roomVersion",
+            roomPersistence: "android.arch.persistence.room:compiler:$roomVersion",
+            roomRx         : "android.arch.persistence.room:rxjava2:$roomVersion"
+    ]
+
+    utils = [
+            stetho: "com.facebook.stetho:stetho:$stethoVersion"
     ]
 
     compiler = [
             dagger2    : "com.google.dagger:dagger-compiler:$daggerVersion",
-            moxy       : "com.arello-mobile:moxy-compiler:$moxyVersion",
             butterknife: "com.jakewharton:butterknife-compiler:$butterknifeVersion",
     ]
 
@@ -67,11 +73,5 @@ ext {
             junit      : "junit:junit:$junitVersion",
             assertJ    : "org.assertj:assertj-core:$assertJVersion",
             robolectric: "org.robolectric:robolectric:$robolectricVersion"
-    ]
-
-    uiTest = [
-            espressoCore   : "com.android.support.test.espresso:espresso-core:$espressoVersion",
-            espressoContrib: "com.android.support.test.espresso:espresso-contrib:$espressoVersion",
-            runner         : "com.android.support.test:runner:$testRunnerVersion"
     ]
 }

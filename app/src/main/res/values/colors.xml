@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0288D1</color>
-    <color name="colorPrimaryDark">#01579B</color>
-    <color name="colorAccent">#0288D1</color>
-    <color name="colorNavHeader">@color/colorPrimary</color>
+    <color name="colorPrimary">@android:color/black</color>
+    <color name="colorPrimaryDark">@android:color/black</color>
+    <color name="colorAccent">@android:color/black</color>
+
     <color name="colorNavHeaderText">@android:color/white</color>
-    <color name="colorTextShadow">@android:color/darker_gray</color>
     <color name="colorTextWeatherLight">@android:color/white</color>
     <color name="colorTextWeatherDark">@android:color/black</color>
+    <color name="detailsBackground">#B3D9F0</color>
+    <color name="textColorDate">#A6563D</color>
+    <color name="textColorMinTemp">#92A7B4</color>
+    <color name="textColorDetails">#3A789C</color>
+    <color name="forecastItemBackground">#FFF8E7</color>
+    <color name="backgroundTranslucent">#BFFFFFFF</color>
 
-    <color name="colorBgWeatherDefault">@color/colorPrimary</color>
     <color name="colorBgWeatherNight">#37474F</color>
     <color name="colorBgWeatherSun">#4FC3F7</color>
     <color name="colorBgWeatherClouds">#B3E5FC</color>

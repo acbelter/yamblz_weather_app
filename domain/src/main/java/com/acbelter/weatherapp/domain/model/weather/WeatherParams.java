@@ -1,27 +1,40 @@
 package com.acbelter.weatherapp.domain.model.weather;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import com.acbelter.weatherapp.domain.model.city.CityData;
+import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
+
 public class WeatherParams {
-    private String mCity;
-    private String mLangCode;
 
-    public WeatherParams(String city) {
-        mCity = city;
-        mLangCode = "en";
+    @NonNull
+    private CityData cityData;
+    @Nullable
+    private TemperatureMetric metric;
+
+    public WeatherParams(@NonNull CityData cityData, @Nullable TemperatureMetric metric) {
+        this.cityData = cityData;
+        this.metric = metric;
     }
 
-    public String getCity() {
-        return mCity;
+    public
+    @Nullable
+    TemperatureMetric getMetric() {
+        return metric;
     }
 
-    public void setCity(String city) {
-        mCity = city;
+    public void setMetric(@Nullable TemperatureMetric metric) {
+        this.metric = metric;
     }
 
-    public String getLangCode() {
-        return mLangCode;
+    public
+    @NonNull
+    CityData getCityData() {
+        return cityData;
     }
 
-    public void setLangCode(String langCode) {
-        mLangCode = langCode;
+    public void setCityData(@NonNull CityData cityData) {
+        this.cityData = cityData;
     }
 }

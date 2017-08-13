@@ -1,13 +1,10 @@
 package com.acbelter.weatherapp.di.component;
 
-import com.acbelter.weatherapp.WeatherUpdateReceiver;
+import com.acbelter.weatherapp.di.module.ActivityModule;
 import com.acbelter.weatherapp.di.module.AppModule;
-import com.acbelter.weatherapp.di.module.DatabaseModule;
+import com.acbelter.weatherapp.di.module.DataModule;
 import com.acbelter.weatherapp.di.module.NetworkModule;
-import com.acbelter.weatherapp.di.module.PreferencesModule;
-import com.acbelter.weatherapp.di.module.WeatherModule;
-import com.acbelter.weatherapp.ui.settings.SettingsActivity;
-import com.acbelter.weatherapp.ui.settings.SettingsFragment;
+import com.acbelter.weatherapp.di.module.UtilsModule;
 
 import javax.inject.Singleton;
 
@@ -17,14 +14,8 @@ import dagger.Component;
 @Component(modules = {
         AppModule.class,
         NetworkModule.class,
-        DatabaseModule.class,
-        PreferencesModule.class})
+        DataModule.class,
+        UtilsModule.class})
 public interface AppComponent {
-    ActivityComponent addWeatherComponent(WeatherModule weatherModule);
-
-    void inject(SettingsFragment settingsFragment);
-
-    void inject(SettingsActivity settingsActivity);
-
-    void inject(WeatherUpdateReceiver updateReceiver);
+    ActivityComponent addWeatherComponent(ActivityModule activityModule);
 }

@@ -1,8 +1,11 @@
 package com.acbelter.weatherapp.data.placesmodel;
 
+import android.support.annotation.VisibleForTesting;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Prediction {
@@ -15,7 +18,7 @@ public class Prediction {
     private String id;
     @SerializedName("matched_substrings")
     @Expose
-    private List<MatchedSubstring> matchedSubstrings = null;
+    private List<MatchedSubstring> matchedSubstrings = new ArrayList<>();
     @SerializedName("place_id")
     @Expose
     private String placeId;
@@ -27,13 +30,18 @@ public class Prediction {
     private StructuredFormatting structuredFormatting;
     @SerializedName("terms")
     @Expose
-    private List<Term> terms = null;
+    private List<Term> terms = new ArrayList<>();
     @SerializedName("types")
     @Expose
-    private List<String> types = null;
+    private List<String> types = new ArrayList<>();
 
     public String getDescription() {
         return description;
+    }
+
+    @VisibleForTesting
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getId() {
@@ -46,6 +54,11 @@ public class Prediction {
 
     public String getPlaceId() {
         return placeId;
+    }
+
+    @VisibleForTesting
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
     }
 
     public String getReference() {

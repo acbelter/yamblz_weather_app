@@ -1,41 +1,100 @@
 package com.acbelter.weatherapp.data.repository.weather;
 
-import com.acbelter.weatherapp.data.database.DatabaseService;
-import com.acbelter.weatherapp.data.network.NetworkService;
-import com.acbelter.weatherapp.data.repository.preference.PreferencesRepo;
-import com.acbelter.weatherapp.domain.model.weather.WeatherData;
+import android.support.annotation.NonNull;
+import android.support.annotation.WorkerThread;
+
+import com.acbelter.weatherapp.data.network.NetworkRepo;
+import com.acbelter.weatherapp.data.repository.preference.SettingsPreference;
+import com.acbelter.weatherapp.data.weathermodel.forecast.ForecastWeather;
+import com.acbelter.weatherapp.domain.model.city.CityData;
+import com.acbelter.weatherapp.domain.model.weather.CurrentWeatherFavorites;
+import com.acbelter.weatherapp.domain.model.weather.ForecastWeatherElement;
 import com.acbelter.weatherapp.domain.model.weather.WeatherParams;
+import com.acbelter.weatherapp.domain.repository.DatabaseRepo;
 import com.acbelter.weatherapp.domain.repository.WeatherRepo;
 
+import java.util.List;
+
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import timber.log.Timber;
 
 public class WeatherRepoImpl implements WeatherRepo {
 
-    private DatabaseService mDatabaseService;
-    private NetworkService mNetworkService;
-    private PreferencesRepo mPreferencesRepo;
+    @NonNull
+    private final NetworkRepo networkRepo;
+    @NonNull
+    private final SettingsPreference settingsPreference;
+    @NonNull
+    private final DatabaseRepo databaseRepo;
 
-    public WeatherRepoImpl(DatabaseService databaseService,
-                           NetworkService networkService, PreferencesRepo preferencesRepo) {
-        mDatabaseService = databaseService;
-        mNetworkService = networkService;
-        this.mPreferencesRepo = preferencesRepo;
+    public WeatherRepoImpl(@NonNull NetworkRepo networkRepo, @NonNull SettingsPreference settingsPreference, @NonNull DatabaseRepo databaseRepo) {
+        this.networkRepo = networkRepo;
+        this.settingsPreference = settingsPreference;
+        this.databaseRepo = databaseRepo;
     }
 
     @Override
-    public Observable<WeatherData> getCurrentWeather(WeatherParams params) {
-        return mNetworkService.getCurrentWeather(params)
-                .map(WeatherDataConverter::fromNetworkData)
-                .doOnNext(data -> {
-                    Timber.d("Current weather data from network: %s", data);
-                });
+    @WorkerThread
+    public Single<CurrentWeatherFavorites> getCurrentWeather() {
+        WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
+                , settingsPreference.loadTemperatureMetric());
+        return databaseRepo.getCurrentWeather(weatherParams.getCityData())
+                .map(currentWeatherFavorites ->
+                        WeatherDataConverter.updateCurrentWeatherMetric(currentWeatherFavorites, weatherParams.getMetric()))
+                .doOnSuccess(data -> Timber.v("Current data from DB: %s", data))
+                .onErrorResumeNext(networkRepo.getCurrentWeather(weatherParams)
+                        .map(currentWeather ->
+                                WeatherDataConverter
+                                        .fromNWWeatherDataToCurrentWeatherData(currentWeather, weatherParams)))
+                .doOnSuccess(data -> Timber.d("Current weather data from network: %s", data));
     }
 
     @Override
-    public void saveWeather(WeatherData weatherData) {
-        mPreferencesRepo.setLastWeatherData(weatherData);
-        long updateTimestamp = System.currentTimeMillis();
-        mPreferencesRepo.setLastUpdateTimestamp(updateTimestamp);
+    @WorkerThread
+    public Single<List<ForecastWeatherElement>> getForecast() {
+        WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
+                , settingsPreference.loadTemperatureMetric());
+        return databaseRepo.getForecastWeather(weatherParams.getCityData())
+                .flatMap(forecastList -> Observable.fromIterable(forecastList)
+                        .map(element -> WeatherDataConverter
+                                .updateForecastWeatherMetric(element, weatherParams.getMetric()))
+                        .toList())
+                .doOnSuccess(data -> Timber.d("Forecast weather data from DB: %s", data))
+                .onErrorResumeNext(networkRepo.getForecastWeather(weatherParams)
+                        .map(ForecastWeather::getForecastElement)
+                        .flatMap(forecastElements -> Observable.fromIterable(forecastElements)
+                                .skip(1) //skip forecast for current day
+                                .map(forecastElement -> WeatherDataConverter.fromForecastElementToWeatherForecast(forecastElement, weatherParams))
+                                .toList()))
+                .doOnSuccess(data -> Timber.d("Forecast weather data from network: %s", data));
+    }
+
+    @Override
+    @WorkerThread
+    public Single<CurrentWeatherFavorites> updateCurrentWeather() {
+        WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
+                , settingsPreference.loadTemperatureMetric());
+        return networkRepo.getCurrentWeather(weatherParams)
+                .map(currentWeather -> WeatherDataConverter.fromNWWeatherDataToCurrentWeatherData(currentWeather, weatherParams));
+    }
+
+    @Override
+    @WorkerThread
+    public Single<List<ForecastWeatherElement>> updateForecast() {
+        WeatherParams weatherParams = new WeatherParams(settingsPreference.loadCurrentCity()
+                , settingsPreference.loadTemperatureMetric());
+        return networkRepo.getForecastWeather(weatherParams)
+                .map(ForecastWeather::getForecastElement)
+                .flatMap(forecastElements -> Observable.fromIterable(forecastElements)
+                        .skip(1) //skip forecast for current day
+                        .map(forecastElement -> WeatherDataConverter.fromForecastElementToWeatherForecast(forecastElement, weatherParams))
+                        .toList());
+    }
+
+    @Override
+    @WorkerThread
+    public void deleteWeather(CityData cityData) {
+        databaseRepo.deleteWeather(cityData);
     }
 }

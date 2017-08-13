@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
+apply from: '../code_quality_tools/jacoco.gradle'
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
@@ -36,10 +37,12 @@ android {
     }
 
     buildTypes {
+
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -57,9 +60,6 @@ dependencies {
     compile support.design
     compile support.constraintLayout
 
-    compile ui.weatherView
-    compile ui.fixPreference
-
     compile rx.rxAndroid
     compile rx.rxJava2
     compile rx.rxBinding
@@ -68,20 +68,14 @@ dependencies {
     compile lib.dagger2
     annotationProcessor compiler.dagger2
 
-    compile lib.moxy
-    compile lib.moxyAppCompat
-    annotationProcessor compiler.moxy
-
     compile lib.butterknife
     annotationProcessor compiler.butterknife
 
     compile lib.gson
-
+    compile utils.stetho
     compile lib.timber
 
-    androidTestCompile uiTest.espressoCore
-    androidTestCompile uiTest.espressoContrib
-    androidTestCompile uiTest.runner
+    compile lib.androidJob
 
     testCompile unitTest.junit
     testCompile unitTest.mockito

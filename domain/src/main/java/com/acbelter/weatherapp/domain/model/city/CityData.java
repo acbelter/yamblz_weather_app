@@ -1,70 +1,70 @@
 package com.acbelter.weatherapp.domain.model.city;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
-public class CityData implements Parcelable {
+public class CityData {
 
-    private String formattedAddress;
+    @NonNull
     private double latitude;
+    @NonNull
     private double longitude;
+    @Nullable
+    private String shortName;
+    @NonNull
+    private long timestamp;
 
-    public CityData() {
+    public static class Builder {
+        //Requered params
+        private final double latitude;
+        private final double longitude;
+        private final long timestamp;
 
-    }
+        //Optional params
+        private String shortName = "";
 
-    protected CityData(Parcel in) {
-        formattedAddress = in.readString();
-        latitude = in.readDouble();
-        longitude = in.readDouble();
-    }
-
-    public static final Creator<CityData> CREATOR = new Creator<CityData>() {
-        @Override
-        public CityData createFromParcel(Parcel in) {
-            return new CityData(in);
+        public Builder(double latitude, double longitude, long timestamp) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+            this.timestamp = timestamp;
         }
 
-        @Override
-        public CityData[] newArray(int size) {
-            return new CityData[size];
+        public Builder shortName(String val) {
+            shortName = val;
+            return this;
         }
-    };
 
-    public void setFormattedAddress(String formattedAddress) {
-        this.formattedAddress = formattedAddress;
+        public CityData build() {
+            return new CityData(this);
+        }
     }
 
-    public String getFormattedAddress() {
-        return formattedAddress;
+    private CityData(Builder builder) {
+        latitude = builder.latitude;
+        longitude = builder.longitude;
+        shortName = builder.shortName;
+        timestamp = builder.timestamp;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    @Nullable
+    public String getShortName() {
+        return shortName;
     }
 
     public double getLatitude() {
         return latitude;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
     public double getLongitude() {
         return longitude;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public long getTimestamp() {
+        return timestamp;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(formattedAddress);
-        parcel.writeDouble(latitude);
-        parcel.writeDouble(longitude);
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     @Override
@@ -74,23 +74,26 @@ public class CityData implements Parcelable {
         if (!(o instanceof CityData))
             return false;
         CityData cityData = (CityData) o;
-        return cityData.formattedAddress.equals(formattedAddress);
+        return (Double.compare(cityData.latitude, latitude) == 0)
+                && (Double.compare(cityData.longitude, longitude) == 0);
     }
 
     @Override
     public int hashCode() {
         int result = 17;
-        result = 31 * result + (formattedAddress == null ? 0 : formattedAddress.hashCode());
+        result = 31 * result + (shortName == null ? 0 : shortName.hashCode());
         result = 31 * result + Double.valueOf(latitude).hashCode();
         result = 31 * result + Double.valueOf(longitude).hashCode();
+        result = 31 * result + Long.valueOf(timestamp).hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return "(formattedAddress=" + formattedAddress +
+        return "(shortName = " + shortName +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
+                ", timestamp=" + timestamp +
                 ")";
     }
 }

@@ -4,93 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe_refresh_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".mvp.view.activity.MainActivity">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/content_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBgWeatherDefault">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvWeather"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="-9dp"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintWidth_default="wrap"
+        tools:layout_constraintLeft_creator="1" />
 
-        <TextView
-            android:id="@+id/date_text"
-            style="@style/ShadowedText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/offset_large"
-            android:layout_marginStart="@dimen/offset_large"
-            android:layout_marginTop="@dimen/offset_large"
-            android:textColor="@color/colorTextWeatherLight"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="12 July 2017" />
-
-        <TextView
-            android:id="@+id/temperature_text"
-            style="@style/ShadowedText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/offset_large"
-            android:layout_marginTop="@dimen/offset_medium"
-            android:textColor="@color/colorTextWeatherLight"
-            android:textSize="88sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date_text"
-            tools:text="123" />
-
-        <TextView
-            android:id="@+id/units_text"
-            style="@style/ShadowedText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorTextWeatherLight"
-            android:textSize="32sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/temperature_text"
-            app:layout_constraintLeft_toRightOf="@+id/temperature_text"
-            tools:text="ºC" />
-
-        <TextView
-            android:id="@+id/location_text"
-            style="@style/ShadowedText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/offset_large"
-            android:layout_marginStart="@dimen/offset_large"
-            android:layout_marginTop="@dimen/offset_medium"
-            android:textColor="@color/colorTextWeatherLight"
-            android:textSize="16sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temperature_text"
-            tools:text="Moscow region, Dolgoprudny" />
-
-        <ImageView
-            android:id="@+id/weather_image"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="@dimen/offset_large"
-            android:layout_marginLeft="@dimen/offset_medium"
-            android:layout_marginRight="@dimen/offset_large"
-            android:layout_marginStart="@dimen/offset_medium"
-            android:layout_marginTop="@dimen/offset_medium"
-            android:scaleType="fitEnd"
-            app:layout_constraintBottom_toBottomOf="@+id/temperature_text"
-            app:layout_constraintHeight_default="spread"
-            app:layout_constraintLeft_toRightOf="@+id/units_text"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date_text"
-            app:layout_constraintWidth_default="spread"
-            tools:ignore="ContentDescription"
-            tools:src="@drawable/img_sun" />
-
-        <xyz.matteobattilana.library.WeatherView
-            android:id="@+id/weather_view"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/location_text"
-            app:layout_constraintWidth_default="spread" />
-    </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

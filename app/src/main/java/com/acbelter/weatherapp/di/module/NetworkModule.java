@@ -1,10 +1,13 @@
 package com.acbelter.weatherapp.di.module;
 
 import com.acbelter.weatherapp.data.network.LocationApi;
-import com.acbelter.weatherapp.data.network.NetworkService;
-import com.acbelter.weatherapp.data.network.NetworkServiceImpl;
+import com.acbelter.weatherapp.data.network.NetworkRepo;
+import com.acbelter.weatherapp.data.network.NetworkRepoImpl;
 import com.acbelter.weatherapp.data.network.PlacesApi;
 import com.acbelter.weatherapp.data.network.WeatherApi;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import javax.inject.Singleton;
 
@@ -15,11 +18,11 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 import timber.log.Timber;
 
 @Module
 public class NetworkModule {
+
     @Provides
     @Singleton
     HttpLoggingInterceptor provideHttpLoggingInterceptor() {
@@ -42,6 +45,7 @@ public class NetworkModule {
     Retrofit.Builder provideRetrofitBuilder(OkHttpClient client) {
         return new Retrofit.Builder()
                 .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
     }
 
@@ -50,7 +54,6 @@ public class NetworkModule {
     WeatherApi provideWeatherApi(Retrofit.Builder builder) {
         return builder
                 .baseUrl(WeatherApi.BASE_WEATHER_URL)
-                .addConverterFactory(ScalarsConverterFactory.create())
                 .build()
                 .create(WeatherApi.class);
     }
@@ -60,7 +63,6 @@ public class NetworkModule {
     PlacesApi providePlacesApi(Retrofit.Builder builder) {
         return builder
                 .baseUrl(PlacesApi.BASE_PLACES_URL)
-                .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(PlacesApi.class);
     }
@@ -70,14 +72,19 @@ public class NetworkModule {
     LocationApi provideLocationApi(Retrofit.Builder builder) {
         return builder
                 .baseUrl(LocationApi.BASE_LOCATION_URL)
-                .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(LocationApi.class);
     }
 
     @Provides
     @Singleton
-    NetworkService provideNetworkService(WeatherApi weatherApi, PlacesApi placesApi, LocationApi locationApi) {
-        return new NetworkServiceImpl(weatherApi, placesApi, locationApi);
+    NetworkRepo provideNetworkService(WeatherApi weatherApi, PlacesApi placesApi, LocationApi locationApi) {
+        return new NetworkRepoImpl(weatherApi, placesApi, locationApi);
+    }
+
+    @Provides
+    @Singleton
+    Executor provideExecutor() {
+        return Executors.newFixedThreadPool(2);
     }
 }
