@@ -43,14 +43,6 @@ public class InfoFragment extends BaseFragment implements InfoView {
     }
 
     @Override
-    public void onActivityCreated(Bundle saveInstanceState) {
-        super.onActivityCreated(saveInstanceState);
-
-        setTitle();
-        setDrawableEnabled();
-    }
-
-    @Override
     protected void setTitle() {
         getActivity().setTitle(R.string.about);
     }

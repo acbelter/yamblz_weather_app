@@ -3,7 +3,6 @@ package com.acbelter.weatherapp.mvp.view.search;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.acbelter.weatherapp.App;
 import com.acbelter.weatherapp.R;
@@ -39,7 +39,7 @@ public class SearchFragment extends BaseFragment implements SearchView, CityAdap
     @BindView(R.id.rvCityList)
     RecyclerView recyclerView;
     @BindView(R.id.content_layout)
-    ConstraintLayout constraintLayout;
+    LinearLayout constraintLayout;
 
     @Inject
     SearchPresenter presenter;
@@ -70,7 +70,6 @@ public class SearchFragment extends BaseFragment implements SearchView, CityAdap
         super.onCreate(saveInstanceState);
         presenter.onAttach(this);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -116,7 +115,7 @@ public class SearchFragment extends BaseFragment implements SearchView, CityAdap
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
-    private void hideKeyboard() {
+    protected void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.HIDE_NOT_ALWAYS, 0);
     }

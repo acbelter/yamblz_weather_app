@@ -32,6 +32,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements DrawerLocker
         , MainActivityView
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     RelativeLayout rvSettings;
     @BindView(R.id.rvInfo)
     RelativeLayout rvInfo;
+    @BindView(R.id.rvAdd)
+    RelativeLayout rvAdd;
     @BindView(R.id.tvEdit)
     TextView tvEdit;
     @BindView(R.id.rvEdit)
@@ -82,11 +85,10 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
         this.twoPain = false;
         if (findViewById(R.id.detail_fragment_container) != null) {
             twoPain = true;
-            router.showDetailsFragment(0, twoPain);
         }
 
         if (savedInstanceState == null) {
-            router.showWeatherListFragment();
+            router.addWeatherFragment();
         }
 
         rvSettings.setOnClickListener(view -> {
@@ -95,7 +97,8 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
         });
         rvInfo.setOnClickListener(view -> {
             router.showInfoFragment();
-            drawerLayout.closeDrawer(GravityCompat.START);
+            if (!twoPain)
+                drawerLayout.closeDrawer(GravityCompat.START);
         });
         rvEdit.setOnClickListener(view -> {
             if (adapter != null) {
@@ -107,6 +110,10 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
             }
         });
 
+        rvAdd.setOnClickListener(view -> {
+            if (twoPain)
+                router.showSearchFragment();
+        });
         initSearchEdittext();
     }
 
@@ -123,9 +130,8 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
         etSearch.setOnTouchListener((view, motionEvent) -> {
             if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
                 router.showSearchFragment();
-                if (twoPain)
-                    router.showErrorFragment();
-                drawerLayout.closeDrawer(GravityCompat.START);
+                if (!twoPain)
+                    drawerLayout.closeDrawer(GravityCompat.START);
             }
             return true;
         });
@@ -218,10 +224,11 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
 
     @Override
     public void showCityList(List<CityData> cities) {
+        Timber.v("SIZE = " + cities.size());
         if (cities.isEmpty()) {
             router.showSearchFragment();
         } else {
-            router.showWeatherListFragment();
+            router.replaceWeatherFragment();
             if (adapter != null)
                 adapter.update(cities);
         }
@@ -233,15 +240,15 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
     }
 
     @Override
-    public void onItemClick(CityData item) {
+    public void onCityItemClick(CityData item) {
         presenter.showSelectedWeather(item);
-        drawerLayout.closeDrawer(GravityCompat.START);
-        if (twoPain)
-            router.showDetailsFragment(0, twoPain);
+        if (!twoPain)
+            drawerLayout.closeDrawer(GravityCompat.START);
+        router.replaceWeatherFragment();
     }
 
     @Override
-    public void deleteItem(CityData item) {
+    public void deleteCityItem(CityData item) {
         presenter.deleteItem(item);
         tvEdit.setTypeface(null, Typeface.NORMAL);
         if (adapter != null)

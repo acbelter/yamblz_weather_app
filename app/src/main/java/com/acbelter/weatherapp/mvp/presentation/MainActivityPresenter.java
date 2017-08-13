@@ -60,12 +60,14 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView> {
         unSubscribeOnDetach(cityInteractor.getFavorites()
                 .subscribe(cityList -> {
                     CityData selectedCity = settingsInteractor.getUserSettings().getSelectedCity();
-                    if (removedItem.equals(selectedCity) && (cityList.size() > 1)) {
-                        cityInteractor.saveSelectedCity(cityList.get(1));
-                    } else if (removedItem.equals(selectedCity) && (cityList.size() == 1)) {
-                        cityInteractor.saveSelectedCity(cityList.get(0));
-                    } else if (removedItem.equals(selectedCity) && cityList.isEmpty()) {
-                        getView().showSearchFragment();
+                    if (removedItem.equals(selectedCity)) {
+                        if (cityList.size() > 1) {
+                            cityInteractor.saveSelectedCity(cityList.get(1));
+                        } else if (cityList.size() == 1) {
+                            cityInteractor.saveSelectedCity(cityList.get(0));
+                        } else {
+                            getView().showCityList(cityList);
+                        }
                     }
                 }));
     }
