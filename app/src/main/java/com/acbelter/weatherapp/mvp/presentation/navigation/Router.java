@@ -21,23 +21,15 @@ public class Router {
         this.activity = activity;
     }
 
-    public void showDetailsFragment(int position, boolean isTwoPane) {
-        if (isTwoPane) {
+    public void showDetailsFragment(int position) {
+        Fragment fragment = ((FragmentActivity) activity).getSupportFragmentManager().findFragmentByTag(DetailFragment.class.getSimpleName());
+        if (fragment == null) {
+            fragment = DetailFragment.newInstance(position);
             ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.detail_fragment_container, DetailFragment.newInstance(position), DetailFragment.class.getSimpleName())
+                    .replace(R.id.fragment_container, fragment, DetailFragment.class.getSimpleName())
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .addToBackStack(null)
                     .commit();
-        } else {
-            Fragment fragment = ((FragmentActivity) activity).getSupportFragmentManager().findFragmentByTag(DetailFragment.class.getSimpleName());
-            if (fragment == null) {
-                fragment = DetailFragment.newInstance(position);
-                ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, fragment, DetailFragment.class.getSimpleName())
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .addToBackStack(null)
-                        .commit();
-            }
         }
     }
 
@@ -82,7 +74,7 @@ public class Router {
         if (fragment == null) {
             fragment = SettingsFragment.newInstance();
             ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.detail_fragment_container, fragment, SettingsFragment.class.getSimpleName())
+                    .replace(R.id.fragment_container, fragment, SettingsFragment.class.getSimpleName())
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .addToBackStack(null)
                     .commit();
@@ -94,7 +86,7 @@ public class Router {
         if (fragment == null) {
             fragment = InfoFragment.newInstance();
             ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.detail_fragment_container, fragment, InfoFragment.class.getSimpleName())
+                    .replace(R.id.fragment_container, fragment, InfoFragment.class.getSimpleName())
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .addToBackStack(null)
                     .commit();

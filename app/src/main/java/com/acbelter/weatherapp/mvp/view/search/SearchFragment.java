@@ -115,7 +115,7 @@ public class SearchFragment extends BaseFragment implements SearchView, CityAdap
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
-    private void hideKeyboard() {
+    protected void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.HIDE_NOT_ALWAYS, 0);
     }

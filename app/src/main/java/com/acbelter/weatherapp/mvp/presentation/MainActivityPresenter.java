@@ -48,14 +48,20 @@ public class MainActivityPresenter extends BasePresenter<MainActivityView> {
     }
 
     public void deleteItem(@NonNull CityData removedItem) {
+        if (getView() == null)
+            return;
         weatherInteractor.deleteWeather(removedItem);
         unSubscribeOnDetach(cityInteractor.getFavorites()
                 .subscribe(cityList -> {
                     CityData selectedCity = settingsInteractor.getUserSettings().getSelectedCity();
-                    if (removedItem.equals(selectedCity) && (cityList.size() > 1)) {
-                        cityInteractor.saveSelectedCity(cityList.get(1));
-                    } else if (removedItem.equals(selectedCity) && (cityList.size() == 1)) {
-                        cityInteractor.saveSelectedCity(cityList.get(0));
+                    if (removedItem.equals(selectedCity)) {
+                        if (cityList.size() > 1) {
+                            cityInteractor.saveSelectedCity(cityList.get(1));
+                        } else if (cityList.size() == 1) {
+                            cityInteractor.saveSelectedCity(cityList.get(0));
+                        } else {
+                            getView().showCityList(cityList);
+                        }
                     }
                 }));
     }

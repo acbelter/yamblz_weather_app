@@ -160,9 +160,6 @@ public class WeatherFragment extends BaseFragment implements WeatherView
 
     @Override
     public void onItemClick(int position) {
-        boolean twoPain = false;
-        if (getActivity().findViewById(R.id.detail_fragment_container) != null)
-            twoPain = true;
-        router.showDetailsFragment(position, twoPain);
+        router.showDetailsFragment(position);
     }
 }

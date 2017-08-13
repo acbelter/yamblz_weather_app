@@ -19,9 +19,8 @@ class DatabaseWeatherConverter {
     private DatabaseWeatherConverter() {
     }
 
-    static
     @NonNull
-    CityData fromDatabaseWeatherDataToCityData(@Nullable DatabaseWeatherData databaseWeatherData) {
+    static CityData fromDatabaseWeatherDataToCityData(@Nullable DatabaseWeatherData databaseWeatherData) {
 
         if (databaseWeatherData == null) {
             throw new IllegalArgumentException("Converted object must be not null");

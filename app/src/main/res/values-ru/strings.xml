@@ -6,6 +6,7 @@
 
     <!--NavigationView screen-->
     <string name="edit">Редактировать</string>
+    <string name="add">Добавить город</string>
 
     <!--Weather screen-->
     <string name="weather">Погода</string>

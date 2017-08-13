@@ -24,9 +24,9 @@ import static android.view.View.VISIBLE;
 public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCitiesAdapter.FavoritesCitiesViewHolder> {
 
     public interface OnItemClickListener {
-        void onItemClick(CityData item);
+        void onCityItemClick(CityData item);
 
-        void deleteItem(CityData item);
+        void deleteCityItem(CityData item);
     }
 
     @NonNull
@@ -78,11 +78,13 @@ public class FavoritesCitiesAdapter extends RecyclerView.Adapter<FavoritesCities
     }
 
     private void itemClicked(int position) {
-        itemClickListener.onItemClick(favoritesCities.get(position));
+        itemClickListener.onCityItemClick(favoritesCities.get(position));
     }
 
     private void deleteItem(int position) {
-        itemClickListener.deleteItem(favoritesCities.get(position));
+        itemClickListener.deleteCityItem(favoritesCities.get(position));
+        favoritesCities.remove(favoritesCities.get(position));
+        notifyItemRemoved(position);
     }
 
     public void update(@Nullable List<CityData> cities) {

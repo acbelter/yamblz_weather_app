@@ -17,7 +17,6 @@ import com.acbelter.weatherapp.domain.utils.TemperatureMetric;
 import com.acbelter.weatherapp.domain.utils.TemperatureMetricConverter;
 import com.acbelter.weatherapp.mvp.presentation.DetailPresenter;
 import com.acbelter.weatherapp.mvp.view.activity.drawer.DrawerLocker;
-import com.acbelter.weatherapp.mvp.view.error.ErrorFragment;
 import com.acbelter.weatherapp.mvp.view.fragment.BaseFragment;
 import com.acbelter.weatherapp.mvp.view.weather.resources.ForecastWeatherRes;
 
