@@ -43,7 +43,7 @@
     <string name="search_title">Search</string>
     <string name="city_search">City search</string>
     <string name="city_name">City name</string>
-    <string name="get_city_list_error">Can\'t get city weatherList</string>
+    <string name="get_city_list_error">Can\'t get city weather list</string>
 
     <!--Test strings-->
     <string name="version_test">Version</string>

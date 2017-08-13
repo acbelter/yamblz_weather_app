@@ -86,7 +86,6 @@ public class DetailFragment extends BaseFragment implements DetailView {
         presenter.onAttach(this);
         if (getArguments() != null) {
             position = getArguments().getInt(ARG_POSITION);
-            Timber.v("position = " + position);
         }
     }
 

@@ -31,7 +31,9 @@ public class SearchPresenter extends BasePresenter<SearchView> {
         unSubscribeOnDetach(cityInteractor.getCityList(cityParams)
                 .subscribe(autocompleteDatas ->
                                 getView().updateCityList(autocompleteDatas),
-                        throwable -> getView().showError()));
+                        throwable -> {
+                            getView().showError();
+                        }));
 
     }
 

@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Flowable;
-import io.reactivex.Single;
 
 import static com.acbelter.weatherapp.domain.utils.TemperatureMetric.CELSIUS;
 import static org.mockito.Matchers.any;

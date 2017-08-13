@@ -25,8 +25,6 @@ ext {
     mockitoVersion = "1.10.19"
     junitVersion = "4.12"
     assertJVersion = "2.5.0"
-    espressoVersion = "3.0.0"
-    testRunnerVersion = "1.0.0"
     robolectricVersion = "3.4"
 
     support = [
@@ -75,11 +73,5 @@ ext {
             junit      : "junit:junit:$junitVersion",
             assertJ    : "org.assertj:assertj-core:$assertJVersion",
             robolectric: "org.robolectric:robolectric:$robolectricVersion"
-    ]
-
-    uiTest = [
-            espressoCore   : "com.android.support.test.espresso:espresso-core:$espressoVersion",
-            espressoContrib: "com.android.support.test.espresso:espresso-contrib:$espressoVersion",
-            runner         : "com.android.support.test:runner:$testRunnerVersion"
     ]
 }

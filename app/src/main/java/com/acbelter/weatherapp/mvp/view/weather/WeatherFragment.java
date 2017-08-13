@@ -1,6 +1,7 @@
 package com.acbelter.weatherapp.mvp.view.weather;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -150,6 +151,7 @@ public class WeatherFragment extends BaseFragment implements WeatherView
                 Snackbar.make(swipeRefreshLayout, R.string.text_weather_error, Snackbar.LENGTH_LONG);
         errorSnackbar.setAction(R.string.ok, v -> {
         });
+        errorSnackbar.getView().setBackgroundColor(Color.WHITE);
         errorSnackbar.show();
     }
 

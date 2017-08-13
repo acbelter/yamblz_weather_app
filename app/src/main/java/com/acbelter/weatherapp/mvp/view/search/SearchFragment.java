@@ -1,6 +1,7 @@
 package com.acbelter.weatherapp.mvp.view.search;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -104,9 +105,11 @@ public class SearchFragment extends BaseFragment implements SearchView, CityAdap
 
     @Override
     public void showError() {
+        hideKeyboard();
         Snackbar errorSnackbar = Snackbar.make(constraintLayout, R.string.get_city_list_error, Snackbar.LENGTH_LONG);
         errorSnackbar.setAction(R.string.ok, v -> {
         });
+        errorSnackbar.getView().setBackgroundColor(Color.WHITE);
         errorSnackbar.show();
     }
 

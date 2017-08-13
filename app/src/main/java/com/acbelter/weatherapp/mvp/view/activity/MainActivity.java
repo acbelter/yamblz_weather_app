@@ -32,7 +32,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements DrawerLocker
         , MainActivityView
@@ -218,7 +217,6 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker
 
     @Override
     public void showCityList(List<CityData> cities) {
-        Timber.v("SIZE = " + cities.size());
         if (cities.isEmpty()) {
             router.showSearchFragment();
         } else {
